@@ -1,2 +1,2 @@
 # fd-nls-utils
-Utilities for the FD-NLS (the FreeDOS Translation Project)
+Utilities for [FD-NLS](https://github.com/shidel/fd-nls) ([the FreeDOS Translation Project](https://shidel.github.io/fd-nls))
