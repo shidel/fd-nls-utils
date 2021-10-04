@@ -16,6 +16,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="1"/>
+      <BuildNr Value="5"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Jerome Shidel" LegalCopyright="2021 Jerome Shidel" OriginalFilename="nlsreport" ProductName="NLS Reporter" ProductVersion="beta"/>
     </VersionInfo>
@@ -50,7 +52,7 @@
     </CodeGeneration>
     <Other>
       <ExecuteBefore>
-        <Command Value="/bin/bash ./version.sh off"/>
+        <Command Value="/bin/bash version.sh local"/>
       </ExecuteBefore>
     </Other>
   </CompilerOptions>

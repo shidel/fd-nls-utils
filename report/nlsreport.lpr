@@ -12,22 +12,32 @@ uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
-  Classes, SysUtils, CustApp
-  { you can add units after this };
+  Classes, SysUtils, CustApp, IniFiles, StrUtils;
 
 {$I version.inc}
+const
+  CfgExt = '.CFG';
+  VerboseOpts : array of string = ('Quite', 'Normal', 'Verbose');
+  NoYesOpts : array of string = ('No', 'Yes', 'True');
 
 type
-
   { TNLSReport }
 
   TNLSReport = class(TCustomApplication)
   protected
+      CfgFile  : TIniFile;
+      Template : string;
+      Verbose  : integer;
     procedure DoRun; override;
   public
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
     procedure WriteHelp; virtual;
+    procedure SettingsDefault; virtual;
+    procedure SettingsLoad; virtual;
+    procedure SettingsSave; virtual;
+    procedure ProcessMain; virtual;
+    procedure ProcessProject( Project : String ); virtual;
   end;
 
 { TNLSReport }
@@ -51,7 +61,7 @@ begin
     Exit;
   end;
 
-  { add your program here }
+  ProcessMain;
 
   // stop program loop
   Terminate;
@@ -61,10 +71,15 @@ constructor TNLSReport.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
   StopOnException:=True;
+  CfgFile := TIniFile.Create(LowerCase(ChangeFileExt(ExeName, CfgExt)));
+  SettingsDefault;
+  SettingsLoad;
 end;
 
 destructor TNLSReport.Destroy;
 begin
+  { SettingsSave; }
+  CfgFile.Free;
   inherited Destroy;
 end;
 
@@ -78,6 +93,67 @@ begin
   WriteLn;
   WriteLn(#9,'-v, --verbose', #9, 'Display more information');
   WriteLn(#9,'-q, --quite',   #9, 'Display less information');
+  WriteLn;
+end;
+
+procedure TNLSReport.SettingsDefault;
+begin
+  Template:='report.template';
+end;
+
+procedure TNLSReport.SettingsLoad;
+begin
+  Template := CfgFile.ReadString('*', 'Template', Template);
+  Verbose := IndexText(Trim(CfgFile.ReadString('*', 'Verbose', '')), VerboseOpts) - 1;
+  if Verbose < -1 then Verbose := 0;
+end;
+
+procedure TNLSReport.SettingsSave;
+begin
+  CfgFile.WriteString('*', 'Template', Template);
+  CfgFile.WriteString('*', 'Verbose', VerboseOpts[Verbose + 1]);
+end;
+
+procedure TNLSReport.ProcessMain;
+var
+  Files : TSearchRec;
+  Res, I : LongInt;
+  Dirs : TStringList;
+  S : String;
+  X : integer;
+begin
+  Dirs := TStringList.Create;
+  Dirs.Sorted:=True;
+  Res := FindFirst('*', faAnyFile, Files);
+  while Res = 0 do begin
+      if (Files.Attr and faDirectory = faDirectory)
+      and (Files.Name[1] <> '.') then
+        Dirs.Add(Files.Name);
+    Res := FindNext(Files);
+  end;
+  FindClose(Files);
+  for I := 0 to Dirs.Count - 1 do begin
+      if CfgFile.ValueExists(Dirs.Strings[I], 'Exclude') then
+        X := IndexStr(Trim(CfgFile.ReadString(Dirs.Strings[I], 'Exclude', '')), NoYesOpts)
+      else
+        X := 0;
+      if (X < 0) or (X > 1) then begin
+        X := IndexText(Trim(CfgFile.ReadString(Dirs.Strings[I], 'Exclude', '')), NoYesOpts);
+        if X > 0 then
+          CfgFile.WriteString(Dirs.Strings[I], 'Exclude', 'Yes')
+        else
+          CfgFile.WriteString(Dirs.Strings[I], 'Exclude', 'No');
+      end;
+      if X > 0 then Continue;
+      ProcessProject(Dirs.Strings[I]);
+  end;
+  Dirs.Free;
+end;
+
+procedure TNLSReport.ProcessProject(Project: String);
+begin
+  if Verbose >= 0 then
+     WriteLn('Project: ', Project);
 end;
 
 var

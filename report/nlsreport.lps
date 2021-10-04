@@ -7,19 +7,26 @@
       <Unit>
         <Filename Value="nlsreport.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="8" Y="18"/>
-        <UsageCount Value="20"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="130"/>
+        <CursorPos X="16" Y="155"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="version.inc"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/Developer/LazyFPC/sources/fpc/rtl/unix/sysutils.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="61"/>
+        <CursorPos X="9" Y="73"/>
+        <UsageCount Value="9"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="1">
+    <JumpHistory HistoryIndex="21">
       <Position>
         <Filename Value="nlsreport.lpr"/>
         <Caret Line="41" Column="90"/>
@@ -27,6 +34,86 @@
       <Position>
         <Filename Value="nlsreport.lpr"/>
         <Caret Line="73" Column="11"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="34" Column="21"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="93" Column="14" TopLine="67"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="15" Column="16"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="70" Column="11" TopLine="68"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="108" Column="8" TopLine="79"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="110" Column="55" TopLine="81"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="94" Column="46" TopLine="82"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="110" Column="89" TopLine="88"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="42" Column="24" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="15" Column="59"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="134" Column="33" TopLine="106"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="142" Column="65" TopLine="104"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="133" Column="3" TopLine="109"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="132" Column="47" TopLine="112"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="43" Column="29" TopLine="31"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="120" Column="33" TopLine="87"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="44" Column="59" TopLine="24"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="160" Column="34" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="118" Column="67" TopLine="104"/>
+      </Position>
+      <Position>
+        <Filename Value="nlsreport.lpr"/>
+        <Caret Line="117" Column="57" TopLine="104"/>
       </Position>
     </JumpHistory>
     <RunParams>
