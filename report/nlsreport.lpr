@@ -22,11 +22,14 @@ const
   ProjectTypes : array of string = ('Detect', 'Exclude', 'Standard');
 
 type
+  PProject = ^TProject;
   TProject = record
+    Parent : PProject;
     Name : String;
     Kind : integer;
+    Level : integer;
+    Subs : array of PProject;
   end;
-  TProjects = array of TProject;
 
   { TNLSReport }
 
@@ -36,7 +39,7 @@ type
       CfgFile  : TIniFile;
       Template : string;
       Verbose  : integer;
-      Projects : TProjects;
+      Projects : PProject;
     procedure DoRun; override;
   public
     constructor Create(TheOwner: TComponent); override;
@@ -46,10 +49,9 @@ type
     procedure SettingsLoad; virtual;
     procedure SettingsSave; virtual;
     procedure ProcessMain; virtual;
-    procedure ProcessProject; virtual;
-    procedure ProcessNLSFiles(APath : String); virtual;
-    procedure ProcessHelpFiles(APath : String); virtual;
-  end;
+    function ProcessSub(AParent : PProject; ASubPath : String) : PProject; virtual;
+    function ProjectPath(AProject : PProject) : String; virtual;
+   end;
 
 { TNLSReport }
 
@@ -72,6 +74,7 @@ begin
     Exit;
   end;
 
+
   ProcessMain;
 
   // stop program loop
@@ -82,11 +85,9 @@ constructor TNLSReport.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
   StopOnException:=True;
-  SetLength(Projects, 0);
   CfgFile := TIniFile.Create(LowerCase(ChangeFileExt(ExeName, CfgExt)));
   SettingsDefault;
   SettingsLoad;
-
 end;
 
 destructor TNLSReport.Destroy;
@@ -130,15 +131,31 @@ begin
 end;
 
 procedure TNLSReport.ProcessMain;
+begin
+  Projects := ProcessSub(nil, '');
+end;
+
+function TNLSReport.ProcessSub(AParent: PProject; ASubPath: String): PProject;
 var
+  Project : PProject;
   Files : TSearchRec;
   Res, I : LongInt;
   Dirs : TStringList;
   X : integer;
+  SubP : String;
 begin
+  Project := New(PProject);
+  Result := Project;
+  with Project^ do begin
+    Parent := AParent;
+    Name := ASubPath;
+    Kind := 0;
+    SetLength(Subs, 0);
+  end;
+  WriteLn(ProjectPath(Project) + '*');
   Dirs := TStringList.Create;
   Dirs.Sorted:=True;
-  Res := FindFirst('*', faAnyFile, Files);
+  Res := FindFirst(ProjectPath(Project) + '*', faAnyFile, Files);
   while Res = 0 do begin
       if (Files.Attr and faDirectory = faDirectory)
       and (Files.Name[1] <> '.') then
@@ -147,65 +164,46 @@ begin
   end;
   FindClose(Files);
   for I := 0 to Dirs.Count - 1 do begin
-      if CfgFile.ValueExists(Dirs.Strings[I], 'Type') then
-        X := IndexStr(Trim(CfgFile.ReadString(Dirs[I], 'Type', '')), ProjectTypes)
+      SubP := IncludeTrailingPathDelimiter(ProjectPath(Project) + Dirs[I]);
+      if CfgFile.ValueExists(SubP, 'Type') then
+        X := IndexStr(Trim(CfgFile.ReadString(SubP, 'Type', '')), ProjectTypes)
       else
         X := 0;
       if (X < 0) then begin
-        X := IndexText(Trim(CfgFile.ReadString(Dirs[I], 'Type', '')), ProjectTypes);
+        X := IndexText(Trim(CfgFile.ReadString(SubP, 'Type', '')), ProjectTypes);
         if X < 0 then X := 0;
-        CfgFile.WriteString(Dirs.Strings[I], 'Type', ProjectTypes[X]);
+        CfgFile.WriteString(SubP, 'Type', ProjectTypes[X]);
       end;
       if X = 1 then Continue;
-      SetLength(Projects, Length(Projects) + 1);
-      Projects[High(Projects)].Name := Dirs[I];
-      Projects[High(Projects)].Kind := X;
-      case X of
-         0,2 : ProcessProject;
-      end;
+      SetLength(Project^.Subs, Length(Project^.Subs) + 1);
+      if (not Assigned(AParent)) or (not Assigned(AParent^.Parent)) then
+            Project^.Subs[High(Project^.Subs)] := ProcessSub(Project, Dirs[I]);
   end;
   Dirs.Free;
+
 end;
 
-procedure TNLSReport.ProcessProject;
+function TNLSReport.ProjectPath(AProject: PProject): String;
 var
-  Files : TSearchRec;
-  Res, I : LongInt;
-  Dirs : TStringList;
-  CP : String;
+  S : String;
 begin
-  CP := IncludeTrailingPathDelimiter(Projects[High(Projects)].Name);
-  if Verbose > 0 then
-     WriteLn('Project: ', Projects[High(Projects)].Name);
-  Dirs := TStringList.Create;
-  Dirs.Sorted:=True;
-  Res := FindFirst(CP + '*', faAnyFile, Files);
-  while Res = 0 do begin
-      if (Files.Attr and faDirectory = faDirectory)
-      and (Files.Name[1] <> '.') then
-        Dirs.Add(Files.Name);
-    Res := FindNext(Files);
+  S := '';
+  while Assigned(AProject) do begin
+    if AProject^.Name <> '' then
+      S := IncludeTrailingPathDelimiter(AProject^.Name) + S;
+    AProject := AProject^.Parent;
   end;
-  FindClose(Files);
-  for I := 0 to Dirs.Count - 1 do begin
-      case Uppercase(Dirs[I]) of
-         'NLS' : ProcessNLSFiles(CP + Dirs[I]);
-         'HELP' : ProcessHelpFiles(CP + Dirs[I]);
-      end;
-  end;
-  Dirs.Free;
-
+  Result := S;
 end;
 
-procedure TNLSReport.ProcessNLSFiles(APath : String);
+{
+
+procedure TNLSReport.ProcessSub(APath : String; var Project: TProject);
 begin
-     WriteLn(APath);
+  Inc(ScanLevel);
+  Dec(ScanLevel);
 end;
-
-procedure TNLSReport.ProcessHelpFiles(APath : String);
-begin
-  WriteLn(APath);
-end;
+}
 
 var
   Application: TNLSReport;
