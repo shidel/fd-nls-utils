@@ -18,16 +18,25 @@ uses
 const
   CfgExt = '.CFG';
   VerboseOpts : array of string = ('Quite', 'Normal', 'Verbose');
-  NoYesOpts : array of string = ('No', 'Yes', 'True');
+  {  NoYesOpts : array of string = ('No', 'Yes', 'True'); }
+  ProjectTypes : array of string = ('Detect', 'Exclude', 'Standard');
 
 type
+  TProject = record
+    Name : String;
+    Kind : integer;
+  end;
+  TProjects = array of TProject;
+
   { TNLSReport }
 
   TNLSReport = class(TCustomApplication)
+  private
   protected
       CfgFile  : TIniFile;
       Template : string;
       Verbose  : integer;
+      Projects : TProjects;
     procedure DoRun; override;
   public
     constructor Create(TheOwner: TComponent); override;
@@ -37,7 +46,9 @@ type
     procedure SettingsLoad; virtual;
     procedure SettingsSave; virtual;
     procedure ProcessMain; virtual;
-    procedure ProcessProject( Project : String ); virtual;
+    procedure ProcessProject; virtual;
+    procedure ProcessNLSFiles(APath : String); virtual;
+    procedure ProcessHelpFiles(APath : String); virtual;
   end;
 
 { TNLSReport }
@@ -71,9 +82,11 @@ constructor TNLSReport.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
   StopOnException:=True;
+  SetLength(Projects, 0);
   CfgFile := TIniFile.Create(LowerCase(ChangeFileExt(ExeName, CfgExt)));
   SettingsDefault;
   SettingsLoad;
+
 end;
 
 destructor TNLSReport.Destroy;
@@ -91,9 +104,11 @@ begin
   WriteLn;
   WriteLn(#9,'-h, --help',    #9, 'Display this help text');
   WriteLn;
+{
   WriteLn(#9,'-v, --verbose', #9, 'Display more information');
   WriteLn(#9,'-q, --quite',   #9, 'Display less information');
   WriteLn;
+}
 end;
 
 procedure TNLSReport.SettingsDefault;
@@ -119,7 +134,6 @@ var
   Files : TSearchRec;
   Res, I : LongInt;
   Dirs : TStringList;
-  S : String;
   X : integer;
 begin
   Dirs := TStringList.Create;
@@ -133,27 +147,64 @@ begin
   end;
   FindClose(Files);
   for I := 0 to Dirs.Count - 1 do begin
-      if CfgFile.ValueExists(Dirs.Strings[I], 'Exclude') then
-        X := IndexStr(Trim(CfgFile.ReadString(Dirs.Strings[I], 'Exclude', '')), NoYesOpts)
+      if CfgFile.ValueExists(Dirs.Strings[I], 'Type') then
+        X := IndexStr(Trim(CfgFile.ReadString(Dirs[I], 'Type', '')), ProjectTypes)
       else
         X := 0;
-      if (X < 0) or (X > 1) then begin
-        X := IndexText(Trim(CfgFile.ReadString(Dirs.Strings[I], 'Exclude', '')), NoYesOpts);
-        if X > 0 then
-          CfgFile.WriteString(Dirs.Strings[I], 'Exclude', 'Yes')
-        else
-          CfgFile.WriteString(Dirs.Strings[I], 'Exclude', 'No');
+      if (X < 0) then begin
+        X := IndexText(Trim(CfgFile.ReadString(Dirs[I], 'Type', '')), ProjectTypes);
+        if X < 0 then X := 0;
+        CfgFile.WriteString(Dirs.Strings[I], 'Type', ProjectTypes[X]);
       end;
-      if X > 0 then Continue;
-      ProcessProject(Dirs.Strings[I]);
+      if X = 1 then Continue;
+      SetLength(Projects, Length(Projects) + 1);
+      Projects[High(Projects)].Name := Dirs[I];
+      Projects[High(Projects)].Kind := X;
+      case X of
+         0,2 : ProcessProject;
+      end;
   end;
   Dirs.Free;
 end;
 
-procedure TNLSReport.ProcessProject(Project: String);
+procedure TNLSReport.ProcessProject;
+var
+  Files : TSearchRec;
+  Res, I : LongInt;
+  Dirs : TStringList;
+  CP : String;
 begin
-  if Verbose >= 0 then
-     WriteLn('Project: ', Project);
+  CP := IncludeTrailingPathDelimiter(Projects[High(Projects)].Name);
+  if Verbose > 0 then
+     WriteLn('Project: ', Projects[High(Projects)].Name);
+  Dirs := TStringList.Create;
+  Dirs.Sorted:=True;
+  Res := FindFirst(CP + '*', faAnyFile, Files);
+  while Res = 0 do begin
+      if (Files.Attr and faDirectory = faDirectory)
+      and (Files.Name[1] <> '.') then
+        Dirs.Add(Files.Name);
+    Res := FindNext(Files);
+  end;
+  FindClose(Files);
+  for I := 0 to Dirs.Count - 1 do begin
+      case Uppercase(Dirs[I]) of
+         'NLS' : ProcessNLSFiles(CP + Dirs[I]);
+         'HELP' : ProcessHelpFiles(CP + Dirs[I]);
+      end;
+  end;
+  Dirs.Free;
+
+end;
+
+procedure TNLSReport.ProcessNLSFiles(APath : String);
+begin
+     WriteLn(APath);
+end;
+
+procedure TNLSReport.ProcessHelpFiles(APath : String);
+begin
+  WriteLn(APath);
 end;
 
 var
