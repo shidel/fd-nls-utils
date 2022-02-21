@@ -1,6 +1,6 @@
 unit uSettings;
 
-{$mode ObjFPC}{$H+}
+{$I defines.inc}
 
 interface
 

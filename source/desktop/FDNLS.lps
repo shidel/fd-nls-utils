@@ -20,7 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <CursorPos X="10" Y="10"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="67" Y="30"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
@@ -28,9 +29,8 @@
         <Filename Value="usettings.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uSettings"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="53" Y="3"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="35" Y="15"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
@@ -40,11 +40,30 @@
         <CursorPos X="51" Y="36"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="../shared/defines.inc"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="23" Y="12"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
-    <JumpHistory>
+    <JumpHistory HistoryIndex="3">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="28" Column="83"/>
+      </Position>
+      <Position>
+        <Filename Value="usettings.pas"/>
+        <Caret Line="15" Column="38"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="3" Column="4"/>
+      </Position>
+      <Position>
+        <Filename Value="usettings.pas"/>
+        <Caret Line="15" Column="35"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -1,6 +1,6 @@
 unit uMain;
 
-{$mode objfpc}{$H+}
+{$I defines.inc}
 
 interface
 

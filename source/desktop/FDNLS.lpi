@@ -10,7 +10,7 @@
       <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True"/>
-        <TextName Value="com.jeromeshidel.fdnls-desktop"/>
+        <TextName Value="com.jeromeshidel.fdnls"/>
         <TextDesc Value="FreeDOS NLS Desktop Utility"/>
       </XPManifest>
       <Icon Value="0"/>
@@ -20,7 +20,7 @@
       <AutoIncrementBuild Value="True"/>
       <BuildNr Value="3"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS Desktop" LegalCopyright="2022 Jerome Shidel" OriginalFilename="fdnls-desktop" ProductName="FDNLS-Desktop" ProductVersion="1.0"/>
+      <StringTable CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS" LegalCopyright="2022 Jerome Shidel" OriginalFilename="fdnls-desktop" ProductName="FD-NLS" ProductVersion="1.0"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -60,10 +60,10 @@
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="../../bin/x86_64-darwin/FD-NLS Desktop"/>
+      <Filename Value="../../bin/x86_64-darwin/FD-NLS"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
+      <IncludeFiles Value="$(ProjOutDir);../shared"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

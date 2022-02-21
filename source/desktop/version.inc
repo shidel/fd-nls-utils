@@ -18,10 +18,10 @@ const
   { Source & Subversion Last Changed Commit }
     Source : (
       Version : '0.0.0.3';
-      Revision : '13';
+      Revision : '15';
       Online : '';
       URL : 'http://github.com/shidel/fd-nls-utils';
-      Commit : 'd9d03afc2142f52d46e0c91b5ed9601738a62a28';
+      Commit : '1b44659b5ae1f8e5a3cdcb5950c57bf662ed2943';
     );
   { Version Build Atributes } 
     Attributes : ( 
@@ -32,20 +32,20 @@ const
       SpecialBuild : False;
       Language : '';
       CharSet : '';
-      Date : '2022-02-21 06:10:17';
+      Date : '2022-02-21 16:14:35';
     );
   { General Application Information }
     Application : (
-      Identifier : 'com.jeromeshidel.fdnls-desktop';
+      Identifier : 'com.jeromeshidel.fd-nls';
       Version : '0.0.0.3';
       Comments : '';
       CompanyName : 'Jerome Shidel';
       FileDescription : 'FreeDOS NLS Desktop Utility';
-      InternalName : 'FD-NLS Desktop';
+      InternalName : 'FD-NLS';
       LegalCopyright : '2022 Jerome Shidel';
       LegalTrademarks : '';
       OriginalFilename : 'fdnls-desktop';
-      ProductName : 'FDNLS-Desktop';
+      ProductName : 'FD-NLS';
       ProductVersion : '1.0';
       Year : '2022';
     );
@@ -66,10 +66,10 @@ const
 
   { Source & Subversion Last Changed Commit }
   SOURCE_VERSION='0.0.0.3';
-  SOURCE_REVISION='13';
+  SOURCE_REVISION='15';
   SOURCE_URL='http://github.com/shidel/fd-nls-utils';
   SOURCE_ONLINE='';
-  SOURCE_COMMIT='d9d03afc2142f52d46e0c91b5ed9601738a62a28';
+  SOURCE_COMMIT='1b44659b5ae1f8e5a3cdcb5950c57bf662ed2943';
 
   { Version Build Atributes } 
   BUILD_DEBUG=False;
@@ -79,17 +79,17 @@ const
   BUILD_SPECIAL=False;
   BUILD_LANGUAGE='';
   BUILD_CHARSET='';
-  BUILD_DATE='2022-02-21 06:10:17';
+  BUILD_DATE='2022-02-21 16:14:35';
 
   { General Application Information }
-  APP_IDENTIFIER='com.jeromeshidel.fdnls-desktop';
+  APP_IDENTIFIER='com.jeromeshidel.fd-nls';
   APP_VERSION='0.0.0.3';
   APP_COMPANYNAME='Jerome Shidel';
   APP_FILEDESCRIPTION='FreeDOS NLS Desktop Utility';
-  APP_INTERNALNAME='FD-NLS Desktop';
+  APP_INTERNALNAME='FD-NLS';
   APP_LEGALCOPYRIGHT='2022 Jerome Shidel';
   APP_ORIGINALFILENAME='fdnls-desktop';
-  APP_PRODUCTNAME='FDNLS-Desktop';
+  APP_PRODUCTNAME='FD-NLS';
   APP_PRODUCTVERSION='1.0';
   APP_YEAR='2022';
 
