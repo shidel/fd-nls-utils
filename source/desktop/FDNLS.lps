@@ -20,8 +20,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="38" Y="30"/>
+        <CursorPos Y="9"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
@@ -29,8 +28,9 @@
         <Filename Value="usettings.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uSettings"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="35" Y="15"/>
+        <CursorPos Y="11"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
@@ -48,7 +48,7 @@
         <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="3">
+    <JumpHistory HistoryIndex="4">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="28" Column="83"/>
@@ -64,6 +64,10 @@
       <Position>
         <Filename Value="usettings.pas"/>
         <Caret Line="15" Column="35"/>
+      </Position>
+      <Position>
+        <Filename Value="usettings.pas"/>
+        <Caret Line="19" Column="26"/>
       </Position>
     </JumpHistory>
     <RunParams>

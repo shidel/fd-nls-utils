@@ -7,8 +7,6 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, uSettings;
 
-{$I version.inc}
-
 type
   TfMain = class(TForm)
   private
@@ -24,7 +22,5 @@ implementation
 
 {$R *.lfm}
 
-initialization
-    WriteLn(GetEnvironmentVariable('HOME') + '/Library/Application Support/' + APP_COMPANYNAME);
 end.
 
