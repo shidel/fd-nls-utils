@@ -18,10 +18,10 @@ const
   { Source & Subversion Last Changed Commit }
     Source : (
       Version : '0.0.0.3';
-      Revision : '21';
+      Revision : '23';
       Online : '';
       URL : 'http://github.com/shidel/fd-nls-utils';
-      Commit : 'f1d3559dd6dbf9a44ec77723c024b9871337ea2a';
+      Commit : 'fce79bfe774d90e88aa871406ff21754cbabc17b';
     );
   { Version Build Atributes } 
     Attributes : ( 
@@ -32,7 +32,7 @@ const
       SpecialBuild : False;
       Language : '';
       CharSet : '';
-      Date : '2022-02-21 16:51:38';
+      Date : '2022-02-21 16:53:28';
     );
   { General Application Information }
     Application : (
@@ -66,10 +66,10 @@ const
 
   { Source & Subversion Last Changed Commit }
   SOURCE_VERSION='0.0.0.3';
-  SOURCE_REVISION='21';
+  SOURCE_REVISION='23';
   SOURCE_URL='http://github.com/shidel/fd-nls-utils';
   SOURCE_ONLINE='';
-  SOURCE_COMMIT='f1d3559dd6dbf9a44ec77723c024b9871337ea2a';
+  SOURCE_COMMIT='fce79bfe774d90e88aa871406ff21754cbabc17b';
 
   { Version Build Atributes } 
   BUILD_DEBUG=False;
@@ -79,7 +79,7 @@ const
   BUILD_SPECIAL=False;
   BUILD_LANGUAGE='';
   BUILD_CHARSET='';
-  BUILD_DATE='2022-02-21 16:51:38';
+  BUILD_DATE='2022-02-21 16:53:28';
 
   { General Application Information }
   APP_IDENTIFIER='com.jeromeshidel.fd-nls';
