@@ -17,11 +17,11 @@ const
     );
   { Source & Subversion Last Changed Commit }
     Source : (
-      Version : '0.0.0.1';
-      Revision : '12';
+      Version : '0.0.0.3';
+      Revision : '13';
       Online : '';
       URL : 'http://github.com/shidel/fd-nls-utils';
-      Commit : 'fce00218d03f34cfe059f6e07ee372e6da2f1c39';
+      Commit : 'd9d03afc2142f52d46e0c91b5ed9601738a62a28';
     );
   { Version Build Atributes } 
     Attributes : ( 
@@ -32,21 +32,21 @@ const
       SpecialBuild : False;
       Language : '';
       CharSet : '';
-      Date : '2022-02-21 05:27:51';
+      Date : '2022-02-21 06:10:17';
     );
   { General Application Information }
     Application : (
-      Identifier : 'com.jeromeshidel.freedosnlsdesktop';
-      Version : '0.0.0.1';
+      Identifier : 'com.jeromeshidel.fdnls-desktop';
+      Version : '0.0.0.3';
       Comments : '';
       CompanyName : 'Jerome Shidel';
       FileDescription : 'FreeDOS NLS Desktop Utility';
       InternalName : 'FD-NLS Desktop';
       LegalCopyright : '2022 Jerome Shidel';
       LegalTrademarks : '';
-      OriginalFilename : 'fdnls';
-      ProductName : 'FreeDOS NLS Desktop';
-      ProductVersion : '';
+      OriginalFilename : 'fdnls-desktop';
+      ProductName : 'FDNLS-Desktop';
+      ProductVersion : '1.0';
       Year : '2022';
     );
   );
@@ -65,11 +65,11 @@ const
   LAZARUS_REVISION='LAZARUS_REVISION='';';
 
   { Source & Subversion Last Changed Commit }
-  SOURCE_VERSION='0.0.0.1';
-  SOURCE_REVISION='12';
+  SOURCE_VERSION='0.0.0.3';
+  SOURCE_REVISION='13';
   SOURCE_URL='http://github.com/shidel/fd-nls-utils';
   SOURCE_ONLINE='';
-  SOURCE_COMMIT='fce00218d03f34cfe059f6e07ee372e6da2f1c39';
+  SOURCE_COMMIT='d9d03afc2142f52d46e0c91b5ed9601738a62a28';
 
   { Version Build Atributes } 
   BUILD_DEBUG=False;
@@ -79,17 +79,18 @@ const
   BUILD_SPECIAL=False;
   BUILD_LANGUAGE='';
   BUILD_CHARSET='';
-  BUILD_DATE='2022-02-21 05:27:51';
+  BUILD_DATE='2022-02-21 06:10:17';
 
   { General Application Information }
-  APP_IDENTIFIER='com.jeromeshidel.freedosnlsdesktop';
-  APP_VERSION='0.0.0.1';
+  APP_IDENTIFIER='com.jeromeshidel.fdnls-desktop';
+  APP_VERSION='0.0.0.3';
   APP_COMPANYNAME='Jerome Shidel';
   APP_FILEDESCRIPTION='FreeDOS NLS Desktop Utility';
   APP_INTERNALNAME='FD-NLS Desktop';
   APP_LEGALCOPYRIGHT='2022 Jerome Shidel';
-  APP_ORIGINALFILENAME='fdnls';
-  APP_PRODUCTNAME='FreeDOS NLS Desktop';
+  APP_ORIGINALFILENAME='fdnls-desktop';
+  APP_PRODUCTNAME='FDNLS-Desktop';
+  APP_PRODUCTVERSION='1.0';
   APP_YEAR='2022';
 
 {$ENDIF}

@@ -1,8 +1,8 @@
-object Form1: TForm1
+object fMain: TfMain
   Left = -1355
   Height = 240
   Top = 312
   Width = 320
-  Caption = 'Form1'
+  Caption = 'FD-NLS'
   LCLVersion = '2.3.0.0'
 end

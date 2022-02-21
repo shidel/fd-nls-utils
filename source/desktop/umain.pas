@@ -5,12 +5,12 @@ unit uMain;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, uSettings;
 
 {$I version.inc}
 
 type
-  TForm1 = class(TForm)
+  TfMain = class(TForm)
   private
 
   public
@@ -18,11 +18,13 @@ type
   end;
 
 var
-  Form1: TForm1;
+  fMain: TfMain;
 
 implementation
 
 {$R *.lfm}
 
+initialization
+    WriteLn(GetEnvironmentVariable('HOME') + '/Library/Application Support/' + APP_COMPANYNAME);
 end.
 
