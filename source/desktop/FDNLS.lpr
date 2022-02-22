@@ -1,6 +1,6 @@
 program FDNLS;
 
-{$mode objfpc}{$H+}
+{$I defines.inc}
 
 uses
   {$IFDEF UNIX}
@@ -17,7 +17,7 @@ uses
 
 begin
   RequireDerivedFormResource:=True;
-  Application.Title:='FD-NLS';
+  Application.Title:=APP_PRODUCTNAME;
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TfMain, fMain);

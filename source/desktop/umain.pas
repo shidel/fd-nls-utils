@@ -8,6 +8,9 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, uSettings;
 
 type
+
+  { TfMain }
+
   TfMain = class(TForm)
   private
 
