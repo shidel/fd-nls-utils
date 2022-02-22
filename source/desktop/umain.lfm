@@ -1,7 +1,7 @@
 object fMain: TfMain
-  Left = -1336
+  Left = -1775
   Height = 240
-  Top = -25
+  Top = -172
   Width = 320
   Caption = 'FD-NLS'
   LCLVersion = '2.3.0.0'

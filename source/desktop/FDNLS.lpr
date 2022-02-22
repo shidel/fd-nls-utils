@@ -10,14 +10,14 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, uMain, uSettings
-  { you can add units after this };
+  Forms, AppConfig, uMain, uSettings;
 
 {$R *.res}
 
 begin
   RequireDerivedFormResource:=True;
-  Application.Title:=APP_PRODUCTNAME;
+  InitAppConfig(APP_IDENTIFIER);
+  Application.Title:='FD-NLS';
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TfMain, fMain);

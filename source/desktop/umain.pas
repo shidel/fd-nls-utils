@@ -5,7 +5,7 @@ unit uMain;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, uSettings;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, AppConfig;
 
 type
 

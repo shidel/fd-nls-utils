@@ -18,7 +18,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="3"/>
+      <BuildNr Value="7"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS" LegalCopyright="2022 Jerome Shidel" OriginalFilename="fdnls-desktop" ProductName="FD-NLS" ProductVersion="1.0"/>
     </VersionInfo>
@@ -53,11 +53,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
       </Unit>
-      <Unit>
-        <Filename Value="usettings.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="uSettings"/>
-      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -67,6 +62,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);../shared"/>
+      <OtherUnitFiles Value="../shared;../packages"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
