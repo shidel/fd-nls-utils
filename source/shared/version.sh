@@ -27,6 +27,7 @@ function parse_attr() {
   	line=$(echo ${line:$(( ${#lval} + 1 ))})
   	topt="${2}_$(echo $lopt | tr [:lower:] [:upper:])"
   	tval="$lval"
+  	[[ "${topt}" == "APP_/" ]] && continue
   	eval $topt=\"$tval\"
   	if [[ "$2" = "APP" ]] ; then
 		opts[${#opts[@]}]="$topt"
@@ -54,6 +55,7 @@ print_consts() {
 
 	echo "const"
 	# Type Declaration
+	if [[ true == false ]] ; then
 	echo '{$IF declared(TAppVersionInfoType)}'
 	echo
 	echo '  VersionInfo : TAppVersionInfoType = ('
@@ -106,22 +108,27 @@ print_consts() {
     echo
     echo '{$ELSE}'
     echo
+    fi
 	echo "  { The default Free Pascal Compiler }"
 	echo "  FPC_VERSION='$FPC_VERSION';"
-	echo "  FPC_REVISION='$FPC_REVISION';"
+	if [[ "$FPC_REVISION" != "" ]] ; then
+ 		echo "  FPC_REVISION='$FPC_REVISION';"
+	fi
 	echo "  FPC_TARGET='$FPC_TARGET';"
 	echo
+	if [[ false == true ]] ; then
 	echo "  { Platform specific and cross-compilers }"
-	[[ $FPC_REVISION_I386 ]]      && echo "  FPC_PPC386='$FPC_REVISION_I386';"
-	[[ $FPC_REVISION_X86_64 ]]    && echo "  FPC_PPCX64='$FPC_REVISION_X86_64';"
-	[[ $FPC_REVISION_PPC ]]       && echo "  FPC_PPCPPC='$FPC_REVISION_PPC';"
-	[[ $FPC_REVISION_SIMULATOR ]] && echo "  FPC_PPCSIM='$FPC_REVISION_SIMULATOR';"
-	[[ $FPC_REVISION_IOS ]]       && echo "  FPC_PPCARM='$FPC_REVISION_IOS';"
-	echo
-	echo "  { The Lazarus I.D.E }"
-	echo "  LAZARUS_VERSION='$LAZARUS_VERSION';"
-	echo "  LAZARUS_REVISION='$LAZARUS_REVISION';"
-	echo
+		[[ $FPC_REVISION_I386 ]]      && echo "  FPC_PPC386='$FPC_REVISION_I386';"
+		[[ $FPC_REVISION_X86_64 ]]    && echo "  FPC_PPCX64='$FPC_REVISION_X86_64';"
+		[[ $FPC_REVISION_PPC ]]       && echo "  FPC_PPCPPC='$FPC_REVISION_PPC';"
+		[[ $FPC_REVISION_SIMULATOR ]] && echo "  FPC_PPCSIM='$FPC_REVISION_SIMULATOR';"
+		[[ $FPC_REVISION_IOS ]]       && echo "  FPC_PPCARM='$FPC_REVISION_IOS';"
+		echo
+		echo "  { The Lazarus I.D.E }"
+		echo "  LAZARUS_VERSION='$LAZARUS_VERSION';"
+		echo "  LAZARUS_REVISION='$LAZARUS_REVISION';"
+		echo
+	fi
 	echo "  { Source & Subversion Last Changed Commit }"
 	echo "  SOURCE_VERSION='${APP_VERSION}';"
 	echo "  SOURCE_REVISION='$REVISION';"
@@ -147,13 +154,15 @@ print_consts() {
 
 	i=0;
 	while [[ i -lt ${#opts[@]} ]] ; do
-		echo "  ${opts[$i]}='${vals[$i]}';"
+		if [[ "${opts[$i]}" != 'APP_/' ]] ; then
+			echo "  ${opts[$i]}='${vals[$i]}';"
+		fi
 		(( i++ ))
 	done
 	echo "  APP_YEAR='${BUILD_YEAR}';"
 
 	echo
-    echo '{$ENDIF}'
+    # echo '{$ENDIF}'
 
 }
 
@@ -234,14 +243,16 @@ function cvs_git () {
 }
 
 # Also takes options, ignore, update, off, local;
+vopts=${@}
 [[ $1 = '' ]] && {
-	echo Usage: ${0##*/} mode [project]
-	echo modes:
-	echo off/local - Do no chech cvs server revision number
-	echo ignore - check but only display differences.
-	echo update - run cvs update if revisions are different.
-	echo commit - always cvs update, then automatically commit changes. \(a really bad idea\)
-	exit 1
+#	echo Usage: ${0##*/} mode [project]
+#	echo modes:
+#	echo off/local - Do no chech cvs server revision number
+#	echo ignore - check but only display differences.
+#	echo update - run cvs update if revisions are different.
+#	echo commit - always cvs update, then automatically commit changes. \(a really bad idea\)
+#	exit 1
+	vopts=off
 }
 
 BUILD_YEAR="${BUILD_DATE%%-*}"
@@ -250,13 +261,13 @@ cwd="${PWD}"
 while [[ "$PWD" != '/' ]] && [[ ! -d '.svn' ]] ; do
     cd ..
 done
-[[ -d '.svn' ]] && cvs_svn ${@}
+[[ -d '.svn' ]] && cvs_svn ${vopts}
 cd "$cwd"
 
 while [[ "$PWD" != '/' ]] && [[ ! -d '.git' ]] ; do
     cd ..
 done
-[[ -d '.git' ]] && cvs_git ${@}
+[[ -d '.git' ]] && cvs_git ${vopts}
 cd "$cwd"
 
 FPC_VERSION=$(/usr/local/bin/fpc -iV)
@@ -322,6 +333,7 @@ APP_VERSION=$(getval MajorVersion)'.'$(getval MinorVersionNr)'.'$(getval Revisio
 FPC_REVISION=$(echo $FPC_REVISION | cut -d "'" -f 2);
 
 print_consts >$version_file
+mv $version_file ${0%.*}.inc
 
 stats >&2
 exit 0

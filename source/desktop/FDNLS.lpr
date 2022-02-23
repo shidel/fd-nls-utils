@@ -1,4 +1,4 @@
-program FDNLS;
+program fdnls;
 
 {$I defines.inc}
 
@@ -10,13 +10,16 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, AppConfig, uMain, uSettings;
+  Forms, AppConfig, uMain
+  { you can add units after this };
 
 {$R *.res}
 
+{$I version.inc}
+
 begin
-  RequireDerivedFormResource:=True;
   InitAppConfig(APP_IDENTIFIER);
+  RequireDerivedFormResource:=True;
   Application.Title:='FD-NLS';
   Application.Scaled:=True;
   Application.Initialize;

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectSession>
+    <PathDelim Value="\"/>
     <Version Value="12"/>
     <BuildModes Active="Default"/>
     <Units>
       <Unit>
-        <Filename Value="FDNLS.lpr"/>
+        <Filename Value="fdnls.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="35" Y="26"/>
-        <UsageCount Value="20"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="33" Y="21"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,169 +20,44 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <CursorPos X="58" Y="14"/>
-        <UsageCount Value="20"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="62" Y="8"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="usettings.pas"/>
-        <UnitName Value="uSettings"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="8" Y="10"/>
-        <UsageCount Value="20"/>
-      </Unit>
-      <Unit>
-        <Filename Value="version.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="50"/>
-        <CursorPos X="17" Y="85"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="../shared/defines.inc"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos Y="14"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="../packages/appconfig.pas"/>
+        <Filename Value="..\packages\appconfig.pas"/>
         <UnitName Value="AppConfig"/>
-        <EditorIndex Value="2"/>
-        <CursorPos X="99" Y="14"/>
-        <ExtraEditorCount Value="1"/>
-        <ExtraEditor1>
-          <EditorIndex Value="-1"/>
-        </ExtraEditor1>
+        <EditorIndex Value="1"/>
+        <CursorPos X="12" Y="30"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="../packages/appconfig_icon.lrs"/>
-        <EditorIndex Value="-1"/>
+        <Filename Value="..\shared\version.inc"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="31" Y="37"/>
         <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="/Developer/LazyFPC/sources/fpc/packages/fcl-xml/src/xmlconf.pp"/>
-        <UnitName Value="XMLConf"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="38"/>
-        <CursorPos X="36" Y="76"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="/Developer/LazyFPC/sources/fpc/rtl/unix/sysutils.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="265"/>
-        <CursorPos X="13" Y="304"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="/Developer/LazyFPC/sources/fpc/rtl/inc/systemh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1468"/>
-        <CursorPos X="11" Y="1491"/>
-        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="24">
+    <JumpHistory HistoryIndex="3">
       <Position>
         <Filename Value="umain.pas"/>
-        <Caret Line="28" Column="83"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="3" Column="4"/>
+        <Caret Line="26" Column="32"/>
       </Position>
       <Position>
         <Filename Value="umain.pas"/>
-        <Caret Line="3" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="FDNLS.lpr"/>
-        <Caret Line="23" Column="105"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="5" Column="37"/>
+        <Caret Line="29" Column="100"/>
       </Position>
       <Position>
         <Filename Value="umain.pas"/>
-        <Caret Line="8" Column="67"/>
+        <Caret Line="8" Column="62"/>
       </Position>
       <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="23" Column="25"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="18" Column="14"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="8" Column="16" TopLine="5"/>
-      </Position>
-      <Position>
-        <Filename Value="FDNLS.lpr"/>
-        <Caret Line="19" Column="11"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="38" Column="61" TopLine="8"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="41" Column="34" TopLine="2"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="45" Column="19" TopLine="14"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="44" Column="61" TopLine="18"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="24" Column="78" TopLine="6"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="17" TopLine="6"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="52" Column="15" TopLine="21"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="70" Column="16" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="72" Column="28" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="70" Column="36" TopLine="40"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="27" Column="66" TopLine="10"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="71" Column="21" TopLine="48"/>
-      </Position>
-      <Position>
-        <Filename Value="../packages/appconfig.pas"/>
-        <Caret Line="70" Column="33" TopLine="48"/>
-      </Position>
-      <Position>
-        <Filename Value="FDNLS.lpr"/>
-        <Caret Line="21" Column="18"/>
+        <Filename Value="fdnls.lpr"/>
+        <Caret Line="21" Column="33"/>
       </Position>
     </JumpHistory>
     <RunParams>

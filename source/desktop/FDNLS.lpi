@@ -2,6 +2,7 @@
 <CONFIG>
   <ProjectOptions>
     <Version Value="12"/>
+    <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
       <Title Value="FD-NLS"/>
@@ -10,7 +11,7 @@
       <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True"/>
-        <TextName Value="com.jeromeshidel.fdnls"/>
+        <TextName Value="com.jeromeshidel.fd-nls"/>
         <TextDesc Value="FreeDOS NLS Desktop Utility"/>
       </XPManifest>
       <Icon Value="0"/>
@@ -18,9 +19,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="7"/>
-      <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS" LegalCopyright="2022 Jerome Shidel" OriginalFilename="fdnls-desktop" ProductName="FD-NLS" ProductVersion="1.0"/>
+      <BuildNr Value="29"/>
+      <StringTable Comments="FreeDOS NLS Desktop Utility" CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS" LegalCopyright="2022 Jerome Shidel" OriginalFilename="FD-NLS" ProductName="FD-NLS" ProductVersion="1.0"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -34,15 +34,12 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="IDEIntf"/>
-      </Item>
-      <Item>
         <PackageName Value="LCL"/>
       </Item>
     </RequiredPackages>
     <Units>
       <Unit>
-        <Filename Value="FDNLS.lpr"/>
+        <Filename Value="fdnls.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -57,13 +54,14 @@
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
+    <PathDelim Value="\"/>
     <Target>
-      <Filename Value="../../bin/x86_64-darwin/FD-NLS"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fd-nls"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir);../shared"/>
-      <OtherUnitFiles Value="../shared;../packages"/>
-      <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+      <IncludeFiles Value="$(ProjOutDir);..\packages;..\shared"/>
+      <OtherUnitFiles Value="..\packages;..\shared"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
       <Options>
@@ -72,11 +70,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <ExecuteBefore>
-        <Command Value="/bin/bash ../shared/version.sh off"/>
-      </ExecuteBefore>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions>

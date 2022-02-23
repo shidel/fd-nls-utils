@@ -88,14 +88,16 @@ begin
           AppXMLPath := '';
         end
      end;
-     AppXMLConfig.Filename:= AppXMLPath + 'settings.xml';
-     AppXMLConfig.OpenKey('general/storage');
-     S := AppXMLConfig.GetValue('path', '');
-     if S = '' then
-       AppXMLConfig.SetValue('path', AppDataPath)
-     else
-       AppDataPath := S;
-     AppXMLConfig.CloseKey;
+     if Assigned(AppXMLConfig) then begin
+       AppXMLConfig.Filename:= AppXMLPath + 'settings.xml';
+       AppXMLConfig.OpenKey('general/storage');
+       S := AppXMLConfig.GetValue('path', '');
+       if S = '' then
+         AppXMLConfig.SetValue('path', AppDataPath)
+       else
+         AppDataPath := S;
+       AppXMLConfig.CloseKey;
+     end;
      if not DirectoryExists(AppDataPath) then begin
          if not CreateDir(AppDataPath) then begin
            AppDataPath := '';
