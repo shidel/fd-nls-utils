@@ -8,13 +8,12 @@ unit AppKit;
 interface
 
 uses
-  AppConfig, PasExt, LazarusPackageIntf;
+  PasExt, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('AppConfig', @AppConfig.Register);
 end;
 
 initialization

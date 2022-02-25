@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, AppConfig, uMain
+  Forms, PasExt, uMain
   { you can add units after this };
 
 {$R *.res}
@@ -18,7 +18,7 @@ uses
 {$I version.inc}
 
 begin
-  InitAppConfig(APP_IDENTIFIER);
+  AppIdentifier := APP_IDENTIFIER;
   RequireDerivedFormResource:=True;
   Application.Title:='FD-NLS';
   Application.Scaled:=True;

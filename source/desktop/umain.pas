@@ -5,13 +5,17 @@ unit uMain;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, AppConfig;
+  Classes, SysUtils, PasExt, Forms, Controls, Graphics, Dialogs,
+  XMLPropStorage, XMLConf;
 
 type
 
   { TfMain }
 
   TfMain = class(TForm)
+    XMLConfig1: TXMLConfig;
+    XMLPropStorage: TXMLPropStorage;
+    procedure FormCreate(Sender: TObject);
   private
 
   public
@@ -24,6 +28,13 @@ var
 implementation
 
 {$R *.lfm}
+
+{ TfMain }
+
+procedure TfMain.FormCreate(Sender: TObject);
+begin
+   XMLPropStorage.FileName := AppCfgFile;
+end;
 
 end.
 
