@@ -8,9 +8,8 @@
       <Unit>
         <Filename Value="fdnls.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="73" Y="11"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="24" Y="28"/>
         <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit>
@@ -29,14 +28,13 @@
       <Unit>
         <Filename Value="..\packages\appconfig.pas"/>
         <UnitName Value="AppConfig"/>
-        <EditorIndex Value="2"/>
-        <CursorPos X="20" Y="8"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="54" Y="16"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <CursorPos X="62" Y="34"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
@@ -58,14 +56,15 @@
       <Unit>
         <Filename Value="..\packages\pasext.pas"/>
         <UnitName Value="PasExt"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="37"/>
-        <CursorPos X="14" Y="61"/>
+        <TopLine Value="26"/>
+        <CursorPos X="11" Y="48"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="21">
+    <JumpHistory HistoryIndex="19">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="26" Column="32"/>
@@ -83,24 +82,8 @@
         <Caret Line="21" Column="33"/>
       </Position>
       <Position>
-        <Filename Value="..\packages\appconfig.pas"/>
-        <Caret Line="40" Column="3" TopLine="16"/>
-      </Position>
-      <Position>
-        <Filename Value="..\packages\appconfig.pas"/>
-        <Caret Line="104" TopLine="68"/>
-      </Position>
-      <Position>
         <Filename Value="..\shared\version.inc"/>
         <Caret Line="31" Column="3"/>
-      </Position>
-      <Position>
-        <Filename Value="..\packages\appconfig.pas"/>
-        <Caret Line="64" Column="14" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="..\packages\appconfig.pas"/>
-        <Caret Line="46" TopLine="26"/>
       </Position>
       <Position>
         <Filename Value="umain.pas"/>
@@ -153,6 +136,14 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="36" Column="19"/>
+      </Position>
+      <Position>
+        <Filename Value="fdnls.lpr"/>
+        <Caret Line="21" Column="36"/>
+      </Position>
+      <Position>
+        <Filename Value="..\packages\pasext.pas"/>
+        <Caret Line="48" Column="11" TopLine="26"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -18,7 +18,7 @@ uses
 {$I version.inc}
 
 begin
-  AppIdentifier := APP_IDENTIFIER;
+  { InitPasExt(APP_IDENTIFIER); }
   RequireDerivedFormResource:=True;
   Application.Title:='FD-NLS';
   Application.Scaled:=True;

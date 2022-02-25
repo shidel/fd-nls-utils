@@ -8,18 +8,19 @@ unit PasExt;
 interface
 
 var
-  AppIdentifier : String;      { Application Identifier }
   UserHomePath  : String;      { User's Home directory }
   AppDataPath   : String;      { Location for program data files }
   AppCfgPath    : String;      { Location of application config file }
   AppCfgFile    : String;      { Application Config File }
+
+procedure InitPasExt(Identifier : String);
 
 implementation
 
 uses
   Classes, SysUtils;
 
-procedure InitPasExt;
+procedure InitPasExt(Identifier : String);
 var
   Executable : String;
 begin
@@ -36,7 +37,7 @@ begin
     AppCfgFile   := AppCfgPath + 'settings.xml';
   {$elseif defined(darwin)}
     AppDataPath  := IncludeTrailingPathDelimiter(UserHomePath + '.' + Executable);
-    if AppIdentifier = '' then begin
+    if Identifier = '' then begin
       AppCfgPath := AppDataPath;
     end else begin
       AppCfgPath :=
@@ -44,7 +45,7 @@ begin
           IncludeTrailingPathDelimiter(
             IncludeTrailingPathDelimiter(UserHomePath + 'Library') +
             'Application Support') +
-          AppIdentifier);
+          Identifier);
     end;
     AppCfgFile := AppCfgPath + 'settings.xml';
   {$elseif defined(linux) or defined(unix)}
@@ -56,9 +57,6 @@ begin
     AppCfgPath   := AppDataPath;
     AppCfgFile   := AppCfgPath + 'settings.xml';
   {$ifend}
-
-  if AppIdentifier = '' then
-     AppIdentifier := 'com.company.' + Executable;
 
   if not DirectoryExists(AppCfgPath) then begin
      if not CreateDir(AppCfgPath) then begin
@@ -74,6 +72,5 @@ begin
 end;
 
 initialization
-  AppIdentifier := '';
-  InitPasExt;
+  InitPasExt('');
 end.
