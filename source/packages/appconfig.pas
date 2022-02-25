@@ -59,11 +59,12 @@ begin
   {$if defined(windows)}
     UserHomePath := '';
     AppXMLPath := ExtractFilePath(ExpandFileName(Paramstr(0)));
+    AppDataPath := AppXMLPath;
   {$elseif defined(darwin)}
     UserHomePath := IncludeTrailingPathDelimiter(SysUtils.GetEnvironmentVariable('HOME'));
     AppXMLPath := LowerCase(ExtractFileName(ParamStr(0)));
     SetLength(AppXMLPath, Length(AppXMLPath) - Length(ExtractFileExt(ParamStr(0))));
-    AppDataPath := UserHomePath + '.' + AppXMLPath;
+    AppDataPath := IncludeTrailingpathDelimiter(UserHomePath + '.' + AppXMLPath);
     AppXMLPath :=
       IncludeTrailingPathDelimiter(
         IncludeTrailingPathDelimiter(
@@ -74,10 +75,12 @@ begin
     UserHomePath := IncludeTrailingpathDelimiter(SysUtils.GetEnvironmentVariable('HOME'));
     AppXMLPath := LowerCase(ExtractFileName(ParamStr(0)));
     SetLength(AppXMLPath, Length(AppXMLPath) - Length(ExtractFileExt(ParamStr(0))));
-    AppXMLPath := UserHomePath + '.' + AppXMLPath;
+    AppXMLPath := IncludeTrailingpathDelimiter(UserHomePath + '.' + AppXMLPath);
+    AppDataPath := AppXMLPath;
   {$else}
     UserHomePath := '';
     AppXMLPath := ExtractFilePath(ExpandFileName(Paramstr(0)));
+    AppDataPath := AppXMLPath;
   {$ifend}
 
   try

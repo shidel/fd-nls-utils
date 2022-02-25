@@ -20,7 +20,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos X="62" Y="8"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
@@ -29,8 +28,10 @@
       <Unit>
         <Filename Value="..\packages\appconfig.pas"/>
         <UnitName Value="AppConfig"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="12" Y="30"/>
+        <TopLine Value="27"/>
+        <CursorPos Y="84"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
