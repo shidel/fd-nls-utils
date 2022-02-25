@@ -1,23 +1,23 @@
 object fMain: TfMain
   Left = 423
-  Height = 240
+  Height = 295
   Top = 245
-  Width = 320
+  Width = 582
   Caption = 'FD-NLS'
   OnCreate = FormCreate
-  SessionProperties = 'Left;Top;Width;Height'
+  SessionProperties = 'Height;Left;Top;Width'
   LCLVersion = '2.3.0.0'
   Visible = True
-  object XMLConfig1: TXMLConfig
+  object XMLCfg: TXMLConfig
     StartEmpty = False
     RootName = 'CONFIG'
     ReadOnly = False
-    Left = 264
-    Top = 16
+    Left = 480
+    Top = 152
   end
-  object XMLPropStorage: TXMLPropStorage
+  object XMLProps: TXMLPropStorage
     StoredValues = <>
-    Left = 16
-    Top = 16
+    Left = 480
+    Top = 88
   end
 end

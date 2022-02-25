@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="24" Y="28"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,8 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <CursorPos X="19" Y="36"/>
-        <UsageCount Value="26"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="17" Y="9"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -30,13 +31,13 @@
         <UnitName Value="AppConfig"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="54" Y="16"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="3"/>
         <CursorPos X="62" Y="34"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="18"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -44,27 +45,25 @@
         <UnitName Value="FormConfig"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="21"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="..\packages\appkit.pas"/>
         <UnitName Value="AppKit"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="103" Y="23"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\packages\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="26"/>
-        <CursorPos X="11" Y="48"/>
-        <UsageCount Value="11"/>
+        <CursorPos X="97" Y="19"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="19">
+    <JumpHistory HistoryIndex="24">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="26" Column="32"/>
@@ -144,6 +143,26 @@
       <Position>
         <Filename Value="..\packages\pasext.pas"/>
         <Caret Line="48" Column="11" TopLine="26"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="37" Column="19"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="39"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="37" Column="48"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="9" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="18" Column="46"/>
       </Position>
     </JumpHistory>
     <RunParams>

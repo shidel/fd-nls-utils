@@ -13,8 +13,8 @@ type
   { TfMain }
 
   TfMain = class(TForm)
-    XMLConfig1: TXMLConfig;
-    XMLPropStorage: TXMLPropStorage;
+    XMLCfg: TXMLConfig;
+    XMLProps: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
   private
 
@@ -33,7 +33,8 @@ implementation
 
 procedure TfMain.FormCreate(Sender: TObject);
 begin
-   XMLPropStorage.FileName := AppCfgFile;
+   XMLProps.FileName := AppCfgFile;
+   XMLCfg.Filename:=AppCfgPath + 'userdata.xml';
 end;
 
 end.
