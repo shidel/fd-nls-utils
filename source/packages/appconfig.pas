@@ -5,7 +5,7 @@ unit AppConfig;
 interface
 
 uses
-  Classes, SysUtils, LResources, XMLConf;
+  Classes, SysUtils, LResources, XMLConf, Forms;
 
 type
 
@@ -29,9 +29,16 @@ var
 
 procedure InitAppConfig(Identifier : String);
 
+procedure SaveState(const Form : TForm); overload;
+
 procedure Register;
 
 implementation
+
+procedure SaveState(const Form : TForm); overload;
+begin
+
+end;
 
 procedure Register;
 begin

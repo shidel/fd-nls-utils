@@ -2,21 +2,13 @@
   This source is only used to compile and install the package.
  }
 
-unit AppKit;
+unit PasExt;
 
 {$warn 5023 off : no warning about unused units}
 interface
 
-uses
-  AppConfig, PasExt, LazarusPackageIntf;
 
 implementation
 
-procedure Register;
-begin
-  RegisterUnit('AppConfig', @AppConfig.Register);
-end;
-
 initialization
-  RegisterPackage('AppKit', @Register);
 end.
