@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CONFIG>
-  <Compiler Value="/usr/local/bin/fpc" Date="1625648727"/>
-  <Params Value=" -MObjFPC -Scghi -O1 -gw -gl -k-framework -kCocoa -l -vewnhibq -Fi/Users/jerome/Development/FreeDOS/FD-NLS-UTILS/source/desktop/lib/x86_64-darwin -Fi/Users/jerome/Development/FreeDOS/FD-NLS-UTILS/source/shared -Fu/Users/jerome/Development/FreeDOS/FD-NLS-UTILS/source/shared -Fu/usr/local/share/lazarus/lcl/units/x86_64-darwin/cocoa -Fu/usr/local/share/lazarus/lcl/units/x86_64-darwin -Fu/usr/local/share/lazarus/components/freetype/lib/x86_64-darwin -Fu/usr/local/share/lazarus/components/lazutils/lib/x86_64-darwin -Fu/usr/local/share/lazarus/packager/units/x86_64-darwin -Fu/Users/jerome/Development/FreeDOS/FD-NLS-UTILS/source/desktop/ -FU/Users/jerome/Development/FreeDOS/FD-NLS-UTILS/source/desktop/lib/x86_64-darwin/ -FE/Users/jerome/Development/FreeDOS/FD-NLS-UTILS/bin/x86_64-darwin/ -o/Users/jerome/Development/FreeDOS/FD-NLS-UTILS/bin/x86_64-darwin/fd-nls -dLCL -dLCLcocoa fdnls.lpr"/>
-</CONFIG>
