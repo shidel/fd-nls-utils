@@ -36,7 +36,6 @@ procedure TfMain.FormCreate(Sender: TObject);
 var
    Displays : String;
    I : integer;
-   T : TMonitor;
 begin
    // Create a unique ID for monitor count and resolutions
    Displays := IntToHex(Screen.MonitorCount, 2) +
