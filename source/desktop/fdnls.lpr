@@ -23,7 +23,7 @@ begin
   Application.Title:='FD-NLS';
   Application.Scaled:=True;
   Application.Initialize;
-  Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TmForm, mForm);
   Application.Run;
 end.
 

@@ -1,32 +1,63 @@
-object fMain: TfMain
-  Left = 351
-  Height = 295
-  Top = 207
-  Width = 582
+object mForm: TmForm
+  Left = 258
+  Height = 393
+  Top = 212
+  Width = 713
   Caption = 'FD-NLS'
-  ClientHeight = 295
-  ClientWidth = 582
+  Menu = mMain
   OnCreate = FormCreate
   SessionProperties = 'Height;Left;Top;Width'
   LCLVersion = '2.3.0.0'
   Visible = True
-  object Label1: TLabel
-    Left = 50
-    Height = 16
-    Top = 45
-    Width = 39
-    Caption = 'Label1'
-  end
-  object XMLCfg: TXMLConfig
+  object xConfig: TXMLConfig
     StartEmpty = False
     RootName = 'CONFIG'
     ReadOnly = False
     Left = 480
     Top = 152
   end
-  object XMLProps: TXMLPropStorage
+  object xProperties: TXMLPropStorage
     StoredValues = <>
     Left = 480
     Top = 88
+  end
+  object mMain: TMainMenu
+    Left = 552
+    Top = 88
+  end
+  object alMain: TActionList
+    Left = 552
+    Top = 160
+    object actAppleAbout: TAction
+      Category = 'Darwin'
+      Caption = 'About FD-NLS...'
+      GroupIndex = 1
+    end
+    object actApplePrefs: TAction
+      Category = 'Darwin'
+      Caption = 'Preferences...'
+      GroupIndex = 1
+    end
+    object actMenuFile: TAction
+      Category = 'Menu'
+      Caption = 'File'
+      GroupIndex = 2
+    end
+    object actMenuOpts: TAction
+      Category = 'Menu'
+      Caption = 'Options'
+      GroupIndex = 3
+      OnExecute = actMenuOptsExecute
+    end
+    object actMenuHelp: TAction
+      Category = 'Menu'
+      Caption = 'Help'
+      GroupIndex = 4
+    end
+    object actPrefs: TAction
+      Category = 'Options'
+      Caption = 'Preferences...'
+      GroupIndex = 3
+    end
   end
 end
