@@ -1,13 +1,22 @@
 object fMain: TfMain
-  Left = 423
+  Left = 351
   Height = 295
-  Top = 245
+  Top = 207
   Width = 582
   Caption = 'FD-NLS'
+  ClientHeight = 295
+  ClientWidth = 582
   OnCreate = FormCreate
   SessionProperties = 'Height;Left;Top;Width'
   LCLVersion = '2.3.0.0'
   Visible = True
+  object Label1: TLabel
+    Left = 50
+    Height = 16
+    Top = 45
+    Width = 39
+    Caption = 'Label1'
+  end
   object XMLCfg: TXMLConfig
     StartEmpty = False
     RootName = 'CONFIG'
