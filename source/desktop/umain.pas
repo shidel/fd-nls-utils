@@ -20,7 +20,10 @@ type
     actMenuOpts: TAction;
     actMenuFile: TAction;
     alMain: TActionList;
+    imgAbout: TImage;
+    memoAbout: TMemo;
     mMain: TMainMenu;
+    pSeparatorAbout: TPanel;
     pcPrefs: TPageControl;
     pMain: TPanel;
     pcMain: TPageControl;
@@ -29,9 +32,9 @@ type
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
     sPrefs: TSplitter;
+    tsAbout: TTabSheet;
     tvPrefs: TTreeView;
     tsPrefs: TTabSheet;
-    tsAbout: TTabSheet;
     xConfig: TXMLConfig;
     xProperties: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
@@ -39,6 +42,7 @@ type
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure CreateMainMenu;
+    procedure CreateAboutText;
   public
 
   end;
@@ -47,6 +51,8 @@ var
   mForm: TmForm;
 
 implementation
+
+{$I version.inc}
 
 {$R *.lfm}
 
@@ -70,6 +76,7 @@ begin
    xProperties.RootNodePath := 'DISPLAYS/UID_' + Displays + '/STATE';
    xConfig.Filename:=AppCfgPath + 'userdata.xml';
    CreateMainMenu;
+   CreateAboutText;
 end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;
@@ -106,6 +113,7 @@ begin
      AddMenuItem(aMenu, actApplePrefs);
      AddMenuItem(aMenu, '-');
    {$ENDIF}
+   // Add ActionList items to Application MainMenu
    for I := 0 to alMain.ActionCount - 1 do begin
       Cat := Uppercase(alMain.Actions[I].Category);
       if Cat <> 'MENU' then continue;
@@ -118,6 +126,24 @@ begin
            AddMenuItem(aMenu, alMain.Actions[J]);
       end;
    end;
+end;
+
+procedure TmForm.CreateAboutText;
+var
+   Rows : integer;
+begin
+  memoAbout.Clear;
+  memoAbout.Lines.Add('');
+  memoAbout.Lines.Add(APP_FILEDESCRIPTION);
+  memoAbout.Lines.Add('Version ' + APP_VERSION + ' (r' + SOURCE_REVISION + ')');
+  memoAbout.Lines.Add('BSD 3-Clause License');
+  memoAbout.Lines.Add('Copyright (c) ' + APP_LEGALCOPYRIGHT);
+  memoAbout.Lines.Add('');
+  memoAbout.Lines.Add('Created with the Lazarus IDE');
+  memoAbout.Lines.Add('and the Free Pascal Compiler');
+  Rows := memoAbout.Lines.Count + 1;
+  if Rows > 10 then Rows := 10;
+  memoAbout.Height:=memoAbout.Font.GetTextHeight(APP_LEGALCOPYRIGHT) * Rows;
 end;
 
 end.
