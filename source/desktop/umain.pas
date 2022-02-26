@@ -5,8 +5,8 @@ unit uMain;
 interface
 
 uses
-  Classes, SysUtils, PasExt, Forms, Controls, Graphics, Dialogs,
-  XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, XMLConf;
+  Classes, SysUtils, PasExt, Forms, Controls, Graphics, Dialogs, XMLPropStorage,
+  StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, PairSplitter, XMLConf;
 
 type
 
@@ -21,14 +21,19 @@ type
     actMenuFile: TAction;
     alMain: TActionList;
     mMain: TMainMenu;
+    pcPrefs: TPageControl;
+    pMain: TPanel;
+    pcMain: TPageControl;
     pControlArea: TPanel;
     pSeparatorUpper: TPanel;
     pSeperatorLower: TPanel;
-    pMain: TPanel;
     sbMain: TStatusBar;
+    sPrefs: TSplitter;
+    tvPrefs: TTreeView;
+    tsPrefs: TTabSheet;
+    tsAbout: TTabSheet;
     xConfig: TXMLConfig;
     xProperties: TXMLPropStorage;
-    procedure actMenuOptsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
@@ -65,11 +70,6 @@ begin
    xProperties.RootNodePath := 'DISPLAYS/UID_' + Displays + '/STATE';
    xConfig.Filename:=AppCfgPath + 'userdata.xml';
    CreateMainMenu;
-end;
-
-procedure TmForm.actMenuOptsExecute(Sender: TObject);
-begin
-
 end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;

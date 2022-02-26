@@ -1,62 +1,108 @@
 object mForm: TmForm
-  Left = 309
-  Height = 393
-  Top = 207
-  Width = 713
+  Left = 240
+  Height = 445
+  Top = 156
+  Width = 772
   Caption = 'FD-NLS'
-  ClientHeight = 393
-  ClientWidth = 713
+  ClientHeight = 445
+  ClientWidth = 772
   Constraints.MinHeight = 200
   Constraints.MinWidth = 320
   Menu = mMain
   OnCreate = FormCreate
-  SessionProperties = 'Height;Left;Top;Width'
+  SessionProperties = 'Height;Left;Top;Width;tvPrefs.Width'
   LCLVersion = '2.3.0.0'
   Visible = True
   object sbMain: TStatusBar
     Left = 0
     Height = 18
-    Top = 375
-    Width = 713
+    Top = 427
+    Width = 772
     Panels = <>
-  end
-  object pMain: TPanel
-    Left = 0
-    Height = 319
-    Top = 53
-    Width = 713
-    Align = alClient
-    BevelOuter = bvNone
-    Caption = 'pMain'
-    TabOrder = 1
   end
   object pSeperatorLower: TPanel
     Left = 0
-    Height = 3
-    Top = 372
-    Width = 713
+    Height = 5
+    Top = 422
+    Width = 772
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 2
+    TabOrder = 1
+    Visible = False
   end
   object pSeparatorUpper: TPanel
     Left = 0
-    Height = 3
+    Height = 5
     Top = 50
-    Width = 713
+    Width = 772
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 2
+    Visible = False
   end
   object pControlArea: TPanel
     Left = 0
     Height = 50
     Top = 0
-    Width = 713
+    Width = 772
     Align = alTop
     BevelOuter = bvNone
-    Caption = 'pControlArea'
+    TabOrder = 3
+  end
+  object pMain: TPanel
+    Left = 0
+    Height = 367
+    Top = 55
+    Width = 772
+    Align = alClient
+    BevelInner = bvSpace
+    BevelOuter = bvSpace
+    BevelWidth = 2
+    ClientHeight = 367
+    ClientWidth = 772
     TabOrder = 4
+    object pcMain: TPageControl
+      Left = 4
+      Height = 359
+      Top = 4
+      Width = 764
+      ActivePage = tsPrefs
+      Align = alClient
+      ShowTabs = False
+      TabIndex = 1
+      TabOrder = 0
+      object tsAbout: TTabSheet
+        Caption = 'tsAbout'
+      end
+      object tsPrefs: TTabSheet
+        Caption = 'tsPrefs'
+        ClientHeight = 359
+        ClientWidth = 764
+        object tvPrefs: TTreeView
+          Left = 0
+          Height = 359
+          Top = 0
+          Width = 121
+          Align = alLeft
+          TabOrder = 0
+        end
+        object sPrefs: TSplitter
+          Left = 121
+          Height = 359
+          Top = 0
+          Width = 5
+        end
+        object pcPrefs: TPageControl
+          Left = 126
+          Height = 359
+          Top = 0
+          Width = 638
+          Align = alClient
+          ShowTabs = False
+          TabOrder = 2
+        end
+      end
+    end
   end
   object xConfig: TXMLConfig
     StartEmpty = False
@@ -96,7 +142,6 @@ object mForm: TmForm
       Category = 'Menu'
       Caption = 'Options'
       GroupIndex = 3
-      OnExecute = actMenuOptsExecute
     end
     object actMenuHelp: TAction
       Category = 'Menu'
