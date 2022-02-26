@@ -1,14 +1,63 @@
 object mForm: TmForm
-  Left = 258
+  Left = 309
   Height = 393
-  Top = 212
+  Top = 207
   Width = 713
   Caption = 'FD-NLS'
+  ClientHeight = 393
+  ClientWidth = 713
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 320
   Menu = mMain
   OnCreate = FormCreate
   SessionProperties = 'Height;Left;Top;Width'
   LCLVersion = '2.3.0.0'
   Visible = True
+  object sbMain: TStatusBar
+    Left = 0
+    Height = 18
+    Top = 375
+    Width = 713
+    Panels = <>
+  end
+  object pMain: TPanel
+    Left = 0
+    Height = 319
+    Top = 53
+    Width = 713
+    Align = alClient
+    BevelOuter = bvNone
+    Caption = 'pMain'
+    TabOrder = 1
+  end
+  object pSeperatorLower: TPanel
+    Left = 0
+    Height = 3
+    Top = 372
+    Width = 713
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 2
+  end
+  object pSeparatorUpper: TPanel
+    Left = 0
+    Height = 3
+    Top = 50
+    Width = 713
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 3
+  end
+  object pControlArea: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 713
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = 'pControlArea'
+    TabOrder = 4
+  end
   object xConfig: TXMLConfig
     StartEmpty = False
     RootName = 'CONFIG'

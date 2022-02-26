@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, PasExt, Forms, Controls, Graphics, Dialogs,
-  XMLPropStorage, StdCtrls, Menus, ActnList, XMLConf;
+  XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, XMLConf;
 
 type
 
@@ -21,6 +21,11 @@ type
     actMenuFile: TAction;
     alMain: TActionList;
     mMain: TMainMenu;
+    pControlArea: TPanel;
+    pSeparatorUpper: TPanel;
+    pSeperatorLower: TPanel;
+    pMain: TPanel;
+    sbMain: TStatusBar;
     xConfig: TXMLConfig;
     xProperties: TXMLPropStorage;
     procedure actMenuOptsExecute(Sender: TObject);
@@ -60,7 +65,6 @@ begin
    xProperties.RootNodePath := 'DISPLAYS/UID_' + Displays + '/STATE';
    xConfig.Filename:=AppCfgPath + 'userdata.xml';
    CreateMainMenu;
-
 end;
 
 procedure TmForm.actMenuOptsExecute(Sender: TObject);
