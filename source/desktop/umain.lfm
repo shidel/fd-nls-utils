@@ -2450,20 +2450,20 @@ object mForm: TmForm
     StartEmpty = False
     RootName = 'CONFIG'
     ReadOnly = False
-    Left = 480
-    Top = 152
+    Left = 640
+    Top = 160
   end
   object xProperties: TXMLPropStorage
     StoredValues = <>
-    Left = 480
+    Left = 640
     Top = 88
   end
   object mMain: TMainMenu
-    Left = 552
+    Left = 696
     Top = 88
   end
   object alMain: TActionList
-    Left = 552
+    Left = 696
     Top = 160
     object actAppleAbout: TAction
       Category = 'Darwin'
