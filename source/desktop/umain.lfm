@@ -99,9 +99,9 @@ object mForm: TmForm
           Height = 329
           Top = 0
           Width = 632
-          ActivePage = tsGeneral
+          ActivePage = tsLanguages
           Align = alClient
-          TabIndex = 0
+          TabIndex = 1
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'General'
@@ -133,6 +133,9 @@ object mForm: TmForm
               Anchors = [akTop, akRight]
               TabOrder = 1
             end
+          end
+          object tsLanguages: TTabSheet
+            Caption = 'Languages'
           end
           object tsAbout: TTabSheet
             Caption = 'About'

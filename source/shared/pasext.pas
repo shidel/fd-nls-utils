@@ -1,7 +1,3 @@
-{ This file was automatically created by Lazarus. Do not edit!
-  This source is only used to compile and install the package.
- }
-
 unit PasExt;
 
 {$warn 5023 off : no warning about unused units}
@@ -14,6 +10,8 @@ var
   AppCfgFile    : String;      { Application Config File }
 
 procedure InitPasExt(Identifier : String);
+
+function VerifiedPath (Parent, SubDir : String) : string;
 
 implementation
 
@@ -69,6 +67,16 @@ begin
         AppDataPath := '';
       end
   end;
+end;
+
+function VerifiedPath(Parent, SubDir: String): string;
+begin
+  Result := '';
+  if Parent = '' then exit;
+  Parent := IncludeTrailingPathDelimiter(Parent);
+  if not DirectoryExists(Parent + SubDir) then
+     if not CreateDir(Parent + SubDir) then exit;
+  Result := IncludeTrailingPathDelimiter(Parent + SubDir);
 end;
 
 initialization

@@ -5,7 +5,7 @@ unit uMain;
 interface
 
 uses
-  Classes, SysUtils, PasExt, Forms, Controls, Graphics, Dialogs, XMLPropStorage,
+  Classes, SysUtils, PasExt, FDKit, Forms, Controls, Graphics, Dialogs, XMLPropStorage,
   StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons, XMLConf;
 
 type
@@ -37,6 +37,7 @@ type
     sbMain: TStatusBar;
     sdLocalRepo: TSelectDirectoryDialog;
     sPrefs: TSplitter;
+    tsLanguages: TTabSheet;
     tsGeneral: TTabSheet;
     tsAbout: TTabSheet;
     tvPrefs: TTreeView;
@@ -50,25 +51,16 @@ type
     procedure FormCreate(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
-    FRepoPath: string;
+    Repository: TFDNLS;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
-    function GetDataPath: string;
-    function GetLanguagesPath: string;
-    function GetProjectsPath: string;
     procedure SelectPrefsPage(Tab : TTabSheet);
     procedure CreateMainMenu;
     procedure CreatePrefsTree;
     procedure CreateAboutText;
-    procedure SetRepoPath(AValue: string);
-    procedure OpenLocalRepo;
-    function  SubPath(Path, SubDir : String) : string;
+    procedure OpenRepository(Location : String);
   public
-    property RepoPath : string read FRepoPath write SetRepoPath;
-    property DataPath : string read GetDataPath;
-    property LanguagesPath : string read GetLanguagesPath;
-    property ProjectsPath : string read GetProjectsPath;
   end;
 
 var
@@ -93,9 +85,7 @@ begin
    // set Program configuration file
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // configure local repository
-   FRepoPath := '';
-   RepoPath := xConfig.GetValue('LOCAL/REPO',  '');
-   OpenLocalRepo;
+   OpenRepository(xConfig.GetValue('LOCAL/REPO',  ''));
    // Create a unique ID for monitor count and resolutions
    Displays := IntToHex(Screen.MonitorCount, 2) +
      IntToHex(Screen.PrimaryMonitor.MonitorNum, 2) +
@@ -125,12 +115,12 @@ end;
 
 procedure TmForm.actLocalRepoDirExecute(Sender: TObject);
 begin
-  if RepoPath = '' then
+  if Repository.Path = '' then
      sdLocalRepo.InitialDir:=UserHomePath
   else
-     sdLocalRepo.InitialDir:=RepoPath;
+     sdLocalRepo.InitialDir:=Repository.Path;
   if sdLocalRepo.Execute then
-     RepoPath := sdLocalRepo.FileName;
+     OpenRepository(sdLocalRepo.FileName);
 end;
 
 procedure TmForm.actPrefsExecute(Sender: TObject);
@@ -212,21 +202,6 @@ begin
   end;
 end;
 
-function TmForm.GetDataPath: string;
-begin
-  Result := SubPath(RepoPath, 'fd-nls');
-end;
-
-function TmForm.GetLanguagesPath: string;
-begin
-  Result := SubPath(DataPath, 'languages');
-end;
-
-function TmForm.GetProjectsPath: string;
-begin
-  Result := SubPath(DataPath, 'projects');
-end;
-
 procedure TmForm.SelectPrefsPage(Tab: TTabSheet);
 var
    N : TTreeNode;
@@ -270,31 +245,12 @@ begin
   memoAbout.Height:=memoAbout.Font.GetTextHeight(APP_LEGALCOPYRIGHT) * Rows;
 end;
 
-procedure TmForm.SetRepoPath(AValue: string);
+procedure TmForm.OpenRepository(Location : String);
 begin
-  if AValue <> '' then
-     AValue := IncludeTrailingPathDelimiter(AValue);
-  if FRepoPath=AValue then Exit;
-  FRepoPath:=AValue;
-  xConfig.SetValue('LOCAL/REPO', FRepoPath);
-  xConfig.Flush;
-  OpenLocalRepo;
-end;
-
-procedure TmForm.OpenLocalRepo;
-begin
-    edLocalRepo.Text:=RepoPath;
-    DataPath;
-end;
-
-function TmForm.SubPath(Path, SubDir: String): string;
-begin
-  Result := '';
-  if Path = '' then exit;
-  Path := IncludeTrailingPathDelimiter(Path);
-  if not DirectoryExists(Path + SubDir) then
-     if not CreateDir(Path + SubDir) then exit;
-  Result := IncludeTrailingPathDelimiter(Path + SubDir);
+    Repository.Path:= Location;
+    edLocalRepo.Text:= Repository.Path;
+    xConfig.SetValue('LOCAL/REPO', Repository.Path);
+    xConfig.Flush;
 end;
 
 end.
