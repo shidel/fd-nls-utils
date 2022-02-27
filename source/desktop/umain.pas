@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, PasExt, Forms, Controls, Graphics, Dialogs, XMLPropStorage,
-  StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, PairSplitter, XMLConf;
+  StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons, XMLConf;
 
 type
 
@@ -15,12 +15,16 @@ type
   TmForm = class(TForm)
     actAppleAbout: TAction;
     actApplePrefs: TAction;
+    actLocalRepoDir: TAction;
     actMenuHelp: TAction;
     actPrefs: TAction;
     actMenuOpts: TAction;
     actMenuFile: TAction;
     alMain: TActionList;
+    bbLocalRepo: TBitBtn;
+    edLocalRepo: TEdit;
     imgAbout: TImage;
+    lbLocalRepo: TLabel;
     memoAbout: TMemo;
     mMain: TMainMenu;
     pSeparatorAbout: TPanel;
@@ -31,6 +35,7 @@ type
     pSeparatorUpper: TPanel;
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
+    sdLocalRepo: TSelectDirectoryDialog;
     sPrefs: TSplitter;
     tsGeneral: TTabSheet;
     tsAbout: TTabSheet;
@@ -40,10 +45,12 @@ type
     xProperties: TXMLPropStorage;
     procedure actAppleAboutExecute(Sender: TObject);
     procedure actApplePrefsExecute(Sender: TObject);
+    procedure actLocalRepoDirExecute(Sender: TObject);
     procedure actPrefsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
+    FLocalRepo: string;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
@@ -51,7 +58,10 @@ type
     procedure CreateMainMenu;
     procedure CreatePrefsTree;
     procedure CreateAboutText;
+    procedure SetLocalRepo(AValue: string);
+    procedure OpenLocalRepo;
   public
+    property LocalRepo : string read FLocalRepo write SetLocalRepo;
 
   end;
 
@@ -76,6 +86,10 @@ begin
    pcPrefs.ShowTabs := False;
    // set Program configuration file
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
+   // configure local repository
+   FLocalRepo := '';
+   LocalRepo := xConfig.GetValue('LOCAL/REPO',  '');
+   OpenLocalRepo;
    // Create a unique ID for monitor count and resolutions
    Displays := IntToHex(Screen.MonitorCount, 2) +
      IntToHex(Screen.PrimaryMonitor.MonitorNum, 2) +
@@ -101,6 +115,16 @@ end;
 procedure TmForm.actApplePrefsExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
+end;
+
+procedure TmForm.actLocalRepoDirExecute(Sender: TObject);
+begin
+  if LocalRepo = '' then
+     sdLocalRepo.InitialDir:=UserHomePath
+  else
+     sdLocalRepo.InitialDir:=LocalRepo;
+  if sdLocalRepo.Execute then
+     LocalRepo := sdLocalRepo.FileName;
 end;
 
 procedure TmForm.actPrefsExecute(Sender: TObject);
@@ -148,6 +172,7 @@ var
    I, J, G : integer;
    Cat     : String;
 begin
+   mMain.Items.Clear;
    {$IFDEF MacOS}
      // Create Aplication menu for Apple macOS
      aMenu := AddMenuItem(nil, #$EF#$A3#$BF); { Unicode Apple Logo }
@@ -222,6 +247,20 @@ begin
   Rows := memoAbout.Lines.Count + 1;
   if Rows > 10 then Rows := 10;
   memoAbout.Height:=memoAbout.Font.GetTextHeight(APP_LEGALCOPYRIGHT) * Rows;
+end;
+
+procedure TmForm.SetLocalRepo(AValue: string);
+begin
+  if FLocalRepo=AValue then Exit;
+  FLocalRepo:=AValue;
+  xConfig.SetValue('LOCAL/REPO', FLocalRepo);
+  xConfig.Flush;
+  OpenLocalRepo;
+end;
+
+procedure TmForm.OpenLocalRepo;
+begin
+    edLocalRepo.Text:=FLocalRepo;
 end;
 
 end.

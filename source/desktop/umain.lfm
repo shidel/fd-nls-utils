@@ -105,6 +105,34 @@ object mForm: TmForm
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'General'
+            ClientHeight = 299
+            ClientWidth = 626
+            object lbLocalRepo: TLabel
+              Left = 16
+              Height = 16
+              Top = 8
+              Width = 104
+              Caption = 'Local Repository:'
+            end
+            object edLocalRepo: TEdit
+              Left = 17
+              Height = 22
+              Top = 32
+              Width = 511
+              Anchors = [akTop, akLeft, akRight]
+              ReadOnly = True
+              TabOrder = 0
+              Text = 'edLocalRepo'
+            end
+            object bbLocalRepo: TBitBtn
+              Left = 536
+              Height = 28
+              Top = 30
+              Width = 75
+              Action = actLocalRepoDir
+              Anchors = [akTop, akRight]
+              TabOrder = 1
+            end
           end
           object tsAbout: TTabSheet
             Caption = 'About'
@@ -2458,20 +2486,20 @@ object mForm: TmForm
     RootName = 'CONFIG'
     ReadOnly = False
     Left = 640
-    Top = 160
+    Top = 368
   end
   object xProperties: TXMLPropStorage
     StoredValues = <>
     Left = 640
-    Top = 88
+    Top = 296
   end
   object mMain: TMainMenu
     Left = 696
-    Top = 88
+    Top = 296
   end
   object alMain: TActionList
     Left = 696
-    Top = 160
+    Top = 368
     object actAppleAbout: TAction
       Category = 'Darwin'
       Caption = 'About FD-NLS...'
@@ -2505,5 +2533,14 @@ object mForm: TmForm
       GroupIndex = 3
       OnExecute = actPrefsExecute
     end
+    object actLocalRepoDir: TAction
+      Category = 'UI'
+      Caption = 'Browse'
+      OnExecute = actLocalRepoDirExecute
+    end
+  end
+  object sdLocalRepo: TSelectDirectoryDialog
+    Left = 640
+    Top = 240
   end
 end
