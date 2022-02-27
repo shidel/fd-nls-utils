@@ -81,7 +81,11 @@ object mForm: TmForm
           Top = 0
           Width = 121
           Align = alLeft
+          ReadOnly = True
+          RowSelect = True
+          ScrollBars = ssAutoVertical
           TabOrder = 0
+          Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
         end
         object sPrefs: TSplitter
           Left = 121
@@ -94,20 +98,22 @@ object mForm: TmForm
           Height = 359
           Top = 0
           Width = 638
-          ActivePage = tsAbout
+          ActivePage = tsGeneral
           Align = alClient
-          ShowTabs = False
           TabIndex = 0
           TabOrder = 2
+          object tsGeneral: TTabSheet
+            Caption = 'General'
+          end
           object tsAbout: TTabSheet
-            Caption = 'tsAbout'
-            ClientHeight = 359
-            ClientWidth = 638
+            Caption = 'About'
+            ClientHeight = 329
+            ClientWidth = 632
             object imgAbout: TImage
               Left = 0
-              Height = 204
+              Height = 174
               Top = 0
-              Width = 638
+              Width = 632
               Align = alClient
               Center = True
               Picture.Data = {
@@ -2418,8 +2424,8 @@ object mForm: TmForm
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 204
-              Width = 638
+              Top = 174
+              Width = 632
               Align = alBottom
               BevelOuter = bvNone
               TabOrder = 0
@@ -2427,8 +2433,8 @@ object mForm: TmForm
             object memoAbout: TMemo
               Left = 0
               Height = 150
-              Top = 209
-              Width = 638
+              Top = 179
+              Width = 632
               Align = alBottom
               Alignment = taCenter
               BorderStyle = bsNone

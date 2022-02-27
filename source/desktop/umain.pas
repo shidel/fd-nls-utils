@@ -32,6 +32,7 @@ type
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
     sPrefs: TSplitter;
+    tsGeneral: TTabSheet;
     tsAbout: TTabSheet;
     tvPrefs: TTreeView;
     tsPrefs: TTabSheet;
@@ -42,6 +43,8 @@ type
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure CreateMainMenu;
+    procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
+    procedure CreatePrefsTree;
     procedure CreateAboutText;
   public
 
@@ -63,6 +66,8 @@ var
    Displays : String;
    I : integer;
 begin
+   // set Program configuration file
+   xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // Create a unique ID for monitor count and resolutions
    Displays := IntToHex(Screen.MonitorCount, 2) +
      IntToHex(Screen.PrimaryMonitor.MonitorNum, 2) +
@@ -74,13 +79,15 @@ begin
    // Assign the config application files
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := 'DISPLAYS/UID_' + Displays + '/STATE';
-   xConfig.Filename:=AppCfgPath + 'userdata.xml';
+   // Populate UI elements
    CreateMainMenu;
+   CreatePrefsTree;
    CreateAboutText;
 end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;
 begin
+   // Add an item to the main menu based on it's action
    Result := TMenuItem.Create(Self);
    Result.Action := ActionItem;
    if Assigned(ToItem) then
@@ -91,6 +98,7 @@ end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; CaptionText: TCaption): TMenuItem;
 begin
+   // Add an item to the main menu based on it's caption
    Result := TMenuItem.Create(Self);
    Result.Caption := CaptionText;
    if Assigned(ToItem) then
@@ -126,12 +134,31 @@ begin
            AddMenuItem(aMenu, alMain.Actions[J]);
       end;
    end;
+   pcPrefs.ShowTabs := False;
+end;
+
+procedure TmForm.AddPrefsTree(ParentNode: TTreeNode; Pages: TPageControl);
+var
+   I : integer;
+begin
+   // Add the pages of an option to a node inthe preferences tree
+  for I := 0 to Pages.PageCount - 1 do begin
+    tvPrefs.Items.AddChild(ParentNode, Pages.Pages[I].Caption);
+  end;
+end;
+
+procedure TmForm.CreatePrefsTree;
+begin
+   // Clear the prefeences tree and populate the root pages
+   tvPrefs.Items.Clear;
+   AddPrefsTree(nil, pcPrefs);
 end;
 
 procedure TmForm.CreateAboutText;
 var
    Rows : integer;
 begin
+  // Create the text for the preferences about page
   memoAbout.Clear;
   memoAbout.Lines.Add('');
   memoAbout.Lines.Add(APP_FILEDESCRIPTION);
