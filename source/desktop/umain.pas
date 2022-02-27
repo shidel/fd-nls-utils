@@ -50,19 +50,25 @@ type
     procedure FormCreate(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
-    FLocalRepo: string;
+    FRepoPath: string;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
+    function GetDataPath: string;
+    function GetLanguagesPath: string;
+    function GetProjectsPath: string;
     procedure SelectPrefsPage(Tab : TTabSheet);
     procedure CreateMainMenu;
     procedure CreatePrefsTree;
     procedure CreateAboutText;
-    procedure SetLocalRepo(AValue: string);
+    procedure SetRepoPath(AValue: string);
     procedure OpenLocalRepo;
+    function  SubPath(Path, SubDir : String) : string;
   public
-    property LocalRepo : string read FLocalRepo write SetLocalRepo;
-
+    property RepoPath : string read FRepoPath write SetRepoPath;
+    property DataPath : string read GetDataPath;
+    property LanguagesPath : string read GetLanguagesPath;
+    property ProjectsPath : string read GetProjectsPath;
   end;
 
 var
@@ -87,8 +93,8 @@ begin
    // set Program configuration file
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // configure local repository
-   FLocalRepo := '';
-   LocalRepo := xConfig.GetValue('LOCAL/REPO',  '');
+   FRepoPath := '';
+   RepoPath := xConfig.GetValue('LOCAL/REPO',  '');
    OpenLocalRepo;
    // Create a unique ID for monitor count and resolutions
    Displays := IntToHex(Screen.MonitorCount, 2) +
@@ -119,12 +125,12 @@ end;
 
 procedure TmForm.actLocalRepoDirExecute(Sender: TObject);
 begin
-  if LocalRepo = '' then
+  if RepoPath = '' then
      sdLocalRepo.InitialDir:=UserHomePath
   else
-     sdLocalRepo.InitialDir:=LocalRepo;
+     sdLocalRepo.InitialDir:=RepoPath;
   if sdLocalRepo.Execute then
-     LocalRepo := sdLocalRepo.FileName;
+     RepoPath := sdLocalRepo.FileName;
 end;
 
 procedure TmForm.actPrefsExecute(Sender: TObject);
@@ -206,6 +212,21 @@ begin
   end;
 end;
 
+function TmForm.GetDataPath: string;
+begin
+  Result := SubPath(RepoPath, 'fd-nls');
+end;
+
+function TmForm.GetLanguagesPath: string;
+begin
+  Result := SubPath(DataPath, 'languages');
+end;
+
+function TmForm.GetProjectsPath: string;
+begin
+  Result := SubPath(DataPath, 'projects');
+end;
+
 procedure TmForm.SelectPrefsPage(Tab: TTabSheet);
 var
    N : TTreeNode;
@@ -249,18 +270,31 @@ begin
   memoAbout.Height:=memoAbout.Font.GetTextHeight(APP_LEGALCOPYRIGHT) * Rows;
 end;
 
-procedure TmForm.SetLocalRepo(AValue: string);
+procedure TmForm.SetRepoPath(AValue: string);
 begin
-  if FLocalRepo=AValue then Exit;
-  FLocalRepo:=AValue;
-  xConfig.SetValue('LOCAL/REPO', FLocalRepo);
+  if AValue <> '' then
+     AValue := IncludeTrailingPathDelimiter(AValue);
+  if FRepoPath=AValue then Exit;
+  FRepoPath:=AValue;
+  xConfig.SetValue('LOCAL/REPO', FRepoPath);
   xConfig.Flush;
   OpenLocalRepo;
 end;
 
 procedure TmForm.OpenLocalRepo;
 begin
-    edLocalRepo.Text:=FLocalRepo;
+    edLocalRepo.Text:=RepoPath;
+    DataPath;
+end;
+
+function TmForm.SubPath(Path, SubDir: String): string;
+begin
+  Result := '';
+  if Path = '' then exit;
+  Path := IncludeTrailingPathDelimiter(Path);
+  if not DirectoryExists(Path + SubDir) then
+     if not CreateDir(Path + SubDir) then exit;
+  Result := IncludeTrailingPathDelimiter(Path + SubDir);
 end;
 
 end.
