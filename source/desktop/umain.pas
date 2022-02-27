@@ -38,12 +38,17 @@ type
     tsPrefs: TTabSheet;
     xConfig: TXMLConfig;
     xProperties: TXMLPropStorage;
+    procedure actAppleAboutExecute(Sender: TObject);
+    procedure actApplePrefsExecute(Sender: TObject);
+    procedure actPrefsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
-    procedure CreateMainMenu;
     procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
+    procedure SelectPrefsPage(Tab : TTabSheet);
+    procedure CreateMainMenu;
     procedure CreatePrefsTree;
     procedure CreateAboutText;
   public
@@ -66,6 +71,9 @@ var
    Displays : String;
    I : integer;
 begin
+   // Hide some design time elements
+   pcMain.ShowTabs := False;
+   pcPrefs.ShowTabs := False;
    // set Program configuration file
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // Create a unique ID for monitor count and resolutions
@@ -83,6 +91,33 @@ begin
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
+end;
+
+procedure TmForm.actAppleAboutExecute(Sender: TObject);
+begin
+   SelectPrefsPage(tsAbout);
+end;
+
+procedure TmForm.actApplePrefsExecute(Sender: TObject);
+begin
+  SelectPrefsPage(tsGeneral);
+end;
+
+procedure TmForm.actPrefsExecute(Sender: TObject);
+begin
+  SelectPrefsPage(tsGeneral);
+end;
+
+procedure TmForm.tvPrefsChange(Sender: TObject; Node: TTreeNode);
+var
+   I : integer;
+begin
+   for I := 0 to pcPrefs.PageCount - 1 do begin
+     if Node.Text = pcPrefs.Pages[I].Caption then begin
+       pcPrefs.ActivePage := pcPrefs.Pages[I];
+       exit;
+     end;
+   end;
 end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;
@@ -134,7 +169,6 @@ begin
            AddMenuItem(aMenu, alMain.Actions[J]);
       end;
    end;
-   pcPrefs.ShowTabs := False;
 end;
 
 procedure TmForm.AddPrefsTree(ParentNode: TTreeNode; Pages: TPageControl);
@@ -147,11 +181,28 @@ begin
   end;
 end;
 
+procedure TmForm.SelectPrefsPage(Tab: TTabSheet);
+var
+   N : TTreeNode;
+begin
+  N := tvPrefs.Items.GetFirstNode;
+  while Assigned(N) do begin
+    if N.Text = Tab.Caption then begin
+      N.Selected:=True;
+      Break;
+    end;
+    N := N.GetNext;
+  end;
+  pcMain.ActivePage := tsPrefs;
+end;
+
 procedure TmForm.CreatePrefsTree;
 begin
    // Clear the prefeences tree and populate the root pages
    tvPrefs.Items.Clear;
    AddPrefsTree(nil, pcPrefs);
+   tvPrefs.FullExpand;
+   tvPrefs.Items.GetFirstNode.Selected:=True;
 end;
 
 procedure TmForm.CreateAboutText;

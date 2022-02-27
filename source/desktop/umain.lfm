@@ -68,36 +68,37 @@ object mForm: TmForm
       Width = 764
       ActivePage = tsPrefs
       Align = alClient
-      ShowTabs = False
       TabIndex = 0
       TabOrder = 0
       object tsPrefs: TTabSheet
-        Caption = 'tsPrefs'
-        ClientHeight = 359
-        ClientWidth = 764
+        Caption = 'Preferences'
+        ClientHeight = 329
+        ClientWidth = 758
         object tvPrefs: TTreeView
           Left = 0
-          Height = 359
+          Height = 329
           Top = 0
           Width = 121
           Align = alLeft
+          HideSelection = False
           ReadOnly = True
           RowSelect = True
           ScrollBars = ssAutoVertical
           TabOrder = 0
-          Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+          OnChange = tvPrefsChange
+          Options = [tvoAutoItemHeight, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
         end
         object sPrefs: TSplitter
           Left = 121
-          Height = 359
+          Height = 329
           Top = 0
           Width = 5
         end
         object pcPrefs: TPageControl
           Left = 126
-          Height = 359
+          Height = 329
           Top = 0
-          Width = 638
+          Width = 632
           ActivePage = tsGeneral
           Align = alClient
           TabIndex = 0
@@ -107,13 +108,13 @@ object mForm: TmForm
           end
           object tsAbout: TTabSheet
             Caption = 'About'
-            ClientHeight = 329
-            ClientWidth = 632
+            ClientHeight = 299
+            ClientWidth = 626
             object imgAbout: TImage
               Left = 0
-              Height = 174
+              Height = 144
               Top = 0
-              Width = 632
+              Width = 626
               Align = alClient
               Center = True
               Picture.Data = {
@@ -2424,8 +2425,8 @@ object mForm: TmForm
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 174
-              Width = 632
+              Top = 144
+              Width = 626
               Align = alBottom
               BevelOuter = bvNone
               TabOrder = 0
@@ -2433,8 +2434,8 @@ object mForm: TmForm
             object memoAbout: TMemo
               Left = 0
               Height = 150
-              Top = 179
-              Width = 632
+              Top = 149
+              Width = 626
               Align = alBottom
               Alignment = taCenter
               BorderStyle = bsNone
@@ -2475,11 +2476,13 @@ object mForm: TmForm
       Category = 'Darwin'
       Caption = 'About FD-NLS...'
       GroupIndex = 1
+      OnExecute = actAppleAboutExecute
     end
     object actApplePrefs: TAction
       Category = 'Darwin'
       Caption = 'Preferences...'
       GroupIndex = 1
+      OnExecute = actApplePrefsExecute
     end
     object actMenuFile: TAction
       Category = 'Menu'
@@ -2500,6 +2503,7 @@ object mForm: TmForm
       Category = 'Options'
       Caption = 'Preferences...'
       GroupIndex = 3
+      OnExecute = actPrefsExecute
     end
   end
 end
