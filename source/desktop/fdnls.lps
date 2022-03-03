@@ -8,8 +8,8 @@
       <Unit>
         <Filename Value="fdnls.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <CursorPos X="9" Y="18"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="86" Y="14"/>
         <UsageCount Value="132"/>
         <Loaded Value="True"/>
       </Unit>
@@ -35,10 +35,9 @@
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="14" Y="27"/>
         <UsageCount Value="23"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\packages\formconfig.pas"/>
@@ -57,10 +56,9 @@
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="22" Y="16"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="D:\usr\local\share\lazarus\lcl\forms.pp"/>
@@ -71,11 +69,10 @@
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="21" Y="53"/>
         <UsageCount Value="18"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ulog.pas"/>
@@ -85,7 +82,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLog"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="10"/>
         <CursorPos X="8" Y="35"/>
         <UsageCount Value="22"/>
@@ -103,13 +100,12 @@
       <Unit>
         <Filename Value="..\shared\puiext.pas"/>
         <UnitName Value="PUIExt"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="56" Y="10"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="20">
+    <JumpHistory HistoryIndex="18">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="10" Column="17" TopLine="16"/>
@@ -151,10 +147,6 @@
         <Caret Line="99" Column="28" TopLine="76"/>
       </Position>
       <Position>
-        <Filename Value="..\shared\puiext.pas"/>
-        <Caret Line="10" Column="47"/>
-      </Position>
-      <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="97" Column="50" TopLine="78"/>
       </Position>
@@ -189,10 +181,6 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="121" Column="59" TopLine="100"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="18"/>
       </Position>
     </JumpHistory>
     <RunParams>
