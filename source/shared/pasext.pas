@@ -3,6 +3,19 @@ unit PasExt;
 {$warn 5023 off : no warning about unused units}
 interface
 
+const
+  {$if defined(windows)}
+  PlatformID = 'WIN';
+  {$elseif defined(darwin)}
+  PlatformID = 'OSX';
+  {$elseif defined(linux)}
+  PlatformID = 'LNX';
+  {$elseif defined(unix)}
+  PlatformID = 'UNX';
+  {$else}
+  PlatformID = 'UNK';
+  {$endif}
+
 var
   UserHomePath  : String;      { User's Home directory }
   AppDataPath   : String;      { Location for program data files }

@@ -1,0 +1,30 @@
+object fLog: TfLog
+  Left = 130
+  Height = 240
+  Top = 122
+  Width = 320
+  BorderStyle = bsSizeToolWin
+  Caption = 'Debug Log'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnCreate = FormCreate
+  SessionProperties = 'ClientHeight;ClientWidth;Left;Width;WindowState;Height;Top'
+  ShowInTaskBar = stNever
+  LCLVersion = '2.3.0.0'
+  object Memo1: TMemo
+    Left = 8
+    Height = 224
+    Top = 8
+    Width = 304
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 0
+  end
+  object xProperties: TXMLPropStorage
+    StoredValues = <>
+    Left = 56
+    Top = 48
+  end
+end

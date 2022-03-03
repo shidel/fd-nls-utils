@@ -10,7 +10,7 @@ object mForm: TmForm
   Constraints.MinWidth = 320
   Menu = mMain
   OnCreate = FormCreate
-  SessionProperties = 'Height;Left;Top;Width;tvPrefs.Width'
+  SessionProperties = 'Height;Left;Top;tvPrefs.Width;Width;WindowState;ClientHeight;ClientWidth'
   LCLVersion = '2.3.0.0'
   Visible = True
   object sbMain: TStatusBar
@@ -99,9 +99,9 @@ object mForm: TmForm
           Height = 329
           Top = 0
           Width = 632
-          ActivePage = tsLanguages
+          ActivePage = tsGeneral
           Align = alClient
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'General'
@@ -132,6 +132,41 @@ object mForm: TmForm
               Action = actLocalRepoDir
               Anchors = [akTop, akRight]
               TabOrder = 1
+            end
+            object lbSoftwareUpdate: TLabel
+              Left = 16
+              Height = 16
+              Top = 72
+              Width = 106
+              Caption = 'Software Update:'
+            end
+            object cbSoftwareUpdate: TComboBox
+              Left = 17
+              Height = 20
+              Top = 96
+              Width = 487
+              Anchors = [akTop, akLeft, akRight]
+              ItemHeight = 26
+              ItemIndex = 0
+              Items.Strings = (
+                'disabled'
+                'Daily'
+                'Weekly'
+                'Monthy'
+              )
+              ReadOnly = True
+              Style = csDropDownList
+              TabOrder = 2
+              Text = 'disabled'
+            end
+            object bbSoftwareUpdate: TButton
+              Left = 520
+              Height = 28
+              Top = 92
+              Width = 91
+              Action = actCheckForUpdate
+              Anchors = [akTop, akRight]
+              TabOrder = 3
             end
           end
           object tsLanguages: TTabSheet
@@ -2488,21 +2523,21 @@ object mForm: TmForm
     StartEmpty = False
     RootName = 'CONFIG'
     ReadOnly = False
-    Left = 640
-    Top = 368
+    Left = 24
+    Top = 256
   end
   object xProperties: TXMLPropStorage
     StoredValues = <>
-    Left = 640
-    Top = 296
+    Left = 24
+    Top = 176
   end
   object mMain: TMainMenu
-    Left = 696
-    Top = 296
+    Left = 80
+    Top = 176
   end
   object alMain: TActionList
-    Left = 696
-    Top = 368
+    Left = 80
+    Top = 256
     object actAppleAbout: TAction
       Category = 'Darwin'
       Caption = 'About FD-NLS...'
@@ -2541,9 +2576,14 @@ object mForm: TmForm
       Caption = 'Browse'
       OnExecute = actLocalRepoDirExecute
     end
+    object actCheckForUpdate: TAction
+      Category = 'UI'
+      Caption = 'Check Now'
+      OnExecute = actCheckForUpdateExecute
+    end
   end
   object sdLocalRepo: TSelectDirectoryDialog
-    Left = 640
-    Top = 240
+    Left = 24
+    Top = 112
   end
 end

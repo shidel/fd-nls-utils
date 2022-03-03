@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, PasExt, uMain
+  Forms, PasExt, uMain, uLog
   { you can add units after this };
 
 {$R *.res}
@@ -24,6 +24,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TmForm, mForm);
+  Application.CreateForm(TfLog, fLog);
   Application.Run;
 end.
 

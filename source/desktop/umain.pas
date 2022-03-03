@@ -5,8 +5,9 @@ unit uMain;
 interface
 
 uses
-  Classes, SysUtils, PasExt, FDKit, Forms, Controls, Graphics, Dialogs, XMLPropStorage,
-  StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons, XMLConf;
+  Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
+  XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
+  XMLConf, opensslsockets, fphttpclient, uLog;
 
 type
 
@@ -15,6 +16,7 @@ type
   TmForm = class(TForm)
     actAppleAbout: TAction;
     actApplePrefs: TAction;
+    actCheckForUpdate: TAction;
     actLocalRepoDir: TAction;
     actMenuHelp: TAction;
     actPrefs: TAction;
@@ -22,8 +24,11 @@ type
     actMenuFile: TAction;
     alMain: TActionList;
     bbLocalRepo: TBitBtn;
+    bbSoftwareUpdate: TButton;
+    cbSoftwareUpdate: TComboBox;
     edLocalRepo: TEdit;
     imgAbout: TImage;
+    lbSoftwareUpdate: TLabel;
     lbLocalRepo: TLabel;
     memoAbout: TMemo;
     mMain: TMainMenu;
@@ -46,6 +51,7 @@ type
     xProperties: TXMLPropStorage;
     procedure actAppleAboutExecute(Sender: TObject);
     procedure actApplePrefsExecute(Sender: TObject);
+    procedure actCheckForUpdateExecute(Sender: TObject);
     procedure actLocalRepoDirExecute(Sender: TObject);
     procedure actPrefsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -60,7 +66,9 @@ type
     procedure CreatePrefsTree;
     procedure CreateAboutText;
     procedure OpenRepository(Location : String);
+    procedure SoftwareUpdate(Silent : boolean);
   public
+
   end;
 
 var
@@ -75,9 +83,6 @@ implementation
 { TmForm }
 
 procedure TmForm.FormCreate(Sender: TObject);
-var
-   Displays : String;
-   I : integer;
 begin
    // Hide some design time elements
    pcMain.ShowTabs := False;
@@ -86,21 +91,14 @@ begin
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // configure local repository
    OpenRepository(xConfig.GetValue('LOCAL/REPO',  ''));
-   // Create a unique ID for monitor count and resolutions
-   Displays := IntToHex(Screen.MonitorCount, 2) +
-     IntToHex(Screen.PrimaryMonitor.MonitorNum, 2) +
-     IntToHex(Screen.PrimaryMonitor.PixelsPerInch, 4);
-   for I := 0 to Screen.MonitorCount - 1 do
-     Displays := Displays +
-     IntToHex(Screen.Monitors[I].Width,4) +
-     IntToHex(Screen.Monitors[I].Height,4);
    // Assign the config application files
    xProperties.FileName := AppCfgFile;
-   xProperties.RootNodePath := 'DISPLAYS/UID_' + Displays + '/STATE';
+   xProperties.RootNodePath := FormNodePath(Self);
    // Populate UI elements
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
+   SoftwareUpdate(True);
 end;
 
 procedure TmForm.actAppleAboutExecute(Sender: TObject);
@@ -111,6 +109,35 @@ end;
 procedure TmForm.actApplePrefsExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
+end;
+
+procedure TmForm.actCheckForUpdateExecute(Sender: TObject);
+var
+  Query : String;
+  SS: TStringStream;
+  Client: TFPHTTPClient;
+begin
+  Query := 'https://up.lod.bz/' +
+    StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
+    '/' + PlatformID + '-' + APP_VERSION;
+  Log(Self, 'Check for update ' + Query);
+  SS := TStringStream.Create('');
+  try
+    Client := TFPHTTPClient.Create(nil);
+    try
+      try
+        Client.Get(Query, SS);
+      except
+        on E: Exception do
+           Log(Self, E.Message);
+      end;
+      Log(Self, SS.DataString);
+    finally
+      FreeAndNil(Client);
+    end;
+  finally
+    SS.Free;
+  end;
 end;
 
 procedure TmForm.actLocalRepoDirExecute(Sender: TObject);
@@ -252,6 +279,12 @@ begin
     xConfig.SetValue('LOCAL/REPO', Repository.Path);
     xConfig.Flush;
 end;
+
+procedure TmForm.SoftwareUpdate(Silent: boolean);
+begin
+
+end;
+
 
 end.
 
