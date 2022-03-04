@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, opensslsockets, fphttpclient, uAppNLS, uLog;
+  XMLConf, LCLType, LCLIntf, opensslsockets, fphttpclient, uAppNLS, uLog;
 
 type
 
@@ -274,7 +274,9 @@ var
   SL : TStringList;
   Client: TFPHTTPClient;
 begin
-  if Silent and UpdateChecked then exit;
+  if Silent then begin
+     if UpdateChecked then exit;
+  end;
   FUpdateChecked := True;
   Query := 'https://up.lod.bz/' +
     StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
@@ -312,6 +314,14 @@ begin
              LookupValue('data-application', SL) +
              ' v' + LookupValue('data-version', SL) +
              ', ' + LookupValue('data-bytes', SL) + ' bytes');
+           if MessageDlg(Format(msg_UpdateAvailable, [
+             LookupValue('data-application', SL),
+             LookupValue('data-version', SL),
+             LookupValue('data-bytes', SL)
+             ]), mtConfirmation, [mbYes,mbNo], 0) = mrYes then begin
+               OpenURL(LookupValue('data-link', SL));
+               OpenURL(Query);
+             end;
         end;
       except
         on E: Exception do begin
