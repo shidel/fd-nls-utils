@@ -3,6 +3,9 @@ unit PasExt;
 {$warn 5023 off : no warning about unused units}
 interface
 
+uses
+  Classes, SysUtils;
+
 const
   {$if defined(windows)}
   PlatformID = 'WIN';
@@ -16,6 +19,14 @@ const
   PlatformID = 'UNK';
   {$endif}
 
+const
+  SPACE       = #$20;
+  TAB         = #$09;
+  CR          = #$0d;
+  LF          = #$0a;
+  UNDERSCORE  = #$5f;
+  CRLF        = #$0d#$0a;
+
 var
   UserHomePath  : String;      { User's Home directory }
   AppDataPath   : String;      { Location for program data files }
@@ -26,10 +37,22 @@ procedure InitPasExt(Identifier : String);
 
 function VerifiedPath (Parent, SubDir : String) : string;
 
-implementation
+function PopDelim(var AStr : String; ADelim: String = SPACE): String; overload;
 
-uses
-  Classes, SysUtils;
+function SubStr(AStr : String; AFrom : String; ATo : String;  MatchCase : boolean = True) : String; overload;
+function SubStr(AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
+function Excise(var AStr : String; AFrom : String; ATo : String;  MatchCase : boolean = True) : String; overload;
+function Excise(var AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
+
+function Implode(AStr: String; ADelim : String = SPACE) : String; overload;
+procedure Explode(AStr : String; var AStrs : TStringList; ADelim : String; ATrim : boolean = false); overload;
+procedure Explode(AStr : String; var AStrs : TStringList; ATrim : boolean = false); overload;
+
+function Lookup(AStr : String; AStrs : TStringList; MatchCase : boolean = false) : LongInt; overload;
+function LookupValue(AStr : String; AStrs : TStringList; Default : String; MatchCase : boolean = false) : String; overload;
+function LookupValue(AStr : String; AStrs : TStringList; MatchCase : boolean = false) : String; overload;
+
+implementation
 
 procedure InitPasExt(Identifier : String);
 var
@@ -90,6 +113,150 @@ begin
   if not DirectoryExists(Parent + SubDir) then
      if not CreateDir(Parent + SubDir) then exit;
   Result := IncludeTrailingPathDelimiter(Parent + SubDir);
+end;
+
+function PopDelim(var AStr : String; ADelim: String = SPACE): String;
+var
+  P : integer;
+begin
+  P := Pos(ADelim, AStr);
+  if P <= 0 then P := Length(AStr) + 1;
+  Result := Copy(AStr, 1, P - 1);
+  Delete(AStr, 1, P - 1 + Length(ADelim));
+end;
+
+function SubStrExcise(var AStr : String; AFrom : String; ATo : String;  MatchCase, Remove : boolean) : String; overload;
+var
+  S : String;
+  P, E, EL : integer;
+begin
+  if not MatchCase then begin
+     AFrom := UpperCase(AFrom);
+     ATo := UpperCase(ATo);
+     S := UpperCase(AStr);
+  end else
+      S := AStr;
+  P := Pos(AFrom, S);
+  if P > 1 then begin
+    EL := Length(ATo);
+    if EL = 0 then begin
+      E := 0;
+      EL := 1;
+    end else
+       E := Pos(ATo, S, P + Length(AFrom));
+    if E < 1 then E := Length(S) + 1;
+    Result := Copy(AStr, P + Length(AFrom), E - P - Length(AFrom));
+    if Remove then
+      Delete(AStr, P, E - P + Length(ATo));
+  end else
+    Result := '';
+end;
+
+function SubStr(AStr : String; AFrom : String; ATo : String;  MatchCase : boolean = True) : String; overload;
+begin
+  Result := SubStrExcise(AStr, AFrom, ATo, MatchCase, False);
+end;
+
+function SubStr(AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
+begin
+  Result := SubStrExcise(AStr, AFrom, '', MatchCase, False);
+end;
+
+function Excise(var AStr : String; AFrom : String; ATo : String;  MatchCase : boolean = True) : String; overload;
+begin
+  Result := SubStrExcise(AStr, AFrom, ATo, MatchCase, True);
+end;
+
+function Excise(var AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
+begin
+  Result := SubStrExcise(AStr, AFrom, '', MatchCase, True);
+end;
+
+function Implode(AStr: String; ADelim : String = SPACE) : String; overload;
+begin
+  Result :=
+    StringReplace(
+      StringReplace(
+        StringReplace(AStr, CRLF, ADelim, [rfReplaceAll]),
+      LF, ADelim, [rfReplaceAll]),
+    CR, ADelim, [rfReplaceAll]);
+end;
+
+procedure Explode(AStr : String; var AStrs : TStringList; ADelim : String;
+  ATrim : boolean = false); overload;
+var
+  S, K : String;
+begin
+  While Length(AStr) > 0 do begin
+    S := PopDelim(AStr, ADelim);
+    if ATrim then begin
+      S := Trim(S);
+      if Pos('=', S) > 0 then begin
+        K := Trim(PopDelim(S, '='));
+        S := Trim(S);
+        AStrs.Add(K + '=' + S);
+      end else if Length(S) > 0 then
+        AStrs.Add(S);
+    end else
+      AStrs.Add(S);
+  end;
+end;
+
+procedure Explode(AStr: String; var AStrs: TStringList; ATrim: boolean = False);
+begin
+  Explode(AStr, AStrs, SPACE, ATrim);
+end;
+
+function Lookup(AStr: String; AStrs: TStringList; MatchCase: boolean): LongInt;
+var
+  I : LongInt;
+begin
+  AStr := AStr + '=';
+  Result := -1;
+  if not MatchCase then begin
+    AStr := UpperCase(AStr);
+    for I := 0 to AStrs.Count - 1 do begin
+      if Uppercase(Copy(AStrs[I], 0, Length(AStr))) = AStr then begin
+         Result := I;
+         Break;
+      end;
+    end;
+  end else begin
+    for I := 0 to AStrs.Count - 1 do begin
+      if Copy(AStrs[I], 0, Length(AStr)) = AStr then begin
+         Result := I;
+         Break;
+      end;
+    end;
+  end;
+end;
+
+function LookupValue(AStr: String; AStrs: TStringList; Default: String;
+  MatchCase: boolean = false): String;
+var
+  I : LongInt;
+  S : String;
+begin
+  I := Lookup(AStr, AStrs, MatchCase);
+  if I = -1 then
+     Result := Default
+  else begin
+    S := AStrs[I];
+    PopDelim(S, '=');
+    if Copy(S, 1, 1) = Copy(S, Length(S), 1) then begin
+      if Copy(S, 1, 1) = '"' then begin
+        Delete(S, 1, 1);
+        Delete(S, Length(S), 1);
+      end;
+    end;
+    Result := S;
+  end;
+end;
+
+function LookupValue(AStr: String; AStrs: TStringList; MatchCase: boolean = false
+  ): String;
+begin
+  Result := LookupValue(AStr, AStrs, '', MatchCase);
 end;
 
 initialization

@@ -67,6 +67,11 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLog"/>
       </Unit>
+      <Unit>
+        <Filename Value="uappnls.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uAppNLS"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, opensslsockets, fphttpclient, uLog;
+  XMLConf, LCLType, opensslsockets, fphttpclient, uAppNLS, uLog;
 
 type
 
@@ -258,31 +258,60 @@ end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);
 var
-  Query : String;
+  Query, R, S : String;
+  I : LongInt;
   SS: TStringStream;
+  SL : TStringList;
   Client: TFPHTTPClient;
 begin
   Query := 'https://up.lod.bz/' +
     StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
     '/' + PlatformID + '-' + APP_VERSION;
-  Query := 'https://upr.lod.bz/ChatterBox/3395';
+  Query := 'https://up.lod.bz/ChatterBox/3394';
   Log(Self, 'Check for update ' + Query);
   SS := TStringStream.Create('');
+  SL := TStringList.Create;
   try
     Client := TFPHTTPClient.Create(nil);
     try
       try
         Client.Get(Query, SS);
       except
-        on E: Exception do
+        on E: Exception do begin
            Log(Self, E.Message);
+           if not Silent then
+              MessageDlg(E.Message, mtError, [mbOk], 0);
+        end;
       end;
-      Log(Self, SS.DataString);
+      R := SubStr(SS.DataString, '<meta name="update-server"', '/>', False);
+      if (R = '') then begin
+        if Pos('NO DOWNLOADS', UpperCase(SS.DataString)) > 0 then begin
+          // Unknown to server
+          Log(Self, APP_PRODUCTNAME + ' is not known to server.');
+          if not Silent then
+            MessageDlg(msg_NoAppUpdatesAvail, mtConfirmation, [mbOk], 0);
+        end else begin
+          // No update at present
+           Log(Self, APP_PRODUCTNAME + ' is latest version.');
+           if not Silent then
+             MessageDlg(msg_UsingLatestAppVersion, mtConfirmation, [mbOk], 0);
+        end;
+      end else begin
+         // Update is available
+         Explode(R, SL, True);
+         Log(Self, 'Version ' + LookupValue('data-version', SL) + ' available ' +
+                  LookupValue('data-bytes', SL) + ' bytes');
+         { for I := 0 to SL.Count - 1 do
+           Log(Self, SL.Strings[I]); }
+            // msg_UsingLatestAppVersion
+            // Log(Self, SS.DataString);
+      end;
     finally
       FreeAndNil(Client);
     end;
   finally
     SS.Free;
+    SL.Free;
   end;
 end;
 
