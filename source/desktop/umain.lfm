@@ -1,7 +1,7 @@
 object mForm: TmForm
-  Left = 235
+  Left = 224
   Height = 445
-  Top = 179
+  Top = 128
   Width = 772
   Caption = 'FD-NLS'
   ClientHeight = 445
@@ -107,6 +107,47 @@ object mForm: TmForm
             Caption = 'General'
             ClientHeight = 299
             ClientWidth = 626
+            object lbSoftwareUpdate: TLabel
+              Left = 16
+              Height = 16
+              Top = 8
+              Width = 106
+              Caption = 'Software Update:'
+            end
+            object cbSoftwareUpdate: TComboBox
+              Left = 17
+              Height = 20
+              Top = 32
+              Width = 487
+              Anchors = [akTop, akLeft, akRight]
+              ItemHeight = 26
+              ItemIndex = 0
+              Items.Strings = (
+                'disabled'
+                'Monthly'
+                'Weekly'
+                'Daily'
+                'Always'
+              )
+              ReadOnly = True
+              Style = csDropDownList
+              TabOrder = 0
+              Text = 'disabled'
+            end
+            object bbSoftwareUpdate: TButton
+              Left = 520
+              Height = 28
+              Top = 28
+              Width = 91
+              Action = actCheckForUpdate
+              Anchors = [akTop, akRight]
+              TabOrder = 1
+            end
+          end
+          object tsRepo: TTabSheet
+            Caption = 'Repository'
+            ClientHeight = 299
+            ClientWidth = 626
             object lbLocalRepo: TLabel
               Left = 16
               Height = 16
@@ -127,46 +168,11 @@ object mForm: TmForm
             object bbLocalRepo: TBitBtn
               Left = 536
               Height = 28
-              Top = 30
+              Top = 28
               Width = 75
               Action = actLocalRepoDir
               Anchors = [akTop, akRight]
               TabOrder = 1
-            end
-            object lbSoftwareUpdate: TLabel
-              Left = 16
-              Height = 16
-              Top = 72
-              Width = 106
-              Caption = 'Software Update:'
-            end
-            object cbSoftwareUpdate: TComboBox
-              Left = 17
-              Height = 20
-              Top = 96
-              Width = 487
-              Anchors = [akTop, akLeft, akRight]
-              ItemHeight = 26
-              ItemIndex = 0
-              Items.Strings = (
-                'disabled'
-                'Daily'
-                'Weekly'
-                'Monthy'
-              )
-              ReadOnly = True
-              Style = csDropDownList
-              TabOrder = 2
-              Text = 'disabled'
-            end
-            object bbSoftwareUpdate: TButton
-              Left = 520
-              Height = 28
-              Top = 92
-              Width = 91
-              Action = actCheckForUpdate
-              Anchors = [akTop, akRight]
-              TabOrder = 3
             end
           end
           object tsLanguages: TTabSheet

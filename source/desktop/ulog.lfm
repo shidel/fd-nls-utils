@@ -1,21 +1,21 @@
 object fLog: TfLog
-  Left = 130
-  Height = 240
-  Top = 122
-  Width = 320
+  Left = 1000
+  Height = 445
+  Top = 128
+  Width = 269
   BorderStyle = bsSizeToolWin
   Caption = 'Debug Log'
-  ClientHeight = 240
-  ClientWidth = 320
+  ClientHeight = 445
+  ClientWidth = 269
   OnCreate = FormCreate
   SessionProperties = 'ClientHeight;ClientWidth;Left;Width;WindowState;Height;Top'
   ShowInTaskBar = stNever
   LCLVersion = '2.3.0.0'
   object Memo1: TMemo
     Left = 8
-    Height = 224
+    Height = 429
     Top = 8
-    Width = 304
+    Width = 253
     Anchors = [akTop, akLeft, akRight, akBottom]
     Lines.Strings = (
       'Memo1'

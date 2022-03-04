@@ -28,8 +28,8 @@ type
     cbSoftwareUpdate: TComboBox;
     edLocalRepo: TEdit;
     imgAbout: TImage;
-    lbSoftwareUpdate: TLabel;
     lbLocalRepo: TLabel;
+    lbSoftwareUpdate: TLabel;
     memoAbout: TMemo;
     mMain: TMainMenu;
     pSeparatorAbout: TPanel;
@@ -42,6 +42,7 @@ type
     sbMain: TStatusBar;
     sdLocalRepo: TSelectDirectoryDialog;
     sPrefs: TSplitter;
+    tsRepo: TTabSheet;
     tsLanguages: TTabSheet;
     tsGeneral: TTabSheet;
     tsAbout: TTabSheet;
@@ -98,7 +99,6 @@ begin
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
-   SoftwareUpdate(True);
 end;
 
 procedure TmForm.actAppleAboutExecute(Sender: TObject);
@@ -112,32 +112,8 @@ begin
 end;
 
 procedure TmForm.actCheckForUpdateExecute(Sender: TObject);
-var
-  Query : String;
-  SS: TStringStream;
-  Client: TFPHTTPClient;
 begin
-  Query := 'https://up.lod.bz/' +
-    StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
-    '/' + PlatformID + '-' + APP_VERSION;
-  Log(Self, 'Check for update ' + Query);
-  SS := TStringStream.Create('');
-  try
-    Client := TFPHTTPClient.Create(nil);
-    try
-      try
-        Client.Get(Query, SS);
-      except
-        on E: Exception do
-           Log(Self, E.Message);
-      end;
-      Log(Self, SS.DataString);
-    finally
-      FreeAndNil(Client);
-    end;
-  finally
-    SS.Free;
-  end;
+  SoftwareUpdate(False);
 end;
 
 procedure TmForm.actLocalRepoDirExecute(Sender: TObject);
@@ -281,10 +257,34 @@ begin
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);
+var
+  Query : String;
+  SS: TStringStream;
+  Client: TFPHTTPClient;
 begin
-
+  Query := 'https://up.lod.bz/' +
+    StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
+    '/' + PlatformID + '-' + APP_VERSION;
+  Query := 'https://upr.lod.bz/ChatterBox/3395';
+  Log(Self, 'Check for update ' + Query);
+  SS := TStringStream.Create('');
+  try
+    Client := TFPHTTPClient.Create(nil);
+    try
+      try
+        Client.Get(Query, SS);
+      except
+        on E: Exception do
+           Log(Self, E.Message);
+      end;
+      Log(Self, SS.DataString);
+    finally
+      FreeAndNil(Client);
+    end;
+  finally
+    SS.Free;
+  end;
 end;
-
 
 end.
 
