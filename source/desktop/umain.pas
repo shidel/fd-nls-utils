@@ -58,6 +58,9 @@ type
     procedure FormCreate(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
+    FUpdateChecked: boolean;
+    procedure SetUpdateChecked(AValue: boolean);
+  private
     Repository: TFDNLS;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
@@ -67,9 +70,9 @@ type
     procedure CreatePrefsTree;
     procedure CreateAboutText;
     procedure OpenRepository(Location : String);
-    procedure SoftwareUpdate(Silent : boolean);
+    property UpdateChecked : boolean read FUpdateChecked write SetUpdateChecked;
   public
-
+    procedure SoftwareUpdate(Silent : boolean);
   end;
 
 var
@@ -85,6 +88,7 @@ implementation
 
 procedure TmForm.FormCreate(Sender: TObject);
 begin
+   FUpdateChecked := False;
    // Hide some design time elements
    pcMain.ShowTabs := False;
    pcPrefs.ShowTabs := False;
@@ -113,7 +117,7 @@ end;
 
 procedure TmForm.actCheckForUpdateExecute(Sender: TObject);
 begin
-  SoftwareUpdate(False);
+    SoftwareUpdate(False);
 end;
 
 procedure TmForm.actLocalRepoDirExecute(Sender: TObject);
@@ -141,6 +145,12 @@ begin
        exit;
      end;
    end;
+end;
+
+procedure TmForm.SetUpdateChecked(AValue: boolean);
+begin
+  if FUpdateChecked=AValue then Exit;
+  FUpdateChecked:=AValue;
 end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;
@@ -258,15 +268,18 @@ end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);
 var
-  Query, R, S : String;
+  Query, R : String;
   I : LongInt;
   SS: TStringStream;
   SL : TStringList;
   Client: TFPHTTPClient;
 begin
+  if Silent and UpdateChecked then exit;
+  FUpdateChecked := True;
   Query := 'https://up.lod.bz/' +
     StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
     '/' + PlatformID + '-' + APP_VERSION;
+  // Query := 'https://up.lod.bz/ChatterBox/3396';
   Query := 'https://up.lod.bz/ChatterBox/3394';
   Log(Self, 'Check for update ' + Query);
   SS := TStringStream.Create('');
@@ -276,35 +289,36 @@ begin
     try
       try
         Client.Get(Query, SS);
+        R := SubStr(SS.DataString, '<meta name="update-server"', '/>', False);
+        if (R = '') then begin
+          if Pos('NO DOWNLOADS', UpperCase(SS.DataString)) > 0 then begin
+            // Unknown to server
+            Log(Self, APP_PRODUCTNAME + ' is not known to server.');
+            if not Silent then
+              MessageDlg(msg_NoAppUpdatesAvail, mtConfirmation, [mbOk], 0);
+          end else begin
+            // No update at present
+             Log(Self, APP_PRODUCTNAME + ' is latest version.');
+             if not Silent then
+               MessageDlg(msg_UsingLatestAppVersion, mtConfirmation, [mbOk], 0);
+          end;
+        end else begin
+           // Update is available
+           Explode(R, SL, True);
+           for I := 0 to SL.Count - 1 do
+             if HasLeading('DATA-', SL.Strings[I], false) then
+               Log(Self, '  ' + SL.Strings[I]);
+           Log(Self, 'Download available: ' +
+             LookupValue('data-application', SL) +
+             ' v' + LookupValue('data-version', SL) +
+             ', ' + LookupValue('data-bytes', SL) + ' bytes');
+        end;
       except
         on E: Exception do begin
            Log(Self, E.Message);
            if not Silent then
               MessageDlg(E.Message, mtError, [mbOk], 0);
         end;
-      end;
-      R := SubStr(SS.DataString, '<meta name="update-server"', '/>', False);
-      if (R = '') then begin
-        if Pos('NO DOWNLOADS', UpperCase(SS.DataString)) > 0 then begin
-          // Unknown to server
-          Log(Self, APP_PRODUCTNAME + ' is not known to server.');
-          if not Silent then
-            MessageDlg(msg_NoAppUpdatesAvail, mtConfirmation, [mbOk], 0);
-        end else begin
-          // No update at present
-           Log(Self, APP_PRODUCTNAME + ' is latest version.');
-           if not Silent then
-             MessageDlg(msg_UsingLatestAppVersion, mtConfirmation, [mbOk], 0);
-        end;
-      end else begin
-         // Update is available
-         Explode(R, SL, True);
-         Log(Self, 'Version ' + LookupValue('data-version', SL) + ' available ' +
-                  LookupValue('data-bytes', SL) + ' bytes');
-         { for I := 0 to SL.Count - 1 do
-           Log(Self, SL.Strings[I]); }
-            // msg_UsingLatestAppVersion
-            // Log(Self, SS.DataString);
       end;
     finally
       FreeAndNil(Client);

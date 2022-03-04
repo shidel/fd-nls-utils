@@ -52,6 +52,14 @@ function Lookup(AStr : String; AStrs : TStringList; MatchCase : boolean = false)
 function LookupValue(AStr : String; AStrs : TStringList; Default : String; MatchCase : boolean = false) : String; overload;
 function LookupValue(AStr : String; AStrs : TStringList; MatchCase : boolean = false) : String; overload;
 
+function HasTrailing(ASubStr, AStr : String; CaseSpecific : boolean = true) : boolean; overload;
+function ExcludeTrailing(ASubStr, AStr : String; CaseSpecific : boolean = true) : String; overload;
+function IncludeTrailing(ASubStr, AStr : String; CaseSpecific : boolean = true) : String; overload;
+
+function HasLeading(ASubStr, AStr : String; CaseSpecific : boolean = true) : boolean; overload;
+function ExcludeLeading(ASubStr, AStr : String; CaseSpecific : boolean = true) : String; overload;
+function IncludeLeading(ASubStr, AStr : String; CaseSpecific : boolean = true) : String; overload;
+
 implementation
 
 procedure InitPasExt(Identifier : String);
@@ -258,6 +266,55 @@ function LookupValue(AStr: String; AStrs: TStringList; MatchCase: boolean = fals
 begin
   Result := LookupValue(AStr, AStrs, '', MatchCase);
 end;
+
+function HasTrailing(ASubStr, AStr: String; CaseSpecific: boolean): boolean;
+begin
+  if CaseSpecific then
+    Result := Copy(AStr, Length(AStr) - Length(ASubStr) + 1) = ASubStr
+  else
+    Result := Uppercase(Copy(AStr, Length(AStr) - Length(ASubStr) + 1)) = Uppercase(ASubStr);
+end;
+
+function ExcludeTrailing(ASubStr, AStr: String; CaseSpecific: boolean): String;
+begin
+  if HasTrailing(ASubStr, AStr, CaseSpecific) then
+    Result := Copy(AStr, 1, Length(AStr) - Length(ASubStr))
+  else
+    Result := AStr;
+end;
+
+function IncludeTrailing(ASubStr, AStr: String; CaseSpecific: boolean): String;
+begin
+  if HasTrailing(ASubStr, AStr, CaseSpecific) then
+    Result := AStr
+  else
+    Result := AStr + ASubStr;
+end;
+
+function HasLeading(ASubStr, AStr: String; CaseSpecific: boolean): boolean;
+begin
+  if CaseSpecific then
+    Result := Copy(AStr, 1, Length(ASubStr)) = ASubStr
+  else
+    Result := Uppercase(Copy(AStr, 1, Length(ASubStr))) = Uppercase(ASubStr);
+end;
+
+function ExcludeLeading(ASubStr, AStr: String; CaseSpecific: boolean): String;
+begin
+  if HasLeading(ASubStr, AStr, CaseSpecific) then
+    Result := Copy(AStr, Length(ASubStr) + 1)
+  else
+    Result := AStr;
+end;
+
+function IncludeLeading(ASubStr, AStr: String; CaseSpecific: boolean): String;
+begin
+  if HasLeading(ASubStr, AStr, CaseSpecific) then
+    Result := AStr
+  else
+    Result := ASubStr + AStr;
+end;
+
 
 initialization
   InitPasExt('');
