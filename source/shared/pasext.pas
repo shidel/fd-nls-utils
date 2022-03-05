@@ -34,6 +34,9 @@ var
   AppCfgFile    : String;      { Application Config File }
   UpdateServer  : String;      { Application Update Server URL }
 
+type
+  TUpdateInterval = (auiNever, auiMonthy, auiWeekly, auiDaily, auiFrequent);
+
 procedure InitPasExt(Identifier : String);
 
 function VerifiedPath (Parent, SubDir : String) : string;

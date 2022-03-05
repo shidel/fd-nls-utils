@@ -55,7 +55,9 @@ type
     procedure actCheckForUpdateExecute(Sender: TObject);
     procedure actLocalRepoDirExecute(Sender: TObject);
     procedure actPrefsExecute(Sender: TObject);
+    procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure tsGeneralShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
     FUpdateChecked: boolean;
@@ -105,6 +107,11 @@ begin
    CreateAboutText;
 end;
 
+procedure TmForm.tsGeneralShow(Sender: TObject);
+begin
+  cbSoftwareUpdate.ItemIndex:= xConfig.GetValue('SOFTWARE/UPDATE/INERVAL', 4);
+end;
+
 procedure TmForm.actAppleAboutExecute(Sender: TObject);
 begin
    SelectPrefsPage(tsAbout);
@@ -133,6 +140,11 @@ end;
 procedure TmForm.actPrefsExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
+end;
+
+procedure TmForm.cbSoftwareUpdateChange(Sender: TObject);
+begin
+  xConfig.SetValue('SOFTWARE/UPDATE/INERVAL', cbSoftwareUpdate.ItemIndex);
 end;
 
 procedure TmForm.tvPrefsChange(Sender: TObject; Node: TTreeNode);

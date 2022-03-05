@@ -107,6 +107,7 @@ object mForm: TmForm
             Caption = 'General'
             ClientHeight = 299
             ClientWidth = 626
+            OnShow = tsGeneralShow
             object lbSoftwareUpdate: TLabel
               Left = 16
               Height = 16
@@ -129,6 +130,7 @@ object mForm: TmForm
                 'Daily'
                 'Always'
               )
+              OnChange = cbSoftwareUpdateChange
               ReadOnly = True
               Style = csDropDownList
               TabOrder = 0
