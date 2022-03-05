@@ -1,7 +1,7 @@
 object mForm: TmForm
-  Left = 196
+  Left = 219
   Height = 445
-  Top = 228
+  Top = 128
   Width = 772
   Caption = 'FD-NLS'
   ClientHeight = 445
@@ -99,9 +99,9 @@ object mForm: TmForm
           Height = 329
           Top = 0
           Width = 632
-          ActivePage = tsGeneral
+          ActivePage = tsRepo
           Align = alClient
-          TabIndex = 0
+          TabIndex = 1
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'General'
@@ -141,7 +141,7 @@ object mForm: TmForm
               Height = 28
               Top = 28
               Width = 91
-              Action = actCheckForUpdate
+              Action = actSoftwareUpdate
               Anchors = [akTop, akRight]
               TabOrder = 1
             end
@@ -150,6 +150,7 @@ object mForm: TmForm
             Caption = 'Repository'
             ClientHeight = 299
             ClientWidth = 626
+            OnShow = tsRepoShow
             object lbLocalRepo: TLabel
               Left = 16
               Height = 16
@@ -157,24 +158,20 @@ object mForm: TmForm
               Width = 104
               Caption = 'Local Repository:'
             end
-            object edLocalRepo: TEdit
-              Left = 17
+            object deLocalRepo: TDirectoryEdit
+              Left = 16
               Height = 22
               Top = 32
-              Width = 511
+              Width = 592
+              Directory = 'deLocalRepo'
+              OnAcceptDirectory = deLocalRepoAcceptDirectory
+              ShowHidden = False
+              ButtonWidth = 23
+              NumGlyphs = 1
               Anchors = [akTop, akLeft, akRight]
-              ReadOnly = True
+              MaxLength = 0
               TabOrder = 0
-              Text = 'edLocalRepo'
-            end
-            object bbLocalRepo: TBitBtn
-              Left = 536
-              Height = 28
-              Top = 28
-              Width = 75
-              Action = actLocalRepoDir
-              Anchors = [akTop, akRight]
-              TabOrder = 1
+              Text = 'deLocalRepo'
             end
           end
           object tsLanguages: TTabSheet
@@ -2579,15 +2576,10 @@ object mForm: TmForm
       GroupIndex = 3
       OnExecute = actPrefsExecute
     end
-    object actLocalRepoDir: TAction
-      Category = 'UI'
-      Caption = 'Browse'
-      OnExecute = actLocalRepoDirExecute
-    end
-    object actCheckForUpdate: TAction
+    object actSoftwareUpdate: TAction
       Category = 'UI'
       Caption = 'Check Now'
-      OnExecute = actCheckForUpdateExecute
+      OnExecute = actSoftwareUpdateExecute
     end
   end
   object sdLocalRepo: TSelectDirectoryDialog
@@ -2595,7 +2587,6 @@ object mForm: TmForm
     Top = 112
   end
   object itMinute: TTimer
-    Interval = 60000
     OnTimer = itMinuteTimer
     Left = 80
     Top = 120

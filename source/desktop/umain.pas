@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, LCLIntf, opensslsockets, fphttpclient, DateUtils,
-  uAppNLS, uLog;
+  XMLConf, LCLType, LCLIntf, EditBtn, ComboEx, opensslsockets, fphttpclient,
+  DateUtils, uAppNLS, uLog;
 
 type
 
@@ -17,17 +17,15 @@ type
   TmForm = class(TForm)
     actAppleAbout: TAction;
     actApplePrefs: TAction;
-    actCheckForUpdate: TAction;
-    actLocalRepoDir: TAction;
+    actSoftwareUpdate: TAction;
     actMenuHelp: TAction;
     actPrefs: TAction;
     actMenuOpts: TAction;
     actMenuFile: TAction;
     alMain: TActionList;
-    bbLocalRepo: TBitBtn;
     bbSoftwareUpdate: TButton;
     cbSoftwareUpdate: TComboBox;
-    edLocalRepo: TEdit;
+    deLocalRepo: TDirectoryEdit;
     imgAbout: TImage;
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
@@ -54,13 +52,14 @@ type
     xProperties: TXMLPropStorage;
     procedure actAppleAboutExecute(Sender: TObject);
     procedure actApplePrefsExecute(Sender: TObject);
-    procedure actCheckForUpdateExecute(Sender: TObject);
-    procedure actLocalRepoDirExecute(Sender: TObject);
     procedure actPrefsExecute(Sender: TObject);
+    procedure actSoftwareUpdateExecute(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
+    procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
     procedure FormCreate(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
+    procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
     Repository: TFDNLS;
@@ -107,13 +106,19 @@ end;
 
 procedure TmForm.itMinuteTimer(Sender: TObject);
 begin
-  // Log(Self, 'Minute Interval Trigger');
+   // Log(Self, 'Minute Interval Trigger');
+  itMinute.Interval := 60 * 1000; { 60 second intervals }
   mForm.SoftwareUpdate(True);
 end;
 
 procedure TmForm.tsGeneralShow(Sender: TObject);
 begin
   cbSoftwareUpdate.ItemIndex:= xConfig.GetValue('SOFTWARE/UPDATE/INERVAL', 4);
+end;
+
+procedure TmForm.tsRepoShow(Sender: TObject);
+begin
+  deLocalRepo.Directory:=xConfig.GetValue('REPOSITORY/LOCAL/PATH', '');
 end;
 
 procedure TmForm.actAppleAboutExecute(Sender: TObject);
@@ -126,30 +131,25 @@ begin
   SelectPrefsPage(tsGeneral);
 end;
 
-procedure TmForm.actCheckForUpdateExecute(Sender: TObject);
-begin
-    SoftwareUpdate(False);
-end;
-
-procedure TmForm.actLocalRepoDirExecute(Sender: TObject);
-begin
-  if Repository.Path = '' then
-     sdLocalRepo.InitialDir:=UserHomePath
-  else
-     sdLocalRepo.InitialDir:=Repository.Path;
-  if sdLocalRepo.Execute then
-     OpenRepository(sdLocalRepo.FileName);
-end;
-
 procedure TmForm.actPrefsExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
+end;
+
+procedure TmForm.actSoftwareUpdateExecute(Sender: TObject);
+begin
+  SoftwareUpdate(False);
 end;
 
 procedure TmForm.cbSoftwareUpdateChange(Sender: TObject);
 begin
   xConfig.SetValue('SOFTWARE/UPDATE/INERVAL', cbSoftwareUpdate.ItemIndex);
   xConfig.Flush;
+end;
+
+procedure TmForm.deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
+begin
+  OpenRepository(deLocalRepo.Directory);
 end;
 
 procedure TmForm.tvPrefsChange(Sender: TObject; Node: TTreeNode);
@@ -272,7 +272,6 @@ end;
 procedure TmForm.OpenRepository(Location : String);
 begin
     Repository.Path:= Location;
-    edLocalRepo.Text:= Repository.Path;
     xConfig.SetValue('REPOSITORY/LOCAL/PATH', Repository.Path);
     xConfig.Flush;
 end;
