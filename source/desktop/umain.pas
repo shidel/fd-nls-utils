@@ -39,7 +39,6 @@ type
     pSeparatorUpper: TPanel;
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
-    sdLocalRepo: TSelectDirectoryDialog;
     sPrefs: TSplitter;
     itMinute: TTimer;
     tsRepo: TTabSheet;

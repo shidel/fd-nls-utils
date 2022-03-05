@@ -42,6 +42,15 @@
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
+        <Filename Value="uappnls.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uAppNLS"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="27" Y="18"/>
+        <UsageCount Value="78"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="14" Y="27"/>
@@ -91,17 +100,8 @@
         <CursorPos X="56" Y="10"/>
         <UsageCount Value="4"/>
       </Unit>
-      <Unit>
-        <Filename Value="uappnls.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="uAppNLS"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="27" Y="18"/>
-        <UsageCount Value="78"/>
-        <Loaded Value="True"/>
-      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
+    <JumpHistory HistoryIndex="27">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="111" TopLine="73"/>
@@ -212,15 +212,7 @@
       </Position>
       <Position>
         <Filename Value="umain.pas"/>
-        <Caret Line="57" TopLine="99"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
         <Caret Line="276" TopLine="240"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="121" Column="72" TopLine="270"/>
       </Position>
     </JumpHistory>
     <RunParams>
