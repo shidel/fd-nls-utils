@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, LCLIntf, opensslsockets, fphttpclient, uAppNLS, uLog;
+  XMLConf, LCLType, LCLIntf, opensslsockets, fphttpclient, DateUtils,
+  uAppNLS, uLog;
 
 type
 
@@ -42,6 +43,7 @@ type
     sbMain: TStatusBar;
     sdLocalRepo: TSelectDirectoryDialog;
     sPrefs: TSplitter;
+    MinuteInterval: TTimer;
     tsRepo: TTabSheet;
     tsLanguages: TTabSheet;
     tsGeneral: TTabSheet;
@@ -57,11 +59,9 @@ type
     procedure actPrefsExecute(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure MinuteIntervalTimer(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
-  private
-    FUpdateChecked: boolean;
-    procedure SetUpdateChecked(AValue: boolean);
   private
     Repository: TFDNLS;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
@@ -72,7 +72,6 @@ type
     procedure CreatePrefsTree;
     procedure CreateAboutText;
     procedure OpenRepository(Location : String);
-    property UpdateChecked : boolean read FUpdateChecked write SetUpdateChecked;
   public
     procedure SoftwareUpdate(Silent : boolean);
   end;
@@ -90,14 +89,13 @@ implementation
 
 procedure TmForm.FormCreate(Sender: TObject);
 begin
-   FUpdateChecked := False;
    // Hide some design time elements
    pcMain.ShowTabs := False;
    pcPrefs.ShowTabs := False;
    // set Program configuration file
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // configure local repository
-   OpenRepository(xConfig.GetValue('LOCAL/REPO',  ''));
+   OpenRepository(xConfig.GetValue('REPOSITORY/LOCAL/PATH',  ''));
    // Assign the config application files
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := FormNodePath(Self);
@@ -105,6 +103,12 @@ begin
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
+end;
+
+procedure TmForm.MinuteIntervalTimer(Sender: TObject);
+begin
+  // Log(Self, 'Minute Interval Trigger');
+  mForm.SoftwareUpdate(True);
 end;
 
 procedure TmForm.tsGeneralShow(Sender: TObject);
@@ -145,6 +149,7 @@ end;
 procedure TmForm.cbSoftwareUpdateChange(Sender: TObject);
 begin
   xConfig.SetValue('SOFTWARE/UPDATE/INERVAL', cbSoftwareUpdate.ItemIndex);
+  xConfig.Flush;
 end;
 
 procedure TmForm.tvPrefsChange(Sender: TObject; Node: TTreeNode);
@@ -157,12 +162,6 @@ begin
        exit;
      end;
    end;
-end;
-
-procedure TmForm.SetUpdateChecked(AValue: boolean);
-begin
-  if FUpdateChecked=AValue then Exit;
-  FUpdateChecked:=AValue;
 end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;
@@ -274,28 +273,56 @@ procedure TmForm.OpenRepository(Location : String);
 begin
     Repository.Path:= Location;
     edLocalRepo.Text:= Repository.Path;
-    xConfig.SetValue('LOCAL/REPO', Repository.Path);
+    xConfig.SetValue('REPOSITORY/LOCAL/PATH', Repository.Path);
     xConfig.Flush;
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);
+const
+  DTFmt = 'yyyy-mm-dd hh:mm:ss';
 var
   Query, R : String;
   I : LongInt;
   SS: TStringStream;
   SL : TStringList;
   Client: TFPHTTPClient;
+  DT, LT : TDateTime;
 begin
+  DT := Now;
   if Silent then begin
-     if UpdateChecked then exit;
+     try
+       LT := ScanDateTime(DTFmt, xConfig.GetValue('SOFTWARE/UPDATE/CHECKED', 'failed'));
+       case xConfig.GetValue('SOFTWARE/UPDATE/INERVAL', 4) of
+         0 : { disabled } exit;
+         1 : { monthly } begin
+           if MonthOf(DT) = MonthOf(LT) then Exit;
+           if WeeksBetween(DT, LT) < 3 then Exit;
+         end;
+         2 : { weekly } begin
+           if WeekOf(DT) = WeekOf(LT) then Exit;
+           if DaysBetween(DT, LT) < 5 then Exit;
+         end;
+         3 : { daily } begin
+           if DayOf(DT) = DayOf(LT) then Exit;
+           if HoursBetween(DT, LT) < 18 then Exit;
+         end;
+         4 : { hourly } begin
+           if HourOf(DT) = HourOf(LT) then Exit;
+           if MinutesBetween(DT, LT) < 45 then Exit;
+         end;
+       end;
+     except
+       Log(Self, 'no previous software update check data');
+       { ignore errors / assume needs checked }
+     end;
   end;
-  FUpdateChecked := True;
+  xConfig.SetValue('SOFTWARE/UPDATE/CHECKED', FormatDateTime(DTFmt, DT));
+  XConfig.Flush;
   Query := UpdateServer +
     StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
-    '/' + PlatformID + '-' + APP_VERSION;
-  // Query := 'https://up.lod.bz/ChatterBox/3396';
-  // Query := 'https://up.lod.bz/ChatterBox/3394';
-  Log(Self, 'Check for update ' + Query);
+    '_' + PlatformID + '/' + APP_VERSION;
+  Log(Self, 'Check for update to ' + APP_PRODUCTNAME + ' v' + APP_VERSION);
+  Log(Self, 'Update URL ' + Query);
   SS := TStringStream.Create('');
   SL := TStringList.Create;
   try

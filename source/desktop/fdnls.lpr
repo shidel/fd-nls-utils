@@ -25,7 +25,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TmForm, mForm);
   Application.CreateForm(TfLog, fLog);
-  mForm.SoftwareUpdate(True);
+  fLog.AutoShow:=True;
   Application.Run;
 end.
 

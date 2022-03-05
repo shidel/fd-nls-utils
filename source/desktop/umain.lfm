@@ -1,7 +1,7 @@
 object mForm: TmForm
-  Left = 224
+  Left = 196
   Height = 445
-  Top = 128
+  Top = 228
   Width = 772
   Caption = 'FD-NLS'
   ClientHeight = 445
@@ -128,7 +128,7 @@ object mForm: TmForm
                 'Monthly'
                 'Weekly'
                 'Daily'
-                'Always'
+                'Hourly'
               )
               OnChange = cbSoftwareUpdateChange
               ReadOnly = True
@@ -2593,5 +2593,11 @@ object mForm: TmForm
   object sdLocalRepo: TSelectDirectoryDialog
     Left = 24
     Top = 112
+  end
+  object MinuteInterval: TTimer
+    Interval = 60000
+    OnTimer = MinuteIntervalTimer
+    Left = 80
+    Top = 120
   end
 end

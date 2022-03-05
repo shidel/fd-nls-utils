@@ -34,14 +34,12 @@ var
   AppCfgFile    : String;      { Application Config File }
   UpdateServer  : String;      { Application Update Server URL }
 
-type
-  TUpdateInterval = (auiNever, auiMonthy, auiWeekly, auiDaily, auiFrequent);
-
 procedure InitPasExt(Identifier : String);
 
 function VerifiedPath (Parent, SubDir : String) : string;
 
 function PopDelim(var AStr : String; ADelim: String = SPACE): String; overload;
+function FieldStr(AStr : String; AField : integer = 0; ADelim : String = SPACE) : String; overload;
 
 function SubStr(AStr : String; AFrom : String; ATo : String;  MatchCase : boolean = True) : String; overload;
 function SubStr(AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
@@ -135,6 +133,16 @@ begin
   if P <= 0 then P := Length(AStr) + 1;
   Result := Copy(AStr, 1, P - 1);
   Delete(AStr, 1, P - 1 + Length(ADelim));
+end;
+
+function FieldStr(AStr: String; AField: integer; ADelim: String): String;
+begin
+  Result := '';
+  if AField >= 0 then
+    repeat
+        Result := PopDelim(AStr, ADelim);
+        Dec(AField);
+    until (AField < 0) or ((Result = '') and (AStr = ''));
 end;
 
 function SubStrExcise(var AStr : String; AFrom : String; ATo : String;  MatchCase, Remove : boolean) : String; overload;

@@ -21,7 +21,7 @@ type
     procedure SetAutoShow(AValue: boolean);
 
   public
-    procedure Add(AMessage : String);
+    procedure Add(AMessage : String; TimeStamp : boolean = true);
   published
     property AutoShow : boolean read FAutoShow write SetAutoShow;
   end;
@@ -52,7 +52,9 @@ begin
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := FormNodePath(Self);
    LogText.Clear;
-   FAutoShow := True;
+   Add('Log started on ' + FormatDateTime('yyyy-mm-dd', Now));
+   Add('');
+   FAutoShow := False;
 end;
 
 procedure TfLog.SetAutoShow(AValue: boolean);
@@ -61,9 +63,12 @@ begin
   FAutoShow:=AValue;
 end;
 
-procedure TfLog.Add(AMessage: String);
+procedure TfLog.Add(AMessage: String; TimeStamp : boolean = true);
 begin
-   LogText.Append(AMessage);
+   if TimeStamp and (AMessage <> '') then
+     LogText.Append(FormatDateTime('hh:mm:ss.zzz', Now) + TAB + ' ' + AMessage)
+   else
+     LogText.Append(AMessage);
 end;
 
 end.
