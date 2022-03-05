@@ -2594,9 +2594,9 @@ object mForm: TmForm
     Left = 24
     Top = 112
   end
-  object MinuteInterval: TTimer
+  object itMinute: TTimer
     Interval = 60000
-    OnTimer = MinuteIntervalTimer
+    OnTimer = itMinuteTimer
     Left = 80
     Top = 120
   end

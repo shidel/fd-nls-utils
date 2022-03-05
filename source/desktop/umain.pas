@@ -43,7 +43,7 @@ type
     sbMain: TStatusBar;
     sdLocalRepo: TSelectDirectoryDialog;
     sPrefs: TSplitter;
-    MinuteInterval: TTimer;
+    itMinute: TTimer;
     tsRepo: TTabSheet;
     tsLanguages: TTabSheet;
     tsGeneral: TTabSheet;
@@ -59,7 +59,7 @@ type
     procedure actPrefsExecute(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure MinuteIntervalTimer(Sender: TObject);
+    procedure itMinuteTimer(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
@@ -105,7 +105,7 @@ begin
    CreateAboutText;
 end;
 
-procedure TmForm.MinuteIntervalTimer(Sender: TObject);
+procedure TmForm.itMinuteTimer(Sender: TObject);
 begin
   // Log(Self, 'Minute Interval Trigger');
   mForm.SoftwareUpdate(True);
