@@ -11,7 +11,7 @@ object fLog: TfLog
   SessionProperties = 'ClientHeight;ClientWidth;Left;Width;WindowState;Height;Top'
   ShowInTaskBar = stNever
   LCLVersion = '2.3.0.0'
-  object Memo1: TMemo
+  object LogText: TMemo
     Left = 8
     Height = 429
     Top = 8

@@ -32,6 +32,7 @@ var
   AppDataPath   : String;      { Location for program data files }
   AppCfgPath    : String;      { Location of application config file }
   AppCfgFile    : String;      { Application Config File }
+  UpdateServer  : String;      { Application Update Server URL }
 
 procedure InitPasExt(Identifier : String);
 
@@ -317,5 +318,6 @@ end;
 
 
 initialization
+  UpdateServer := 'https://up.lod.bz/';
   InitPasExt('');
 end.

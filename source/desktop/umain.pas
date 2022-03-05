@@ -278,11 +278,11 @@ begin
      if UpdateChecked then exit;
   end;
   FUpdateChecked := True;
-  Query := 'https://up.lod.bz/' +
+  Query := UpdateServer +
     StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +
     '/' + PlatformID + '-' + APP_VERSION;
   // Query := 'https://up.lod.bz/ChatterBox/3396';
-  Query := 'https://up.lod.bz/ChatterBox/3394';
+  // Query := 'https://up.lod.bz/ChatterBox/3394';
   Log(Self, 'Check for update ' + Query);
   SS := TStringStream.Create('');
   SL := TStringList.Create;
@@ -308,7 +308,7 @@ begin
            // Update is available
            Explode(R, SL, True);
            for I := 0 to SL.Count - 1 do
-             if HasLeading('DATA-', SL.Strings[I], false) then
+             if HasLeading('data-', SL.Strings[I], false) then
                Log(Self, '  ' + SL.Strings[I]);
            Log(Self, 'Download available: ' +
              LookupValue('data-application', SL) +

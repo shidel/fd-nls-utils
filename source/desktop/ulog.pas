@@ -13,13 +13,17 @@ type
   { TfLog }
 
   TfLog = class(TForm)
-    Memo1: TMemo;
+    LogText: TMemo;
     xProperties: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
   private
+    FAutoShow: boolean;
+    procedure SetAutoShow(AValue: boolean);
 
   public
-
+    procedure Add(AMessage : String);
+  published
+    property AutoShow : boolean read FAutoShow write SetAutoShow;
   end;
 
 var
@@ -31,8 +35,11 @@ implementation
 
 procedure Log(Sender: TForm; Message: String);
 begin
-  if not fLog.Visible then fLog.Show;
-  fLog.Memo1.Lines.Add(Message);
+  if not Assigned(fLog) then exit;
+  with fLog do begin
+       if (not Visible) and (AutoShow) then Show;
+       Add(Message);
+  end;
 end;
 
 {$R *.lfm}
@@ -44,7 +51,19 @@ procedure TfLog.FormCreate(Sender: TObject);
 begin
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := FormNodePath(Self);
-   Memo1.Clear;
+   LogText.Clear;
+   FAutoShow := True;
+end;
+
+procedure TfLog.SetAutoShow(AValue: boolean);
+begin
+  if FAutoShow=AValue then Exit;
+  FAutoShow:=AValue;
+end;
+
+procedure TfLog.Add(AMessage: String);
+begin
+   LogText.Append(AMessage);
 end;
 
 end.
