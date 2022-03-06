@@ -13,12 +13,52 @@ object mForm: TmForm
   SessionProperties = 'Height;Left;Top;tvPrefs.Width;Width;WindowState;ClientHeight;ClientWidth'
   LCLVersion = '2.3.0.0'
   Visible = True
+  object pControlArea: TPanel
+    Left = 0
+    Height = 40
+    Top = 0
+    Width = 772
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ClientHeight = 40
+    ClientWidth = 772
+    TabOrder = 4
+    object tbMain: TToolBar
+      Left = 0
+      Height = 40
+      Top = 0
+      Width = 772
+      AutoSize = True
+      ButtonHeight = 40
+      ButtonWidth = 36
+      Caption = 'tbMain'
+      EdgeBorders = []
+      Images = ilGlyphs36
+      TabOrder = 0
+      object tbPreferences: TToolButton
+        Left = 1
+        Top = 0
+        Action = actMenuOpts
+      end
+    end
+  end
   object sbMain: TStatusBar
     Left = 0
     Height = 18
     Top = 427
     Width = 772
     Panels = <>
+  end
+  object pSeparatorUpper: TPanel
+    Left = 0
+    Height = 5
+    Top = 40
+    Width = 772
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 2
+    Visible = False
   end
   object pSeperatorLower: TPanel
     Left = 0
@@ -30,40 +70,21 @@ object mForm: TmForm
     TabOrder = 1
     Visible = False
   end
-  object pSeparatorUpper: TPanel
-    Left = 0
-    Height = 5
-    Top = 50
-    Width = 772
-    Align = alTop
-    BevelOuter = bvNone
-    TabOrder = 2
-    Visible = False
-  end
-  object pControlArea: TPanel
-    Left = 0
-    Height = 50
-    Top = 0
-    Width = 772
-    Align = alTop
-    BevelOuter = bvNone
-    TabOrder = 3
-  end
   object pMain: TPanel
     Left = 0
-    Height = 367
-    Top = 55
+    Height = 377
+    Top = 45
     Width = 772
     Align = alClient
     BevelInner = bvSpace
     BevelOuter = bvSpace
     BevelWidth = 2
-    ClientHeight = 367
+    ClientHeight = 377
     ClientWidth = 772
-    TabOrder = 4
+    TabOrder = 3
     object pcMain: TPageControl
       Left = 4
-      Height = 359
+      Height = 369
       Top = 4
       Width = 764
       ActivePage = tsPrefs
@@ -72,11 +93,11 @@ object mForm: TmForm
       TabOrder = 0
       object tsPrefs: TTabSheet
         Caption = 'Preferences'
-        ClientHeight = 329
+        ClientHeight = 339
         ClientWidth = 758
         object tvPrefs: TTreeView
           Left = 0
-          Height = 329
+          Height = 339
           Top = 0
           Width = 121
           Align = alLeft
@@ -90,22 +111,22 @@ object mForm: TmForm
         end
         object sPrefs: TSplitter
           Left = 121
-          Height = 329
+          Height = 339
           Top = 0
           Width = 5
         end
         object pcPrefs: TPageControl
           Left = 126
-          Height = 329
+          Height = 339
           Top = 0
           Width = 632
-          ActivePage = tsAbout
+          ActivePage = tsLanguages
           Align = alClient
-          TabIndex = 3
+          TabIndex = 2
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'General'
-            ClientHeight = 299
+            ClientHeight = 309
             ClientWidth = 626
             OnShow = tsGeneralShow
             object lbSoftwareUpdate: TLabel
@@ -148,7 +169,7 @@ object mForm: TmForm
           end
           object tsRepo: TTabSheet
             Caption = 'Repository'
-            ClientHeight = 299
+            ClientHeight = 309
             ClientWidth = 626
             OnShow = tsRepoShow
             object lbLocalRepo: TLabel
@@ -176,11 +197,11 @@ object mForm: TmForm
           end
           object tsLanguages: TTabSheet
             Caption = 'Languages'
-            ClientHeight = 299
+            ClientHeight = 309
             ClientWidth = 626
             object lvLanguages: TListView
               Left = 16
-              Height = 246
+              Height = 256
               Top = 48
               Width = 600
               Anchors = [akTop, akLeft, akRight, akBottom]
@@ -193,11 +214,11 @@ object mForm: TmForm
           end
           object tsAbout: TTabSheet
             Caption = 'About'
-            ClientHeight = 299
+            ClientHeight = 309
             ClientWidth = 626
             object imgAbout: TImage
               Left = 0
-              Height = 104
+              Height = 114
               Top = 0
               Width = 626
               Align = alClient
@@ -2511,7 +2532,7 @@ object mForm: TmForm
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 294
+              Top = 304
               Width = 626
               Align = alBottom
               BevelOuter = bvNone
@@ -2520,7 +2541,7 @@ object mForm: TmForm
             object hpAbout: TIpHtmlPanel
               Left = 0
               Height = 190
-              Top = 104
+              Top = 114
               Width = 626
               Align = alBottom
               BgColor = clInfoBk
@@ -2585,6 +2606,8 @@ object mForm: TmForm
       Category = 'Menu'
       Caption = 'Options'
       GroupIndex = 3
+      ImageIndex = 7
+      OnExecute = actApplePrefsExecute
     end
     object actMenuHelp: TAction
       Category = 'Menu'
@@ -2607,5 +2630,18 @@ object mForm: TmForm
     OnTimer = itMinuteTimer
     Left = 80
     Top = 120
+  end
+  object ilGlyphs36: TImageList
+    Height = 36
+    Width = 36
+    Left = 24
+    Top = 376
+  end
+  object ilFlags100: TImageList
+    AllocBy = 16
+    Height = 100
+    Width = 100
+    Left = 24
+    Top = 328
   end
 end

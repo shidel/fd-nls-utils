@@ -8,16 +8,8 @@ uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
   XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, opensslsockets,
-  fphttpclient, DateUtils, uAppNLS, uLog;
+  fphttpclient, DateUtils, uAppNLS, uLog, Icons;
 
-const
-
-  { 3rd Party Icon and Copyright Information }
-
-  IconProviderCopyright = '2022 Icons8';
-  IconProviderURL       = 'https://icons8.com';
-  IconCollectionName    = 'APP-FDNLS';
-  IconCollectionURL     = 'https://icons8.com/icons/share-collections/uRjmCz4CbAnb';
 
 type
 
@@ -35,22 +27,26 @@ type
     bbSoftwareUpdate: TButton;
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
+    ilGlyphs36: TImageList;
+    ilFlags100: TImageList;
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
     mMain: TMainMenu;
+    pControlArea: TPanel;
     pSeparatorAbout: TPanel;
     pcPrefs: TPageControl;
     pMain: TPanel;
     pcMain: TPageControl;
-    pControlArea: TPanel;
     pSeparatorUpper: TPanel;
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
     sPrefs: TSplitter;
     itMinute: TTimer;
+    tbMain: TToolBar;
+    tbPreferences: TToolButton;
     tsRepo: TTabSheet;
     tsLanguages: TTabSheet;
     tsGeneral: TTabSheet;
@@ -77,6 +73,7 @@ type
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
     procedure SelectPrefsPage(Tab : TTabSheet);
+    procedure LoadGlyphResources;
     procedure CreateMainMenu;
     procedure CreatePrefsTree;
     procedure CreateAboutText;
@@ -109,6 +106,7 @@ begin
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := FormNodePath(Self);
    // Populate UI elements
+   LoadGlyphResources;
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
@@ -255,6 +253,16 @@ begin
     N := N.GetNext;
   end;
   pcMain.ActivePage := tsPrefs;
+end;
+
+procedure TmForm.LoadGlyphResources;
+var
+   I : Integer;
+begin
+  for I := Low(IconUI) to High(IconUI) do
+      ilGlyphs36.AddLazarusResource(IconUI[I]);
+  for I := Low(IconFlags) to High(IconFlags) do
+      ilFlags100.AddLazarusResource(IconFlags[I]);
 end;
 
 procedure TmForm.CreatePrefsTree;
