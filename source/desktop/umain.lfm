@@ -99,9 +99,9 @@ object mForm: TmForm
           Height = 329
           Top = 0
           Width = 632
-          ActivePage = tsRepo
+          ActivePage = tsAbout
           Align = alClient
-          TabIndex = 1
+          TabIndex = 3
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'General'
@@ -176,6 +176,20 @@ object mForm: TmForm
           end
           object tsLanguages: TTabSheet
             Caption = 'Languages'
+            ClientHeight = 299
+            ClientWidth = 626
+            object lvLanguages: TListView
+              Left = 16
+              Height = 246
+              Top = 48
+              Width = 600
+              Anchors = [akTop, akLeft, akRight, akBottom]
+              Checkboxes = True
+              Columns = <>
+              ReadOnly = True
+              RowSelect = True
+              TabOrder = 0
+            end
           end
           object tsAbout: TTabSheet
             Caption = 'About'
@@ -183,7 +197,7 @@ object mForm: TmForm
             ClientWidth = 626
             object imgAbout: TImage
               Left = 0
-              Height = 144
+              Height = 104
               Top = 0
               Width = 626
               Align = alClient
@@ -2492,32 +2506,39 @@ object mForm: TmForm
                 00000049454E44AE426082
               }
               Proportional = True
+              Transparent = True
             end
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 144
+              Top = 294
               Width = 626
               Align = alBottom
               BevelOuter = bvNone
               TabOrder = 0
             end
-            object memoAbout: TMemo
+            object hpAbout: TIpHtmlPanel
               Left = 0
-              Height = 150
-              Top = 149
+              Height = 190
+              Top = 104
               Width = 626
               Align = alBottom
-              Alignment = taCenter
-              BorderStyle = bsNone
-              Color = clForm
-              Lines.Strings = (
-                'memoAbout'
-              )
-              ReadOnly = True
-              ScrollBars = ssAutoVertical
+              BgColor = clInfoBk
+              BorderStyle = bsSingle
+              FixedTypeface = 'Courier'
+              DefaultTypeFace = 'default'
+              DefaultFontSize = 12
+              FlagErrors = False
+              PrintSettings.MarginLeft = 0.5
+              PrintSettings.MarginTop = 0.5
+              PrintSettings.MarginRight = 0.5
+              PrintSettings.MarginBottom = 0.5
+              PrintSettings.Preview.Left = 640
+              PrintSettings.Preview.Top = 360
+              PrintSettings.Preview.Width = 1920
+              PrintSettings.Preview.Height = 1080
               TabOrder = 1
-              TabStop = False
+              OnHotClick = hpAboutHotClick
             end
           end
         end

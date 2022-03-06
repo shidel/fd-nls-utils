@@ -7,8 +7,17 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, LCLIntf, EditBtn, ComboEx, opensslsockets, fphttpclient,
-  DateUtils, uAppNLS, uLog;
+  XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, opensslsockets,
+  fphttpclient, DateUtils, uAppNLS, uLog;
+
+const
+
+  { 3rd Party Icon and Copyright Information }
+
+  IconProviderCopyright = '2022 Icons8';
+  IconProviderURL       = 'https://icons8.com';
+  IconCollectionName    = 'APP-FDNLS';
+  IconCollectionURL     = 'https://icons8.com/icons/share-collections/uRjmCz4CbAnb';
 
 type
 
@@ -27,9 +36,10 @@ type
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
     imgAbout: TImage;
+    hpAbout: TIpHtmlPanel;
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
-    memoAbout: TMemo;
+    lvLanguages: TListView;
     mMain: TMainMenu;
     pSeparatorAbout: TPanel;
     pcPrefs: TPageControl;
@@ -56,6 +66,7 @@ type
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
     procedure FormCreate(Sender: TObject);
+    procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
@@ -101,6 +112,12 @@ begin
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
+end;
+
+procedure TmForm.hpAboutHotClick(Sender: TObject);
+begin
+  Log(Self, 'About URL click "' +  hpAbout.HotURL + '"');
+  OpenURL(hpAbout.HotURL);
 end;
 
 procedure TmForm.itMinuteTimer(Sender: TObject);
@@ -251,21 +268,35 @@ end;
 
 procedure TmForm.CreateAboutText;
 var
-   Rows : integer;
+  S: TStringStream;
+  H: TIpHtml;
 begin
-  // Create the text for the preferences about page
-  memoAbout.Clear;
-  memoAbout.Lines.Add('');
-  memoAbout.Lines.Add(APP_FILEDESCRIPTION);
-  memoAbout.Lines.Add('Version ' + APP_VERSION + ' (r' + SOURCE_REVISION + ')');
-  memoAbout.Lines.Add('BSD 3-Clause License');
-  memoAbout.Lines.Add('Copyright (c) ' + APP_LEGALCOPYRIGHT);
-  memoAbout.Lines.Add('');
-  memoAbout.Lines.Add('Created with the Lazarus IDE');
-  memoAbout.Lines.Add('and the Free Pascal Compiler');
-  Rows := memoAbout.Lines.Count + 1;
-  if Rows > 10 then Rows := 10;
-  memoAbout.Height:=memoAbout.Font.GetTextHeight(APP_LEGALCOPYRIGHT) * Rows;
+  try
+    S := TStringStream.Create(
+      '<html><body><center>' +
+      '<b>' + APP_FILEDESCRIPTION + '</b><br>' +
+      Format(msg_AboutVersion, [APP_VERSION, SOURCE_REVISION]) + '<br>' +
+      msg_AboutLicense + '<br>' +
+      Format(msg_AboutCopyright, [APP_LEGALCOPYRIGHT]) + '<br>' +
+      '<br>' +
+      Format(msg_AboutIconCopyright, [IconProviderCopyright,
+       '(<a href="' + IconProviderURL + '">' + IconProviderUrl + '</a>)<br>',
+       '<a href="' + IconCollectionURL + '">' + IconCollectionName + '</a>']) + '<br>' +
+       '<br>' +
+       Format(msg_AboutCreatedWith, ['<a href="https://www.lazarus-ide.org/">Lazarus IDE</a>',
+        '<a href="https://www.freepascal.org/">the Free Pascal Compiler</a>']) + '<br>' +
+      '</center></body></html>'
+    );
+    try
+      H:=TIpHtml.Create;
+      H.LoadFromStream(S);
+    finally
+      S.Free;
+    end;
+    hpAbout.SetHtml(H);
+    // TIpHtml is automatically freed by TIpHtmlPanel
+  finally
+  end;
 end;
 
 procedure TmForm.OpenRepository(Location : String);
