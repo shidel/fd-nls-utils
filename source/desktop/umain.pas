@@ -18,16 +18,19 @@ type
   TmForm = class(TForm)
     actAppleAbout: TAction;
     actApplePrefs: TAction;
+    actDebugLog: TAction;
+    actPackages: TAction;
+    actProjects: TAction;
     actSoftwareUpdate: TAction;
     actMenuHelp: TAction;
-    actPrefs: TAction;
+    actPreferences: TAction;
     actMenuOpts: TAction;
     actMenuFile: TAction;
     alMain: TActionList;
     bbSoftwareUpdate: TButton;
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
-    ilGlyphs36: TImageList;
+    ilToolBarGlyphs: TImageList;
     ilFlags100: TImageList;
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
@@ -45,7 +48,12 @@ type
     sbMain: TStatusBar;
     sPrefs: TSplitter;
     itMinute: TTimer;
+    tsPackages: TTabSheet;
+    tsProjects: TTabSheet;
     tbMain: TToolBar;
+    tbProjects: TToolButton;
+    tbPackages: TToolButton;
+    tbDebugLog: TToolButton;
     tbPreferences: TToolButton;
     tsRepo: TTabSheet;
     tsLanguages: TTabSheet;
@@ -57,13 +65,17 @@ type
     xProperties: TXMLPropStorage;
     procedure actAppleAboutExecute(Sender: TObject);
     procedure actApplePrefsExecute(Sender: TObject);
-    procedure actPrefsExecute(Sender: TObject);
+    procedure actDebugLogExecute(Sender: TObject);
+    procedure actPackagesExecute(Sender: TObject);
+    procedure actPreferencesExecute(Sender: TObject);
+    procedure actProjectsExecute(Sender: TObject);
     procedure actSoftwareUpdateExecute(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
     procedure FormCreate(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
+    procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
@@ -110,6 +122,11 @@ begin
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
+   // Config verification
+   if xConfig.GetValue('VERSION/ABOUT/REVISION',  '') <> SOURCE_REVISION then
+      SelectPrefsPage(tsAbout)
+   else if not DirectoryExists(xConfig.GetValue('REPOSITORY/LOCAL/PATH', '')) then
+      SelectPrefsPage(tsRepo);
 end;
 
 procedure TmForm.hpAboutHotClick(Sender: TObject);
@@ -123,6 +140,11 @@ begin
    // Log(Self, 'Minute Interval Trigger');
   itMinute.Interval := 60 * 1000; { 60 second intervals }
   mForm.SoftwareUpdate(True);
+end;
+
+procedure TmForm.tsAboutShow(Sender: TObject);
+begin
+  xConfig.SetValue('VERSION/ABOUT/REVISION', SOURCE_REVISION);
 end;
 
 procedure TmForm.tsGeneralShow(Sender: TObject);
@@ -145,9 +167,24 @@ begin
   SelectPrefsPage(tsGeneral);
 end;
 
-procedure TmForm.actPrefsExecute(Sender: TObject);
+procedure TmForm.actDebugLogExecute(Sender: TObject);
+begin
+  fLog.Show;
+end;
+
+procedure TmForm.actPackagesExecute(Sender: TObject);
+begin
+  pcMain.ActivePage := tsPackages;
+end;
+
+procedure TmForm.actPreferencesExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
+end;
+
+procedure TmForm.actProjectsExecute(Sender: TObject);
+begin
+   pcMain.ActivePage := tsProjects;
 end;
 
 procedure TmForm.actSoftwareUpdateExecute(Sender: TObject);
@@ -163,7 +200,7 @@ end;
 
 procedure TmForm.deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
 begin
-  OpenRepository(deLocalRepo.Directory);
+  OpenRepository(Value);
 end;
 
 procedure TmForm.tvPrefsChange(Sender: TObject; Node: TTreeNode);
@@ -260,7 +297,7 @@ var
    I : Integer;
 begin
   for I := Low(IconUI) to High(IconUI) do
-      ilGlyphs36.AddLazarusResource(IconUI[I]);
+      ilToolBarGlyphs.AddLazarusResource(IconUI[I]);
   for I := Low(IconFlags) to High(IconFlags) do
       ilFlags100.AddLazarusResource(IconFlags[I]);
 end;
@@ -309,9 +346,12 @@ end;
 
 procedure TmForm.OpenRepository(Location : String);
 begin
-    Repository.Path:= Location;
-    xConfig.SetValue('REPOSITORY/LOCAL/PATH', Repository.Path);
-    xConfig.Flush;
+    if Location <> Repository.Path then begin
+      Repository.Path:= Location;
+      xConfig.SetValue('REPOSITORY/LOCAL/PATH', Repository.Path);
+      xConfig.Flush;
+    end;
+    Log(Self, 'Open local repository ' + Location);
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);

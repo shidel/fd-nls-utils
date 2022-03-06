@@ -21,11 +21,18 @@ if [[ -d 'icons8' ]] ; then
     [[ -d "app-fdnls" ]] && cd app-fdnls
     [[ ! -f notice.txt ]] && notice message >notice.txt
     echo "notice.txt=icons-notice">filelist.txt
+    echo "const" >filelist.inc
+    echo "  IconFiles : array of string = (" >>filelist.inc
+    prev=
     for i in *100.png ; do
-    	x=${i%%-100.*}
-    	x=icons100-"${x#*-}"
-    	echo "${i}=${x}">>filelist.txt
+    	[[ "${prev}" != '' ]] && echo "    '${prev}',">>filelist.inc
+    	x="${i%%-100.*}"
+    	x="${x#*-}"
+    	prev="${x}"
+    	echo "${i}=icons100-${x}">>filelist.txt
     done
+    echo "    '${prev}'">>filelist.inc
+    echo "  );" >>filelist.inc
     lazres "${owd}/icons.lrs" @filelist.txt
     popd >/dev/null
 else

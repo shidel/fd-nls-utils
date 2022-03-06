@@ -29,17 +29,33 @@ object mForm: TmForm
       Height = 40
       Top = 0
       Width = 772
+      Align = alClient
       AutoSize = True
       ButtonHeight = 40
       ButtonWidth = 36
       Caption = 'tbMain'
       EdgeBorders = []
-      Images = ilGlyphs36
+      Images = ilToolBarGlyphs
       TabOrder = 0
-      object tbPreferences: TToolButton
+      object tbProjects: TToolButton
         Left = 1
         Top = 0
-        Action = actMenuOpts
+        Action = actProjects
+      end
+      object tbPackages: TToolButton
+        Left = 41
+        Top = 0
+        Action = actPackages
+      end
+      object tbDebugLog: TToolButton
+        Left = 81
+        Top = 0
+        Action = actDebugLog
+      end
+      object tbPreferences: TToolButton
+        Left = 121
+        Top = 0
+        Action = actPreferences
       end
     end
   end
@@ -87,10 +103,16 @@ object mForm: TmForm
       Height = 369
       Top = 4
       Width = 764
-      ActivePage = tsPrefs
+      ActivePage = tsProjects
       Align = alClient
       TabIndex = 0
       TabOrder = 0
+      object tsProjects: TTabSheet
+        Caption = 'Projects'
+      end
+      object tsPackages: TTabSheet
+        Caption = 'Packages'
+      end
       object tsPrefs: TTabSheet
         Caption = 'Preferences'
         ClientHeight = 339
@@ -120,9 +142,9 @@ object mForm: TmForm
           Height = 339
           Top = 0
           Width = 632
-          ActivePage = tsLanguages
+          ActivePage = tsRepo
           Align = alClient
-          TabIndex = 2
+          TabIndex = 1
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'General'
@@ -186,8 +208,10 @@ object mForm: TmForm
               Width = 592
               Directory = 'deLocalRepo'
               OnAcceptDirectory = deLocalRepoAcceptDirectory
+              DialogTitle = 'FD-NLS Local Repository'
               ShowHidden = False
               ButtonWidth = 23
+              DirectInput = False
               NumGlyphs = 1
               Anchors = [akTop, akLeft, akRight]
               MaxLength = 0
@@ -216,6 +240,7 @@ object mForm: TmForm
             Caption = 'About'
             ClientHeight = 309
             ClientWidth = 626
+            OnShow = tsAboutShow
             object imgAbout: TImage
               Left = 0
               Height = 114
@@ -2606,24 +2631,42 @@ object mForm: TmForm
       Category = 'Menu'
       Caption = 'Options'
       GroupIndex = 3
-      ImageIndex = 7
-      OnExecute = actApplePrefsExecute
     end
     object actMenuHelp: TAction
       Category = 'Menu'
       Caption = 'Help'
       GroupIndex = 4
     end
-    object actPrefs: TAction
+    object actPreferences: TAction
       Category = 'Options'
       Caption = 'Preferences...'
       GroupIndex = 3
-      OnExecute = actPrefsExecute
+      ImageIndex = 1
+      OnExecute = actPreferencesExecute
     end
     object actSoftwareUpdate: TAction
       Category = 'UI'
       Caption = 'Check Now'
+      ImageIndex = 0
       OnExecute = actSoftwareUpdateExecute
+    end
+    object actDebugLog: TAction
+      Category = 'UI'
+      Caption = 'Debug Log'
+      ImageIndex = 2
+      OnExecute = actDebugLogExecute
+    end
+    object actProjects: TAction
+      Category = 'UI'
+      Caption = 'Projects'
+      ImageIndex = 3
+      OnExecute = actProjectsExecute
+    end
+    object actPackages: TAction
+      Category = 'UI'
+      Caption = 'Packages'
+      ImageIndex = 4
+      OnExecute = actPackagesExecute
     end
   end
   object itMinute: TTimer
@@ -2631,7 +2674,7 @@ object mForm: TmForm
     Left = 80
     Top = 120
   end
-  object ilGlyphs36: TImageList
+  object ilToolBarGlyphs: TImageList
     Height = 36
     Width = 36
     Left = 24
