@@ -169,7 +169,10 @@ end;
 
 procedure TmForm.actDebugLogExecute(Sender: TObject);
 begin
-  fLog.Show;
+  if not fLog.Visible then begin
+    fLog.Show;
+    Self.Show;
+  end;
 end;
 
 procedure TmForm.actPackagesExecute(Sender: TObject);

@@ -74,7 +74,6 @@ object mForm: TmForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    Visible = False
   end
   object pSeperatorLower: TPanel
     Left = 0
