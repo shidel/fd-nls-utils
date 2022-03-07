@@ -34,6 +34,11 @@ resourcestring
   tab_PrefLanguages             = 'Languages';
   tab_PrefAbout                 = 'About';
 
+  led_LanguageName              = 'Language name';
+  led_LanguageISO               = 'Identifier';
+  led_LanguageDOS               = 'DOS ID';
+  led_LanguageCodepage          = 'Code page';
+
 implementation
 
 end.

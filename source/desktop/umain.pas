@@ -37,8 +37,13 @@ type
     ilFlagsLarge: TImageList;
     ilFlagsSmall: TImageList;
     ilToolsSmall: TImageList;
+    Image1: TImage;
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
+    leLangName: TLabeledEdit;
+    leLangISO: TLabeledEdit;
+    leLangDOS: TLabeledEdit;
+    leLangCodePage: TLabeledEdit;
     lbAvailLanguages: TLabel;
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
@@ -86,6 +91,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
+    procedure lvLanguagesChange(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
     procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
@@ -103,6 +110,7 @@ type
     procedure CreateAboutText;
     procedure OpenRepository(Location : String);
     procedure SetAppLanguageText(ALanguage : String);
+    procedure SelectEditLanguage(Item : TListItem);
   public
     procedure SoftwareUpdate(Silent : boolean);
   end;
@@ -164,6 +172,12 @@ begin
   mForm.SoftwareUpdate(True);
 end;
 
+procedure TmForm.lvLanguagesChange(Sender: TObject; Item: TListItem;
+  Change: TItemChange);
+begin
+  SelectEditLanguage(Item);
+end;
+
 procedure TmForm.tsAboutShow(Sender: TObject);
 begin
   xConfig.SetValue('VERSION/ABOUT/REVISION', SOURCE_REVISION);
@@ -184,6 +198,7 @@ begin
     LI := lvLanguages.Items.Add;
     LI.Caption:=Repository.Languages.Captions[I];
   end;
+  SelectEditLanguage(lvLanguages.Selected);
 end;
 
 procedure TmForm.tsRepoShow(Sender: TObject);
@@ -337,10 +352,10 @@ begin
       ilToolsMedium.AddLazarusResource(IconUI[I]);
       ilToolsSmall.AddLazarusResource(IconUI[I]);
   end;
-  for I := Low(IconFlags) to High(IconFlags) do
+  for I := Low(IconFlags) to High(IconFlags) do begin
       ilFlagsLarge.AddLazarusResource(IconFlags[I]);
-  for I := Low(IconFlags) to High(IconFlags) do
       ilFlagsSmall.AddLazarusResource(IconFlags[I]);
+  end;
 end;
 
 procedure TmForm.CreatePrefsTree;
@@ -419,6 +434,24 @@ begin
   tsRepo.Caption:=tab_PrefRepository;
   tsLanguages.Caption:=tab_PrefLanguages;
   tsAbout.Caption:=tab_PrefAbout;
+  leLangName.EditLabel.Caption:=led_LanguageName;
+  leLangISO.EditLabel.Caption:=led_LanguageISO;
+  leLangDOS.EditLabel.Caption:=led_LanguageDOS;
+  leLangCodePage.EditLabel.Caption:=led_LanguageCodePage;
+end;
+
+procedure TmForm.SelectEditLanguage(Item: TListItem);
+begin
+  if not Assigned(Item) then begin
+    leLangName.Text:='';
+    sbLanguages.Enabled:=False;
+  end else begin
+      leLangName.Text:=Item.Caption;
+      sbLanguages.Enabled:=True;
+  end;
+  leLangISO.Text:='';
+  leLangDOS.Text:='';
+  leLangCodePage.Text:='';
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);

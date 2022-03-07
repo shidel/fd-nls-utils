@@ -1,13 +1,13 @@
 object mForm: TmForm
-  Left = 219
-  Height = 445
-  Top = 128
-  Width = 772
+  Left = 211
+  Height = 673
+  Top = 22
+  Width = 640
   Caption = 'FD-NLS'
-  ClientHeight = 445
-  ClientWidth = 772
-  Constraints.MinHeight = 200
-  Constraints.MinWidth = 320
+  ClientHeight = 673
+  ClientWidth = 640
+  Constraints.MinHeight = 400
+  Constraints.MinWidth = 640
   Menu = mMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -18,18 +18,18 @@ object mForm: TmForm
     Left = 0
     Height = 40
     Top = 0
-    Width = 772
+    Width = 640
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ClientHeight = 40
-    ClientWidth = 772
+    ClientWidth = 640
     TabOrder = 4
     object tbMain: TToolBar
       Left = 0
       Height = 40
       Top = 0
-      Width = 772
+      Width = 640
       Align = alClient
       AutoSize = True
       ButtonHeight = 40
@@ -63,15 +63,15 @@ object mForm: TmForm
   object sbMain: TStatusBar
     Left = 0
     Height = 18
-    Top = 427
-    Width = 772
+    Top = 655
+    Width = 640
     Panels = <>
   end
   object pSeparatorUpper: TPanel
     Left = 0
     Height = 5
     Top = 40
-    Width = 772
+    Width = 640
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
@@ -79,8 +79,8 @@ object mForm: TmForm
   object pSeperatorLower: TPanel
     Left = 0
     Height = 5
-    Top = 422
-    Width = 772
+    Top = 650
+    Width = 640
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
@@ -88,21 +88,21 @@ object mForm: TmForm
   end
   object pMain: TPanel
     Left = 0
-    Height = 377
+    Height = 605
     Top = 45
-    Width = 772
+    Width = 640
     Align = alClient
     BevelInner = bvSpace
     BevelOuter = bvSpace
     BevelWidth = 2
-    ClientHeight = 377
-    ClientWidth = 772
+    ClientHeight = 605
+    ClientWidth = 640
     TabOrder = 2
     object pcMain: TPageControl
       Left = 4
-      Height = 369
+      Height = 597
       Top = 4
-      Width = 764
+      Width = 632
       ActivePage = tsPrefs
       Align = alClient
       TabIndex = 2
@@ -115,11 +115,11 @@ object mForm: TmForm
       end
       object tsPrefs: TTabSheet
         Caption = 'Preferences'
-        ClientHeight = 339
-        ClientWidth = 758
+        ClientHeight = 567
+        ClientWidth = 626
         object tvPrefs: TTreeView
           Left = 0
-          Height = 339
+          Height = 567
           Top = 0
           Width = 121
           Align = alLeft
@@ -133,23 +133,24 @@ object mForm: TmForm
         end
         object sPrefs: TSplitter
           Left = 121
-          Height = 339
+          Height = 567
           Top = 0
           Width = 5
         end
         object pcPrefs: TPageControl
           Left = 126
-          Height = 339
+          Height = 567
           Top = 0
-          Width = 632
+          Width = 500
           ActivePage = tsLanguages
           Align = alClient
+          Constraints.MinWidth = 480
           TabIndex = 2
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
-            ClientHeight = 309
-            ClientWidth = 626
+            ClientHeight = 537
+            ClientWidth = 494
             OnShow = tsGeneralShow
             object lbSoftwareUpdate: TLabel
               Left = 16
@@ -162,7 +163,7 @@ object mForm: TmForm
               Left = 17
               Height = 20
               Top = 32
-              Width = 487
+              Width = 355
               Anchors = [akTop, akLeft, akRight]
               ItemHeight = 26
               OnChange = cbSoftwareUpdateChange
@@ -172,7 +173,7 @@ object mForm: TmForm
               Text = '0'
             end
             object bbSoftwareUpdate: TButton
-              Left = 520
+              Left = 388
               Height = 28
               Top = 28
               Width = 91
@@ -183,8 +184,8 @@ object mForm: TmForm
           end
           object tsRepo: TTabSheet
             Caption = 'Repository'
-            ClientHeight = 309
-            ClientWidth = 626
+            ClientHeight = 537
+            ClientWidth = 494
             OnShow = tsRepoShow
             object lbLocalRepo: TLabel
               Left = 16
@@ -197,7 +198,7 @@ object mForm: TmForm
               Left = 16
               Height = 22
               Top = 32
-              Width = 592
+              Width = 460
               Directory = 'deLocalRepo'
               OnAcceptDirectory = deLocalRepoAcceptDirectory
               ShowHidden = False
@@ -212,8 +213,8 @@ object mForm: TmForm
           end
           object tsLanguages: TTabSheet
             Caption = 'Languages'
-            ClientHeight = 309
-            ClientWidth = 626
+            ClientHeight = 537
+            ClientWidth = 494
             OnShow = tsLanguagesShow
             object lbAvailLanguages: TLabel
               Left = 16
@@ -223,20 +224,20 @@ object mForm: TmForm
               Caption = 'lbAvailLanguages'
             end
             object pLanguages: TPanel
-              Left = 16
-              Height = 281
-              Top = 31
-              Width = 593
+              Left = 14
+              Height = 509
+              Top = 32
+              Width = 461
               Anchors = [akTop, akLeft, akRight, akBottom]
               BevelOuter = bvNone
-              ClientHeight = 281
-              ClientWidth = 593
+              ClientHeight = 509
+              ClientWidth = 461
               TabOrder = 0
               object lvLanguages: TListView
                 Left = 0
                 Height = 87
                 Top = 0
-                Width = 593
+                Width = 461
                 Align = alTop
                 Checkboxes = True
                 Columns = <                
@@ -252,43 +253,96 @@ object mForm: TmForm
                 ShowColumnHeaders = False
                 StateImagesWidth = 24
                 TabOrder = 0
+                OnChange = lvLanguagesChange
               end
               object sLanguages: TSplitter
                 Cursor = crVSplit
                 Left = 0
                 Height = 5
                 Top = 87
-                Width = 593
+                Width = 461
                 Align = alTop
                 ResizeAnchor = akTop
               end
               object sbLanguages: TScrollBox
                 Left = 0
-                Height = 189
+                Height = 417
                 Top = 92
-                Width = 593
+                Width = 461
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 189
+                VertScrollBar.Page = 270
                 Align = alClient
                 BorderStyle = bsNone
-                ClientHeight = 189
-                ClientWidth = 578
+                ClientHeight = 417
+                ClientWidth = 461
                 TabOrder = 2
                 object bbRemoveLanguage: TBitBtn
-                  Left = 496
+                  Left = 372
                   Height = 30
-                  Top = 176
-                  Width = 75
+                  Top = 240
+                  Width = 91
                   Action = actRemoveLanguage
+                  Anchors = [akTop, akRight]
                   Images = ilToolsSmall
                   ImageIndex = 6
                   TabOrder = 0
                 end
+                object Image1: TImage
+                  Left = 360
+                  Height = 100
+                  Top = 0
+                  Width = 100
+                  Anchors = [akTop, akRight]
+                end
+                object leLangName: TLabeledEdit
+                  Left = 0
+                  Height = 22
+                  Top = 24
+                  Width = 296
+                  EditLabel.Height = 16
+                  EditLabel.Width = 296
+                  EditLabel.Caption = 'leLangName'
+                  TabOrder = 1
+                  Text = 'leLangName'
+                end
+                object leLangISO: TLabeledEdit
+                  Left = 0
+                  Height = 22
+                  Top = 70
+                  Width = 80
+                  EditLabel.Height = 16
+                  EditLabel.Width = 80
+                  EditLabel.Caption = 'leLangISO'
+                  TabOrder = 2
+                  Text = 'leLangISO'
+                end
+                object leLangDOS: TLabeledEdit
+                  Left = 111
+                  Height = 22
+                  Top = 70
+                  Width = 80
+                  EditLabel.Height = 16
+                  EditLabel.Width = 80
+                  EditLabel.Caption = 'leLangDOS'
+                  TabOrder = 3
+                  Text = 'leLangDOS'
+                end
+                object leLangCodePage: TLabeledEdit
+                  Left = 216
+                  Height = 22
+                  Top = 70
+                  Width = 80
+                  EditLabel.Height = 16
+                  EditLabel.Width = 80
+                  EditLabel.Caption = 'leLangCodePage'
+                  TabOrder = 4
+                  Text = 'leLangCodePage'
+                end
               end
             end
             object sbAddLanguage: TSpeedButton
-              Left = 584
+              Left = 452
               Height = 22
               Top = 2
               Width = 23
@@ -300,14 +354,14 @@ object mForm: TmForm
           end
           object tsAbout: TTabSheet
             Caption = 'About'
-            ClientHeight = 309
-            ClientWidth = 626
+            ClientHeight = 537
+            ClientWidth = 494
             OnShow = tsAboutShow
             object imgAbout: TImage
               Left = 0
-              Height = 119
+              Height = 347
               Top = 0
-              Width = 626
+              Width = 494
               Align = alClient
               Center = True
               Picture.Data = {
@@ -2619,8 +2673,8 @@ object mForm: TmForm
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 119
-              Width = 626
+              Top = 347
+              Width = 494
               Align = alBottom
               BevelOuter = bvNone
               TabOrder = 0
@@ -2628,8 +2682,8 @@ object mForm: TmForm
             object hpAbout: TIpHtmlPanel
               Left = 0
               Height = 185
-              Top = 124
-              Width = 626
+              Top = 352
+              Width = 494
               Align = alBottom
               BgColor = clInfoBk
               BorderStyle = bsSingle
