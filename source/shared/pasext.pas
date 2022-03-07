@@ -4,6 +4,9 @@ unit PasExt;
 interface
 
 uses
+  {$if defined(darwin)}
+    MacOSAll, { CocoaAll, CocoaUtils, }
+  {$endif}
   Classes, SysUtils;
 
 const
@@ -28,6 +31,7 @@ const
   CRLF        = #$0d#$0a;
 
 var
+  UserLanguage  : String;      { User's Language }
   UserHomePath  : String;      { User's Home directory }
   AppDataPath   : String;      { Location for program data files }
   AppCfgPath    : String;      { Location of application config file }
@@ -67,7 +71,13 @@ implementation
 procedure InitPasExt(Identifier : String);
 var
   Executable : String;
+  {$if defined(darwin)}
+    lbuf :  StringPtr;
+  {$else}
+    ltmp : String;
+  {$endif}
 begin
+  UserLanguage := '';
   UserHomePath := IncludeTrailingPathDelimiter(SysUtils.GetEnvironmentVariable('HOME'));
   Executable  := ExtractFileName(Paramstr(0));
   SetLength(Executable, Length(Executable) - Length(ExtractFileExt(ParamStr(0))));
@@ -80,6 +90,10 @@ begin
     AppCfgPath   := AppDataPath;
     AppCfgFile   := AppCfgPath + 'settings.xml';
   {$elseif defined(darwin)}
+    lbuf := New(StringPtr);
+    if CFStringGetPascalString(CFLocaleGetIdentifier(CFLocaleCopyCurrent),
+      lbuf, Sizeof(lbuf^), 0) then UserLanguage := String(lbuf^);
+    Dispose(lbuf);
     AppDataPath  := IncludeTrailingPathDelimiter(UserHomePath + '.' + Executable);
     if Identifier = '' then begin
       AppCfgPath := AppDataPath;
@@ -93,10 +107,14 @@ begin
     end;
     AppCfgFile := AppCfgPath + 'settings.xml';
   {$elseif defined(linux) or defined(unix)}
-  AppDataPath  := IncludeTrailingPathDelimiter(UserHomePath + '.' + Executable);
-  AppCfgPath := AppDataPath;
-  AppCfgFile := AppCfgPath + 'settings.xml';
+    ltmp := FieldStr(GetEnvironmentVariable('LANG'), 0, '.');
+    if ltmp <> '' then UserLanguage := ltmp;
+    AppDataPath  := IncludeTrailingPathDelimiter(UserHomePath + '.' + Executable);
+    AppCfgPath := AppDataPath;
+    AppCfgFile := AppCfgPath + 'settings.xml';
   {$else}
+    ltmp := FieldStr(GetEnvironmentVariable('LANG'), 0, '.');
+    if ltmp <> '' then UserLanguage := ltmp;
     AppDataPath  := IncludeTrailingPathDelimiter(UserHomePath + Executable);
     AppCfgPath   := AppDataPath;
     AppCfgFile   := AppCfgPath + 'settings.xml';

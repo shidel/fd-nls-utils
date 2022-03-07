@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, PasExt;
 
-const
+resourcestring
   msg_NoAppUpdatesAvail         = 'No updates are available at this time.';
   msg_UsingLatestAppVersion     = 'You are currently using the latest version available.';
   msg_UpdateAvailable           = '%0:s version %1:s is available. ' + CRLF + 'Download now?';
@@ -17,9 +17,17 @@ const
   msg_AboutIconCopyright        = 'Most icons are Copyright (c) %0:s, %1:s and may be download in the %2:s collection';
   msg_AboutCreatedWith          = 'Created with the %0:s and %1:s';
 
-  msg_lbAvailLanguages          = 'Available languages';
-  msg_lbLocalRepository         = 'Location of local repository';
-  msg_lbSoftwareUpdate          = 'Check for software updates';
+  lbl_AvailLanguages            = 'Available languages';
+  lbl_LocalRepository           = 'Location of local repository';
+  lbl_SoftwareUpdate            = 'Check for software updates';
+
+  dlg_LocalRepo                 = 'FD-NLS Local Repository';
+
+  cbox_SoftwareUpdateOff        = 'disabled';
+  cbox_SoftwareUpdateMonthly    = 'Monthly';
+  cbox_SoftwareUpdateWeekly     = 'Weekly';
+  cbox_SoftwareUpdateDaily      = 'Daily';
+  cbox_SoftwareUpdateHourly     = 'Hourly';
 
 implementation
 

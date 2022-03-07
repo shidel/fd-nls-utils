@@ -165,19 +165,11 @@ object mForm: TmForm
               Width = 487
               Anchors = [akTop, akLeft, akRight]
               ItemHeight = 26
-              ItemIndex = 0
-              Items.Strings = (
-                'disabled'
-                'Monthly'
-                'Weekly'
-                'Daily'
-                'Hourly'
-              )
               OnChange = cbSoftwareUpdateChange
               ReadOnly = True
               Style = csDropDownList
               TabOrder = 0
-              Text = 'disabled'
+              Text = '0'
             end
             object bbSoftwareUpdate: TButton
               Left = 520
@@ -208,7 +200,6 @@ object mForm: TmForm
               Width = 592
               Directory = 'deLocalRepo'
               OnAcceptDirectory = deLocalRepoAcceptDirectory
-              DialogTitle = 'FD-NLS Local Repository'
               ShowHidden = False
               ButtonWidth = 23
               DirectInput = False
@@ -224,33 +215,64 @@ object mForm: TmForm
             ClientHeight = 309
             ClientWidth = 626
             OnShow = tsLanguagesShow
-            object lvLanguages: TListView
-              Left = 16
-              Height = 88
-              Top = 32
-              Width = 600
-              Anchors = [akTop, akLeft, akRight, akBottom]
-              Checkboxes = True
-              Columns = <              
-                item
-                  Alignment = taCenter
-                  AutoSize = True
-                  Width = 100
-                end>
-              ColumnClick = False
-              ReadOnly = True
-              RowSelect = True
-              ScrollBars = ssAutoVertical
-              ShowColumnHeaders = False
-              StateImagesWidth = 24
-              TabOrder = 0
-            end
             object lbAvailLanguages: TLabel
               Left = 16
               Height = 16
               Top = 8
               Width = 105
               Caption = 'lbAvailLanguages'
+            end
+            object pLanguages: TPanel
+              Left = 16
+              Height = 281
+              Top = 31
+              Width = 600
+              Anchors = [akTop, akLeft, akRight, akBottom]
+              BevelOuter = bvNone
+              ClientHeight = 281
+              ClientWidth = 600
+              TabOrder = 0
+              object lvLanguages: TListView
+                Left = 0
+                Height = 87
+                Top = 0
+                Width = 600
+                Align = alTop
+                Checkboxes = True
+                Columns = <                
+                  item
+                    Alignment = taCenter
+                    AutoSize = True
+                    Width = 100
+                  end>
+                ColumnClick = False
+                ReadOnly = True
+                RowSelect = True
+                ScrollBars = ssAutoVertical
+                ShowColumnHeaders = False
+                StateImagesWidth = 24
+                TabOrder = 0
+              end
+              object sLanguages: TSplitter
+                Cursor = crVSplit
+                Left = 0
+                Height = 5
+                Top = 87
+                Width = 600
+                Align = alTop
+                ResizeAnchor = akTop
+              end
+              object sbLanguages: TScrollBox
+                Left = 0
+                Height = 189
+                Top = 92
+                Width = 600
+                HorzScrollBar.Page = 1
+                VertScrollBar.Page = 1
+                Align = alClient
+                BorderStyle = bsNone
+                TabOrder = 2
+              end
             end
           end
           object tsAbout: TTabSheet
@@ -260,7 +282,7 @@ object mForm: TmForm
             OnShow = tsAboutShow
             object imgAbout: TImage
               Left = 0
-              Height = 114
+              Height = 119
               Top = 0
               Width = 626
               Align = alClient
@@ -2574,7 +2596,7 @@ object mForm: TmForm
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 304
+              Top = 119
               Width = 626
               Align = alBottom
               BevelOuter = bvNone
@@ -2582,8 +2604,8 @@ object mForm: TmForm
             end
             object hpAbout: TIpHtmlPanel
               Left = 0
-              Height = 190
-              Top = 114
+              Height = 185
+              Top = 124
               Width = 626
               Align = alBottom
               BgColor = clInfoBk

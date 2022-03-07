@@ -40,6 +40,7 @@ type
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
     mMain: TMainMenu;
+    pLanguages: TPanel;
     pControlArea: TPanel;
     pSeparatorAbout: TPanel;
     pcPrefs: TPageControl;
@@ -48,6 +49,8 @@ type
     pSeparatorUpper: TPanel;
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
+    sbLanguages: TScrollBox;
+    sLanguages: TSplitter;
     sPrefs: TSplitter;
     itMinute: TTimer;
     tsPackages: TTabSheet;
@@ -112,6 +115,7 @@ implementation
 
 procedure TmForm.FormCreate(Sender: TObject);
 begin
+   Caption := Caption + UserLanguage;
    Repository := TFDNLS.Create;
    // Hide some design time elements
    pcMain.ShowTabs := False;
@@ -120,7 +124,8 @@ begin
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // configure local repository
    OpenRepository(xConfig.GetValue('REPOSITORY/LOCAL/PATH',  ''));
-   SetAppLanguageText(xConfig.GetValue('LANGUAGE/USER/NATIVE',  'EN'));
+   SetAppLanguageText(xConfig.GetValue('LANGUAGE/USER/ACTIVE',
+     UpperCase(GetEnvironmentVariable('LANG'))));
    // Set display config files
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := FormNodePath(Self);
@@ -384,14 +389,25 @@ begin
 end;
 
 procedure TmForm.SetAppLanguageText(ALanguage: String);
+var
+  I : integer;
 begin
-  if ALanguage <> xConfig.GetValue('LANGUAGE/USER/NATIVE',  '') then begin
-    xConfig.SetValue('LANGUAGE/USER/NATIVE',  ALanguage);
+  if ALanguage <> xConfig.GetValue('LANGUAGE/USER/ACTIVE',  '') then begin
+    xConfig.SetValue('LANGUAGE/USER/ACTIVE',  ALanguage);
     xConfig.Flush;
   end;
-  lbAvailLanguages.Caption:=msg_lbAvailLanguages;
-  lbLocalRepo.Caption:=msg_lbLocalRepository;
-  lbSoftwareUpdate.Caption:=msg_lbSoftwareUpdate;
+  lbAvailLanguages.Caption:=lbl_AvailLanguages;
+  lbLocalRepo.Caption:=lbl_LocalRepository;
+  lbSoftwareUpdate.Caption:=lbl_SoftwareUpdate;
+  deLocalRepo.DialogTitle:=dlg_LocalRepo;
+  I := cbSoftwareUpdate.ItemIndex;
+  cbSoftwareUpdate.Clear;
+  cbSoftwareUpdate.Items.Add(cbox_SoftwareUpdateOff);
+  cbSoftwareUpdate.Items.Add(cbox_SoftwareUpdateMonthly);
+  cbSoftwareUpdate.Items.Add(cbox_SoftwareUpdateWeekly);
+  cbSoftwareUpdate.Items.Add(cbox_SoftwareUpdateDaily);
+  cbSoftwareUpdate.Items.Add(cbox_SoftwareUpdateHourly);
+  cbSoftwareUpdate.ItemIndex := I;
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);
