@@ -11,7 +11,7 @@ object mForm: TmForm
   Menu = mMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  SessionProperties = 'Height;Left;Top;tvPrefs.Width;Width;WindowState;ClientHeight;ClientWidth'
+  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;tvPrefs.Width;Width;WindowState;lvLanguages.Height'
   LCLVersion = '2.3.0.0'
   Visible = True
   object pControlArea: TPanel
@@ -36,7 +36,7 @@ object mForm: TmForm
       ButtonWidth = 36
       Caption = 'tbMain'
       EdgeBorders = []
-      Images = ilToolsSmall
+      Images = ilToolsMedium
       TabOrder = 0
       object tbProjects: TToolButton
         Left = 1
@@ -142,9 +142,9 @@ object mForm: TmForm
           Height = 339
           Top = 0
           Width = 632
-          ActivePage = tsGeneral
+          ActivePage = tsLanguages
           Align = alClient
-          TabIndex = 0
+          TabIndex = 2
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
@@ -226,17 +226,17 @@ object mForm: TmForm
               Left = 16
               Height = 281
               Top = 31
-              Width = 600
+              Width = 593
               Anchors = [akTop, akLeft, akRight, akBottom]
               BevelOuter = bvNone
               ClientHeight = 281
-              ClientWidth = 600
+              ClientWidth = 593
               TabOrder = 0
               object lvLanguages: TListView
                 Left = 0
                 Height = 87
                 Top = 0
-                Width = 600
+                Width = 593
                 Align = alTop
                 Checkboxes = True
                 Columns = <                
@@ -258,7 +258,7 @@ object mForm: TmForm
                 Left = 0
                 Height = 5
                 Top = 87
-                Width = 600
+                Width = 593
                 Align = alTop
                 ResizeAnchor = akTop
               end
@@ -266,13 +266,36 @@ object mForm: TmForm
                 Left = 0
                 Height = 189
                 Top = 92
-                Width = 600
+                Width = 593
                 HorzScrollBar.Page = 1
-                VertScrollBar.Page = 1
+                HorzScrollBar.Visible = False
+                VertScrollBar.Page = 189
                 Align = alClient
                 BorderStyle = bsNone
+                ClientHeight = 189
+                ClientWidth = 578
                 TabOrder = 2
+                object bbRemoveLanguage: TBitBtn
+                  Left = 496
+                  Height = 30
+                  Top = 176
+                  Width = 75
+                  Action = actRemoveLanguage
+                  Images = ilToolsSmall
+                  ImageIndex = 6
+                  TabOrder = 0
+                end
               end
+            end
+            object sbAddLanguage: TSpeedButton
+              Left = 584
+              Height = 22
+              Top = 2
+              Width = 23
+              Anchors = [akTop, akRight]
+              Flat = True
+              Images = ilToolsSmall
+              ImageIndex = 5
             end
           end
           object tsAbout: TTabSheet
@@ -2707,17 +2730,26 @@ object mForm: TmForm
       ImageIndex = 4
       OnExecute = actPackagesExecute
     end
+    object actAddLanguage: TAction
+      Category = 'UI'
+      Caption = 'actAddLanguage'
+    end
+    object actRemoveLanguage: TAction
+      Category = 'UI'
+      Caption = 'Delete'
+      ImageIndex = 6
+    end
   end
   object itMinute: TTimer
     OnTimer = itMinuteTimer
     Left = 16
     Top = 144
   end
-  object ilToolsSmall: TImageList
+  object ilToolsMedium: TImageList
     Height = 36
     Width = 36
     Left = 16
-    Top = 352
+    Top = 360
   end
   object ilFlagsLarge: TImageList
     AllocBy = 16
@@ -2728,8 +2760,15 @@ object mForm: TmForm
   end
   object ilFlagsSmall: TImageList
     AllocBy = 16
+    Height = 24
     Width = 24
     Left = 80
     Top = 288
+  end
+  object ilToolsSmall: TImageList
+    Height = 24
+    Width = 24
+    Left = 84
+    Top = 360
   end
 end

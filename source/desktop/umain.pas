@@ -19,6 +19,8 @@ type
     actAppleAbout: TAction;
     actApplePrefs: TAction;
     actDebugLog: TAction;
+    actAddLanguage: TAction;
+    actRemoveLanguage: TAction;
     actPackages: TAction;
     actProjects: TAction;
     actSoftwareUpdate: TAction;
@@ -28,11 +30,13 @@ type
     actMenuFile: TAction;
     alMain: TActionList;
     bbSoftwareUpdate: TButton;
+    bbRemoveLanguage: TBitBtn;
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
-    ilToolsSmall: TImageList;
+    ilToolsMedium: TImageList;
     ilFlagsLarge: TImageList;
     ilFlagsSmall: TImageList;
+    ilToolsSmall: TImageList;
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
     lbAvailLanguages: TLabel;
@@ -51,6 +55,7 @@ type
     sbMain: TStatusBar;
     sbLanguages: TScrollBox;
     sLanguages: TSplitter;
+    sbAddLanguage: TSpeedButton;
     sPrefs: TSplitter;
     itMinute: TTimer;
     tsPackages: TTabSheet;
@@ -328,8 +333,10 @@ procedure TmForm.LoadGlyphResources;
 var
    I : Integer;
 begin
-  for I := Low(IconUI) to High(IconUI) do
+  for I := Low(IconUI) to High(IconUI) do begin
+      ilToolsMedium.AddLazarusResource(IconUI[I]);
       ilToolsSmall.AddLazarusResource(IconUI[I]);
+  end;
   for I := Low(IconFlags) to High(IconFlags) do
       ilFlagsLarge.AddLazarusResource(IconFlags[I]);
   for I := Low(IconFlags) to High(IconFlags) do

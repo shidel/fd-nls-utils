@@ -33,9 +33,10 @@ const
     'scroll',              { 2 }
     'hierarchy',           { 3 }
     'list',                { 4 }
+    'add',                 { 5 }
+    'remove',
     'error',
     'check-circle',
-    'remove',
     'save',
     'save-all',
     'form',
@@ -52,7 +53,6 @@ const
     'dos',
     'trash-can',
     'language'
-
   );
 
   IconFlags : array of string = (
