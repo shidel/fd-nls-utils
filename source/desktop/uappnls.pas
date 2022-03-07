@@ -17,6 +17,10 @@ const
   msg_AboutIconCopyright        = 'Most icons are Copyright (c) %0:s, %1:s and may be download in the %2:s collection';
   msg_AboutCreatedWith          = 'Created with the %0:s and %1:s';
 
+  msg_lbAvailLanguages          = 'Available languages';
+  msg_lbLocalRepository         = 'Location of local repository';
+  msg_lbSoftwareUpdate          = 'Check for software updates';
+
 implementation
 
 end.

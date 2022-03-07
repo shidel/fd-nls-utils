@@ -30,10 +30,12 @@ type
     bbSoftwareUpdate: TButton;
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
-    ilToolBarGlyphs: TImageList;
-    ilFlags100: TImageList;
+    ilToolsSmall: TImageList;
+    ilFlagsLarge: TImageList;
+    ilFlagsSmall: TImageList;
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
+    lbAvailLanguages: TLabel;
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
@@ -73,10 +75,12 @@ type
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
     procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
+    procedure tsLanguagesShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
@@ -90,6 +94,7 @@ type
     procedure CreatePrefsTree;
     procedure CreateAboutText;
     procedure OpenRepository(Location : String);
+    procedure SetAppLanguageText(ALanguage : String);
   public
     procedure SoftwareUpdate(Silent : boolean);
   end;
@@ -107,6 +112,7 @@ implementation
 
 procedure TmForm.FormCreate(Sender: TObject);
 begin
+   Repository := TFDNLS.Create;
    // Hide some design time elements
    pcMain.ShowTabs := False;
    pcPrefs.ShowTabs := False;
@@ -114,7 +120,8 @@ begin
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // configure local repository
    OpenRepository(xConfig.GetValue('REPOSITORY/LOCAL/PATH',  ''));
-   // Assign the config application files
+   SetAppLanguageText(xConfig.GetValue('LANGUAGE/USER/NATIVE',  'EN'));
+   // Set display config files
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := FormNodePath(Self);
    // Populate UI elements
@@ -127,6 +134,11 @@ begin
       SelectPrefsPage(tsAbout)
    else if not DirectoryExists(xConfig.GetValue('REPOSITORY/LOCAL/PATH', '')) then
       SelectPrefsPage(tsRepo);
+end;
+
+procedure TmForm.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(Repository);
 end;
 
 procedure TmForm.hpAboutHotClick(Sender: TObject);
@@ -150,6 +162,18 @@ end;
 procedure TmForm.tsGeneralShow(Sender: TObject);
 begin
   cbSoftwareUpdate.ItemIndex:= xConfig.GetValue('SOFTWARE/UPDATE/INERVAL', 4);
+end;
+
+procedure TmForm.tsLanguagesShow(Sender: TObject);
+var
+  I : integer;
+  LI : TListItem;
+begin
+  lvLanguages.Clear;
+  for I := 0 to Repository.Languages.Count - 1 do begin
+    LI := lvLanguages.Items.Add;
+    LI.Caption:=Repository.Languages.Captions[I];
+  end;
 end;
 
 procedure TmForm.tsRepoShow(Sender: TObject);
@@ -300,9 +324,11 @@ var
    I : Integer;
 begin
   for I := Low(IconUI) to High(IconUI) do
-      ilToolBarGlyphs.AddLazarusResource(IconUI[I]);
+      ilToolsSmall.AddLazarusResource(IconUI[I]);
   for I := Low(IconFlags) to High(IconFlags) do
-      ilFlags100.AddLazarusResource(IconFlags[I]);
+      ilFlagsLarge.AddLazarusResource(IconFlags[I]);
+  for I := Low(IconFlags) to High(IconFlags) do
+      ilFlagsSmall.AddLazarusResource(IconFlags[I]);
 end;
 
 procedure TmForm.CreatePrefsTree;
@@ -355,6 +381,17 @@ begin
       xConfig.Flush;
     end;
     Log(Self, 'Open local repository ' + Location);
+end;
+
+procedure TmForm.SetAppLanguageText(ALanguage: String);
+begin
+  if ALanguage <> xConfig.GetValue('LANGUAGE/USER/NATIVE',  '') then begin
+    xConfig.SetValue('LANGUAGE/USER/NATIVE',  ALanguage);
+    xConfig.Flush;
+  end;
+  lbAvailLanguages.Caption:=msg_lbAvailLanguages;
+  lbLocalRepo.Caption:=msg_lbLocalRepository;
+  lbSoftwareUpdate.Caption:=msg_lbSoftwareUpdate;
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);
