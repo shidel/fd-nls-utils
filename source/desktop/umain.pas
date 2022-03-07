@@ -408,6 +408,10 @@ begin
   cbSoftwareUpdate.Items.Add(cbox_SoftwareUpdateDaily);
   cbSoftwareUpdate.Items.Add(cbox_SoftwareUpdateHourly);
   cbSoftwareUpdate.ItemIndex := I;
+  tsGeneral.Caption:=tab_PrefGeneral;
+  tsRepo.Caption:=tab_PrefRepository;
+  tsLanguages.Caption:=tab_PrefLanguages;
+  tsAbout.Caption:=tab_PrefAbout;
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);

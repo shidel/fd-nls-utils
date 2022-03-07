@@ -29,6 +29,11 @@ resourcestring
   cbox_SoftwareUpdateDaily      = 'Daily';
   cbox_SoftwareUpdateHourly     = 'Hourly';
 
+  tab_PrefGeneral               = 'General';
+  tab_PrefRepository            = 'Repository';
+  tab_PrefLanguages             = 'Languages';
+  tab_PrefAbout                 = 'About';
+
 implementation
 
 end.

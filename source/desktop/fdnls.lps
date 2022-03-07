@@ -21,8 +21,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="325"/>
-        <CursorPos X="35" Y="410"/>
+        <TopLine Value="326"/>
+        <CursorPos X="34" Y="414"/>
         <FoldState Value=" T3kP0512A13211]3g"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
@@ -46,7 +46,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
         <EditorIndex Value="5"/>
-        <CursorPos Y="31"/>
+        <CursorPos X="43" Y="35"/>
         <UsageCount Value="143"/>
         <Loaded Value="True"/>
       </Unit>

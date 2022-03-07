@@ -147,7 +147,7 @@ object mForm: TmForm
           TabIndex = 0
           TabOrder = 2
           object tsGeneral: TTabSheet
-            Caption = 'General'
+            Caption = 'tsGeneral'
             ClientHeight = 309
             ClientWidth = 626
             OnShow = tsGeneralShow
