@@ -49,7 +49,7 @@ type
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
     mMain: TMainMenu;
-    pLangList: TPanel;
+    pLanguagesList: TPanel;
     pLanguages: TPanel;
     pControlArea: TPanel;
     pSeparatorAbout: TPanel;
@@ -59,9 +59,9 @@ type
     pSeparatorUpper: TPanel;
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
-    sbLanguages: TScrollBox;
+    sbLanguageEdit: TScrollBox;
     sLanguages: TSplitter;
-    sbAddLanguage: TSpeedButton;
+    btAddLanguage: TSpeedButton;
     sPrefs: TSplitter;
     itMinute: TTimer;
     tsPackages: TTabSheet;
@@ -512,7 +512,7 @@ begin
     leLangISO.Text:='';
     leLangDOS.Text:='';
     leLangCodePage.Text:='';
-    sbLanguages.Enabled:=False;
+    sbLanguageEdit.Enabled:=False;
   end else begin
       leLangName.Text:=Repository.Languages.Caption[EditLangIndex];
       leLangISO.Text:=Repository.Languages.Identifier[EditLangIndex];
@@ -521,8 +521,12 @@ begin
         leLangCodePage.Text:=ZeroPad(Repository.Languages.Codepage[EditLangIndex], 3)
       else
         leLangCodePage.Text:= '';
-      sbLanguages.Enabled:=True;
+      sbLanguageEdit.Enabled:=True;
   end;
+  // Reset Edit Area to top and make sure scroll bar is visible if needed.
+  sbLanguageEdit.VertScrollBar.Position:=0;
+  sbLanguageEdit.VertScrollBar.Page:=8;
+  sbLanguageEdit.VertScrollBar.Range:=bbRemoveLanguage.Top + bbRemoveLanguage.Height + 2;
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);

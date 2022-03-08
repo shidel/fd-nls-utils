@@ -20,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="125"/>
-        <CursorPos Y="139"/>
+        <TopLine Value="492"/>
+        <CursorPos X="75" Y="526"/>
         <FoldState Value=" T3l2050512218134]7b"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
@@ -37,7 +37,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="43"/>
         <CursorPos X="101" Y="62"/>
-        <UsageCount Value="179"/>
+        <UsageCount Value="180"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -47,7 +47,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="4"/>
         <CursorPos X="47" Y="40"/>
-        <UsageCount Value="174"/>
+        <UsageCount Value="175"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -103,10 +103,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="123" Column="24" TopLine="102"/>
-      </Position>
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
         <Caret Line="34" Column="15" TopLine="13"/>
@@ -222,6 +218,10 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="138" TopLine="124"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="527" Column="86" TopLine="490"/>
       </Position>
     </JumpHistory>
     <RunParams>

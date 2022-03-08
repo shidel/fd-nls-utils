@@ -11,7 +11,7 @@ object mForm: TmForm
   Menu = mMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;tvPrefs.Width;Width;WindowState;lvLanguages.Height'
+  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;lvLanguages.Height;Top;tvPrefs.Width;Width;WindowState'
   LCLVersion = '2.3.0.0'
   Visible = True
   object pControlArea: TPanel
@@ -235,7 +235,7 @@ object mForm: TmForm
                 Align = alTop
                 ResizeAnchor = akTop
               end
-              object sbLanguages: TScrollBox
+              object sbLanguageEdit: TScrollBox
                 Left = 0
                 Height = 411
                 Top = 128
@@ -315,7 +315,7 @@ object mForm: TmForm
                   OnEditingDone = leLangCodePageEditingDone
                 end
               end
-              object pLangList: TPanel
+              object pLanguagesList: TPanel
                 Left = 0
                 Height = 123
                 Top = 0
@@ -355,7 +355,7 @@ object mForm: TmForm
                   TabOrder = 0
                   OnChange = lvLanguagesChange
                 end
-                object sbAddLanguage: TSpeedButton
+                object btAddLanguage: TSpeedButton
                   Left = 436
                   Height = 22
                   Top = 2
