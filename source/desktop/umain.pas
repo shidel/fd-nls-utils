@@ -49,6 +49,7 @@ type
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
     mMain: TMainMenu;
+    pLangList: TPanel;
     pLanguages: TPanel;
     pControlArea: TPanel;
     pSeparatorAbout: TPanel;

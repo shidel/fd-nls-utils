@@ -142,10 +142,10 @@ object mForm: TmForm
           Height = 567
           Top = 0
           Width = 500
-          ActivePage = tsGeneral
+          ActivePage = tsLanguages
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 0
+          TabIndex = 2
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
@@ -216,71 +216,42 @@ object mForm: TmForm
             ClientHeight = 537
             ClientWidth = 494
             OnShow = tsLanguagesShow
-            object lbAvailLanguages: TLabel
-              Left = 16
-              Height = 16
-              Top = 8
-              Width = 105
-              Caption = 'lbAvailLanguages'
-            end
             object pLanguages: TPanel
               Left = 14
-              Height = 509
-              Top = 32
-              Width = 461
+              Height = 539
+              Top = 2
+              Width = 480
               Anchors = [akTop, akLeft, akRight, akBottom]
               BevelOuter = bvNone
-              ClientHeight = 509
-              ClientWidth = 461
+              ClientHeight = 539
+              ClientWidth = 480
               TabOrder = 0
-              object lvLanguages: TListView
-                Left = 0
-                Height = 87
-                Top = 0
-                Width = 461
-                Align = alTop
-                Checkboxes = True
-                Columns = <                
-                  item
-                    Alignment = taCenter
-                    AutoSize = True
-                    Width = 100
-                  end>
-                ColumnClick = False
-                ReadOnly = True
-                RowSelect = True
-                ScrollBars = ssAutoVertical
-                ShowColumnHeaders = False
-                StateImagesWidth = 24
-                TabOrder = 0
-                OnChange = lvLanguagesChange
-              end
               object sLanguages: TSplitter
                 Cursor = crVSplit
                 Left = 0
                 Height = 5
-                Top = 87
-                Width = 461
+                Top = 123
+                Width = 480
                 Align = alTop
                 ResizeAnchor = akTop
               end
               object sbLanguages: TScrollBox
                 Left = 0
-                Height = 417
-                Top = 92
-                Width = 461
+                Height = 411
+                Top = 128
+                Width = 480
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 270
+                VertScrollBar.Page = 262
                 Align = alClient
                 BorderStyle = bsNone
-                ClientHeight = 417
-                ClientWidth = 461
-                TabOrder = 2
+                ClientHeight = 411
+                ClientWidth = 480
+                TabOrder = 1
                 object bbRemoveLanguage: TBitBtn
-                  Left = 372
+                  Left = 369
                   Height = 30
-                  Top = 240
+                  Top = 232
                   Width = 91
                   Action = actRemoveLanguage
                   Anchors = [akTop, akRight]
@@ -344,18 +315,59 @@ object mForm: TmForm
                   OnEditingDone = leLangCodePageEditingDone
                 end
               end
-            end
-            object sbAddLanguage: TSpeedButton
-              Left = 452
-              Height = 22
-              Top = 2
-              Width = 23
-              Action = actAddLanguage
-              Anchors = [akTop, akRight]
-              Flat = True
-              Images = ilToolsSmall
-              ImageIndex = 5
-              ShowCaption = False
+              object pLangList: TPanel
+                Left = 0
+                Height = 123
+                Top = 0
+                Width = 480
+                Align = alTop
+                BevelOuter = bvNone
+                ClientHeight = 123
+                ClientWidth = 480
+                TabOrder = 2
+                object lbAvailLanguages: TLabel
+                  Left = 0
+                  Height = 16
+                  Top = 8
+                  Width = 105
+                  Caption = 'lbAvailLanguages'
+                end
+                object lvLanguages: TListView
+                  Tag = 32
+                  Left = -1
+                  Height = 87
+                  Top = 32
+                  Width = 461
+                  Anchors = [akTop, akLeft, akRight, akBottom]
+                  Checkboxes = True
+                  Columns = <                  
+                    item
+                      Alignment = taCenter
+                      AutoSize = True
+                      Width = 100
+                    end>
+                  ColumnClick = False
+                  ReadOnly = True
+                  RowSelect = True
+                  ScrollBars = ssAutoVertical
+                  ShowColumnHeaders = False
+                  StateImagesWidth = 24
+                  TabOrder = 0
+                  OnChange = lvLanguagesChange
+                end
+                object sbAddLanguage: TSpeedButton
+                  Left = 436
+                  Height = 22
+                  Top = 2
+                  Width = 23
+                  Action = actAddLanguage
+                  Anchors = [akTop, akRight]
+                  Flat = True
+                  Images = ilToolsSmall
+                  ImageIndex = 5
+                  ShowCaption = False
+                end
+              end
             end
           end
           object tsAbout: TTabSheet
