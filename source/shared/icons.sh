@@ -32,7 +32,7 @@ if [[ -d 'icons8' ]] ; then
     for i in *.png ; do
     	[[ "${prev}" != '' ]] && echo "    '${prev}',">>filelist.inc
     	x="${i%.*}"
-    	x="${i%-100*}"
+    	x="${x%-100*}"
     	x="${x#*icons8-}"
     	prev="${x}"
     	echo "${i}=icons100-${x}">>filelist.txt

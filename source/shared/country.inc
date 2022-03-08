@@ -3,6 +3,7 @@ const
   // (ISO 3166-1) 2-digit code, 3 digit code, numeric code
   // Flag Identifier,Country name+
   CountryData : array of string = (
+    ',,,unknown-flag',
     'ax,ala,004,aland-islands',
     'al,alb,008,albania',
     'dz,dza,012,algeria',
@@ -159,8 +160,10 @@ const
     'nu,niu,570,niue',
     'kp,prk,408,north-korea,The Democratic People''s Republic of Korea',
     'mp,mnp,580,northern-mariana-islands',
+    'no,nor,578,norway',
     'om,omn,512,oman',
     'pk,pak,586,pakistan',
+    'ps,pse,275,palestine',
     'pa,pan,591,panama',
     'pg,png,598,papua-new-guinea',
     'py,pry,600,paraguay',
@@ -241,9 +244,7 @@ const
      { 'yt,myt,175,mayotte', }
      { 'nc,ncl,540,new-caledonia', }
      { 'nf,nfx,574,norfolk-island', }
-     { 'no,nor,578,norway', }
      { 'pw,plw,585,palau', }
-     { 'ps,pse,275,palestine', }
      { 're,reu,638,reunion,Réunion', }
      { 'bl,blm,652,saint-barthelemy,Saint Barthélemy', }
      { 'sh,shn,654,helena-ascension-cunha,Saint Helena, Ascension and Tristan da Cunha', }

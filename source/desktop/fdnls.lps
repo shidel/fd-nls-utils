@@ -35,7 +35,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="43"/>
         <CursorPos X="101" Y="62"/>
-        <UsageCount Value="196"/>
+        <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -45,21 +45,21 @@
         <EditorIndex Value="6"/>
         <TopLine Value="4"/>
         <CursorPos X="47" Y="40"/>
-        <UsageCount Value="191"/>
+        <UsageCount Value="196"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="14" Y="27"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\packages\pasext.pas"/>
         <UnitName Value="PasExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="97" Y="19"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
@@ -75,13 +75,13 @@
         <UnitName Value="FDKit"/>
         <EditorIndex Value="2"/>
         <CursorPos X="6" Y="262"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.lrs"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="0"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
@@ -89,7 +89,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="44"/>
         <CursorPos X="56" Y="69"/>
-        <UsageCount Value="56"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -103,15 +103,14 @@
         <UnitName Value="VCSExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="23"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\country.inc"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="192"/>
-        <CursorPos X="5" Y="212"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="11" Y="6"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
