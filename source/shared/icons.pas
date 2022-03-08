@@ -52,6 +52,9 @@ const
     'bug',
     'dos',
     'trash-can',
+    'repository',
+    'commit-git',
+    'compare-git',
     'language'
   );
 
@@ -102,9 +105,7 @@ const
     'christmas-island',
     'cocos-keeling-islands',
     'colombia',
-    'commit-git',
     'comoros',
-    'compare-git',
     'congo',
     'cook-islands',
     'costa-rica',
@@ -227,7 +228,6 @@ const
     'portugal',
     'puerto-rico',
     'qatar',
-    'repository',
     'romania',
     'russian-federation',
     'rwanda',
@@ -288,6 +288,238 @@ const
     'yemen',
     'zambia',
     'zimbabwe'
+  );
+
+  IconFlagsCode : array of string = (
+    'ax,ala', { aland-islands }
+    'al,alb', { albania }
+    'dz,dza', { algeria }
+    'ad,and', { andorra }
+    'ao,ago', { angola }
+    'ai,aia', { anguilla }
+    'aq,ata', { antarctica }
+    'ag,atg', { antigua-and-barbuda }
+    'ar,arg', { argentina }
+    'am,arm', { armenia }
+    'aw,abw', { aruba }
+    'au,aus', { australia }
+    'at,aut', { austria }
+    'az,aze', { azerbaijan }
+    'bs,bhs', { bahamas }
+    'bh,bhr', { bahrain }
+    'bg,bgd', { bangladesh }
+    'bb,brb', { barbados }
+    'by,blr', { belarus }
+    'be,bel', { belgium }
+    'bz,blz', { belize }
+    'bj,ben', { benin }
+    'bm,bmu', { bermuda }
+    'bt,btn', { bhutan }
+    'bo,bol', { bolivia }
+    'ba,bih', { bosnia-and-herzegovina }
+    'bw,bwa', { botswana }
+    'br,bra', { brazil }
+    'io,iot', { british-indian-ocean-territory }
+    'vg,vgb', { british-virgin-islands }
+    'bn,brn', { brunei-darussalam }
+    '', { bulgaria }
+    '', {  burkina-faso }
+    '', {  burundi }
+    '', {  cambodia }
+    '', {  cameroon }
+    '', {  canada }
+    '', {  cape-verde }
+    '', {  cayman-islands }
+    '', {  central-african-republic }
+    '', {  chad }
+    '', {  chile }
+    '', {  china }
+    '', {  christmas-island }
+    '', {  cocos-keeling-islands }
+    '', {  colombia }
+    '', {  comoros }
+    '', {  congo }
+    '', {  cook-islands }
+    '', {  costa-rica }
+    '', {  croatia }
+    '', {  cuba }
+    '', {  curaao }
+    '', {  cyprus }
+    '', {  czech-republic }
+    '', {  democratic-republic-congo }
+    '', {  denmark }
+    '', {  djibouti }
+    '', {  dominica }
+    '', {  dominican-republic }
+    '', {  ecuador }
+    '', {  egypt }
+    '', {  el-salvador }
+    '', {  equatorial-guinea }
+    '', {  eritrea }
+    '', {  estonia }
+    '', {  ethiopia }
+    '', {  falkland-islands }
+    '', {  faroe-islands }
+    '', {  fiji }
+    '', {  finland }
+    '', {  flag-of-afghanistan }
+    'gf,guf', {  france }
+    'pf,pyf', {  french-polynesia }
+    'tf,atf', {  french-southern-territories }
+    '', {  gabon }
+    '', {  gambia }
+    '', {  georgia }
+    'de,deu', {  germany }
+    '', {  ghana }
+    '', {  gibraltar }
+    'gb,gbr', {  great-britain }
+    '', {  greece }
+    '', {  greenland }
+    '', {  grenada }
+    '', {  guam }
+    '', {  guatemala }
+    '', {  guernsey }
+    '', {  guinea }
+    '', {  guinea-bissau }
+    '', {  guyana }
+    '', {  haiti-flag }
+    '', {  honduras }
+    '', {  hongkong-flag }
+    '', {  hungary }
+    '', {  iceland }
+    '', {  india }
+    '', {  indonesia }
+    '', {  iran }
+    '', {  iraq }
+    '', {  ireland }
+    '', {  isle-of-man }
+    '', {  israel }
+    '', {  italy }
+    '', {  ivory-coast }
+    '', {  jamaica }
+    '', {  japan }
+    '', {  jersey }
+    '', {  jordan }
+    '', {  kazakhstan }
+    '', {  kenya }
+    '', {  kiribati }
+    '', {  kuwait }
+    '', {  kyrgyzstan }
+    '', {  laos }
+    '', {  latvia }
+    '', {  lebanon }
+    '', {  lesotho }
+    '', {  liberia }
+    '', {  libya }
+    '', {  liechtenstein }
+    '', {  lithuania }
+    '', {  luxembourg }
+    '', {  macao }
+    '', {  macedonia }
+    '', {  madagacar }
+    '', {  malawi }
+    '', {  malaysia }
+    '', {  maldives }
+    '', {  mali }
+    '', {  malta }
+    '', {  marshall-islands }
+    '', {  mauritania }
+    '', {  mauritius }
+    '', {  merge-git }
+    '', {  mexico }
+    '', {  micronesia }
+    '', {  moldova }
+    '', {  monaco }
+    '', {  mongolia }
+    '', {  montenegro }
+    '', {  montserrat }
+    '', {  morocco }
+    '', {  mozambique-flag }
+    '', {  myanmar }
+    '', {  namibia }
+    '', {  nauru }
+    '', {  nepal }
+    '', {  netherlands }
+    '', {  new-zealand }
+    '', {  nicaragua }
+    '', {  niger }
+    '', {  nigeria-flag }
+    '', {  niue }
+    '', {  north-korea }
+    '', {  northern-mariana-islands }
+    '', {  notification }
+    '', {  oman }
+    '', {  pakistan }
+    '', {  panama }
+    '', {  papua-new-guinea }
+    '', {  paraguay }
+    '', {  peru }
+    '', {  philippines }
+    '', {  pitcairn-islands }
+    '', {  poland }
+    '', {  portugal }
+    '', {  puerto-rico }
+    '', {  qatar }
+    '', {  romania }
+    '', {  russian-federation }
+    '', {  rwanda }
+    '', {  saint-kitts-and-nevis }
+    '', {  saint-lucia }
+    '', {  saint-vincent-and-the-grenadines }
+    '', {  samoa }
+    '', {  san-marino }
+    '', {  sao-tome-and-principe }
+    '', {  saudi-arabia }
+    '', {  scandinavian }
+    '', {  senegal }
+    '', {  serbia }
+    '', {  seychelles }
+    '', {  sierra-leone }
+    '', {  singapore }
+    '', {  slovakia }
+    '', {  slovenia }
+    '', {  solomon-islands }
+    '', {  somalia }
+    '', {  south-georgia-and-the-south-sandwich-islands }
+    '', {  south-korea }
+    '', {  south-sudan }
+    'es,esp', {  spain }
+    '', {  spain-flag }
+    '', {  sri-lanka }
+    '', {  sudan }
+    '', {  suriname }
+    '', {  swaziland }
+    'se,swe', {  sweden }
+    'ch,che', {  switzerland }
+    '', {  syria }
+    '', {  tajikistan }
+    '', {  tanzania }
+    '', {  thailand }
+    '', {  timor-leste }
+    '', {  togo }
+    '', {  tokelau }
+    '', {  tonga }
+    '', {  trinidad-and-tobago }
+    'tr,tur', {  turkey }
+    '', {  turkmenistan }
+    '', {  turks-and-caicos-islands }
+    '', {  tuvalu }
+    '', {  uganda }
+    'ua,ukr', {  ukraine }
+    'ae,are', {  united-arab-emirates }
+    'vi,vir', {  united-states-virgin-islands }
+    '', {  uruguay }
+    'us,usa', {  usa }
+    '', {  ussr }
+    '', {  uzbekistan }
+    '', {  vanuatu }
+    '', {  vatican-city }
+    '', {  venezuela }
+    '', {  vietnam }
+    '', {  western-sahara }
+    '', {  yemen }
+    '', {  zambia }
+    ''  {  zimbabwe }
   );
 
 implementation
