@@ -253,7 +253,7 @@ var
 begin
   lvLanguages.BeginUpdate;
   lvLanguages.Clear;
-  Repository.Languages.Refresh;
+  Repository.Refresh;
   for I := 0 to Repository.Languages.Count - 1 do begin
     LI := lvLanguages.Items.Add;
     LI.Caption:=Repository.Languages.Caption[I];
@@ -315,6 +315,10 @@ end;
 
 procedure TmForm.actRemoveLanguageExecute(Sender: TObject);
 begin
+  if EditLangIndex <> -1 then begin
+    Repository.Languages.Delete(EditLangIndex);
+    EditLangIndex := -1;
+  end;
   tsLanguagesShow(Self);
 end;
 

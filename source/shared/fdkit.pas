@@ -8,7 +8,7 @@ unit FDKit;
 interface
 
 uses
-  Classes, SysUtils, PasExt, XMLConf;
+  Classes, SysUtils, PasExt, XMLConf, VCSExt;
 
 type
   TLangDataItem = record
@@ -54,6 +54,7 @@ type
     property Lang[Index : integer] : String read GetLang write SetLang;
     property CodePage[Index : integer] : integer read GetCodePage write SetCodePage;
     function NewLanguage : integer;
+    procedure Delete(Index : integer);
   published
   end;
 
@@ -75,6 +76,7 @@ type
     destructor Destroy; override;
     property Path : string read GetPath write SetPath;
     property Languages : TFDLanguages read FLanguages write SetLanguages;
+    procedure Refresh;
   published
   end;
 
@@ -117,8 +119,15 @@ begin
 end;
 
 procedure TFDLanguages.SetCaption(Index : integer; AValue: String);
+var
+  I : integer;
+  T : String;
 begin
+  AValue := Trim(AValue);
   if AValue = FData[Index].Caption then exit;
+  T := Uppercase(AValue);
+  for I := 0 to Length(FData) - 1 do
+    if T = Uppercase(FData[I].Caption) then exit;
   FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
   FXML.SetValue('LANGUAGE/CAPTION', AValue);
   FXML.Flush;
@@ -128,6 +137,7 @@ end;
 procedure TFDLanguages.SetCodePage(Index : integer; AValue: integer);
 begin
   if AValue = FData[Index].CodePage then exit;
+  // OK to have a duplicate codepage
   FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
   FXML.SetValue('LANGUAGE/CODEPAGE', AValue);
   FXML.Flush;
@@ -136,6 +146,7 @@ end;
 
 procedure TFDLanguages.SetFileName(Index : integer; AValue: String);
 begin
+  AValue := Trim(Lowercase(AValue));
   if FileExists(FOwner.LanguagesPath + AValue) then Exit;
   if FileExists(FOwner.LanguagesPath + FFiles[Index]) then begin
     if not RenameFile(FOwner.LanguagesPath + FFiles[Index], FOwner.LanguagesPath + AValue) then exit;
@@ -145,8 +156,17 @@ begin
 end;
 
 procedure TFDLanguages.SetIdentifier(Index : integer; AValue: String);
+var
+  I : integer;
+  T : String;
 begin
+  AValue := Trim(AValue);
   if AValue = FData[Index].Identifier then exit;
+  if AValue <> '' then begin
+    T := Uppercase(AValue);
+    for I := 0 to Length(FData) - 1 do
+        if T = Uppercase(FData[I].Identifier) then exit;
+  end;
   FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
   FXML.SetValue('LANGUAGE/IDENTIFIER', AValue);
   FXML.Flush;
@@ -154,9 +174,16 @@ begin
 end;
 
 procedure TFDLanguages.SetLang(Index : integer; AValue: String);
+var
+  I : integer;
+  T : String;
 begin
-  AValue := Uppercase(AValue);
+  AValue := Uppercase(Trim(AValue));
   if AValue = FData[Index].Lang then exit;
+  if AValue <> '' then begin
+    for I := 0 to Length(FData) - 1 do
+        if AValue = FData[I].Lang then exit;
+  end;
   FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
   FXML.SetValue('LANGUAGE/LANG', AValue);
   FXML.Flush;
@@ -227,6 +254,14 @@ begin
     Codepage := -1;
   end;
   SetCaption(Result, FieldStr(N, 0, '.'));
+  VCSAddFile(FOwner.LanguagesPath + N);
+end;
+
+procedure TFDLanguages.Delete(Index: integer);
+begin
+  VCSDeleteFile(FOwner.LanguagesPath + FFiles[Index]);
+  DeleteFile(FOwner.LanguagesPath + FFiles[Index]);
+  Refresh;
 end;
 
 { TFDNLS }
@@ -275,6 +310,11 @@ destructor TFDNLS.Destroy;
 begin
   FreeAndNil(FLanguages);
   inherited Destroy;
+end;
+
+procedure TFDNLS.Refresh;
+begin
+  Languages.Refresh;
 end;
 
 end.

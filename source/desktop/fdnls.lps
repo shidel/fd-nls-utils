@@ -19,9 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="247"/>
-        <CursorPos X="110" Y="263"/>
+        <TopLine Value="227"/>
+        <CursorPos X="22" Y="256"/>
         <FoldState Value=" T3l5050612823134221W"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
@@ -37,17 +36,17 @@
         <EditorIndex Value="1"/>
         <TopLine Value="43"/>
         <CursorPos X="101" Y="62"/>
-        <UsageCount Value="181"/>
+        <UsageCount Value="182"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="uappnls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="4"/>
         <CursorPos X="47" Y="40"/>
-        <UsageCount Value="176"/>
+        <UsageCount Value="177"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -66,18 +65,19 @@
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="82"/>
-        <CursorPos X="34" Y="89"/>
+        <CursorPos X="75" Y="102"/>
         <UsageCount Value="97"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="73"/>
-        <CursorPos X="6" Y="84"/>
+        <TopLine Value="228"/>
+        <CursorPos X="6" Y="262"/>
         <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit>
@@ -89,7 +89,7 @@
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
         <UnitName Value="Icons"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="182"/>
         <CursorPos X="15" Y="55"/>
         <UsageCount Value="49"/>
@@ -99,26 +99,18 @@
         <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\interfaces\cocoa\cocoautils.pas"/>
         <UnitName Value="CocoaUtils"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\vcsext.pas"/>
+        <UnitName Value="VCSExt"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="13" Y="23"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="538" Column="30" TopLine="517"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="38" Column="23" TopLine="35"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="10" Column="10"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="220" TopLine="194"/>
-      </Position>
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
         <Caret Line="143" Column="7" TopLine="106"/>
@@ -222,6 +214,22 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="317" Column="25" TopLine="243"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="57" Column="38" TopLine="41"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="235" Column="29" TopLine="205"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="79" Column="23" TopLine="46"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="257" Column="13" TopLine="217"/>
       </Position>
     </JumpHistory>
     <RunParams>
