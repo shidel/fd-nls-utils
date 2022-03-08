@@ -36,8 +36,8 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="43"/>
-        <CursorPos Y="67"/>
-        <UsageCount Value="162"/>
+        <CursorPos X="53" Y="79"/>
+        <UsageCount Value="179"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -47,21 +47,21 @@
         <EditorIndex Value="5"/>
         <TopLine Value="4"/>
         <CursorPos X="47" Y="40"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="174"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="14" Y="27"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="..\packages\pasext.pas"/>
         <UnitName Value="PasExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="97" Y="19"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
@@ -69,7 +69,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="82"/>
         <CursorPos X="34" Y="89"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -78,13 +78,13 @@
         <EditorIndex Value="2"/>
         <TopLine Value="73"/>
         <CursorPos X="6" Y="84"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.lrs"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
@@ -92,14 +92,14 @@
         <EditorIndex Value="3"/>
         <TopLine Value="182"/>
         <CursorPos X="15" Y="55"/>
-        <UsageCount Value="39"/>
+        <UsageCount Value="47"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\interfaces\cocoa\cocoautils.pas"/>
         <UnitName Value="CocoaUtils"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">

@@ -142,10 +142,10 @@ object mForm: TmForm
           Height = 567
           Top = 0
           Width = 500
-          ActivePage = tsLanguages
+          ActivePage = tsGeneral
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 2
+          TabIndex = 0
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
