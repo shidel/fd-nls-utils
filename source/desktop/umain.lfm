@@ -11,7 +11,7 @@ object mForm: TmForm
   Menu = mMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;lvLanguages.Height;Top;tvPrefs.Width;Width;WindowState'
+  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;tvPrefs.Width;Width;WindowState;pLanguagesList.Height'
   LCLVersion = '2.3.0.0'
   Visible = True
   object pControlArea: TPanel
@@ -217,21 +217,21 @@ object mForm: TmForm
             ClientWidth = 494
             OnShow = tsLanguagesShow
             object pLanguages: TPanel
-              Left = 14
+              Left = 12
               Height = 539
               Top = 2
-              Width = 480
+              Width = 482
               Anchors = [akTop, akLeft, akRight, akBottom]
               BevelOuter = bvNone
               ClientHeight = 539
-              ClientWidth = 480
+              ClientWidth = 482
               TabOrder = 0
               object sLanguages: TSplitter
                 Cursor = crVSplit
                 Left = 0
                 Height = 5
                 Top = 123
-                Width = 480
+                Width = 482
                 Align = alTop
                 ResizeAnchor = akTop
               end
@@ -239,35 +239,37 @@ object mForm: TmForm
                 Left = 0
                 Height = 411
                 Top = 128
-                Width = 480
+                Width = 482
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 262
+                VertScrollBar.Page = 260
                 Align = alClient
                 BorderStyle = bsNone
                 ClientHeight = 411
-                ClientWidth = 480
+                ClientWidth = 482
                 TabOrder = 1
+                OnResize = sbLanguageEditResize
                 object bbRemoveLanguage: TBitBtn
-                  Left = 369
-                  Height = 30
+                  Left = 404
+                  Height = 28
                   Top = 232
-                  Width = 91
+                  Width = 58
                   Action = actRemoveLanguage
                   Anchors = [akTop, akRight]
+                  AutoSize = True
                   Images = ilToolsSmall
                   ImageIndex = 6
                   TabOrder = 0
                 end
                 object Image1: TImage
-                  Left = 360
+                  Left = 362
                   Height = 100
                   Top = 0
                   Width = 100
                   Anchors = [akTop, akRight]
                 end
                 object leLangName: TLabeledEdit
-                  Left = 0
+                  Left = 8
                   Height = 22
                   Top = 24
                   Width = 296
@@ -279,7 +281,7 @@ object mForm: TmForm
                   OnEditingDone = leLangNameEditingDone
                 end
                 object leLangISO: TLabeledEdit
-                  Left = 0
+                  Left = 8
                   Height = 22
                   Top = 70
                   Width = 80
@@ -291,7 +293,7 @@ object mForm: TmForm
                   OnEditingDone = leLangISOEditingDone
                 end
                 object leLangDOS: TLabeledEdit
-                  Left = 111
+                  Left = 119
                   Height = 22
                   Top = 70
                   Width = 80
@@ -303,7 +305,7 @@ object mForm: TmForm
                   OnEditingDone = leLangDOSEditingDone
                 end
                 object leLangCodePage: TLabeledEdit
-                  Left = 216
+                  Left = 224
                   Height = 22
                   Top = 70
                   Width = 80
@@ -319,14 +321,14 @@ object mForm: TmForm
                 Left = 0
                 Height = 123
                 Top = 0
-                Width = 480
+                Width = 482
                 Align = alTop
                 BevelOuter = bvNone
                 ClientHeight = 123
-                ClientWidth = 480
+                ClientWidth = 482
                 TabOrder = 2
                 object lbAvailLanguages: TLabel
-                  Left = 0
+                  Left = 8
                   Height = 16
                   Top = 8
                   Width = 105
@@ -334,10 +336,10 @@ object mForm: TmForm
                 end
                 object lvLanguages: TListView
                   Tag = 32
-                  Left = -1
-                  Height = 87
+                  Left = 8
+                  Height = 86
                   Top = 32
-                  Width = 461
+                  Width = 454
                   Anchors = [akTop, akLeft, akRight, akBottom]
                   Checkboxes = True
                   Columns = <                  
@@ -356,7 +358,7 @@ object mForm: TmForm
                   OnChange = lvLanguagesChange
                 end
                 object btAddLanguage: TSpeedButton
-                  Left = 436
+                  Left = 438
                   Height = 22
                   Top = 2
                   Width = 23
@@ -2811,6 +2813,8 @@ object mForm: TmForm
       Category = 'UI'
       Caption = 'Delete'
       ImageIndex = 6
+      OnExecute = actRemoveLanguageExecute
+      OnUpdate = actRemoveLanguageUpdate
     end
   end
   object itMinute: TTimer

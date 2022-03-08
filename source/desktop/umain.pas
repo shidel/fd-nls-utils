@@ -86,6 +86,8 @@ type
     procedure actPackagesExecute(Sender: TObject);
     procedure actPreferencesExecute(Sender: TObject);
     procedure actProjectsExecute(Sender: TObject);
+    procedure actRemoveLanguageExecute(Sender: TObject);
+    procedure actRemoveLanguageUpdate(Sender: TObject);
     procedure actSoftwareUpdateExecute(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
@@ -99,6 +101,7 @@ type
     procedure leLangNameEditingDone(Sender: TObject);
     procedure lvLanguagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure sbLanguageEditResize(Sender: TObject);
     procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
@@ -228,6 +231,11 @@ begin
   SelectEditLanguage(Item.Index);
 end;
 
+procedure TmForm.sbLanguageEditResize(Sender: TObject);
+begin
+    sbLanguageEdit.VertScrollBar.Page:= sbLanguageEdit.Height;
+end;
+
 procedure TmForm.tsAboutShow(Sender: TObject);
 begin
   xConfig.SetValue('VERSION/ABOUT/REVISION', SOURCE_REVISION);
@@ -243,12 +251,14 @@ var
   I : integer;
   LI : TListItem;
 begin
+  lvLanguages.BeginUpdate;
   lvLanguages.Clear;
   Repository.Languages.Refresh;
   for I := 0 to Repository.Languages.Count - 1 do begin
     LI := lvLanguages.Items.Add;
     LI.Caption:=Repository.Languages.Caption[I];
   end;
+  lvLanguages.EndUpdate;
   SelectEditLanguage(-1);
 end;
 
@@ -301,6 +311,16 @@ end;
 procedure TmForm.actProjectsExecute(Sender: TObject);
 begin
    pcMain.ActivePage := tsProjects;
+end;
+
+procedure TmForm.actRemoveLanguageExecute(Sender: TObject);
+begin
+  tsLanguagesShow(Self);
+end;
+
+procedure TmForm.actRemoveLanguageUpdate(Sender: TObject);
+begin
+  actRemoveLanguage.Enabled:=EditLangIndex <> -1;
 end;
 
 procedure TmForm.actSoftwareUpdateExecute(Sender: TObject);
@@ -523,9 +543,8 @@ begin
         leLangCodePage.Text:= '';
       sbLanguageEdit.Enabled:=True;
   end;
-  // Reset Edit Area to top and make sure scroll bar is visible if needed.
+  // Reset Edit Area to top
   sbLanguageEdit.VertScrollBar.Position:=0;
-  sbLanguageEdit.VertScrollBar.Page:=8;
   sbLanguageEdit.VertScrollBar.Range:=bbRemoveLanguage.Top + bbRemoveLanguage.Height + 2;
 end;
 
