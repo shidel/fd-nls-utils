@@ -30,6 +30,8 @@ const
   UNDERSCORE  = #$5f;
   CRLF        = #$0d#$0a;
 
+{$I country.inc}
+
 var
   UserLanguage  : String;      { User's Language }
   UserHomePath  : String;      { User's Home directory }
