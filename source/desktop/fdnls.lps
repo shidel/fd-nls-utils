@@ -86,10 +86,9 @@
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
         <UnitName Value="Icons"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="44"/>
-        <CursorPos X="67" Y="72"/>
+        <CursorPos X="56" Y="69"/>
         <UsageCount Value="56"/>
         <Loaded Value="True"/>
       </Unit>
@@ -108,9 +107,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\shared\country.inc"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="34"/>
-        <CursorPos X="35" Y="4"/>
+        <TopLine Value="192"/>
+        <CursorPos X="5" Y="212"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>

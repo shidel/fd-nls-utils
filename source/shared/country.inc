@@ -6,6 +6,7 @@ const
     'ax,ala,004,aland-islands',
     'al,alb,008,albania',
     'dz,dza,012,algeria',
+    'as,asm,016,american-samoa,American Samoa',
     'ad,and,020,andorra',
     'ao,ago,024,angola',
     'ai,aia,660,anguilla',
@@ -189,6 +190,7 @@ const
     'si,svn,705,slovenia',
     'sb,slb,090,solomon-islands',
     'so,som,706,somalia',
+    'za,zaf,710,south-africa,South Africa',
     'gs,sgs,239,south-georgia-and-the-south-sandwich-islands',
     'kr,kor,410,south-korea,The Republic of Korea',
     'ss,ssd,728,south-sudan',
@@ -207,6 +209,7 @@ const
     'tk,tkl,772,tokelau',
     'to,ton,776,tonga',
     'tt,tto,780,trinidad-and-tobago',
+    'tn,tun,788,tunisia',
     'tr,tur,792,turkey',
     'tm,tkm,795,turkmenistan',
     'tc,tca,796,turks-and-caicos-islands',
@@ -227,7 +230,6 @@ const
     'ye,yem,887,yemen',
     'zm,zmb,894,zambia',
     'zw,zwe,716,zimbabwe'
-     { 'as,asm,016,samoa-america,American Samoa', }
      { 'bq,bes,535,caribbean-netherlands,Bonair, Sint Eustatius and Saba', }
      { 'bv,bvt,074,norway,Bouvet Island', }
      { 'sj,sjm,744,norway,Svalbard and Jan Mayen', }
@@ -248,8 +250,6 @@ const
      { 'mf,maf,663,saint-martin', }
      { 'pm,spm,666,pierre-miquelon,The Overseas Collectivity of Saint-Pierre and Miquelon', }
      { 'sx,sxm,534,sint-maarten,Sint Maartin', }
-     { 'za,zaf,710,south-africa,South Africa', }
-     { 'tn,tun,788,tunisia', }
      { 'tw,twn,158,taiwan', }
      { 'wf,wlf,876,wallis-futuna,The Territory of the Wallis and Futuna Islands', }
      { Scotland }
