@@ -305,6 +305,7 @@ object mForm: TmForm
                   EditLabel.Caption = 'leLangName'
                   TabOrder = 1
                   Text = 'leLangName'
+                  OnEditingDone = leLangNameEditingDone
                 end
                 object leLangISO: TLabeledEdit
                   Left = 0
@@ -316,6 +317,7 @@ object mForm: TmForm
                   EditLabel.Caption = 'leLangISO'
                   TabOrder = 2
                   Text = 'leLangISO'
+                  OnEditingDone = leLangISOEditingDone
                 end
                 object leLangDOS: TLabeledEdit
                   Left = 111
@@ -327,6 +329,7 @@ object mForm: TmForm
                   EditLabel.Caption = 'leLangDOS'
                   TabOrder = 3
                   Text = 'leLangDOS'
+                  OnEditingDone = leLangDOSEditingDone
                 end
                 object leLangCodePage: TLabeledEdit
                   Left = 216
@@ -338,6 +341,7 @@ object mForm: TmForm
                   EditLabel.Caption = 'leLangCodePage'
                   TabOrder = 4
                   Text = 'leLangCodePage'
+                  OnEditingDone = leLangCodePageEditingDone
                 end
               end
             end
@@ -346,10 +350,12 @@ object mForm: TmForm
               Height = 22
               Top = 2
               Width = 23
+              Action = actAddLanguage
               Anchors = [akTop, akRight]
               Flat = True
               Images = ilToolsSmall
               ImageIndex = 5
+              ShowCaption = False
             end
           end
           object tsAbout: TTabSheet
@@ -2787,6 +2793,7 @@ object mForm: TmForm
     object actAddLanguage: TAction
       Category = 'UI'
       Caption = 'actAddLanguage'
+      OnExecute = actAddLanguageExecute
     end
     object actRemoveLanguage: TAction
       Category = 'UI'

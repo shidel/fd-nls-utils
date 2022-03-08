@@ -33,9 +33,17 @@ procedure Log(Sender : TForm; Message : String); overload;
 
 implementation
 
+var
+  PreLog : TStringList;
+
 procedure Log(Sender: TForm; Message: String);
 begin
-  if not Assigned(fLog) then exit;
+  if not Assigned(fLog) then begin
+     if Assigned(PreLog) then begin
+          PreLog.Append(Message);
+     end;
+     exit;
+  end;
   with fLog do begin
        if (not Visible) and (AutoShow) then Show;
        Add(Message);
@@ -46,7 +54,6 @@ end;
 
 { TfLog }
 
-
 procedure TfLog.FormCreate(Sender: TObject);
 begin
    xProperties.FileName := AppCfgFile;
@@ -54,6 +61,11 @@ begin
    LogText.Clear;
    Add('Log started on ' + FormatDateTime('yyyy-mm-dd', Now));
    Add('');
+   if Assigned(PreLog) then begin
+      LogText.Append(PreLog.Text);
+      Add('');
+      FreeAndNil(PreLog);
+   end;
    FAutoShow := False;
 end;
 
@@ -70,6 +82,9 @@ begin
    else
      LogText.Append(AMessage);
 end;
+
+initialization
+  PreLog := TStringList.Create;
 
 end.
 

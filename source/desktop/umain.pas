@@ -78,6 +78,7 @@ type
     tsPrefs: TTabSheet;
     xConfig: TXMLConfig;
     xProperties: TXMLPropStorage;
+    procedure actAddLanguageExecute(Sender: TObject);
     procedure actAppleAboutExecute(Sender: TObject);
     procedure actApplePrefsExecute(Sender: TObject);
     procedure actDebugLogExecute(Sender: TObject);
@@ -91,6 +92,10 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
+    procedure leLangCodePageEditingDone(Sender: TObject);
+    procedure leLangDOSEditingDone(Sender: TObject);
+    procedure leLangISOEditingDone(Sender: TObject);
+    procedure leLangNameEditingDone(Sender: TObject);
     procedure lvLanguagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure tsAboutShow(Sender: TObject);
@@ -99,6 +104,7 @@ type
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
+    EditLangIndex : integer;
     Repository: TFDNLS;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
@@ -110,7 +116,7 @@ type
     procedure CreateAboutText;
     procedure OpenRepository(Location : String);
     procedure SetAppLanguageText(ALanguage : String);
-    procedure SelectEditLanguage(Item : TListItem);
+    procedure SelectEditLanguage(Index : integer);
   public
     procedure SoftwareUpdate(Silent : boolean);
   end;
@@ -128,7 +134,7 @@ implementation
 
 procedure TmForm.FormCreate(Sender: TObject);
 begin
-   Caption := Caption + UserLanguage;
+   Log(Self, 'User Language: ' + UserLanguage);
    Repository := TFDNLS.Create;
    // Hide some design time elements
    pcMain.ShowTabs := False;
@@ -172,10 +178,53 @@ begin
   mForm.SoftwareUpdate(True);
 end;
 
+procedure TmForm.leLangCodePageEditingDone(Sender: TObject);
+var
+  I : integer;
+begin
+   if EditLangIndex < 0 then exit;
+   try
+     I := StrtoInt(leLangCodePage.Caption);
+   except
+     I := -1;
+   end;
+   Repository.Languages.Codepage[EditLangIndex] := I;
+   I := Repository.Languages.Codepage[EditLangIndex];
+   if I < 0 then
+    leLangCodePage.Caption := ''
+   else
+    leLangCodePage.Caption := ZeroPad(I, 3);
+end;
+
+procedure TmForm.leLangDOSEditingDone(Sender: TObject);
+begin
+   if EditLangIndex < 0 then exit;
+   Repository.Languages.Lang[EditLangIndex] := leLangDOS.Caption;
+   leLangDOS.Caption := Repository.Languages.Lang[EditLangIndex];
+end;
+
+procedure TmForm.leLangISOEditingDone(Sender: TObject);
+begin
+   if EditLangIndex < 0 then exit;
+   Repository.Languages.Identifier[EditLangIndex] := leLangISO.Caption;
+   leLangISO.Caption := Repository.Languages.Identifier[EditLangIndex];
+   if leLangISO.Caption <> '' then
+     Repository.Languages.FileName[EditLangIndex] := leLangISO.Caption + '.xml';
+end;
+
+procedure TmForm.leLangNameEditingDone(Sender: TObject);
+begin
+   if EditLangIndex < 0 then exit;
+   Repository.Languages.Caption[EditLangIndex] := leLangName.Caption;
+   leLangName.Caption := Repository.Languages.Caption[EditLangIndex];
+   lvLanguages.Items.Item[EditLangIndex].Caption :=
+     Repository.Languages.Caption[EditLangIndex];
+end;
+
 procedure TmForm.lvLanguagesChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
-  SelectEditLanguage(Item);
+  SelectEditLanguage(Item.Index);
 end;
 
 procedure TmForm.tsAboutShow(Sender: TObject);
@@ -194,11 +243,12 @@ var
   LI : TListItem;
 begin
   lvLanguages.Clear;
+  Repository.Languages.Refresh;
   for I := 0 to Repository.Languages.Count - 1 do begin
     LI := lvLanguages.Items.Add;
-    LI.Caption:=Repository.Languages.Captions[I];
+    LI.Caption:=Repository.Languages.Caption[I];
   end;
-  SelectEditLanguage(lvLanguages.Selected);
+  SelectEditLanguage(-1);
 end;
 
 procedure TmForm.tsRepoShow(Sender: TObject);
@@ -209,6 +259,19 @@ end;
 procedure TmForm.actAppleAboutExecute(Sender: TObject);
 begin
    SelectPrefsPage(tsAbout);
+end;
+
+procedure TmForm.actAddLanguageExecute(Sender: TObject);
+var
+  I : integer;
+  LI : TListItem;
+begin
+  I := Repository.Languages.NewLanguage;
+  Log(Self, 'Result ' + IntToStr(I));
+  if I <> -1 then begin
+    LI := lvLanguages.Items.Add;
+    LI.Caption:=Repository.Languages.Caption[I];
+  end;
 end;
 
 procedure TmForm.actApplePrefsExecute(Sender: TObject);
@@ -440,18 +503,25 @@ begin
   leLangCodePage.EditLabel.Caption:=led_LanguageCodePage;
 end;
 
-procedure TmForm.SelectEditLanguage(Item: TListItem);
+procedure TmForm.SelectEditLanguage(Index : integer);
 begin
-  if not Assigned(Item) then begin
+  EditLangIndex := Index;
+  if Index < 0 then begin
     leLangName.Text:='';
+    leLangISO.Text:='';
+    leLangDOS.Text:='';
+    leLangCodePage.Text:='';
     sbLanguages.Enabled:=False;
   end else begin
-      leLangName.Text:=Item.Caption;
+      leLangName.Text:=Repository.Languages.Caption[EditLangIndex];
+      leLangISO.Text:=Repository.Languages.Identifier[EditLangIndex];
+      leLangDOS.Text:=Repository.Languages.Lang[EditLangIndex];
+      if Repository.Languages.Codepage[EditLangIndex] > 0 then
+        leLangCodePage.Text:=ZeroPad(Repository.Languages.Codepage[EditLangIndex], 3)
+      else
+        leLangCodePage.Text:= '';
       sbLanguages.Enabled:=True;
   end;
-  leLangISO.Text:='';
-  leLangDOS.Text:='';
-  leLangCodePage.Text:='';
 end;
 
 procedure TmForm.SoftwareUpdate(Silent: boolean);

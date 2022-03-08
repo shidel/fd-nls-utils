@@ -38,6 +38,10 @@ var
   AppCfgFile    : String;      { Application Config File }
   UpdateServer  : String;      { Application Update Server URL }
 
+type
+  TFileList = array of string;
+  TForEachFileFunc = function (FileName : String) : integer of object;
+
 procedure InitPasExt(Identifier : String);
 
 function VerifiedPath (Parent, SubDir : String) : string;
@@ -65,6 +69,32 @@ function IncludeTrailing(ASubStr, AStr : String; CaseSpecific : boolean = true) 
 function HasLeading(ASubStr, AStr : String; CaseSpecific : boolean = true) : boolean; overload;
 function ExcludeLeading(ASubStr, AStr : String; CaseSpecific : boolean = true) : String; overload;
 function IncludeLeading(ASubStr, AStr : String; CaseSpecific : boolean = true) : String; overload;
+
+function WhenTrue(AState : boolean; ATrue : String;  AFalse : String = '') : String; overload;
+function WhenTrue(AState : boolean; ATrue : integer; AFalse : integer = 0) : integer; overload;
+function WhenTrue(AState : boolean; ATrue : pointer; AFalse : pointer = nil) : pointer; overload;
+
+function WhenTrue(AStr : String; ATrue : String;  AFalse : String = '') : String; overload;
+function WhenTrue(AStr : String; ATrue : integer; AFalse : integer = 0) : integer; overload;
+function WhenTrue(AStr : String; ATrue : pointer; AFalse : pointer = nil) : pointer; overload;
+
+function WhenTrue(AInt : Integer; ATrue : String;  AFalse : String = '') : String; overload;
+function WhenTrue(AInt : Integer; ATrue : integer; AFalse : integer = 0) : integer; overload;
+function WhenTrue(AInt : Integer; ATrue : pointer; AFalse : pointer = nil) : pointer; overload;
+
+function WhenTrue(APtr : Pointer; ATrue : String;  AFalse : String = '') : String; overload;
+function WhenTrue(APtr : Pointer; ATrue : integer; AFalse : integer = 0) : integer; overload;
+function WhenTrue(APtr : Pointer; ATrue : pointer; AFalse : pointer = nil) : pointer; overload;
+
+function ZeroPad(AValue : LongInt; AWidth: integer) : String; overload;
+function LeftPad(AStr : String; AWidth: integer; ASubStr : String = SPACE) : String; overload;
+function RightPad(AStr : String; AWidth: integer; ASubStr : String = SPACE) : String; overload;
+function CenterPad(AStr : String; AWidth: integer; ASubStr : String = SPACE) : String; overload;
+
+function SimpleCheckSum(const AStr : String) : word; overload;
+
+function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean = True) : integer; overload;
+function FileList(APathSpec : String) : TFileList;
 
 implementation
 
@@ -345,6 +375,221 @@ begin
     Result := ASubStr + AStr;
 end;
 
+function WhenTrue(AState: boolean; ATrue: String; AFalse: String): String;
+begin
+  if AState then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AState: boolean; ATrue: integer; AFalse: integer): integer;
+begin
+  if AState then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AState: boolean; ATrue: pointer; AFalse: pointer): pointer;
+begin
+  if AState then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AStr: String; ATrue: String; AFalse: String): String;
+begin
+  if AStr <> '' then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AStr: String; ATrue: integer; AFalse: integer): integer;
+begin
+  if AStr <> '' then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AStr: String; ATrue: pointer; AFalse: pointer): pointer;
+begin
+  if AStr <> '' then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AInt: Integer; ATrue: String; AFalse: String): String;
+begin
+  if AInt <> 0 then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AInt: Integer; ATrue: integer; AFalse: integer): integer;
+begin
+  if AInt <> 0 then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(AInt: Integer; ATrue: pointer; AFalse: pointer): pointer;
+begin
+  if AInt <> 0 then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(APtr: Pointer; ATrue: String; AFalse: String): String;
+begin
+  if Assigned(APtr) then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(APtr: Pointer; ATrue: integer; AFalse: integer): integer;
+begin
+  if Assigned(APtr) then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function WhenTrue(APtr: Pointer; ATrue: pointer; AFalse: pointer): pointer;
+begin
+  if Assigned(APtr) then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function ZeroPad(AValue : LongInt; AWidth: integer): String;
+begin
+  Result := LeftPad(IntToStr(AValue), AWidth, '0');
+end;
+
+function LeftPad(AStr: String; AWidth: integer; ASubStr: String): String;
+begin
+  if ASubStr = '' then ASubStr := SPACE;
+  While (Length(AStr) < AWidth) do begin
+    AStr := ASubStr + AStr;
+  end;
+  Result := AStr;
+end;
+
+function RightPad(AStr: String; AWidth: integer; ASubStr: String): String;
+begin
+  if ASubStr = '' then ASubStr := SPACE;
+  While (Length(AStr) < AWidth) do begin
+    AStr := AStr + ASubStr;
+  end;
+  Result := AStr;
+end;
+
+function CenterPad(AStr: String; AWidth: integer; ASubStr: String): String;
+begin
+  if ASubStr = '' then ASubStr := SPACE;
+  While (Length(AStr) < AWidth) do begin
+    AStr := AStr + ASubStr;
+    if (Length(AStr) < AWidth) then
+      AStr := ASubStr + AStr;
+  end;
+  Result := AStr;
+end;
+
+
+
+function SimpleCheckSum(const AStr: String): word;
+var
+  Sum: word;
+  I : integer;
+begin
+  Sum:= 0;
+  for I := 1 to Length(AStr) do
+    Sum:=word((Sum shr 1) or ((Sum and 1) shl 15)) + Ord(AStr[I]);
+  Result:=Sum;
+end;
+
+function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean) : integer;
+var
+  PathFlag : boolean;
+  AnyFile : boolean;
+
+  function ForEachFiles(const ASubPath : String) : integer;
+  var
+    R : integer;
+    Search : TSearchRec;
+  begin
+    if ARecurse then begin
+      R := FindFirst(IncludeTrailingPathDelimiter(APath + ASubPath) + '*', faAnyFile, Search);
+      while (R = 0) do begin
+        if (Search.Attr and faDirectory = faDirectory) then begin
+          if (Search.Name <> '.') and (Search.Name <> '..') then
+            R := ForEachFiles(ASubPath + WhenTrue(ASubPath <> '', DirectorySeparator) + Search.Name);
+        end;
+        if R = 0 then
+          R := FindNext(Search);
+      end;
+      FindClose(Search);
+    end;
+
+    if (R = 0) or (R = -1) then begin
+      R := FindFirst(IncludeTrailingPathDelimiter(APath + ASubPath) + '*', faAnyFile, Search);
+      while (R = 0) do begin
+        if (Search.Attr and faDirectory <> faDirectory) then begin
+           AnyFile := True;
+           R := AProc(WhenTrue(PathFlag, '', DirectorySeparator) +
+             ASubPath + WhenTrue(ASubPath <> '', DirectorySeparator) + Search.Name);
+        end;
+        if R = 0 then
+          R := FindNext(Search);
+      end;
+      FindClose(Search);
+    end;
+
+    if (R = -1) then R := 0;
+    Result := R;
+  end;
+
+begin
+  AnyFile := True;
+  PathFlag := APath = IncludeTrailingPathDelimiter(APath);
+  if not PathFlag then
+    APath := IncludeTrailingPathDelimiter(APath);
+  Result := ForEachFiles('');
+  if (Result = 0) and (Not AnyFile) then
+    Result := -1;
+end;
+
+function FileList(APathSpec : String) : TFileList;
+var
+  R, C : integer;
+  Search : TSearchRec;
+begin
+  C := 0;
+  SetLength(Result, 0);
+  R := FindFirst(APathSpec, faAnyFile, Search);
+  while (R = 0) do begin
+    if (Search.Attr and faDirectory <> faDirectory) then begin
+      if C = Length(Result) then
+        SetLength(Result, Length(Result) + 16);
+      Result[C] := Search.Name;
+      Inc(C);
+    end;
+    if R = 0 then
+      R := FindNext(Search);
+  end;
+  FindClose(Search);
+  SetLength(Result, C);
+end;
 
 initialization
   UpdateServer := 'https://up.lod.bz/';
