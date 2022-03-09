@@ -11,12 +11,14 @@ uses
   Classes, SysUtils, PasExt, XMLConf, VCSExt;
 
 type
+  TWideStringMap = array[0..255] of WideString;
   TLangDataItem = record
     Caption : String;
     Identifier : String;
     Lang : String;
     CodePage : integer;
     Graphic : String;
+    UnicodeMap, UTFMap : TWideStringMap;
   end;
 
   { TFDNLS }
@@ -37,6 +39,10 @@ type
     function GetGraphic(Index : integer): String;
     function GetIdentifier(Index : integer): String;
     function GetLang(Index : integer): String;
+    function GetUnicode(Index : integer; ASCII : integer): String;
+    function GetUnicodeMap(Index : integer): TWideStringMap;
+    function GetUTF(Index : integer; ASCII : integer): String;
+    function GetUTFMap(Index : integer): TWideStringMap;
     procedure SetCaption(Index : integer; AValue: String);
     procedure SetCodePage(Index : integer; AValue: integer);
     procedure SetFileName(Index : integer; AValue: String);
@@ -44,6 +50,10 @@ type
     procedure SetIdentifier(Index : integer; AValue: String);
     procedure SetLang(Index : integer; AValue: String);
     procedure SetOwner(AValue: TFDNLS);
+    procedure SetUnicode(Index : integer; ASCII : integer; AValue: String);
+    procedure SetUnicodeMap(Index : integer; AValue: TWideStringMap);
+    procedure SetUTF(Index : integer; ASCII : integer; AValue: String);
+    procedure SetUTFMap(Index : integer; AValue: TWideStringMap);
   protected
     property Owner : TFDNLS read FOwner write SetOwner;
   public
@@ -57,6 +67,10 @@ type
     property Lang[Index : integer] : String read GetLang write SetLang;
     property CodePage[Index : integer] : integer read GetCodePage write SetCodePage;
     property Graphic[Index : integer] : String read GetGraphic write SetGraphic;
+    property UnicodeMap[Index : integer] : TWideStringMap read GetUnicodeMap write SetUnicodeMap;
+    property Unicode[Index : integer; ASCII : integer] : String read GetUnicode write SetUnicode;
+    property UTFMap[Index : integer] : TWideStringMap read GetUTFMap write SetUTFMap;
+    property UTF[Index : integer; ASCII : integer] : String read GetUTF write SetUTF;
     function NewLanguage : integer;
     procedure Delete(Index : integer);
   published
@@ -125,6 +139,26 @@ end;
 function TFDLanguages.GetLang(Index : integer): String;
 begin
   Result := FData[Index].Lang;
+end;
+
+function TFDLanguages.GetUnicode(Index : integer; ASCII : integer): String;
+begin
+
+end;
+
+function TFDLanguages.GetUnicodeMap(Index : integer): TWideStringMap;
+begin
+
+end;
+
+function TFDLanguages.GetUTF(Index : integer; ASCII : integer): String;
+begin
+
+end;
+
+function TFDLanguages.GetUTFMap(Index : integer): TWideStringMap;
+begin
+
 end;
 
 procedure TFDLanguages.SetCaption(Index : integer; AValue: String);
@@ -215,6 +249,27 @@ begin
   FOwner:=AValue;
 end;
 
+procedure TFDLanguages.SetUnicode(Index : integer; ASCII : integer;
+  AValue: String);
+begin
+
+end;
+
+procedure TFDLanguages.SetUnicodeMap(Index : integer; AValue: TWideStringMap);
+begin
+
+end;
+
+procedure TFDLanguages.SetUTF(Index : integer; ASCII : integer; AValue: String);
+begin
+
+end;
+
+procedure TFDLanguages.SetUTFMap(Index : integer; AValue: TWideStringMap);
+begin
+
+end;
+
 constructor TFDLanguages.Create(AOwner : TFDNLS);
 begin
   inherited Create;
@@ -231,7 +286,7 @@ end;
 
 procedure TFDLanguages.Refresh;
 var
-  I : integer;
+  I, J : integer;
 begin
   SetLength(FFiles, 0);
   FFiles := FileList(FOwner.LanguagesPath + '*.xml');
@@ -247,13 +302,23 @@ begin
     except
       FData[I].Codepage := -1;
     end;
+    for J := 0 to 255 do begin
+      FData[I].UnicodeMap[J] := IntsToStr(
+        FXML.GetValue('TRANSLATE/ASCII_' + IntToStr(J) + '/UNICODE',
+          WhenTrue(J <= 127, Char(J), '')
+        ));
+      FData[I].UTFMap[J] := IntsToStr(
+        FXML.GetValue('TRANSLATE/ASCII_' + IntToStr(J) + '/UTF8',
+          WhenTrue(J <= 127, Char(J), '')
+        ));
+    end;
   end;
 end;
 
 function TFDLanguages.NewLanguage: integer;
 var
   N : String;
-  X : integer;
+  X, I : integer;
 begin
   Result := -1;
   X := 0;
@@ -273,6 +338,10 @@ begin
     Lang := '';
     Caption := '';
     Graphic := '';
+    for I := 0 to 255 do begin
+      UnicodeMap[I] := '';
+      UTFMap[I] := '';
+    end;
   end;
   SetCodepage(Result, -1);
   VCSAddFile(FOwner.LanguagesPath + N);

@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, opensslsockets,
-  fphttpclient, DateUtils, uAppNLS, uLog, uPickFlag, Icons;
+  XMLConf, LCLType, LCLIntf, EditBtn, Grids, IpHtml, Ipfilebroker,
+  opensslsockets, fphttpclient, DateUtils, uAppNLS, uLog, uPickFlag, Icons, Types;
 
 type
 
@@ -46,6 +46,7 @@ type
     lbAvailLanguages: TLabel;
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
+    leCharMap: TListView;
     lvLanguages: TListView;
     mMain: TMainMenu;
     pLangEditRight: TPanel;
@@ -96,6 +97,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
+    procedure leCharMapEdited(Sender: TObject; Item: TListItem;
+      var AValue: string);
     procedure leGraphicClick(Sender: TObject);
     procedure leLangCodePageEditingDone(Sender: TObject);
     procedure leLangDOSEditingDone(Sender: TObject);
@@ -187,6 +190,14 @@ begin
    // Log(Self, 'Minute Interval Trigger');
   itMinute.Interval := 60 * 1000; { 60 second intervals }
   mForm.SoftwareUpdate(True);
+end;
+
+procedure TmForm.leCharMapEdited(Sender: TObject; Item: TListItem;
+  var AValue: string);
+begin
+   Log(Self, StrtoInts(AValue));
+   Item.SubItems.Strings[0] := StrToInts(AValue);
+   Item.SubItems.Strings[1] := IntsToStr(Item.SubItems.Strings[0]);
 end;
 
 procedure TmForm.leGraphicClick(Sender: TObject);
@@ -284,6 +295,7 @@ procedure TmForm.lvLanguagesChange(Sender: TObject; Item: TListItem;
 begin
   SelectEditLanguage(Item.Index);
 end;
+
 
 procedure TmForm.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
 begin
@@ -617,6 +629,8 @@ procedure TmForm.SelectEditLanguage(Index : integer);
 var
   S, N, G : String;
   I : integer;
+  X : UnicodeString;
+  LI : TListItem;
 begin
   EditLangIndex := Index;
   if Index < 0 then begin
@@ -663,6 +677,19 @@ begin
       leGraphic.Picture.LoadFromLazarusResource(G);
     end;
   end;
+  leCharMap.BeginUpdate;
+  leCharMap.Clear;
+  for I := 0 to 255 do begin
+     LI := leCharMap.Items.Add;
+     LI.Caption := IntToStr(I);
+     LI.SubItems.Add(Chr(I));
+     LI.SubItems.Add(Chr(I));
+     LI.SubItems.Add(Chr(I));
+  end;
+  leCharMap.EndUpdate;
+  X := 'Выполнить';
+  X := 'Yükleyicinin numaralı';
+  N := StrToInts(X);
   // Reset Edit Area to top
   sbLanguageEdit.VertScrollBar.Position:=0;
   sbLanguageEdit.VertScrollBar.Range:=bbRemoveLanguage.Top + bbRemoveLanguage.Height + 2;

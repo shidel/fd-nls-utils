@@ -101,6 +101,9 @@ function SimpleCheckSum(const AStr : String) : word; overload;
 function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean = True) : integer; overload;
 function FileList(APathSpec : String) : TFileList;
 
+function StrToInts(AStr: String): String; overload;
+function IntsToStr(AStr: String): String; overload;
+
 implementation
 
 procedure InitPasExt(Identifier : String);
@@ -621,6 +624,34 @@ begin
   end;
   FindClose(Search);
   SetLength(Result, C);
+end;
+
+function StrToInts(AStr: String): String;
+var
+  I : integer;
+begin
+  Result := '';
+  for I := 1 to length(AStr) do begin
+    Result := Result + IntToStr(Word(AStr[I]));
+    if I < length(AStr) then Result := Result + ' ';
+  end;
+end;
+
+function IntsToStr(AStr: String): String;
+var
+  S : String;
+  V, E : integer;
+begin
+  Result := '';
+  While AStr <> '' do begin
+    S := PopDelim(AStr, SPACE);
+    Val(S, V, E);
+    if E <> 0 then begin
+      Result := '';
+      Break;
+    end;
+    Result := Result + char(V);
+  end;
 end;
 
 initialization

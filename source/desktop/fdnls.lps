@@ -20,9 +20,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="382"/>
-        <CursorPos Y="311"/>
-        <FoldState Value=" T3l1036 pidjD07F[95Z039]9ZjF08]RjD]Ir1Z"/>
+        <TopLine Value="177"/>
+        <CursorPos X="14" Y="198"/>
+        <FoldState Value=" T3l403215 pibjU04E]9ZjR039[95F08611v"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -52,21 +52,14 @@
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="14" Y="27"/>
-        <UsageCount Value="1"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\packages\pasext.pas"/>
-        <UnitName Value="PasExt"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="97" Y="19"/>
         <UsageCount Value="0"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="235"/>
-        <CursorPos X="34" Y="272"/>
+        <TopLine Value="81"/>
+        <CursorPos Y="106"/>
         <UsageCount Value="102"/>
         <Loaded Value="True"/>
       </Unit>
@@ -74,9 +67,9 @@
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="57"/>
-        <CursorPos X="69" Y="120"/>
-        <UsageCount Value="61"/>
+        <TopLine Value="285"/>
+        <CursorPos X="35" Y="310"/>
+        <UsageCount Value="64"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -85,21 +78,15 @@
         <EditorIndex Value="2"/>
         <TopLine Value="51"/>
         <CursorPos Y="89"/>
-        <UsageCount Value="80"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\interfaces\cocoa\cocoautils.pas"/>
-        <UnitName Value="CocoaUtils"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="0"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\vcsext.pas"/>
         <UnitName Value="VCSExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="23"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\country.inc"/>
@@ -118,7 +105,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="52"/>
         <CursorPos Y="73"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="41"/>
       </Unit>
       <Unit>
         <Filename Value="ulangedit.pas"/>
@@ -130,75 +117,7 @@
         <UsageCount Value="20"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="18">
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="143" Column="21" TopLine="110"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="149" Column="21" TopLine="116"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="53" Column="58" TopLine="32"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\icons.pas"/>
-        <Caret Line="83" Column="37" TopLine="47"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="482" TopLine="342"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\icons.pas"/>
-        <Caret Line="83" Column="111" TopLine="51"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="208" Column="40" TopLine="199"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="207" Column="27" TopLine="176"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="196" Column="51" TopLine="195"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="194" TopLine="169"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="639" TopLine="174"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="373" Column="58" TopLine="359"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="12" TopLine="358"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="126" Column="101" TopLine="106"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="129" Column="8" TopLine="106"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="60" Column="46" TopLine="51"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="436" Column="17" TopLine="423"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="292" Column="20" TopLine="192"/>
@@ -206,6 +125,118 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="291" Column="65" TopLine="238"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="542" Column="80" TopLine="377"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="553" Column="80" TopLine="369"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="676" TopLine="639"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="441" TopLine="418"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="96" TopLine="83"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="95" TopLine="82"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="115" Column="67" TopLine="100"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="64" Column="89" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="73" Column="85" TopLine="33"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="68" Column="12" TopLine="40"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="67" Column="26" TopLine="36"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="72" Column="29" TopLine="71"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="146" Column="3" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="311" Column="60" TopLine="289"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="105" Column="27" TopLine="82"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="669" Column="16" TopLine="635"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="310" Column="38" TopLine="285"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="653" Column="36" TopLine="618"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="635" Column="32" TopLine="614"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="653" Column="30" TopLine="619"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="672" Column="28" TopLine="638"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="637" Column="40" TopLine="619"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="682" Column="23" TopLine="655"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="101" Column="63" TopLine="88"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="688" Column="48" TopLine="649"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="198" Column="37" TopLine="170"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="200" Column="38" TopLine="155"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="310" Column="35" TopLine="285"/>
       </Position>
     </JumpHistory>
     <RunParams>
