@@ -19,11 +19,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <TopLine Value="173"/>
-        <CursorPos X="25" Y="193"/>
-        <FoldState Value=" T3l805019 pj2k503F piejW0S6]9ajZ0S011K"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="359"/>
+        <CursorPos Y="377"/>
+        <FoldState Value=" T3l805019 pj2k5037[B4iYkW0D5]K0jP0r1a"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ulog.pas"/>
@@ -32,19 +34,17 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLog"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="43"/>
-        <CursorPos X="101" Y="62"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="50"/>
+        <CursorPos X="90" Y="79"/>
         <UsageCount Value="201"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="uappnls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="4"/>
-        <CursorPos X="50" Y="26"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="81" Y="19"/>
         <UsageCount Value="222"/>
         <Loaded Value="True"/>
       </Unit>
@@ -64,7 +64,7 @@
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="576"/>
         <CursorPos X="100" Y="206"/>
         <UsageCount Value="102"/>
@@ -73,26 +73,26 @@
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="110"/>
         <CursorPos X="25" Y="277"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="60"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
         <UnitName Value="Icons"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="51"/>
         <CursorPos Y="89"/>
-        <UsageCount Value="78"/>
+        <UsageCount Value="79"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\interfaces\cocoa\cocoautils.pas"/>
         <UnitName Value="CocoaUtils"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="0"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\vcsext.pas"/>
@@ -103,11 +103,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\shared\country.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="229"/>
         <CursorPos X="29" Y="207"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="33"/>
       </Unit>
       <Unit>
         <Filename Value="upickflag.pas"/>
@@ -116,48 +115,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="39"/>
-        <CursorPos X="39" Y="66"/>
-        <UsageCount Value="31"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="52"/>
+        <CursorPos Y="73"/>
+        <UsageCount Value="32"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="190" Column="32" TopLine="347"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="25" Column="63" TopLine="7"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="52" Column="27" TopLine="12"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="53" Column="27"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="52" Column="27" TopLine="11"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="54" TopLine="44"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="52" Column="18" TopLine="40"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="58" Column="78" TopLine="40"/>
-      </Position>
+    <JumpHistory HistoryIndex="11">
       <Position>
         <Filename Value="..\shared\pasext.pas"/>
         <Caret Line="143" Column="21" TopLine="110"/>
@@ -165,10 +129,6 @@
       <Position>
         <Filename Value="..\shared\pasext.pas"/>
         <Caret Line="149" Column="21" TopLine="116"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="53" Column="31" TopLine="18"/>
       </Position>
       <Position>
         <Filename Value="..\shared\pasext.pas"/>
@@ -187,46 +147,6 @@
         <Caret Line="83" Column="111" TopLine="51"/>
       </Position>
       <Position>
-        <Filename Value="..\shared\country.inc"/>
-        <Caret Line="6" Column="24"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\country.inc"/>
-        <Caret Line="79" Column="21" TopLine="45"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\country.inc"/>
-        <Caret Line="101" Column="40" TopLine="68"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\country.inc"/>
-        <Caret Line="150" Column="43" TopLine="116"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\country.inc"/>
-        <Caret Line="159" Column="37" TopLine="125"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\country.inc"/>
-        <Caret Line="200" Column="27" TopLine="166"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="26" Column="49" TopLine="19"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="27" Column="49" TopLine="22"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="26" Column="49" TopLine="21"/>
-      </Position>
-      <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="29" Column="38" TopLine="7"/>
-      </Position>
-      <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="208" Column="40" TopLine="199"/>
       </Position>
@@ -243,8 +163,12 @@
         <Caret Line="194" TopLine="169"/>
       </Position>
       <Position>
-        <Filename Value="upickflag.pas"/>
-        <Caret Line="80" Column="28" TopLine="39"/>
+        <Filename Value="umain.pas"/>
+        <Caret Line="639" TopLine="174"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="373" Column="58" TopLine="359"/>
       </Position>
     </JumpHistory>
     <RunParams>

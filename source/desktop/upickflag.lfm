@@ -10,6 +10,7 @@ object fPickFlag: TfPickFlag
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
+  SessionProperties = 'Position;Left;Top;Width;Height;ClientWidth;ClientHeight'
   LCLVersion = '2.3.0.0'
   object lvFlags: TListView
     Left = 16
@@ -91,5 +92,10 @@ object fPickFlag: TfPickFlag
     Width = 48
     Left = 80
     Top = 272
+  end
+  object xProperties: TXMLPropStorage
+    StoredValues = <>
+    Left = 142
+    Top = 275
   end
 end

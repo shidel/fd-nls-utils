@@ -369,10 +369,13 @@ end;
 procedure TmForm.actRemoveLanguageExecute(Sender: TObject);
 begin
   if EditLangIndex <> -1 then begin
-    Repository.Languages.Delete(EditLangIndex);
-    EditLangIndex := -1;
+    if MessageDlg(Format(msg_VerifyDelete, []),
+      mtConfirmation, [mbYes,mbNo], 0) = mrYes then begin
+        Repository.Languages.Delete(EditLangIndex);
+        EditLangIndex := -1;
+        tsLanguagesShow(Self);
+      end;
   end;
-  tsLanguagesShow(Self);
 end;
 
 procedure TmForm.actRemoveLanguageUpdate(Sender: TObject);

@@ -16,6 +16,7 @@ type
     LogText: TMemo;
     xProperties: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FAutoShow: boolean;
     procedure SetAutoShow(AValue: boolean);
@@ -67,6 +68,11 @@ begin
       FreeAndNil(PreLog);
    end;
    FAutoShow := False;
+end;
+
+procedure TfLog.FormShow(Sender: TObject);
+begin
+  Position:=poDesigned;
 end;
 
 procedure TfLog.SetAutoShow(AValue: boolean);

@@ -242,7 +242,7 @@ object mForm: TmForm
                 Width = 482
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 341
+                VertScrollBar.Page = 340
                 Align = alClient
                 BorderStyle = bsNone
                 ClientHeight = 395
@@ -333,10 +333,10 @@ object mForm: TmForm
                     Transparent = True
                   end
                   object bbRemoveLanguage: TBitBtn
-                    Left = 48
-                    Height = 29
+                    Left = 51
+                    Height = 28
                     Top = 312
-                    Width = 61
+                    Width = 58
                     Action = actRemoveLanguage
                     Anchors = [akTop, akRight]
                     AutoSize = True

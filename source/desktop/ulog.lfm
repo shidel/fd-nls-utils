@@ -8,7 +8,9 @@ object fLog: TfLog
   ClientHeight = 445
   ClientWidth = 269
   OnCreate = FormCreate
-  SessionProperties = 'ClientHeight;ClientWidth;Left;Width;WindowState;Height;Top'
+  OnShow = FormShow
+  Position = poScreenCenter
+  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;Width;Position'
   ShowInTaskBar = stNever
   LCLVersion = '2.3.0.0'
   object LogText: TMemo

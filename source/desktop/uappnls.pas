@@ -16,6 +16,7 @@ resourcestring
   msg_AboutCopyright            = 'Copyright (c) %0:s';
   msg_AboutIconCopyright        = 'Most icons are Copyright (c) %0:s, %1:s and may be download in the %2:s collection';
   msg_AboutCreatedWith          = 'Created with the %0:s and %1:s';
+  msg_VerifyDelete              = 'Are you sure you want to delete this entry?';
 
   lbl_AvailLanguages            = 'Available languages';
   lbl_LocalRepository           = 'Location of local repository';
@@ -24,6 +25,7 @@ resourcestring
   dlg_LocalRepo                 = 'FD-NLS Local Repository';
   dlg_DebugLog                  = 'Debug Log';
   dlg_PickFlag                  = 'Select image';
+  dlg_ConfirmDelete             = 'Confirm Deletion';
 
   cbox_SoftwareUpdateOff        = 'disabled';
   cbox_SoftwareUpdateMonthly    = 'Monthly';
