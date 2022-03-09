@@ -1,10 +1,10 @@
 object mForm: TmForm
   Left = 211
-  Height = 673
+  Height = 657
   Top = 22
   Width = 640
   Caption = 'FD-NLS'
-  ClientHeight = 673
+  ClientHeight = 657
   ClientWidth = 640
   Constraints.MinHeight = 400
   Constraints.MinWidth = 640
@@ -63,7 +63,7 @@ object mForm: TmForm
   object sbMain: TStatusBar
     Left = 0
     Height = 18
-    Top = 655
+    Top = 639
     Width = 640
     Panels = <>
   end
@@ -79,7 +79,7 @@ object mForm: TmForm
   object pSeperatorLower: TPanel
     Left = 0
     Height = 5
-    Top = 650
+    Top = 634
     Width = 640
     Align = alBottom
     BevelOuter = bvNone
@@ -88,19 +88,19 @@ object mForm: TmForm
   end
   object pMain: TPanel
     Left = 0
-    Height = 605
+    Height = 589
     Top = 45
     Width = 640
     Align = alClient
     BevelInner = bvSpace
     BevelOuter = bvSpace
     BevelWidth = 2
-    ClientHeight = 605
+    ClientHeight = 589
     ClientWidth = 640
     TabOrder = 2
     object pcMain: TPageControl
       Left = 4
-      Height = 597
+      Height = 581
       Top = 4
       Width = 632
       ActivePage = tsPrefs
@@ -115,11 +115,11 @@ object mForm: TmForm
       end
       object tsPrefs: TTabSheet
         Caption = 'Preferences'
-        ClientHeight = 567
+        ClientHeight = 551
         ClientWidth = 626
         object tvPrefs: TTreeView
           Left = 0
-          Height = 567
+          Height = 551
           Top = 0
           Width = 121
           Align = alLeft
@@ -133,13 +133,13 @@ object mForm: TmForm
         end
         object sPrefs: TSplitter
           Left = 121
-          Height = 567
+          Height = 551
           Top = 0
           Width = 5
         end
         object pcPrefs: TPageControl
           Left = 126
-          Height = 567
+          Height = 551
           Top = 0
           Width = 500
           ActivePage = tsLanguages
@@ -149,7 +149,7 @@ object mForm: TmForm
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
-            ClientHeight = 537
+            ClientHeight = 521
             ClientWidth = 494
             OnShow = tsGeneralShow
             object lbSoftwareUpdate: TLabel
@@ -184,7 +184,7 @@ object mForm: TmForm
           end
           object tsRepo: TTabSheet
             Caption = 'Repository'
-            ClientHeight = 537
+            ClientHeight = 521
             ClientWidth = 494
             OnShow = tsRepoShow
             object lbLocalRepo: TLabel
@@ -213,17 +213,17 @@ object mForm: TmForm
           end
           object tsLanguages: TTabSheet
             Caption = 'Languages'
-            ClientHeight = 537
+            ClientHeight = 521
             ClientWidth = 494
             OnShow = tsLanguagesShow
             object pLanguages: TPanel
               Left = 12
-              Height = 539
+              Height = 523
               Top = 2
               Width = 482
               Anchors = [akTop, akLeft, akRight, akBottom]
               BevelOuter = bvNone
-              ClientHeight = 539
+              ClientHeight = 523
               ClientWidth = 482
               TabOrder = 0
               object sLanguages: TSplitter
@@ -237,84 +237,111 @@ object mForm: TmForm
               end
               object sbLanguageEdit: TScrollBox
                 Left = 0
-                Height = 411
+                Height = 395
                 Top = 128
                 Width = 482
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 260
+                VertScrollBar.Page = 334
                 Align = alClient
                 BorderStyle = bsNone
-                ClientHeight = 411
+                ClientHeight = 395
                 ClientWidth = 482
                 TabOrder = 1
                 OnResize = sbLanguageEditResize
-                object bbRemoveLanguage: TBitBtn
-                  Left = 404
-                  Height = 28
-                  Top = 232
-                  Width = 58
-                  Action = actRemoveLanguage
-                  Anchors = [akTop, akRight]
-                  AutoSize = True
-                  Images = ilToolsSmall
-                  ImageIndex = 6
-                  TabOrder = 0
-                end
-                object Image1: TImage
-                  Left = 362
-                  Height = 100
+                object pLangEditLeft: TPanel
+                  Left = 0
+                  Height = 395
                   Top = 0
-                  Width = 100
-                  Anchors = [akTop, akRight]
+                  Width = 360
+                  Align = alLeft
+                  BevelOuter = bvNone
+                  ClientHeight = 395
+                  ClientWidth = 360
+                  TabOrder = 0
+                  object leLangISO: TLabeledEdit
+                    Left = 8
+                    Height = 22
+                    Top = 24
+                    Width = 160
+                    EditLabel.Height = 16
+                    EditLabel.Width = 160
+                    EditLabel.Caption = 'leLangISO'
+                    TabOrder = 0
+                    Text = 'leLangISO'
+                    OnEditingDone = leLangISOEditingDone
+                  end
+                  object leLangName: TLabeledEdit
+                    Left = 8
+                    Height = 22
+                    Top = 72
+                    Width = 344
+                    Anchors = [akTop, akLeft, akRight]
+                    EditLabel.Height = 16
+                    EditLabel.Width = 344
+                    EditLabel.Caption = 'leLangName'
+                    TabOrder = 1
+                    Text = 'leLangName'
+                    OnEditingDone = leLangNameEditingDone
+                  end
+                  object leLangDOS: TLabeledEdit
+                    Left = 8
+                    Height = 22
+                    Top = 120
+                    Width = 160
+                    EditLabel.Height = 16
+                    EditLabel.Width = 160
+                    EditLabel.Caption = 'leLangDOS'
+                    TabOrder = 2
+                    Text = 'leLangDOS'
+                    OnEditingDone = leLangDOSEditingDone
+                  end
+                  object leLangCodePage: TLabeledEdit
+                    Left = 192
+                    Height = 22
+                    Top = 120
+                    Width = 160
+                    Anchors = [akTop, akRight]
+                    EditLabel.Height = 16
+                    EditLabel.Width = 160
+                    EditLabel.Caption = 'leLangCodePage'
+                    TabOrder = 3
+                    Text = 'leLangCodePage'
+                    OnEditingDone = leLangCodePageEditingDone
+                  end
                 end
-                object leLangName: TLabeledEdit
-                  Left = 8
-                  Height = 22
-                  Top = 24
-                  Width = 296
-                  EditLabel.Height = 16
-                  EditLabel.Width = 296
-                  EditLabel.Caption = 'leLangName'
+                object pLangEditRight: TPanel
+                  Left = 360
+                  Height = 395
+                  Top = 0
+                  Width = 122
+                  Align = alClient
+                  BevelOuter = bvLowered
+                  ClientHeight = 395
+                  ClientWidth = 122
+                  Constraints.MaxWidth = 300
                   TabOrder = 1
-                  Text = 'leLangName'
-                  OnEditingDone = leLangNameEditingDone
-                end
-                object leLangISO: TLabeledEdit
-                  Left = 8
-                  Height = 22
-                  Top = 70
-                  Width = 80
-                  EditLabel.Height = 16
-                  EditLabel.Width = 80
-                  EditLabel.Caption = 'leLangISO'
-                  TabOrder = 2
-                  Text = 'leLangISO'
-                  OnEditingDone = leLangISOEditingDone
-                end
-                object leLangDOS: TLabeledEdit
-                  Left = 119
-                  Height = 22
-                  Top = 70
-                  Width = 80
-                  EditLabel.Height = 16
-                  EditLabel.Width = 80
-                  EditLabel.Caption = 'leLangDOS'
-                  TabOrder = 3
-                  Text = 'leLangDOS'
-                  OnEditingDone = leLangDOSEditingDone
-                end
-                object leLangCodePage: TLabeledEdit
-                  Left = 224
-                  Height = 22
-                  Top = 70
-                  Width = 80
-                  EditLabel.Height = 16
-                  EditLabel.Width = 80
-                  EditLabel.Caption = 'leLangCodePage'
-                  TabOrder = 4
-                  Text = 'leLangCodePage'
-                  OnEditingDone = leLangCodePageEditingDone
+                  object leGraphic: TImage
+                    Left = 9
+                    Height = 300
+                    Top = 8
+                    Width = 100
+                    Anchors = [akTop, akLeft, akRight]
+                    Proportional = True
+                    Stretch = True
+                  end
+                  object bbRemoveLanguage: TBitBtn
+                    Left = 48
+                    Height = 29
+                    Top = 304
+                    Width = 61
+                    Action = actRemoveLanguage
+                    Anchors = [akTop, akRight]
+                    AutoSize = True
+                    Images = ilToolsSmall
+                    ImageIndex = 6
+                    TabOrder = 0
+                  end
                 end
               end
               object pLanguagesList: TPanel
@@ -374,12 +401,12 @@ object mForm: TmForm
           end
           object tsAbout: TTabSheet
             Caption = 'About'
-            ClientHeight = 537
+            ClientHeight = 521
             ClientWidth = 494
             OnShow = tsAboutShow
             object imgAbout: TImage
               Left = 0
-              Height = 347
+              Height = 331
               Top = 0
               Width = 494
               Align = alClient
@@ -2693,7 +2720,7 @@ object mForm: TmForm
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 347
+              Top = 331
               Width = 494
               Align = alBottom
               BevelOuter = bvNone
@@ -2702,7 +2729,7 @@ object mForm: TmForm
             object hpAbout: TIpHtmlPanel
               Left = 0
               Height = 185
-              Top = 352
+              Top = 336
               Width = 494
               Align = alBottom
               BgColor = clInfoBk

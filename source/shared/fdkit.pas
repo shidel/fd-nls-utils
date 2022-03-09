@@ -16,6 +16,7 @@ type
     Identifier : String;
     Lang : String;
     CodePage : integer;
+    Graphic : String;
   end;
 
   { TFDNLS }
@@ -33,11 +34,13 @@ type
     function GetCodePage(Index : integer): integer;
     function GetCount: integer;
     function GetFileName(Index : integer): String;
+    function GetGraphic(Index : integer): String;
     function GetIdentifier(Index : integer): String;
     function GetLang(Index : integer): String;
     procedure SetCaption(Index : integer; AValue: String);
     procedure SetCodePage(Index : integer; AValue: integer);
     procedure SetFileName(Index : integer; AValue: String);
+    procedure SetGraphic(Index : integer; AValue: String);
     procedure SetIdentifier(Index : integer; AValue: String);
     procedure SetLang(Index : integer; AValue: String);
     procedure SetOwner(AValue: TFDNLS);
@@ -53,6 +56,7 @@ type
     property Identifier[Index : integer] : String read GetIdentifier write SetIdentifier;
     property Lang[Index : integer] : String read GetLang write SetLang;
     property CodePage[Index : integer] : integer read GetCodePage write SetCodePage;
+    property Graphic[Index : integer] : String read GetGraphic write SetGraphic;
     function NewLanguage : integer;
     procedure Delete(Index : integer);
   published
@@ -108,6 +112,11 @@ begin
   Result := FFiles[Index];
 end;
 
+function TFDLanguages.GetGraphic(Index : integer): String;
+begin
+  Result := FData[Index].Graphic;
+end;
+
 function TFDLanguages.GetIdentifier(Index : integer): String;
 begin
   Result := FData[Index].Identifier;
@@ -153,6 +162,16 @@ begin
   end;
   FFiles[Index] := AValue;
   FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
+end;
+
+procedure TFDLanguages.SetGraphic(Index : integer; AValue: String);
+begin
+  AValue := Trim(LowerCase(AValue));
+  if AValue = FData[Index].Graphic then exit;
+  FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
+  FXML.SetValue('LANGUAGE/GRAPHIC', AValue);
+  FXML.Flush;
+  FData[Index].Graphic := AValue;
 end;
 
 procedure TFDLanguages.SetIdentifier(Index : integer; AValue: String);
@@ -222,6 +241,7 @@ begin
     FData[I].Caption := FXML.GetValue('LANGUAGE/CAPTION', FFiles[I]);
     FData[I].Identifier := FXML.GetValue('LANGUAGE/IDENTIFIER', '');
     FData[I].Lang := FXML.GetValue('LANGUAGE/LANG', '');
+    FData[I].Graphic := FXML.GetValue('LANGUAGE/GRAPHIC', '');
     try
         FData[I].Codepage := StrToInt(FXML.GetValue('LANGUAGE/CODEPAGE', ''));
     except
@@ -252,6 +272,7 @@ begin
     Identifier := '';
     Lang := '';
     Codepage := -1;
+    Graphic := '';
   end;
   SetCaption(Result, FieldStr(N, 0, '.'));
   VCSAddFile(FOwner.LanguagesPath + N);

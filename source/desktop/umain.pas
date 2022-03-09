@@ -37,7 +37,7 @@ type
     ilFlagsLarge: TImageList;
     ilFlagsSmall: TImageList;
     ilToolsSmall: TImageList;
-    Image1: TImage;
+    leGraphic: TImage;
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
     leLangName: TLabeledEdit;
@@ -49,6 +49,8 @@ type
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
     mMain: TMainMenu;
+    pLangEditRight: TPanel;
+    pLangEditLeft: TPanel;
     pLanguagesList: TPanel;
     pLanguages: TPanel;
     pControlArea: TPanel;
@@ -529,6 +531,9 @@ begin
 end;
 
 procedure TmForm.SelectEditLanguage(Index : integer);
+var
+  S, L, C, N, G : String;
+  I : integer;
 begin
   EditLangIndex := Index;
   if Index < 0 then begin
@@ -536,8 +541,30 @@ begin
     leLangISO.Text:='';
     leLangDOS.Text:='';
     leLangCodePage.Text:='';
+    leGraphic.Picture.Clear;
     sbLanguageEdit.Enabled:=False;
   end else begin
+      G := '';
+      S := Uppercase(Repository.Languages.Identifier[EditLangIndex]);
+      if S <> '' then
+        for I := 0 to Length(LanguageCodes) - 1 do
+          if Uppercase(FieldStr(LanguageCodes[I],0,',')) = S then begin
+            Repository.Languages.Identifier[EditLangIndex] := FieldStr(LanguageCodes[I],0,',');
+            L := FieldStr(LanguageCodes[I],1,',');
+            C := FieldStr(LanguageCodes[I],2,',');
+            N := FieldStr(LanguageCodes[I],2,',');
+            G := FieldStr(LanguageCodes[I],4,',');
+            if Repository.Languages.Caption[EditLangIndex] = 'newlang' then
+              Repository.Languages.Caption[EditLangIndex] := N;
+            if Repository.Languages.Lang[EditLangIndex] = '' then
+              Repository.Languages.Lang[EditLangIndex] := L;
+            if (Repository.Languages.CodePage[EditLangIndex] = -1) then
+              try
+                Repository.Languages.Codepage[EditLangIndex] := StrToInt(C);
+              except
+                Repository.Languages.Codepage[EditLangIndex] := -1;
+              end;
+          end;
       leLangName.Text:=Repository.Languages.Caption[EditLangIndex];
       leLangISO.Text:=Repository.Languages.Identifier[EditLangIndex];
       leLangDOS.Text:=Repository.Languages.Lang[EditLangIndex];
@@ -546,6 +573,23 @@ begin
       else
         leLangCodePage.Text:= '';
       sbLanguageEdit.Enabled:=True;
+      if Repository.Languages.Graphic[EditLangIndex] <> '' then begin
+        G := Repository.Languages.Graphic[EditLangIndex];
+      end else begin
+        N := '';
+        for I := 0 to Length(CountryData) - 1 do
+          if G = FieldStr(CountryData[I], 1, ',') then begin
+            N := IconFlags[I];
+            Break;
+          end;
+        Log(self, G + '>' + N);
+        G := N;
+      end;
+      if G = '' then begin
+        leGraphic.Picture.LoadFromLazarusResource(IconFlags[0]);
+      end else begin
+        leGraphic.Picture.LoadFromLazarusResource(G);
+      end;
   end;
   // Reset Edit Area to top
   sbLanguageEdit.VertScrollBar.Position:=0;
