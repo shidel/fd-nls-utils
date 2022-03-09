@@ -16,7 +16,7 @@ unit Icons;
 
 interface
 
-uses LResources, PasExt;
+uses SysUtils, StrUtils, LResources, PasExt;
 
 const
 
@@ -26,7 +26,7 @@ const
   IconProviderURL       = 'https://icons8.com';
   IconCollectionName    = 'APP-FDNLS';
   IconCollectionURL     = 'https://icons8.com/icons/share-collections/uRjmCz4CbAnb';
-  IconPrefix            = 'icon100-';
+  IconPrefix            = 'icon-';
 
   IconUI : array of string = (
     'bug',                { 0 }
@@ -35,7 +35,9 @@ const
     'hierarchy',          { 3 }
     'list',               { 4 }
     'add',                { 5 }
-    'remove',
+    'remove',             { 6 }
+    'done',               { 7 }
+    'close',              { 8 }
     'error',
     'notification',
     'check-circle',
@@ -62,19 +64,29 @@ const
   );
 
   IconFlags : array of string = ();
+  FlagNames : array of string = ();
 
 implementation
 
 procedure Initialize;
 var
   I : integer;
+  S : String;
 begin
   {$I icons.lrs}
   for I := Low(IconUI) to High(IconUI) do
-      IconUI[I] := 'icons100-' + IconUI[I];
+      IconUI[I] := IconPrefix + IconUI[I];
   SetLength(IconFlags, Length(CountryData));
-  for I := Low(IconFlags) to High(IconFlags) do
-      IconFlags[I] := 'icons100-' + FieldStr(CountryData[I],3,',');
+  SetLength(FlagNames, Length(CountryData));
+  for I := Low(IconFlags) to High(IconFlags) do begin
+      IconFlags[I] := IconPrefix + FieldStr(CountryData[I],3,',');
+      FlagNames[I] := FieldStr(CountryData[I],4,-1,',');
+      if FlagNames[I] = '' then
+        FlagNames[I] := AnsiProperCase(
+          StringReplace(
+            FieldStr(CountryData[I],3,','), '-', ' ', [rfReplaceAll]
+          ), [SPACE]);
+  end;
 end;
 
 initialization

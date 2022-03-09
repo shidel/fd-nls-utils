@@ -136,7 +136,7 @@ begin
   if AValue = FData[Index].Caption then exit;
   T := Uppercase(AValue);
   for I := 0 to Length(FData) - 1 do
-    if T = Uppercase(FData[I].Caption) then exit;
+    if (I <> Index) and (T = Uppercase(FData[I].Caption)) then exit;
   FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
   FXML.SetValue('LANGUAGE/CAPTION', AValue);
   FXML.Flush;
@@ -184,7 +184,7 @@ begin
   if AValue <> '' then begin
     T := Uppercase(AValue);
     for I := 0 to Length(FData) - 1 do
-        if T = Uppercase(FData[I].Identifier) then exit;
+        if (I <> Index) and (T = Uppercase(FData[I].Identifier)) then exit;
   end;
   FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
   FXML.SetValue('LANGUAGE/IDENTIFIER', AValue);
@@ -271,10 +271,10 @@ begin
   with FData[Length(FFiles) - 1] do begin
     Identifier := '';
     Lang := '';
-    Codepage := -1;
+    Caption := '';
     Graphic := '';
   end;
-  SetCaption(Result, FieldStr(N, 0, '.'));
+  SetCodepage(Result, -1);
   VCSAddFile(FOwner.LanguagesPath + N);
 end;
 

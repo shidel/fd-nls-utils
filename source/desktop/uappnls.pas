@@ -22,6 +22,8 @@ resourcestring
   lbl_SoftwareUpdate            = 'Check for software updates';
 
   dlg_LocalRepo                 = 'FD-NLS Local Repository';
+  dlg_DebugLog                  = 'Debug Log';
+  dlg_PickFlag                  = 'Select image';
 
   cbox_SoftwareUpdateOff        = 'disabled';
   cbox_SoftwareUpdateMonthly    = 'Monthly';
@@ -35,9 +37,13 @@ resourcestring
   tab_PrefAbout                 = 'About';
 
   led_LanguageName              = 'Language name';
-  led_LanguageISO               = 'Identifier';
+  led_LanguageID                = 'Language identifier';
   led_LanguageDOS               = 'DOS ID';
   led_LanguageCodepage          = 'Code page';
+  led_NewLanguage               = 'New Language';
+
+  btn_OK                        = 'OK';
+  btn_Cancel                    = 'Cancel';
 
 implementation
 

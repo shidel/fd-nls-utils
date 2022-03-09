@@ -50,6 +50,7 @@ function VerifiedPath (Parent, SubDir : String) : string;
 
 function PopDelim(var AStr : String; ADelim: String = SPACE): String; overload;
 function FieldStr(AStr : String; AField : integer = 0; ADelim : String = SPACE) : String; overload;
+function FieldStr(AStr : String; AField, ACount : integer; ADelim : String = SPACE) : String; overload;
 
 function SubStr(AStr : String; AFrom : String; ATo : String;  MatchCase : boolean = True) : String; overload;
 function SubStr(AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
@@ -193,6 +194,23 @@ begin
         Result := PopDelim(AStr, ADelim);
         Dec(AField);
     until (AField < 0) or ((Result = '') and (AStr = ''));
+end;
+
+function FieldStr(AStr: String; AField, ACount: integer; ADelim: String
+  ): String;
+begin
+  Result := '';
+  if (AField >= 0) and (ACount <> 0) then
+    repeat
+        if AField > 0 then begin
+          PopDelim(AStr, ADelim);
+          Dec(AField);
+        end else begin
+          if Result <> '' then Result := Result + ADelim;
+          Result := Result + PopDelim(AStr, ADelim);
+          if ACount > 0 then Dec(ACount);
+        end;
+    until (ACount = 0) or  (AStr = '');
 end;
 
 function SubStrExcise(var AStr : String; AFrom : String; ATo : String;  MatchCase, Remove : boolean) : String; overload;

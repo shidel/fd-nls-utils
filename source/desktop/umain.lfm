@@ -242,7 +242,7 @@ object mForm: TmForm
                 Width = 482
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 334
+                VertScrollBar.Page = 341
                 Align = alClient
                 BorderStyle = bsNone
                 ClientHeight = 395
@@ -259,17 +259,17 @@ object mForm: TmForm
                   ClientHeight = 395
                   ClientWidth = 360
                   TabOrder = 0
-                  object leLangISO: TLabeledEdit
+                  object leLangID: TLabeledEdit
                     Left = 8
                     Height = 22
                     Top = 24
                     Width = 160
                     EditLabel.Height = 16
                     EditLabel.Width = 160
-                    EditLabel.Caption = 'leLangISO'
+                    EditLabel.Caption = 'leLangID'
                     TabOrder = 0
-                    Text = 'leLangISO'
-                    OnEditingDone = leLangISOEditingDone
+                    Text = 'leLangID'
+                    OnEditingDone = leLangIDEditingDone
                   end
                   object leLangName: TLabeledEdit
                     Left = 8
@@ -316,24 +316,26 @@ object mForm: TmForm
                   Top = 0
                   Width = 122
                   Align = alClient
-                  BevelOuter = bvLowered
+                  BevelOuter = bvNone
                   ClientHeight = 395
                   ClientWidth = 122
                   Constraints.MaxWidth = 300
                   TabOrder = 1
                   object leGraphic: TImage
-                    Left = 9
+                    Left = 8
                     Height = 300
-                    Top = 8
+                    Top = 0
                     Width = 100
                     Anchors = [akTop, akLeft, akRight]
+                    OnClick = leGraphicClick
                     Proportional = True
                     Stretch = True
+                    Transparent = True
                   end
                   object bbRemoveLanguage: TBitBtn
                     Left = 48
                     Height = 29
-                    Top = 304
+                    Top = 312
                     Width = 61
                     Action = actRemoveLanguage
                     Anchors = [akTop, akRight]

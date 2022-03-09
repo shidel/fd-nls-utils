@@ -19,7 +19,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="38"/>
+      <BuildNr Value="39"/>
       <StringTable Comments="FreeDOS NLS Desktop Utility" CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS" LegalCopyright="2022 Jerome Shidel" OriginalFilename="FD-NLS" ProductName="FD-NLS" ProductVersion="1.0"/>
     </VersionInfo>
     <BuildModes>
@@ -74,6 +74,13 @@
         <Filename Value="uappnls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
+      </Unit>
+      <Unit>
+        <Filename Value="upickflag.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fPickFlag"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uPickFlag"/>
       </Unit>
     </Units>
   </ProjectOptions>

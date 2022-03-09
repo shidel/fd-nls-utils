@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
   XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, opensslsockets,
-  fphttpclient, DateUtils, uAppNLS, uLog, Icons;
+  fphttpclient, DateUtils, uAppNLS, uLog, uPickFlag, Icons;
 
 
 type
@@ -41,7 +41,7 @@ type
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
     leLangName: TLabeledEdit;
-    leLangISO: TLabeledEdit;
+    leLangID: TLabeledEdit;
     leLangDOS: TLabeledEdit;
     leLangCodePage: TLabeledEdit;
     lbAvailLanguages: TLabel;
@@ -97,9 +97,10 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
+    procedure leGraphicClick(Sender: TObject);
     procedure leLangCodePageEditingDone(Sender: TObject);
     procedure leLangDOSEditingDone(Sender: TObject);
-    procedure leLangISOEditingDone(Sender: TObject);
+    procedure leLangIDEditingDone(Sender: TObject);
     procedure leLangNameEditingDone(Sender: TObject);
     procedure lvLanguagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
@@ -184,6 +185,11 @@ begin
   mForm.SoftwareUpdate(True);
 end;
 
+procedure TmForm.leGraphicClick(Sender: TObject);
+begin
+  if fPickFlag.ShowModal = mrOk then begin end;
+end;
+
 procedure TmForm.leLangCodePageEditingDone(Sender: TObject);
 var
   I : integer;
@@ -209,13 +215,39 @@ begin
    leLangDOS.Caption := Repository.Languages.Lang[EditLangIndex];
 end;
 
-procedure TmForm.leLangISOEditingDone(Sender: TObject);
+procedure TmForm.leLangIDEditingDone(Sender: TObject);
+var
+  S, L, C, N, G : String;
+  I : integer;
 begin
    if EditLangIndex < 0 then exit;
-   Repository.Languages.Identifier[EditLangIndex] := leLangISO.Caption;
-   leLangISO.Caption := Repository.Languages.Identifier[EditLangIndex];
-   if leLangISO.Caption <> '' then
-     Repository.Languages.FileName[EditLangIndex] := leLangISO.Caption + '.xml';
+   Repository.Languages.Identifier[EditLangIndex] := leLangID.Caption;
+   leLangID.Caption := Repository.Languages.Identifier[EditLangIndex];
+   if leLangID.Caption <> '' then
+     Repository.Languages.FileName[EditLangIndex] := leLangID.Caption + '.xml';
+   // Reset/Auto-populate fields
+   S := Uppercase(Repository.Languages.Identifier[EditLangIndex]);
+   if S <> '' then
+     for I := 0 to Length(LanguageCodes) - 1 do
+       if Uppercase(FieldStr(LanguageCodes[I],0,',')) = S then begin
+         Repository.Languages.Identifier[EditLangIndex] := FieldStr(LanguageCodes[I],0,',');
+         L := FieldStr(LanguageCodes[I],1,',');
+         C := FieldStr(LanguageCodes[I],2,',');
+         N := FieldStr(LanguageCodes[I],3,',');
+         G := FieldStr(LanguageCodes[I],4,',');
+         if Repository.Languages.Caption[EditLangIndex] = '' then
+           Repository.Languages.Caption[EditLangIndex] := N;
+         if Repository.Languages.Lang[EditLangIndex] = '' then
+           Repository.Languages.Lang[EditLangIndex] := L;
+         if (Repository.Languages.CodePage[EditLangIndex] = -1) then
+           try
+             Repository.Languages.Codepage[EditLangIndex] := StrToInt(C);
+           except
+             Repository.Languages.Codepage[EditLangIndex] := -1;
+           end;
+         break;
+       end;
+    SelectEditLanguage(EditLangIndex);
 end;
 
 procedure TmForm.leLangNameEditingDone(Sender: TObject);
@@ -284,6 +316,8 @@ begin
   if I <> -1 then begin
     LI := lvLanguages.Items.Add;
     LI.Caption:=Repository.Languages.Caption[I];
+    lvLanguages.Selected:=LI;
+    leLangId.SetFocus;
   end;
 end;
 
@@ -295,6 +329,7 @@ end;
 procedure TmForm.actDebugLogExecute(Sender: TObject);
 begin
   if not fLog.Visible then begin
+    fLog.Caption := dlg_DebugLog;
     fLog.Show;
     Self.Show;
   end;
@@ -525,71 +560,60 @@ begin
   tsLanguages.Caption:=tab_PrefLanguages;
   tsAbout.Caption:=tab_PrefAbout;
   leLangName.EditLabel.Caption:=led_LanguageName;
-  leLangISO.EditLabel.Caption:=led_LanguageISO;
+  leLangID.EditLabel.Caption:=led_LanguageID;
   leLangDOS.EditLabel.Caption:=led_LanguageDOS;
   leLangCodePage.EditLabel.Caption:=led_LanguageCodePage;
 end;
 
 procedure TmForm.SelectEditLanguage(Index : integer);
 var
-  S, L, C, N, G : String;
+  S, N, G : String;
   I : integer;
 begin
   EditLangIndex := Index;
   if Index < 0 then begin
     leLangName.Text:='';
-    leLangISO.Text:='';
+    leLangID.Text:='';
     leLangDOS.Text:='';
     leLangCodePage.Text:='';
     leGraphic.Picture.Clear;
     sbLanguageEdit.Enabled:=False;
   end else begin
-      G := '';
+    G := '';
+    leLangName.Text:=Repository.Languages.Caption[EditLangIndex];
+    if leLangName.Text = '' then
+      leLangName.Text:=led_NewLanguage;
+    lvLanguages.Items.Item[EditLangIndex].Caption:=leLangName.Text; { update list if needed }
+    leLangID.Text:=Repository.Languages.Identifier[EditLangIndex];
+    leLangDOS.Text:=Repository.Languages.Lang[EditLangIndex];
+    if Repository.Languages.Codepage[EditLangIndex] > 0 then
+      leLangCodePage.Text:=ZeroPad(Repository.Languages.Codepage[EditLangIndex], 3)
+    else
+      leLangCodePage.Text:= '';
+    sbLanguageEdit.Enabled:=True;
+    if Repository.Languages.Graphic[EditLangIndex] <> '' then begin
+      G := Repository.Languages.Graphic[EditLangIndex];
+    end else if Repository.Languages.Identifier[EditLangIndex] <> '' then begin
+      N := '';
       S := Uppercase(Repository.Languages.Identifier[EditLangIndex]);
-      if S <> '' then
-        for I := 0 to Length(LanguageCodes) - 1 do
-          if Uppercase(FieldStr(LanguageCodes[I],0,',')) = S then begin
-            Repository.Languages.Identifier[EditLangIndex] := FieldStr(LanguageCodes[I],0,',');
-            L := FieldStr(LanguageCodes[I],1,',');
-            C := FieldStr(LanguageCodes[I],2,',');
-            N := FieldStr(LanguageCodes[I],2,',');
-            G := FieldStr(LanguageCodes[I],4,',');
-            if Repository.Languages.Caption[EditLangIndex] = 'newlang' then
-              Repository.Languages.Caption[EditLangIndex] := N;
-            if Repository.Languages.Lang[EditLangIndex] = '' then
-              Repository.Languages.Lang[EditLangIndex] := L;
-            if (Repository.Languages.CodePage[EditLangIndex] = -1) then
-              try
-                Repository.Languages.Codepage[EditLangIndex] := StrToInt(C);
-              except
-                Repository.Languages.Codepage[EditLangIndex] := -1;
-              end;
-          end;
-      leLangName.Text:=Repository.Languages.Caption[EditLangIndex];
-      leLangISO.Text:=Repository.Languages.Identifier[EditLangIndex];
-      leLangDOS.Text:=Repository.Languages.Lang[EditLangIndex];
-      if Repository.Languages.Codepage[EditLangIndex] > 0 then
-        leLangCodePage.Text:=ZeroPad(Repository.Languages.Codepage[EditLangIndex], 3)
-      else
-        leLangCodePage.Text:= '';
-      sbLanguageEdit.Enabled:=True;
-      if Repository.Languages.Graphic[EditLangIndex] <> '' then begin
-        G := Repository.Languages.Graphic[EditLangIndex];
-      end else begin
-        N := '';
-        for I := 0 to Length(CountryData) - 1 do
-          if G = FieldStr(CountryData[I], 1, ',') then begin
-            N := IconFlags[I];
-            Break;
-          end;
-        Log(self, G + '>' + N);
-        G := N;
-      end;
-      if G = '' then begin
-        leGraphic.Picture.LoadFromLazarusResource(IconFlags[0]);
-      end else begin
-        leGraphic.Picture.LoadFromLazarusResource(G);
-      end;
+      for I := 0 to Length(LanguageCodes) - 1 do
+        if Uppercase(FieldStr(LanguageCodes[I],0,',')) = S then begin
+          G := FieldStr(LanguageCodes[I],4,',');
+          break;
+        end;
+      for I := 0 to Length(CountryData) - 1 do
+        if G = FieldStr(CountryData[I], 1, ',') then begin
+          N := IconFlags[I];
+          Break;
+        end;
+      Log(self, G + '>' + N);
+      G := N;
+    end;
+    if G = '' then begin
+      leGraphic.Picture.LoadFromLazarusResource(IconFlags[0]);
+    end else begin
+      leGraphic.Picture.LoadFromLazarusResource(G);
+    end;
   end;
   // Reset Edit Area to top
   sbLanguageEdit.VertScrollBar.Position:=0;

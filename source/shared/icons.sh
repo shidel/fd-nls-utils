@@ -15,6 +15,8 @@ function notice () {
 	echo '-------------------------------------------------------------------------------'
 }
 
+prefix='icon-'
+
 if [[ -d 'icons8' ]] ; then
 	owd="${PWD}"
     pushd icons8 >/dev/null
@@ -35,7 +37,7 @@ if [[ -d 'icons8' ]] ; then
     	x="${x%-100*}"
     	x="${x#*icons8-}"
     	prev="${x}"
-    	echo "${i}=icons100-${x}">>filelist.txt
+    	echo "${i}=${prefix}${x}">>filelist.txt
     done
     echo "    '${prev}'">>filelist.inc
     echo "  );" >>filelist.inc

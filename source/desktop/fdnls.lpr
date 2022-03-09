@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, PasExt, uMain, uLog, uAppNLS
+  Forms, PasExt, uMain, uLog, uAppNLS, uPickFlag
   { you can add units after this };
 
 {$R *.res}
@@ -25,6 +25,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TmForm, mForm);
   Application.CreateForm(TfLog, fLog);
+  Application.CreateForm(TfPickFlag, fPickFlag);
   Application.Run;
 end.
 
