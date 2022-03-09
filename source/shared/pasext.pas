@@ -57,6 +57,8 @@ function SubStr(AStr : String; AFrom : String; MatchCase : boolean = True) : Str
 function Excise(var AStr : String; AFrom : String; ATo : String;  MatchCase : boolean = True) : String; overload;
 function Excise(var AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
 
+function AlphaOnly(AStr : String) : String; overload;
+
 function Implode(AStr: String; ADelim : String = SPACE) : String; overload;
 procedure Explode(AStr : String; var AStrs : TStringList; ADelim : String; ATrim : boolean = false); overload;
 procedure Explode(AStr : String; var AStrs : TStringList; ATrim : boolean = false); overload;
@@ -258,6 +260,16 @@ end;
 function Excise(var AStr : String; AFrom : String; MatchCase : boolean = True) : String; overload;
 begin
   Result := SubStrExcise(AStr, AFrom, '', MatchCase, True);
+end;
+
+function AlphaOnly(AStr: String): String; overload;
+var
+  I : integer;
+begin
+  Result := '';
+  for I := 1 to length(AStr) do
+    if (AStr[I] in [#$41..#$5A,#$61..#$7A]) then
+      Result := Result + AStr[I];
 end;
 
 function Implode(AStr: String; ADelim : String = SPACE) : String; overload;

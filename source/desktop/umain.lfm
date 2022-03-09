@@ -385,6 +385,7 @@ object mForm: TmForm
                   StateImagesWidth = 24
                   TabOrder = 0
                   OnChange = lvLanguagesChange
+                  OnItemChecked = lvLanguagesItemChecked
                 end
                 object btAddLanguage: TSpeedButton
                   Left = 438

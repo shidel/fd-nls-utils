@@ -10,7 +10,6 @@ uses
   XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, opensslsockets,
   fphttpclient, DateUtils, uAppNLS, uLog, uPickFlag, Icons;
 
-
 type
 
   { TmForm }
@@ -104,12 +103,16 @@ type
     procedure leLangNameEditingDone(Sender: TObject);
     procedure lvLanguagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
     procedure sbLanguageEditResize(Sender: TObject);
     procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
+  private
+    function GetActiveLanguage(ALang : String): boolean;
+    procedure SetActiveLanguage(ALang : String; AValue: boolean);
   private
     EditLangIndex : integer;
     Repository: TFDNLS;
@@ -124,6 +127,7 @@ type
     procedure OpenRepository(Location : String);
     procedure SetAppLanguageText(ALanguage : String);
     procedure SelectEditLanguage(Index : integer);
+    property ActiveLanguage[ALang : String] : boolean read GetActiveLanguage write SetActiveLanguage;
   public
     procedure SoftwareUpdate(Silent : boolean);
   end;
@@ -281,6 +285,14 @@ begin
   SelectEditLanguage(Item.Index);
 end;
 
+procedure TmForm.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
+begin
+  if Assigned(Item) then begin
+     ActiveLanguage[Repository.Languages.Identifier[Item.Index]] :=
+       Item.Checked;
+  end;
+end;
+
 procedure TmForm.sbLanguageEditResize(Sender: TObject);
 begin
     sbLanguageEdit.VertScrollBar.Page:= sbLanguageEdit.Height;
@@ -307,6 +319,7 @@ begin
   for I := 0 to Repository.Languages.Count - 1 do begin
     LI := lvLanguages.Items.Add;
     LI.Caption:=Repository.Languages.Caption[I];
+    LI.Checked:=ActiveLanguage[Repository.Languages.Identifier[I]];
   end;
   lvLanguages.EndUpdate;
   SelectEditLanguage(-1);
@@ -409,6 +422,22 @@ begin
        exit;
      end;
    end;
+end;
+
+function TmForm.GetActiveLanguage(ALang : String): boolean;
+begin
+  Result := False;
+  ALang := UpperCase(AlphaOnly(ALang));
+  if Length(ALang) < 2 then exit;
+  Result := xConfig.GetValue('LANGUAGE/EDIT/' + Copy(ALang,1,2) + '/' + ALang, False);
+end;
+
+procedure TmForm.SetActiveLanguage(ALang : String; AValue: boolean);
+begin
+  ALang := UpperCase(AlphaOnly(ALang));
+  if Length(ALang) < 2 then exit;
+  xConfig.SetValue('LANGUAGE/EDIT/' + Copy(ALang,1,2) + '/' + ALang, AValue);
+  xConfig.Flush;
 end;
 
 function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;

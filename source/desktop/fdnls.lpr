@@ -10,8 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, PasExt, uMain, uLog, uAppNLS, uPickFlag
-  { you can add units after this };
+  Forms, PasExt, uMain, uLog, uAppNLS, uPickFlag;
 
 {$R *.res}
 
