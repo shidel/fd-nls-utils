@@ -8,6 +8,7 @@ object fPickFlag: TfPickFlag
   ClientHeight = 320
   ClientWidth = 480
   OnCreate = FormCreate
+  OnShow = FormShow
   Position = poScreenCenter
   LCLVersion = '2.3.0.0'
   object lvFlags: TListView
@@ -24,6 +25,7 @@ object fPickFlag: TfPickFlag
       end>
     LargeImages = ilFlags
     LargeImagesWidth = 48
+    ParentFont = False
     ReadOnly = True
     ScrollBars = ssVertical
     ShowColumnHeaders = False
@@ -80,14 +82,14 @@ object fPickFlag: TfPickFlag
   object ilButtons: TImageList
     Height = 24
     Width = 24
-    Left = 152
-    Top = 264
+    Left = 24
+    Top = 272
   end
   object ilFlags: TImageList
     AllocBy = 16
     Height = 48
     Width = 48
-    Left = 200
-    Top = 264
+    Left = 80
+    Top = 272
   end
 end

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
-  StdCtrls, Buttons, uAppNLS, uLog, Icons;
+  StdCtrls, Buttons, ActnList, uAppNLS, uLog, Icons;
 
 type
 
@@ -21,10 +21,13 @@ type
     pButtons: TPanel;
     pBtnSeperator: TPanel;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    function GetIndex: integer;
+    procedure SetIndex(AValue: integer);
 
   public
-
+    property Index : integer read GetIndex write SetIndex;
   end;
 
 var
@@ -54,8 +57,32 @@ begin
       end;
   end;
   Log(Self, IntToStr(lvFlags.Items.Count) + ' flag images');
-  lvFlags.ViewStyle:=vsIcon;
   lvFlags.EndUpdate;
+end;
+
+procedure TfPickFlag.FormShow(Sender: TObject);
+begin
+  if Assigned(lvFLags.Selected) then begin
+    lvFlags.Selected.MakeVisible(false);
+  end;
+end;
+
+function TfPickFlag.GetIndex: integer;
+begin
+  if Assigned(lvFlags.Selected) then
+    Result := lvFlags.Selected.Index
+  else
+    Result := -1;
+end;
+
+procedure TfPickFlag.SetIndex(AValue: integer);
+begin
+  if GetIndex=AValue then Exit;
+  if (AValue < 0) or (AValue >= lvFlags.Items.Count) then begin
+    lvFlags.Selected := nil;
+  end else begin
+    lvFlags.Selected := lvFlags.Items.Item[AValue];
+  end;
 end;
 
 end.

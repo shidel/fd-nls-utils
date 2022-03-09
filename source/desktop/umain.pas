@@ -186,8 +186,24 @@ begin
 end;
 
 procedure TmForm.leGraphicClick(Sender: TObject);
+var
+  I : integer;
+  S : String;
 begin
-  if fPickFlag.ShowModal = mrOk then begin end;
+  fPickFlag.Index := -1;
+  S := Repository.Languages.Graphic[EditLangIndex];
+  for I := Low(IconFlags) to High(IconFlags) do
+      if S = FieldStr(IconFlags[I], 1, -1, '-') then begin
+          fPickFlag.Index:=I;
+          Break;
+      end;
+  if fPickFlag.ShowModal = mrOk then begin
+     if fPickFLag.Index = -1 then
+       Repository.Languages.Graphic[EditLangIndex] := ''
+     else
+       Repository.Languages.Graphic[EditLangIndex] := FieldStr(IconFlags[fPickFLag.Index], 1, -1, '-');
+     SelectEditLanguage(EditLangIndex);
+  end;
 end;
 
 procedure TmForm.leLangCodePageEditingDone(Sender: TObject);
@@ -592,7 +608,7 @@ begin
       leLangCodePage.Text:= '';
     sbLanguageEdit.Enabled:=True;
     if Repository.Languages.Graphic[EditLangIndex] <> '' then begin
-      G := Repository.Languages.Graphic[EditLangIndex];
+      G := IconPrefix + Repository.Languages.Graphic[EditLangIndex];
     end else if Repository.Languages.Identifier[EditLangIndex] <> '' then begin
       N := '';
       S := Uppercase(Repository.Languages.Identifier[EditLangIndex]);

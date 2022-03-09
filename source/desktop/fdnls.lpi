@@ -79,6 +79,7 @@
         <Filename Value="upickflag.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="fPickFlag"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
       </Unit>
