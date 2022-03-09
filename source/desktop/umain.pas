@@ -96,8 +96,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
-    procedure leCharMapEdited(Sender: TObject; Item: TListItem;
-      var AValue: string);
     procedure leGraphicClick(Sender: TObject);
     procedure leLangCodePageEditingDone(Sender: TObject);
     procedure leLangDOSEditingDone(Sender: TObject);
@@ -189,14 +187,6 @@ begin
    // Log(Self, 'Minute Interval Trigger');
   itMinute.Interval := 60 * 1000; { 60 second intervals }
   mForm.SoftwareUpdate(True);
-end;
-
-procedure TmForm.leCharMapEdited(Sender: TObject; Item: TListItem;
-  var AValue: string);
-begin
-   Log(Self, StrtoInts(AValue));
-   Item.SubItems.Strings[0] := StrToInts(AValue);
-   Item.SubItems.Strings[1] := IntsToStr(Item.SubItems.Strings[0]);
 end;
 
 procedure TmForm.leGraphicClick(Sender: TObject);
@@ -294,7 +284,6 @@ procedure TmForm.lvLanguagesChange(Sender: TObject; Item: TListItem;
 begin
   SelectEditLanguage(Item.Index);
 end;
-
 
 procedure TmForm.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
 begin
@@ -676,9 +665,6 @@ begin
       leGraphic.Picture.LoadFromLazarusResource(G);
     end;
   end;
-  X := 'Выполнить';
-  X := 'Yükleyicinin numaralı';
-  N := StrToInts(X);
   // Reset Edit Area to top
   sbLanguageEdit.VertScrollBar.Position:=0;
   sbLanguageEdit.VertScrollBar.Range:=bbRemoveLanguage.Top + bbRemoveLanguage.Height + 2;
