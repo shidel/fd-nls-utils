@@ -46,7 +46,6 @@ type
     lbAvailLanguages: TLabel;
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
-    leCharMap: TListView;
     lvLanguages: TListView;
     mMain: TMainMenu;
     pLangEditRight: TPanel;
@@ -677,16 +676,6 @@ begin
       leGraphic.Picture.LoadFromLazarusResource(G);
     end;
   end;
-  leCharMap.BeginUpdate;
-  leCharMap.Clear;
-  for I := 0 to 255 do begin
-     LI := leCharMap.Items.Add;
-     LI.Caption := IntToStr(I);
-     LI.SubItems.Add(Chr(I));
-     LI.SubItems.Add(Chr(I));
-     LI.SubItems.Add(Chr(I));
-  end;
-  leCharMap.EndUpdate;
   X := 'Выполнить';
   X := 'Yükleyicinin numaralı';
   N := StrToInts(X);
