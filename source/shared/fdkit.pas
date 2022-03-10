@@ -50,6 +50,10 @@ type
     property Count : integer read GetCount;
     property Filename[Index : integer] : String read GetFileName write SetFileName;
     procedure Reload;
+    function Add : integer;
+    procedure Delete(Index : integer);
+    procedure SetValue(Index : integer; KeyName : String; Value : String); overload;
+    procedure SetValue(Index : integer; KeyName : String; Value : Integer); overload;
   published
 
   end;
@@ -76,14 +80,11 @@ type
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
-    procedure Refresh;
     property Caption[Index : integer] : String read GetCaption write SetCaption;
     property Identifier[Index : integer] : String read GetIdentifier write SetIdentifier;
     property Lang[Index : integer] : String read GetLang write SetLang;
     property CodePage[Index : integer] : integer read GetCodePage write SetCodePage;
     property Graphic[Index : integer] : String read GetGraphic write SetGraphic;
-    function NewLanguage : integer;
-    procedure Delete(Index : integer);
   published
   end;
 
@@ -105,7 +106,7 @@ type
     destructor Destroy; override;
     property Path : string read GetPath write SetPath;
     property Languages : TFDLanguages read FLanguages write SetLanguages;
-    procedure Refresh;
+    procedure Reload;
   published
   end;
 
@@ -176,7 +177,7 @@ begin
   while I < FFiles.Count do begin
     try
       FXML.Filename:=GroupPath + FFiles[I];
-      if (GroupID <> '') and (FXML.GetValue('XMLGROUP/CLASS/ID', '') <> GroupID) then begin
+      if (GroupID <> '') and (FXML.GetValue('XMLGROUP/ID', '') <> GroupID) then begin
         {$IFDEF UseLog}
           Log(nil,'XML_GROUP, ' + GroupID + ' verification failed for ' + FFiles[I]);
         {$ENDIF}
@@ -202,9 +203,62 @@ begin
         Log(nil,'XML_GROUP, ERROR ' + FFiles[I] + ' raised exception');
       {$ENDIF}
       FXML.FileName := '';
-      FFiles.Delete(I)
+      FFiles.Delete(I);
     end;
   end;
+end;
+
+function TXMLGroup.Add: integer;
+var
+  N : String;
+  X, I : integer;
+  D : TObject;
+begin
+  Result := -1;
+  X := 0;
+  N := 'new-item.xml';
+  While X < 100 do begin
+    if not FileExists(GroupPath + N) then break;
+    Inc(X);
+    N := 'new-item'+IntToStr(X)+'.xml';
+  end;
+  if X = 100 then exit;
+  FXML.Filename:=GroupPath + N;
+  FXML.SetValue('XMLGROUP/ID', GroupID);
+  FXML.SetValue('LANGUAGE/CODEPAGE', -1);
+  FXML.Flush;
+  VCSAddFile(GroupPath + N);
+  X := -1;
+  I := FFiles.Add(N);
+  D := LoadData;
+  if Assigned(D) then
+    X := FData.Add(D);
+  if I <> X then begin
+     raise Exception.Create('internal sorting error');
+  end else begin
+    Result := I;
+  end;
+end;
+
+procedure TXMLGroup.Delete(Index: integer);
+begin
+  if (Index < 0) or (Index >= Count) then exit;
+  VCSDeleteFile(GroupPath + FFiles[Index]);
+  DeleteFile(GroupPath + FFiles[Index]);
+  FFiles.Delete(Index);
+  FData.Delete(Index);
+end;
+
+procedure TXMLGroup.SetValue(Index : integer; KeyName: String; Value: String);
+begin
+  FXML.Filename:=GroupPath + FFiles[Index];
+  FXML.SetValue(GroupID + '/' + KeyName, Value);
+  FXML.Flush;
+end;
+
+procedure TXMLGroup.SetValue(Index : integer; KeyName: String; Value: Integer);
+begin
+  SetValue(Index, KeyName, IntToStr(Value));
 end;
 
 { TFDLanguages }
@@ -244,19 +298,14 @@ begin
   T := Uppercase(AValue);
   for I := 0 to FData.Count - 1 do
     if (I <> Index) and (T = Uppercase(TLanguageData(FData[I]).Caption)) then exit;
-  FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
-  FXML.SetValue('LANGUAGE/CAPTION', AValue);
-  FXML.Flush;
+  SetValue(Index, 'CAPTION', AValue);
   TLanguageData(FData[Index]).Caption := AValue;
 end;
 
 procedure TFDLanguages.SetCodePage(Index : integer; AValue: integer);
 begin
   if AValue = TLanguageData(FData[Index]).CodePage then exit;
-  // OK to have a duplicate codepage
-  FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
-  FXML.SetValue('LANGUAGE/CODEPAGE', AValue);
-  FXML.Flush;
+  SetValue(Index, 'CODEPAGE', AValue);
   TLanguageData(FData[Index]).Codepage := AValue;
 end;
 
@@ -264,9 +313,7 @@ procedure TFDLanguages.SetGraphic(Index : integer; AValue: String);
 begin
   AValue := Trim(LowerCase(AValue));
   if AValue = TLanguageData(FData[Index]).Graphic then exit;
-  FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
-  FXML.SetValue('LANGUAGE/GRAPHIC', AValue);
-  FXML.Flush;
+  SetValue(Index, 'GRAPHIC', AValue);
   TLanguageData(FData[Index]).Graphic := AValue;
 end;
 
@@ -282,9 +329,7 @@ begin
     for I := 0 to FData.Count - 1 do
         if (I <> Index) and (T = Uppercase(TLanguageData(FData[I]).Identifier)) then exit;
   end;
-  FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
-  FXML.SetValue('LANGUAGE/IDENTIFIER', AValue);
-  FXML.Flush;
+  SetValue(Index, 'IDENTIFIER', AValue);
   TLanguageData(FData[Index]).Identifier := AValue;
 end;
 
@@ -295,13 +340,7 @@ var
 begin
   AValue := Uppercase(Trim(AValue));
   if AValue = TLanguageData(FData[Index]).Lang then exit;
-  if AValue <> '' then begin
-    for I := 0 to FData.Count - 1 do
-        if AValue = TLanguageData(FData[I]).Lang then exit;
-  end;
-  FXML.Filename:=FOwner.LanguagesPath + FFiles[Index];
-  FXML.SetValue('LANGUAGE/LANG', AValue);
-  FXML.Flush;
+  SetValue(Index, 'LANG', AValue);
   TLanguageData(FData[Index]).Lang := AValue;
 end;
 
@@ -316,7 +355,7 @@ var
 begin
   O := TLanguageData.Create;
   try
-    O.Caption := FXML.GetValue('LANGUAGE/CAPTION', ExtractFilename(FXML.Filename));
+    O.Caption := FXML.GetValue('LANGUAGE/CAPTION', '');
     O.Identifier := FXML.GetValue('LANGUAGE/IDENTIFIER', '');
     O.Lang := FXML.GetValue('LANGUAGE/LANG', '');
     O.CodePage := StrToInt(FXML.GetValue('LANGUAGE/CODEPAGE', '-1'));
@@ -331,56 +370,12 @@ begin
   inherited Create;
   FOwner := AOwner;
   FGroupID := 'LANGUAGE';
-  Refresh;
+  Reload;
 end;
 
 destructor TFDLanguages.Destroy;
 begin
   inherited Destroy;
-end;
-
-procedure TFDLanguages.Refresh;
-
-begin
-  Reload;
-end;
-
-function TFDLanguages.NewLanguage: integer;
-var
-  N : String;
-  X, I : integer;
-begin
-  Result := -1;
-  X := 0;
-  N := 'newlang.xml';
-  While X < 100 do begin
-    if not FileExists(FOwner.LanguagesPath + N) then break;
-    Inc(X);
-    N := 'newlang-'+IntToStr(X)+'.xml';
-  end;
-  if X = 100 then exit;
-{  I := FFiles.Add(N);
-  if I <> Length(FData) then
-     raise Exception.Create('internal sorting error');
-  FXML.Filename:=FOwner.LanguagesPath + N;
-  FXML.SetValue('LANGUAGE/CODEPAGE', -1);
-  FXML.Flush;
-  VCSAddFile(FOwner.LanguagesPath + N);
-  SetLength(FData, I + 1);
-  Result := I;
-  with FData[I] do begin
-    Identifier := '';
-    Lang := '';
-    Caption := '';
-    Graphic := '';
-  end;            }
-end;
-
-procedure TFDLanguages.Delete(Index: integer);
-begin
-  VCSDeleteFile(FOwner.LanguagesPath + FFiles[Index]);
-  DeleteFile(FOwner.LanguagesPath + FFiles[Index]);
-  Refresh;
 end;
 
 { TFDNLS }
@@ -431,9 +426,9 @@ begin
   inherited Destroy;
 end;
 
-procedure TFDNLS.Refresh;
+procedure TFDNLS.Reload;
 begin
-  Languages.Refresh;
+  Languages.Reload;
 end;
 
 end.

@@ -315,7 +315,7 @@ var
 begin
   lvLanguages.BeginUpdate;
   lvLanguages.Clear;
-  Repository.Refresh;
+  Repository.Languages.Reload;
   for I := 0 to Repository.Languages.Count - 1 do begin
     LI := lvLanguages.Items.Add;
     LI.Caption:=Repository.Languages.Caption[I];
@@ -340,7 +340,7 @@ var
   I : integer;
   LI : TListItem;
 begin
-  I := Repository.Languages.NewLanguage;
+  I := Repository.Languages.Add;
   Log(Self, 'Result ' + IntToStr(I));
   if I <> -1 then begin
     LI := lvLanguages.Items.Add;
