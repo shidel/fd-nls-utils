@@ -19,6 +19,9 @@ type
     actApplePrefs: TAction;
     actDebugLog: TAction;
     actAddLanguage: TAction;
+    actCodepageNew: TAction;
+    actCodepageEdit: TAction;
+    actCodepageNone: TAction;
     actRemoveLanguage: TAction;
     actPackages: TAction;
     actProjects: TAction;
@@ -63,6 +66,7 @@ type
     sbLanguageEdit: TScrollBox;
     sLanguages: TSplitter;
     btAddLanguage: TSpeedButton;
+    btCodepage: TSpeedButton;
     sPrefs: TSplitter;
     itMinute: TTimer;
     tsPackages: TTabSheet;
@@ -628,6 +632,8 @@ var
 begin
   EditLangIndex := Index;
   if Index < 0 then begin
+    btCodePage.Action := actCodePageNone;
+    btCodePage.ImageIndex:=actCodePageNone.ImageIndex;
     leLangName.Text:='';
     leLangID.Text:='';
     leLangDOS.Text:='';

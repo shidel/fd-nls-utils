@@ -38,11 +38,11 @@ const
     'remove',             { 6 }
     'done',               { 7 }
     'close',              { 8 }
-    'cancel',
-    'edit',
+    'cancel',             { 9 }
+    'no-edit',            { 10 }
+    'edit',               { 11 }
     'edit-property',
     'edit-file',
-    'no-edit',
     'error',
     'notification',
     'check-circle',

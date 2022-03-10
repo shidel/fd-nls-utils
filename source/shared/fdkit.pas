@@ -19,7 +19,7 @@ type
   TLanguageData = class(TObject)
     Caption : String;
     Identifier : String;
-    Lang : String;
+    Language : String;
     CodePage : integer;
     Graphic : String;
   end;
@@ -65,6 +65,7 @@ type
     FOwner: TFDNLS;
     function GetCaption(Index : integer): String;
     function GetCodePage(Index : integer): integer;
+    function GetData(Index : integer): TLanguageData;
     function GetGraphic(Index : integer): String;
     function GetIdentifier(Index : integer): String;
     function GetLanguage(Index : integer): String;
@@ -77,6 +78,7 @@ type
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
     function LoadData : TObject; override;
+    property Data[Index : integer] : TLanguageData read GetData;
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
@@ -250,6 +252,7 @@ end;
 
 procedure TXMLGroup.SetValue(Index : integer; KeyName: String; Value: String);
 begin
+  if FXML.GetValue(GroupID + '/' + KeyName, '') = Value then exit;
   FXML.Filename:=GroupPath + FFiles[Index];
   FXML.SetValue(GroupID + '/' + KeyName, Value);
   FXML.Flush;
@@ -264,27 +267,32 @@ end;
 
 function TFDLanguages.GetCaption(Index : integer): String;
 begin
-  Result := TLanguageData(FData[Index]).Caption;
+  Result := Data[Index].Caption;
 end;
 
 function TFDLanguages.GetCodePage(Index : integer): integer;
 begin
-  Result := TLanguageData(FData[Index]).Codepage;
+  Result := Data[Index].Codepage;
+end;
+
+function TFDLanguages.GetData(Index : integer): TLanguageData;
+begin
+  Result := TLanguageData(FData[Index]);
 end;
 
 function TFDLanguages.GetGraphic(Index : integer): String;
 begin
-  Result := TLanguageData(FData[Index]).Graphic;
+  Result := Data[Index].Graphic;
 end;
 
 function TFDLanguages.GetIdentifier(Index : integer): String;
 begin
-  Result := TLanguageData(FData[Index]).Identifier;
+  Result := Data[Index].Identifier;
 end;
 
 function TFDLanguages.GetLanguage(Index : integer): String;
 begin
-  Result := TLanguageData(FData[Index]).Lang;
+  Result := Data[Index].Language;
 end;
 
 procedure TFDLanguages.SetCaption(Index : integer; AValue: String);
@@ -293,27 +301,25 @@ var
   T : String;
 begin
   AValue := Trim(AValue);
-  if AValue = TLanguageData(FData[Index]).Caption then exit;
+  if AValue = Data[Index].Caption then exit;
   T := Uppercase(AValue);
   for I := 0 to FData.Count - 1 do
     if (I <> Index) and (T = Uppercase(TLanguageData(FData[I]).Caption)) then exit;
   SetValue(Index, 'CAPTION', AValue);
-  TLanguageData(FData[Index]).Caption := AValue;
+  Data[Index].Caption := AValue;
 end;
 
 procedure TFDLanguages.SetCodePage(Index : integer; AValue: integer);
 begin
-  if AValue = TLanguageData(FData[Index]).CodePage then exit;
   SetValue(Index, 'CODEPAGE', AValue);
-  TLanguageData(FData[Index]).Codepage := AValue;
+  Data[Index].Codepage := AValue;
 end;
 
 procedure TFDLanguages.SetGraphic(Index : integer; AValue: String);
 begin
   AValue := Trim(LowerCase(AValue));
-  if AValue = TLanguageData(FData[Index]).Graphic then exit;
   SetValue(Index, 'GRAPHIC', AValue);
-  TLanguageData(FData[Index]).Graphic := AValue;
+  Data[Index].Graphic := AValue;
 end;
 
 procedure TFDLanguages.SetIdentifier(Index : integer; AValue: String);
@@ -322,14 +328,14 @@ var
   T : String;
 begin
   AValue := Trim(AValue);
-  if AValue = TLanguageData(FData[Index]).Identifier then exit;
+  if AValue = Data[Index].Identifier then exit;
   if AValue <> '' then begin
     T := Uppercase(AValue);
     for I := 0 to FData.Count - 1 do
-        if (I <> Index) and (T = Uppercase(TLanguageData(FData[I]).Identifier)) then exit;
+        if (I <> Index) and (T = Uppercase(Data[I].Identifier)) then exit;
   end;
   SetValue(Index, 'IDENTIFIER', AValue);
-  TLanguageData(FData[Index]).Identifier := AValue;
+  Data[Index].Identifier := AValue;
 end;
 
 procedure TFDLanguages.SetLanguage(Index : integer; AValue: String);
@@ -338,9 +344,8 @@ var
   T : String;
 begin
   AValue := Uppercase(Trim(AValue));
-  if AValue = TLanguageData(FData[Index]).Lang then exit;
   SetValue(Index, 'LANG', AValue);
-  TLanguageData(FData[Index]).Lang := AValue;
+  Data[Index].Language := AValue;
 end;
 
 function TFDLanguages.GroupPath: String;
@@ -356,7 +361,7 @@ begin
   try
     O.Caption := FXML.GetValue('LANGUAGE/CAPTION', '');
     O.Identifier := FXML.GetValue('LANGUAGE/IDENTIFIER', '');
-    O.Lang := FXML.GetValue('LANGUAGE/LANG', '');
+    O.Language := FXML.GetValue('LANGUAGE/LANG', '');
     O.CodePage := StrToInt(FXML.GetValue('LANGUAGE/CODEPAGE', '-1'));
   except
     FreeAndNil(O);

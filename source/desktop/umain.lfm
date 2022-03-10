@@ -334,6 +334,16 @@ object mForm: TmForm
                     Stretch = True
                     Transparent = True
                   end
+                  object btCodepage: TSpeedButton
+                    Left = 304
+                    Height = 22
+                    Top = 168
+                    Width = 23
+                    Anchors = [akTop, akRight]
+                    Flat = True
+                    Images = ilToolsSmall
+                    ShowCaption = False
+                  end
                 end
                 object pLangEditRight: TPanel
                   Left = 482
@@ -2845,6 +2855,21 @@ object mForm: TmForm
       ImageIndex = 6
       OnExecute = actRemoveLanguageExecute
       OnUpdate = actRemoveLanguageUpdate
+    end
+    object actCodepageNew: TAction
+      Category = 'UI'
+      Caption = 'actCodepageNew'
+      ImageIndex = 5
+    end
+    object actCodepageEdit: TAction
+      Category = 'UI'
+      Caption = 'actCodepageEdit'
+      ImageIndex = 11
+    end
+    object actCodepageNone: TAction
+      Category = 'UI'
+      Caption = 'actCodepageNone'
+      ImageIndex = 10
     end
   end
   object itMinute: TTimer
