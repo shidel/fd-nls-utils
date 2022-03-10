@@ -41,7 +41,12 @@ var
   UpdateServer  : String;      { Application Update Server URL }
 
 type
-  TFileList = array of string;
+  TByteArray = array of Byte;
+  TWordArray = array of Word;
+  TIntegerArray = array of Integer;
+  TCharArray = array of Char;
+  TStringArray = array of String;
+  TPointerArray = array of Pointer;
   TForEachFileFunc = function (FileName : String) : integer of object;
 
 procedure InitPasExt(Identifier : String);
@@ -98,8 +103,26 @@ function CenterPad(AStr : String; AWidth: integer; ASubStr : String = SPACE) : S
 
 function SimpleCheckSum(const AStr : String) : word; overload;
 
+procedure ClearArray(var A : TByteArray; ALength : integer = 0); overload;
+procedure ClearArray(var A : TWordArray; ALength : integer = 0); overload;
+procedure ClearArray(var A : TIntegerArray; ALength : integer = 0); overload;
+procedure ClearArray(var A : TCharArray; ALength : integer = 0); overload;
+procedure ClearArray(var A : TStringArray; ALength : integer = 0); overload;
+procedure ClearArray(var A : TPointerArray; ALength : integer = 0); overload;
+
+function AddToArray(var A : TByteArray; B : Byte) : integer; overload;
+function AddToArray(var A : TWordArray; W : Word) : integer; overload;
+function AddToArray(var A : TIntegerArray; I : Integer) : integer; overload;
+function AddToArray(var A : TCharArray; C : Char) : integer; overload;
+function AddToArray(var A : TStringArray; S : String) : integer; overload;
+function AddToArray(var A : TPointerArray; P : Pointer) : integer; overload;
+
+function InArray(AStr : String; A : TStringArray; CaseSpecific : boolean = true) : boolean; overload;
+
 function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean = True) : integer; overload;
-function FileList(APathSpec : String) : TFileList;
+
+procedure FileList(var List : TStringList; APathSpec : String);  overload;
+procedure FileList(var List : TStringArray; APathSpec : String);  overload;
 
 function StrToInts(AStr: String): String; overload;
 function IntsToStr(AStr: String): String; overload;
@@ -540,8 +563,6 @@ begin
   Result := AStr;
 end;
 
-
-
 function SimpleCheckSum(const AStr: String): word;
 var
   Sum: word;
@@ -551,6 +572,130 @@ begin
   for I := 1 to Length(AStr) do
     Sum:=word((Sum shr 1) or ((Sum and 1) shl 15)) + Ord(AStr[I]);
   Result:=Sum;
+end;
+
+procedure ClearArray(var A: TByteArray; ALength: integer);
+var
+  I : integer;
+begin
+  SetLength(A, ALength);
+  if Length(A) > 0 then
+    for I := Low(A) to High(A) do
+      A[I] := 0;
+end;
+
+procedure ClearArray(var A: TWordArray; ALength: integer);
+var
+  I : integer;
+begin
+  SetLength(A, ALength);
+  if Length(A) > 0 then
+    for I := Low(A) to High(A) do
+      A[I] := 0;
+end;
+
+procedure ClearArray(var A: TIntegerArray; ALength: integer);
+var
+  I : integer;
+begin
+  SetLength(A, ALength);
+  if Length(A) > 0 then
+    for I := Low(A) to High(A) do
+      A[I] := 0;
+end;
+
+procedure ClearArray(var A: TCharArray; ALength: integer);
+var
+  I : integer;
+begin
+  SetLength(A, ALength);
+  if Length(A) > 0 then
+    for I := Low(A) to High(A) do
+      A[I] := #0;
+end;
+
+procedure ClearArray(var A: TStringArray; ALength: integer);
+var
+  I : integer;
+begin
+  SetLength(A, ALength);
+  if Length(A) > 0 then
+    for I := Low(A) to High(A) do
+      A[I] := '';
+end;
+
+procedure ClearArray(var A: TPointerArray; ALength: integer);
+var
+  I : integer;
+begin
+  SetLength(A, ALength);
+  if Length(A) > 0 then
+    for I := Low(A) to High(A) do
+      A[I] := nil;
+end;
+
+function AddToArray(var A: TByteArray; B: Byte): integer;
+begin
+  SetLength(A, Length(A) + 1);
+  A[High(A)] := B;
+  Result := Length(A);
+end;
+
+function AddToArray(var A: TWordArray; W: Word): integer;
+begin
+  SetLength(A, Length(A) + 1);
+  A[High(A)] := W;
+  Result := Length(A);
+end;
+
+function AddToArray(var A: TIntegerArray; I: Integer): integer;
+begin
+  SetLength(A, Length(A) + 1);
+  A[High(A)] := I;
+  Result := Length(A);
+end;
+
+function AddToArray(var A: TCharArray; C: Char): integer;
+begin
+  SetLength(A, Length(A) + 1);
+  A[High(A)] := C;
+  Result := Length(A);
+end;
+
+function AddToArray(var A : TStringArray; S : String) : integer;
+begin
+  SetLength(A, Length(A) + 1);
+  A[High(A)] := S;
+  Result := Length(A);
+end;
+
+function AddToArray(var A: TPointerArray; P: Pointer): integer;
+begin
+  SetLength(A, Length(A) + 1);
+  A[High(A)] := P;
+  Result := Length(A);
+end;
+
+function InArray(AStr: String; A: TStringArray; CaseSpecific: boolean
+  ): boolean;
+var
+  I : integer;
+begin
+  Result := False;
+  if CaseSpecific then begin
+    for I := Low(A) to High(A) do
+      if AStr = A[I] then begin
+        Result := True;
+        Exit;
+      end;
+  end else begin
+    AStr := Uppercase(AStr);
+    for I := Low(A) to High(A) do
+      if AStr = Uppercase(A[I]) then begin
+        Result := True;
+        Exit;
+      end;
+  end;
 end;
 
 function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean) : integer;
@@ -604,26 +749,44 @@ begin
     Result := -1;
 end;
 
-function FileList(APathSpec : String) : TFileList;
+procedure FileList(var List : TStringList; APathSpec : String);  overload;
+var
+  R : integer;
+  Search : TSearchRec;
+begin
+  if not Assigned(List) then exit;
+  List.Clear;
+  R := FindFirst(APathSpec, faAnyFile, Search);
+  while (R = 0) do begin
+    if (Search.Attr and faDirectory <> faDirectory) then begin
+      List.Add(Search.Name);
+    end;
+    if R = 0 then
+      R := FindNext(Search);
+  end;
+  FindClose(Search);
+end;
+
+procedure FileList(var List : TStringArray; APathSpec : String);  overload;
 var
   R, C : integer;
   Search : TSearchRec;
 begin
   C := 0;
-  SetLength(Result, 0);
+  ClearArray(List);
   R := FindFirst(APathSpec, faAnyFile, Search);
   while (R = 0) do begin
     if (Search.Attr and faDirectory <> faDirectory) then begin
-      if C = Length(Result) then
-        SetLength(Result, Length(Result) + 16);
-      Result[C] := Search.Name;
+      if C = Length(List) then
+        SetLength(List, Length(List) + 16);
+      List[C] := Search.Name;
       Inc(C);
     end;
     if R = 0 then
       R := FindNext(Search);
   end;
   FindClose(Search);
-  SetLength(Result, C);
+  SetLength(List, C);
 end;
 
 function StrToInts(AStr: String): String;

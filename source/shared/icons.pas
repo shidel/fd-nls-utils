@@ -38,11 +38,17 @@ const
     'remove',             { 6 }
     'done',               { 7 }
     'close',              { 8 }
+    'cancel',
+    'edit',
+    'edit-property',
+    'edit-file',
+    'no-edit',
     'error',
     'notification',
     'check-circle',
     'save',
     'save-all',
+    'save-as',
     'form',
     'category',
     'git',
@@ -60,7 +66,13 @@ const
     'commit-git',
     'compare-git',
     'merge-git',
-    'language'
+    'language',
+    'source-code',
+    'fold',
+    'unfold',
+    'document-header',
+    'document-body',
+    'footer'
   );
 
   IconFlags : array of string = ();

@@ -346,6 +346,7 @@ begin
     LI := lvLanguages.Items.Add;
     LI.Caption:=Repository.Languages.Caption[I];
     lvLanguages.Selected:=LI;
+    LI.MakeVisible(false);
     leLangId.SetFocus;
   end;
 end;

@@ -27,7 +27,7 @@ type
   TFDLanguages = class(TPersistent)
   private
     FXML : TXMLConfig;
-    FFiles : TFileList;
+    FFiles : TStringList;
     FData : array of TLangDataItem;
     FOwner: TFDNLS;
     function GetCaption(Index : integer): String;
@@ -104,7 +104,7 @@ end;
 
 function TFDLanguages.GetCount: integer;
 begin
-  Result := Length(FFiles);
+  Result := FFiles.Count;
 end;
 
 function TFDLanguages.GetFileName(Index : integer): String;
@@ -220,11 +220,13 @@ begin
   inherited Create;
   FOwner := AOwner;
   FXML := TXMLConfig.Create(nil);
+  FFiles := TStringList.Create;
   Refresh;
 end;
 
 destructor TFDLanguages.Destroy;
 begin
+  FreeAndNil(FFiles);
   FreeAndNil(FXML);
   inherited Destroy;
 end;
@@ -233,10 +235,10 @@ procedure TFDLanguages.Refresh;
 var
   I, J : integer;
 begin
-  SetLength(FFiles, 0);
-  FFiles := FileList(FOwner.LanguagesPath + '*.xml');
-  SetLength(FData, Length(FFiles));
-  for I := 0 to Length(FFiles) - 1 do begin
+  FileList(FFiles, FOwner.LanguagesPath + '*.xml');
+  FFiles.Sort;
+  SetLength(FData, Count);
+  for I := 0 to Count - 1 do begin
     FXML.Filename:=FOwner.LanguagesPath + FFiles[I];
     FData[I].Caption := FXML.GetValue('LANGUAGE/CAPTION', FFiles[I]);
     FData[I].Identifier := FXML.GetValue('LANGUAGE/IDENTIFIER', '');
@@ -274,18 +276,20 @@ begin
     N := 'newlang-'+IntToStr(X)+'.xml';
   end;
   if X = 100 then exit;
-  SetLength(FFiles, Length(FFiles) + 1);
-  SetLength(FData, Length(FFiles));
-  FFiles[Length(FFiles) - 1]:=N;
-  Result := Length(FFiles) - 1;
-  with FData[Length(FFiles) - 1] do begin
+  FXML.Filename:=FOwner.LanguagesPath + N;
+  FXML.SetValue('LANGUAGE/CODEPAGE', -1);
+  VCSAddFile(FOwner.LanguagesPath + N);
+  I := FFiles.Add(N);
+  if I <> Length(FData) then
+     raise Exception.Create('internal sorting error');
+  SetLength(FData, I + 1);
+  Result := I;
+  with FData[I] do begin
     Identifier := '';
     Lang := '';
     Caption := '';
     Graphic := '';
   end;
-  SetCodepage(Result, -1);
-  VCSAddFile(FOwner.LanguagesPath + N);
 end;
 
 procedure TFDLanguages.Delete(Index: integer);
