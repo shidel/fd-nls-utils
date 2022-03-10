@@ -2861,11 +2861,13 @@ object fMain: TfMain
       Category = 'UI'
       Caption = 'actCodepageNew'
       ImageIndex = 5
+      OnExecute = actCodepageNewExecute
     end
     object actCodepageEdit: TAction
       Category = 'UI'
       Caption = 'actCodepageEdit'
       ImageIndex = 11
+      OnExecute = actCodepageEditExecute
     end
     object actCodepageNone: TAction
       Category = 'UI'

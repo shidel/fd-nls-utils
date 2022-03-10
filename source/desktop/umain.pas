@@ -8,7 +8,9 @@ uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
   XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker,
-  opensslsockets, fphttpclient, DateUtils, uAppNLS, uLog, uPickFlag, Icons;
+  opensslsockets, fphttpclient, DateUtils,
+  uAppNLS, uLog, uPickFlag, uEditCodePage,
+  Icons;
 
 type
 
@@ -87,6 +89,8 @@ type
     procedure actAddLanguageExecute(Sender: TObject);
     procedure actAppleAboutExecute(Sender: TObject);
     procedure actApplePrefsExecute(Sender: TObject);
+    procedure actCodepageEditExecute(Sender: TObject);
+    procedure actCodepageNewExecute(Sender: TObject);
     procedure actDebugLogExecute(Sender: TObject);
     procedure actPackagesExecute(Sender: TObject);
     procedure actPreferencesExecute(Sender: TObject);
@@ -377,6 +381,18 @@ end;
 procedure TfMain.actApplePrefsExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
+end;
+
+procedure TfMain.actCodepageEditExecute(Sender: TObject);
+begin
+  if fEditCodePage.ShowModal = mrOk then begin
+
+  end;
+end;
+
+procedure TfMain.actCodepageNewExecute(Sender: TObject);
+begin
+  actCodePageEditExecute(Sender);
 end;
 
 procedure TfMain.actDebugLogExecute(Sender: TObject);
