@@ -15,13 +15,12 @@
       <Unit>
         <Filename Value="umain.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="mForm"/>
+        <ComponentName Value="fMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="633"/>
-        <CursorPos X="32" Y="647"/>
+        <TopLine Value="663"/>
+        <CursorPos X="59" Y="650"/>
         <FoldState Value=" T3l60322121141Fb"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
@@ -43,7 +42,7 @@
         <Filename Value="uappnls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="10"/>
         <CursorPos X="87" Y="29"/>
         <UsageCount Value="222"/>
@@ -58,7 +57,7 @@
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="46"/>
         <CursorPos X="56" Y="16"/>
         <FoldState Value=" T3xD0nl"/>
@@ -68,7 +67,7 @@
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="217"/>
         <CursorPos X="30" Y="153"/>
         <FoldState Value=" T3lO039^"/>
@@ -78,7 +77,7 @@
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
         <UnitName Value="Icons"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="12"/>
         <CursorPos X="75" Y="61"/>
         <UsageCount Value="102"/>
@@ -104,10 +103,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="43"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="40"/>
         <CursorPos Y="73"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="87"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ulangedit.pas"/>
@@ -145,28 +146,22 @@
         <CursorPos X="47" Y="15"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="ueditcodepage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fEditCodePage"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uEditCodePage"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="16"/>
+        <CursorPos Y="53"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="333" Column="37"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="342" TopLine="322"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="362" Column="68" TopLine="341"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="181" Column="67" TopLine="160"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="228" Column="39" TopLine="207"/>
-      </Position>
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
         <Caret Line="255" Column="51" TopLine="234"/>
@@ -266,6 +261,25 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="686" TopLine="658"/>
+      </Position>
+      <Position>
+        <Filename Value="ueditcodepage.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="ueditcodepage.pas"/>
+        <Caret Line="11"/>
+      </Position>
+      <Position>
+        <Filename Value="ueditcodepage.pas"/>
+        <Caret Line="43" Column="43" TopLine="3"/>
+      </Position>
+      <Position>
+        <Filename Value="ueditcodepage.pas"/>
+        <Caret Line="48" Column="43" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="ueditcodepage.pas"/>
+        <Caret Line="56" Column="24" TopLine="19"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -1,0 +1,72 @@
+object fEditCodePage: TfEditCodePage
+  Left = 288
+  Height = 304
+  Top = 361
+  Width = 488
+  BorderStyle = bsSizeToolWin
+  Caption = 'fEditCodePage'
+  ClientHeight = 304
+  ClientWidth = 488
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poScreenCenter
+  SessionProperties = 'Position;Left;Top;Height;Width;ClientHeight;ClientWidth'
+  LCLVersion = '2.3.0.0'
+  object pButtons: TPanel
+    Left = 0
+    Height = 29
+    Top = 256
+    Width = 472
+    Anchors = [akLeft, akRight, akBottom]
+    BevelOuter = bvNone
+    ClientHeight = 29
+    ClientWidth = 472
+    TabOrder = 0
+    object pBtnSeperator: TPanel
+      Left = 387
+      Height = 29
+      Top = 0
+      Width = 10
+      Align = alRight
+      Anchors = [akTop, akRight]
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object bbOK: TBitBtn
+      Left = 312
+      Height = 29
+      Top = 0
+      Width = 75
+      Align = alRight
+      Caption = 'bbOK'
+      ModalResult = 1
+      Images = ilButtons
+      ImageIndex = 0
+      TabOrder = 1
+    end
+    object bbCancel: TBitBtn
+      Left = 397
+      Height = 29
+      Top = 0
+      Width = 75
+      Align = alRight
+      AutoSize = True
+      Caption = 'bbCancel'
+      ModalResult = 2
+      Images = ilButtons
+      ImageIndex = 1
+      TabOrder = 2
+    end
+  end
+  object xProperties: TXMLPropStorage
+    StoredValues = <>
+    Left = 24
+    Top = 256
+  end
+  object ilButtons: TImageList
+    Height = 24
+    Width = 24
+    Left = 96
+    Top = 256
+  end
+end

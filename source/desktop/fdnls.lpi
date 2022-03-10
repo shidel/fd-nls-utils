@@ -57,7 +57,7 @@
       <Unit>
         <Filename Value="umain.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="mForm"/>
+        <ComponentName Value="fMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
@@ -82,6 +82,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ueditcodepage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fEditCodePage"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uEditCodePage"/>
       </Unit>
     </Units>
   </ProjectOptions>

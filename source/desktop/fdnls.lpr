@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, PasExt, uMain, uLog, uAppNLS, uPickFlag;
+  Forms, PasExt, uMain, uLog, uAppNLS, uPickFlag, uEditCodePage;
 
 {$R *.res}
 
@@ -22,9 +22,10 @@ begin
   Application.Title:='FD-NLS';
   Application.Scaled:=True;
   Application.Initialize;
-  Application.CreateForm(TmForm, mForm);
+  Application.CreateForm(TfMain, fMain);
   Application.CreateForm(TfLog, fLog);
   Application.CreateForm(TfPickFlag, fPickFlag);
+  Application.CreateForm(TfEditCodePage, fEditCodePage);
   Application.Run;
 end.
 

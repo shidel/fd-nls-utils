@@ -12,9 +12,9 @@ uses
 
 type
 
-  { TmForm }
+  { TfMain }
 
-  TmForm = class(TForm)
+  TfMain = class(TForm)
     actAppleAbout: TAction;
     actApplePrefs: TAction;
     actDebugLog: TAction;
@@ -138,7 +138,7 @@ type
   end;
 
 var
-  mForm: TmForm;
+  fMain: TfMain;
 
 implementation
 
@@ -146,9 +146,9 @@ implementation
 
 {$R *.lfm}
 
-{ TmForm }
+{ TfMain }
 
-procedure TmForm.FormCreate(Sender: TObject);
+procedure TfMain.FormCreate(Sender: TObject);
 begin
    Log(Self, 'User Language: ' + UserLanguage);
    Repository := TFDNLS.Create;
@@ -176,25 +176,25 @@ begin
       SelectPrefsPage(tsRepo);
 end;
 
-procedure TmForm.FormDestroy(Sender: TObject);
+procedure TfMain.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Repository);
 end;
 
-procedure TmForm.hpAboutHotClick(Sender: TObject);
+procedure TfMain.hpAboutHotClick(Sender: TObject);
 begin
   Log(Self, 'About URL click "' +  hpAbout.HotURL + '"');
   OpenURL(hpAbout.HotURL);
 end;
 
-procedure TmForm.itMinuteTimer(Sender: TObject);
+procedure TfMain.itMinuteTimer(Sender: TObject);
 begin
    // Log(Self, 'Minute Interval Trigger');
   itMinute.Interval := 60 * 1000; { 60 second intervals }
-  mForm.SoftwareUpdate(True);
+  fMain.SoftwareUpdate(True);
 end;
 
-procedure TmForm.leGraphicClick(Sender: TObject);
+procedure TfMain.leGraphicClick(Sender: TObject);
 var
   I : integer;
   S : String;
@@ -215,7 +215,7 @@ begin
   end;
 end;
 
-procedure TmForm.leLangCodePageChange(Sender: TObject);
+procedure TfMain.leLangCodePageChange(Sender: TObject);
 begin
   if leLangCodePage.Text = '' then begin
     btCodePage.Action := actCodePageNone;
@@ -229,7 +229,7 @@ begin
   end;
 end;
 
-procedure TmForm.leLangCodePageEditingDone(Sender: TObject);
+procedure TfMain.leLangCodePageEditingDone(Sender: TObject);
 var
   I : integer;
 begin
@@ -247,14 +247,14 @@ begin
     leLangCodePage.Caption := ZeroPad(I, 3);
 end;
 
-procedure TmForm.leLangDOSEditingDone(Sender: TObject);
+procedure TfMain.leLangDOSEditingDone(Sender: TObject);
 begin
    if EditLangIndex < 0 then exit;
    Repository.Languages.Language[EditLangIndex] := leLangDOS.Caption;
    leLangDOS.Caption := Repository.Languages.Language[EditLangIndex];
 end;
 
-procedure TmForm.leLangIDEditingDone(Sender: TObject);
+procedure TfMain.leLangIDEditingDone(Sender: TObject);
 var
   S, L, C, N : String;
   I : integer;
@@ -288,7 +288,7 @@ begin
     SelectEditLanguage(EditLangIndex);
 end;
 
-procedure TmForm.leLangNameEditingDone(Sender: TObject);
+procedure TfMain.leLangNameEditingDone(Sender: TObject);
 begin
    if EditLangIndex < 0 then exit;
    if leLangName.Caption = led_NewLanguage then begin
@@ -301,13 +301,13 @@ begin
      Repository.Languages.Caption[EditLangIndex];
 end;
 
-procedure TmForm.lvLanguagesChange(Sender: TObject; Item: TListItem;
+procedure TfMain.lvLanguagesChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
   SelectEditLanguage(Item.Index);
 end;
 
-procedure TmForm.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
+procedure TfMain.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
 begin
   if Assigned(Item) then begin
      ActiveLanguage[Repository.Languages.Identifier[Item.Index]] :=
@@ -315,22 +315,22 @@ begin
   end;
 end;
 
-procedure TmForm.sbLanguageEditResize(Sender: TObject);
+procedure TfMain.sbLanguageEditResize(Sender: TObject);
 begin
     sbLanguageEdit.VertScrollBar.Page:= sbLanguageEdit.Height;
 end;
 
-procedure TmForm.tsAboutShow(Sender: TObject);
+procedure TfMain.tsAboutShow(Sender: TObject);
 begin
   xConfig.SetValue('VERSION/ABOUT/REVISION', SOURCE_REVISION);
 end;
 
-procedure TmForm.tsGeneralShow(Sender: TObject);
+procedure TfMain.tsGeneralShow(Sender: TObject);
 begin
   cbSoftwareUpdate.ItemIndex:= xConfig.GetValue('SOFTWARE/UPDATE/INERVAL', 4);
 end;
 
-procedure TmForm.tsLanguagesShow(Sender: TObject);
+procedure TfMain.tsLanguagesShow(Sender: TObject);
 var
   I : integer;
   LI : TListItem;
@@ -347,17 +347,17 @@ begin
   SelectEditLanguage(-1);
 end;
 
-procedure TmForm.tsRepoShow(Sender: TObject);
+procedure TfMain.tsRepoShow(Sender: TObject);
 begin
   deLocalRepo.Directory:=xConfig.GetValue('REPOSITORY/LOCAL/PATH', '');
 end;
 
-procedure TmForm.actAppleAboutExecute(Sender: TObject);
+procedure TfMain.actAppleAboutExecute(Sender: TObject);
 begin
    SelectPrefsPage(tsAbout);
 end;
 
-procedure TmForm.actAddLanguageExecute(Sender: TObject);
+procedure TfMain.actAddLanguageExecute(Sender: TObject);
 var
   I : integer;
   LI : TListItem;
@@ -374,12 +374,12 @@ begin
   end;
 end;
 
-procedure TmForm.actApplePrefsExecute(Sender: TObject);
+procedure TfMain.actApplePrefsExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
 end;
 
-procedure TmForm.actDebugLogExecute(Sender: TObject);
+procedure TfMain.actDebugLogExecute(Sender: TObject);
 begin
   if not fLog.Visible then begin
     fLog.Caption := dlg_DebugLog;
@@ -388,22 +388,22 @@ begin
   end;
 end;
 
-procedure TmForm.actPackagesExecute(Sender: TObject);
+procedure TfMain.actPackagesExecute(Sender: TObject);
 begin
   pcMain.ActivePage := tsPackages;
 end;
 
-procedure TmForm.actPreferencesExecute(Sender: TObject);
+procedure TfMain.actPreferencesExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
 end;
 
-procedure TmForm.actProjectsExecute(Sender: TObject);
+procedure TfMain.actProjectsExecute(Sender: TObject);
 begin
    pcMain.ActivePage := tsProjects;
 end;
 
-procedure TmForm.actRemoveLanguageExecute(Sender: TObject);
+procedure TfMain.actRemoveLanguageExecute(Sender: TObject);
 begin
   if EditLangIndex <> -1 then begin
     if MessageDlg(Format(msg_VerifyDelete, []),
@@ -415,28 +415,28 @@ begin
   end;
 end;
 
-procedure TmForm.actRemoveLanguageUpdate(Sender: TObject);
+procedure TfMain.actRemoveLanguageUpdate(Sender: TObject);
 begin
   actRemoveLanguage.Enabled:=EditLangIndex <> -1;
 end;
 
-procedure TmForm.actSoftwareUpdateExecute(Sender: TObject);
+procedure TfMain.actSoftwareUpdateExecute(Sender: TObject);
 begin
   SoftwareUpdate(False);
 end;
 
-procedure TmForm.cbSoftwareUpdateChange(Sender: TObject);
+procedure TfMain.cbSoftwareUpdateChange(Sender: TObject);
 begin
   xConfig.SetValue('SOFTWARE/UPDATE/INERVAL', cbSoftwareUpdate.ItemIndex);
   xConfig.Flush;
 end;
 
-procedure TmForm.deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
+procedure TfMain.deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
 begin
   OpenRepository(Value);
 end;
 
-procedure TmForm.tvPrefsChange(Sender: TObject; Node: TTreeNode);
+procedure TfMain.tvPrefsChange(Sender: TObject; Node: TTreeNode);
 var
    I : integer;
 begin
@@ -448,7 +448,7 @@ begin
    end;
 end;
 
-function TmForm.GetActiveLanguage(ALang : String): boolean;
+function TfMain.GetActiveLanguage(ALang : String): boolean;
 begin
   Result := False;
   ALang := UpperCase(AlphaOnly(ALang));
@@ -456,7 +456,7 @@ begin
   Result := xConfig.GetValue('LANGUAGE/EDIT/' + Copy(ALang,1,2) + '/' + ALang, False);
 end;
 
-procedure TmForm.SetActiveLanguage(ALang : String; AValue: boolean);
+procedure TfMain.SetActiveLanguage(ALang : String; AValue: boolean);
 begin
   ALang := UpperCase(AlphaOnly(ALang));
   if Length(ALang) < 2 then exit;
@@ -464,7 +464,7 @@ begin
   xConfig.Flush;
 end;
 
-function TmForm.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;
+function TfMain.AddMenuItem(ToItem: TMenuItem; ActionItem: TBasicAction): TMenuItem;
 begin
    // Add an item to the main menu based on it's action
    Result := TMenuItem.Create(Self);
@@ -475,7 +475,7 @@ begin
       mMain.Items.Add(Result);
 end;
 
-function TmForm.AddMenuItem(ToItem: TMenuItem; CaptionText: TCaption): TMenuItem;
+function TfMain.AddMenuItem(ToItem: TMenuItem; CaptionText: TCaption): TMenuItem;
 begin
    // Add an item to the main menu based on it's caption
    Result := TMenuItem.Create(Self);
@@ -486,7 +486,7 @@ begin
       mMain.Items.Add(Result);
 end;
 
-procedure TmForm.CreateMainMenu;
+procedure TfMain.CreateMainMenu;
 var
    aMenu   : TMenuitem;
    I, J, G : integer;
@@ -516,7 +516,7 @@ begin
    end;
 end;
 
-procedure TmForm.AddPrefsTree(ParentNode: TTreeNode; Pages: TPageControl);
+procedure TfMain.AddPrefsTree(ParentNode: TTreeNode; Pages: TPageControl);
 var
    I : integer;
 begin
@@ -526,7 +526,7 @@ begin
   end;
 end;
 
-procedure TmForm.SelectPrefsPage(Tab: TTabSheet);
+procedure TfMain.SelectPrefsPage(Tab: TTabSheet);
 var
    N : TTreeNode;
 begin
@@ -541,7 +541,7 @@ begin
   pcMain.ActivePage := tsPrefs;
 end;
 
-procedure TmForm.LoadGlyphResources;
+procedure TfMain.LoadGlyphResources;
 var
    I : Integer;
 begin
@@ -555,7 +555,7 @@ begin
   end;
 end;
 
-procedure TmForm.CreatePrefsTree;
+procedure TfMain.CreatePrefsTree;
 begin
    // Clear the prefeences tree and populate the root pages
    tvPrefs.Items.Clear;
@@ -564,7 +564,7 @@ begin
    tvPrefs.Items.GetFirstNode.Selected:=True;
 end;
 
-procedure TmForm.CreateAboutText;
+procedure TfMain.CreateAboutText;
 var
   S: TStringStream;
   H: TIpHtml;
@@ -597,7 +597,7 @@ begin
   end;
 end;
 
-procedure TmForm.OpenRepository(Location : String);
+procedure TfMain.OpenRepository(Location : String);
 begin
     if Location <> Repository.Path then begin
       Repository.Path:= Location;
@@ -607,7 +607,7 @@ begin
     Log(Self, 'Open local repository ' + Location);
 end;
 
-procedure TmForm.SetAppLanguageText(ALanguage: String);
+procedure TfMain.SetAppLanguageText(ALanguage: String);
 var
   I : integer;
 begin
@@ -637,7 +637,7 @@ begin
   leLangCodePage.EditLabel.Caption:=led_LanguageCodePage;
 end;
 
-procedure TmForm.SelectEditLanguage(Index : integer);
+procedure TfMain.SelectEditLanguage(Index : integer);
 var
   S, N, G : String;
   I : integer;
@@ -698,7 +698,7 @@ begin
   sbLanguageEdit.VertScrollBar.Range:=bbRemoveLanguage.Top + bbRemoveLanguage.Height + 2;
 end;
 
-procedure TmForm.SoftwareUpdate(Silent: boolean);
+procedure TfMain.SoftwareUpdate(Silent: boolean);
 const
   DTFmt = 'yyyy-mm-dd hh:mm:ss';
 var

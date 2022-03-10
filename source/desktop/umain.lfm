@@ -1,4 +1,4 @@
-object mForm: TmForm
+object fMain: TfMain
   Left = 232
   Height = 477
   Top = 81
