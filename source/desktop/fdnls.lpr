@@ -1,5 +1,5 @@
 program fdnls;
-
+{$WARN 5028 off : Local $1 "$2" is not used}
 {$I defines.inc}
 
 uses

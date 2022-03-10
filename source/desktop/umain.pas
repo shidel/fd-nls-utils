@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, LCLIntf, EditBtn, Grids, IpHtml, Ipfilebroker,
-  opensslsockets, fphttpclient, DateUtils, uAppNLS, uLog, uPickFlag, Icons, Types;
+  XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker,
+  opensslsockets, fphttpclient, DateUtils, uAppNLS, uLog, uPickFlag, Icons;
 
 type
 
@@ -241,7 +241,7 @@ end;
 
 procedure TmForm.leLangIDEditingDone(Sender: TObject);
 var
-  S, L, C, N, G : String;
+  S, L, C, N : String;
   I : integer;
 begin
    if EditLangIndex < 0 then exit;
@@ -258,7 +258,6 @@ begin
          L := FieldStr(LanguageCodes[I],1,',');
          C := FieldStr(LanguageCodes[I],2,',');
          N := FieldStr(LanguageCodes[I],3,',');
-         G := FieldStr(LanguageCodes[I],4,',');
          if Repository.Languages.Caption[EditLangIndex] = '' then
            Repository.Languages.Caption[EditLangIndex] := N;
          if Repository.Languages.Language[EditLangIndex] = '' then
@@ -627,8 +626,6 @@ procedure TmForm.SelectEditLanguage(Index : integer);
 var
   S, N, G : String;
   I : integer;
-  X : UnicodeString;
-  LI : TListItem;
 begin
   EditLangIndex := Index;
   if Index < 0 then begin
@@ -638,7 +635,11 @@ begin
     leLangID.Text:='';
     leLangDOS.Text:='';
     leLangCodePage.Text:='';
-    leGraphic.Picture.Clear;
+    try
+      leGraphic.Picture.LoadFromLazarusResource(IconUI[12]);
+    except
+      leGraphic.Picture.Clear;
+    end;
     sbLanguageEdit.Enabled:=False;
   end else begin
     G := '';

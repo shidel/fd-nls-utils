@@ -12,3 +12,4 @@
      {$define Unknown}
 {$ifend}
 
+{$warn 5028 off : no unused constant warnings }

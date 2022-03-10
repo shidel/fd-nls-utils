@@ -41,6 +41,8 @@ const
     'cancel',             { 9 }
     'no-edit',            { 10 }
     'edit',               { 11 }
+    'no-image',           { 12 }
+    'image',
     'edit-property',
     'edit-file',
     'error',

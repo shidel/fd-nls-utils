@@ -1,6 +1,7 @@
 unit PasExt;
 
-{$warn 5023 off : no warning about unused units}
+{$warn 5023 off : no warning about unused units }
+{$warn 5028 off : no warning about unused constants }
 interface
 
 uses
