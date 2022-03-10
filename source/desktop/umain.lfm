@@ -309,6 +309,7 @@ object mForm: TmForm
                     EditLabel.Caption = 'leLangCodePage'
                     TabOrder = 3
                     Text = 'leLangCodePage'
+                    OnChange = leLangCodePageChange
                     OnEditingDone = leLangCodePageEditingDone
                   end
                   object bbRemoveLanguage: TBitBtn

@@ -101,6 +101,7 @@ type
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
     procedure leGraphicClick(Sender: TObject);
+    procedure leLangCodePageChange(Sender: TObject);
     procedure leLangCodePageEditingDone(Sender: TObject);
     procedure leLangDOSEditingDone(Sender: TObject);
     procedure leLangIDEditingDone(Sender: TObject);
@@ -211,6 +212,20 @@ begin
      else
        Repository.Languages.Graphic[EditLangIndex] := FieldStr(IconFlags[fPickFLag.Index], 1, -1, '-');
      SelectEditLanguage(EditLangIndex);
+  end;
+end;
+
+procedure TmForm.leLangCodePageChange(Sender: TObject);
+begin
+  if leLangCodePage.Text = '' then begin
+    btCodePage.Action := actCodePageNone;
+    btCodePage.ImageIndex:=actCodePageNone.ImageIndex;
+  end else if Repository.CodePages.IndexOfIdentifier(leLangCodePage.Text) = -1 then begin
+    btCodePage.Action := actCodePageNew;
+    btCodePage.ImageIndex:=actCodePageNew.ImageIndex;
+  end else begin
+    btCodePage.Action := actCodePageEdit;
+    btCodePage.ImageIndex:=actCodePageEdit.ImageIndex;
   end;
 end;
 
