@@ -348,6 +348,7 @@ begin
     lvLanguages.Selected:=LI;
     LI.MakeVisible(false);
     leLangId.SetFocus;
+    EditLangIndex := I;
   end;
 end;
 

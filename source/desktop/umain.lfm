@@ -242,7 +242,7 @@ object mForm: TmForm
                 Width = 482
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 193
+                VertScrollBar.Page = 192
                 Align = alClient
                 BorderStyle = bsNone
                 ClientHeight = 215
@@ -312,10 +312,10 @@ object mForm: TmForm
                     OnEditingDone = leLangCodePageEditingDone
                   end
                   object bbRemoveLanguage: TBitBtn
-                    Left = 405
-                    Height = 29
+                    Left = 408
+                    Height = 28
                     Top = 164
-                    Width = 61
+                    Width = 58
                     Action = actRemoveLanguage
                     Anchors = [akTop, akRight]
                     AutoSize = True
