@@ -1,7 +1,7 @@
 object mForm: TmForm
-  Left = 211
+  Left = 232
   Height = 477
-  Top = 22
+  Top = 81
   Width = 640
   Caption = 'FD-NLS'
   ClientHeight = 477

@@ -67,12 +67,12 @@ type
     function GetCodePage(Index : integer): integer;
     function GetGraphic(Index : integer): String;
     function GetIdentifier(Index : integer): String;
-    function GetLang(Index : integer): String;
+    function GetLanguage(Index : integer): String;
     procedure SetCaption(Index : integer; AValue: String);
     procedure SetCodePage(Index : integer; AValue: integer);
     procedure SetGraphic(Index : integer; AValue: String);
     procedure SetIdentifier(Index : integer; AValue: String);
-    procedure SetLang(Index : integer; AValue: String);
+    procedure SetLanguage(Index : integer; AValue: String);
   protected
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
@@ -82,7 +82,7 @@ type
     destructor Destroy; override;
     property Caption[Index : integer] : String read GetCaption write SetCaption;
     property Identifier[Index : integer] : String read GetIdentifier write SetIdentifier;
-    property Lang[Index : integer] : String read GetLang write SetLang;
+    property Language[Index : integer] : String read GetLanguage write SetLanguage;
     property CodePage[Index : integer] : integer read GetCodePage write SetCodePage;
     property Graphic[Index : integer] : String read GetGraphic write SetGraphic;
   published
@@ -109,7 +109,6 @@ type
     procedure Reload;
   published
   end;
-
 
 implementation
 
@@ -283,7 +282,7 @@ begin
   Result := TLanguageData(FData[Index]).Identifier;
 end;
 
-function TFDLanguages.GetLang(Index : integer): String;
+function TFDLanguages.GetLanguage(Index : integer): String;
 begin
   Result := TLanguageData(FData[Index]).Lang;
 end;
@@ -333,7 +332,7 @@ begin
   TLanguageData(FData[Index]).Identifier := AValue;
 end;
 
-procedure TFDLanguages.SetLang(Index : integer; AValue: String);
+procedure TFDLanguages.SetLanguage(Index : integer; AValue: String);
 var
   I : integer;
   T : String;

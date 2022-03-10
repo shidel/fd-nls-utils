@@ -6,11 +6,11 @@ const
   FPC_TARGET='x86_64';
 
   { Source & Subversion Last Changed Commit }
-  SOURCE_VERSION='0.0.0.40';
-  SOURCE_REVISION='148';
+  SOURCE_VERSION='0.0.0.41';
+  SOURCE_REVISION='154';
   SOURCE_URL='http://github.com/shidel/fd-nls-utils';
   SOURCE_ONLINE='';
-  SOURCE_COMMIT='6d1012c87fe1fa19bb8bcc6e8880e0f624fc91f3';
+  SOURCE_COMMIT='3e9aad0e2d9d928d0ceda31497401a95cb7c09c0';
 
   { Version Build Atributes } 
   BUILD_DEBUG=False;
@@ -20,11 +20,11 @@ const
   BUILD_SPECIAL=False;
   BUILD_LANGUAGE='';
   BUILD_CHARSET='';
-  BUILD_DATE='2022-03-10 03:34:29';
+  BUILD_DATE='2022-03-10 11:30:58';
 
   { General Application Information }
   APP_IDENTIFIER='com.jeromeshidel.fd-nls';
-  APP_VERSION='0.0.0.40';
+  APP_VERSION='0.0.0.41';
   APP_COMMENTS='FreeDOS NLS Desktop Utility';
   APP_COMPANYNAME='Jerome Shidel';
   APP_FILEDESCRIPTION='FreeDOS NLS Desktop Utility';

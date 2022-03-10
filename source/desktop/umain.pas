@@ -231,8 +231,8 @@ end;
 procedure TmForm.leLangDOSEditingDone(Sender: TObject);
 begin
    if EditLangIndex < 0 then exit;
-   Repository.Languages.Lang[EditLangIndex] := leLangDOS.Caption;
-   leLangDOS.Caption := Repository.Languages.Lang[EditLangIndex];
+   Repository.Languages.Language[EditLangIndex] := leLangDOS.Caption;
+   leLangDOS.Caption := Repository.Languages.Language[EditLangIndex];
 end;
 
 procedure TmForm.leLangIDEditingDone(Sender: TObject);
@@ -257,8 +257,8 @@ begin
          G := FieldStr(LanguageCodes[I],4,',');
          if Repository.Languages.Caption[EditLangIndex] = '' then
            Repository.Languages.Caption[EditLangIndex] := N;
-         if Repository.Languages.Lang[EditLangIndex] = '' then
-           Repository.Languages.Lang[EditLangIndex] := L;
+         if Repository.Languages.Language[EditLangIndex] = '' then
+           Repository.Languages.Language[EditLangIndex] := L;
          if (Repository.Languages.CodePage[EditLangIndex] = -1) then
            try
              Repository.Languages.Codepage[EditLangIndex] := StrToInt(C);
@@ -273,8 +273,12 @@ end;
 procedure TmForm.leLangNameEditingDone(Sender: TObject);
 begin
    if EditLangIndex < 0 then exit;
-   Repository.Languages.Caption[EditLangIndex] := leLangName.Caption;
-   leLangName.Caption := Repository.Languages.Caption[EditLangIndex];
+   if leLangName.Caption = led_NewLanguage then begin
+     Repository.Languages.Caption[EditLangIndex] := '';
+   end else begin
+     Repository.Languages.Caption[EditLangIndex] := leLangName.Caption;
+     leLangName.Caption := Repository.Languages.Caption[EditLangIndex];
+   end;
    lvLanguages.Items.Item[EditLangIndex].Caption :=
      Repository.Languages.Caption[EditLangIndex];
 end;
@@ -637,7 +641,7 @@ begin
       leLangName.Text:=led_NewLanguage;
     lvLanguages.Items.Item[EditLangIndex].Caption:=leLangName.Text; { update list if needed }
     leLangID.Text:=Repository.Languages.Identifier[EditLangIndex];
-    leLangDOS.Text:=Repository.Languages.Lang[EditLangIndex];
+    leLangDOS.Text:=Repository.Languages.Language[EditLangIndex];
     if Repository.Languages.Codepage[EditLangIndex] > 0 then
       leLangCodePage.Text:=ZeroPad(Repository.Languages.Codepage[EditLangIndex], 3)
     else
