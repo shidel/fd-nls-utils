@@ -83,10 +83,25 @@ type
   published
   end;
 
+  { TFDFontFiles }
+
+  TFDFontFiles = class (TFileGroup)
+  private
+    FOwner: TFDNLS;
+  protected
+    property Owner : TFDNLS read FOwner;
+    function GroupPath : String; override;
+  public
+    constructor Create(AOwner : TFDNLS);
+    destructor Destroy; override;
+  published
+  end;
+
   { TFDNLS }
   TFDNLS = class(TPersistent)
   private
     FCodePages: TFDCodePages;
+    FFonts: TFDFontFiles;
     FLanguages: TFDLanguages;
     function GetCodePagePath: string;
     function GetDataPath: string;
@@ -107,6 +122,7 @@ type
     property Path : string read GetPath write SetPath;
     property Languages : TFDLanguages read FLanguages;
     property CodePages : TFDCodePages read FCodePages;
+    property Fonts : TFDFontFiles read FFonts;
     procedure Reload;
   published
   end;
@@ -115,6 +131,25 @@ implementation
 
 const
    RepositoryPath : String = '';
+
+{ TFDFontFiles }
+
+function TFDFontFiles.GroupPath: String;
+begin
+  Result := FOwner.GetFontsPath;
+end;
+
+constructor TFDFontFiles.Create(AOwner : TFDNLS);
+begin
+  inherited Create;
+  FOwner := AOwner;
+  GroupID := 'FNT';
+end;
+
+destructor TFDFontFiles.Destroy;
+begin
+  inherited Destroy;
+end;
 
 { TFDCodePages }
 
@@ -376,6 +411,7 @@ begin
      AValue := IncludeTrailingPathDelimiter(AValue);
   if RepositoryPath=AValue then Exit;
   RepositoryPath:=AValue;
+  Reload;
 end;
 
 constructor TFDNLS.Create;
@@ -383,10 +419,12 @@ begin
   inherited Create;
   FLanguages := TFDLanguages.Create(Self);
   FCodePages := TFDCodepages.Create(Self);
+  FFonts     := TFDFontFiles.Create(Self);
 end;
 
 destructor TFDNLS.Destroy;
 begin
+  FreeAndNil(FFonts);
   FreeAndNil(FCodePages);
   FreeAndNil(FLanguages);
   inherited Destroy;
@@ -396,6 +434,7 @@ procedure TFDNLS.Reload;
 begin
   Languages.Reload;
   CodePages.Reload;
+  Fonts.Reload;
 end;
 
 end.

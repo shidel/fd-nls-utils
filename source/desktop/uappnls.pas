@@ -21,6 +21,8 @@ resourcestring
   lbl_AvailLanguages            = 'Available languages';
   lbl_LocalRepository           = 'Location of local repository';
   lbl_SoftwareUpdate            = 'Check for software updates';
+  lbl_NoCodepageFonts           = 'no codepage font available';
+  lbl_UsingCodepageFont         = 'using %0:s font for codepage';
 
   dlg_LocalRepo                 = 'FD-NLS Local Repository';
   dlg_DebugLog                  = 'Debug Log';

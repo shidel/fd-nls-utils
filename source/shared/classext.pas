@@ -51,6 +51,7 @@ type
     property LoadAll : boolean read FLoadAll write SetLoadAll;
     property Filename[Index : integer] : String read GetFileName write SetFileName;
     property Data[Index : integer] : TFileObject read GetFileObject write SetFileObject;
+    function IndexOfFile(AValue : String) : integer;
     procedure Reload; virtual;
     function Add : integer;
     procedure Delete(Index : integer);
@@ -83,6 +84,7 @@ type
     property GroupID : String read FGroupID write SetGroupID;
     property Count : integer read GetCount;
     property Filename[Index : integer] : String read GetFileName write SetFileName;
+    function IndexOfFile(AValue : String) : integer;
     procedure Reload;
     function Add : integer;
     procedure Delete(Index : integer);
@@ -194,11 +196,11 @@ end;
 procedure TFileGroup.SetFileName(Index: integer; AValue: String);
 begin
   AValue := Trim(Lowercase(AValue));
-  if FileExists(GroupPath + AValue + FExt) then exit;
-  if FileExists(GroupPath + FFiles[Index] + FExt) then begin
-    if not RenameFile(GroupPath + FFiles[Index] + FExt, GroupPath + AValue + FExt) then exit;
-    VCSDelete(GroupPath + FFiles[Index] + FExt);
-    VCSAdd(GroupPath + AValue + FExt);
+  if FileExists(GroupPath + AValue) then exit;
+  if FileExists(GroupPath + FFiles[Index]) then begin
+    if not RenameFile(GroupPath + FFiles[Index], GroupPath + AValue) then exit;
+    VCSDelete(GroupPath + FFiles[Index]);
+    VCSAdd(GroupPath + AValue);
   end;
   FFiles[Index] := AValue;
 end;
@@ -229,6 +231,22 @@ begin
   inherited Destroy;
 end;
 
+function TFileGroup.IndexOfFile(AValue: String): integer;
+var
+  I : integer;
+begin
+  Result := FFiles.IndexOfName(AValue);
+  if Result < 0 then begin
+    AValue := Trim(UpperCase(AValue));
+    if AValue <> '' then
+      for I := 0 to FFiles.Count - 1 do
+        if (AValue = Uppercase(FFiles[I])) then begin
+           Result := I;
+           Break;
+        end;
+  end;
+end;
+
 procedure TFileGroup.Reload;
 var
   I, X : Integer;
@@ -250,14 +268,14 @@ begin
       X := FData.Add(D);
       if I <> X then begin
         {$IFDEF UseLog}
-          Log(nil,'FILE_GROUP, maligned indexes ' + IntToStr(I) + ':' + IntToStr(X) + ' with ' + FFiles[I] + FExt);
+          Log(nil,'FILE_GROUP, maligned indexes ' + IntToStr(I) + ':' + IntToStr(X) + ' with ' + FFiles[I]);
         {$ENDIF}
         raise exception.Create('maligned list index management error');
       end;
       inc(I);
     except
       {$IFDEF UseLog}
-        Log(nil,'FILE_GROUP, ERROR ' + FFiles[I] + FExt + ' raised exception');
+        Log(nil,'FILE_GROUP, ERROR ' + FFiles[I] + ' raised exception');
       {$ENDIF}
       FFiles.Delete(I);
     end;
@@ -271,11 +289,11 @@ var
 begin
   Result := -1;
   X := 0;
-  N := 'new-file';
+  N := 'new-file'   + FExt;
   While X < 100 do begin
-    if not FileExists(GroupPath + N  + FExt) then break;
+    if not FileExists(GroupPath + N) then break;
     Inc(X);
-    N := 'new-file'+IntToStr(X);
+    N := 'new-file'+IntToStr(X) + FExt;
   end;
   if X = 100 then exit;
   I := FFiles.Add(N);
@@ -286,7 +304,7 @@ begin
     Result := I;
     try
       SaveFile(I);
-      VCSAdd(GroupPath + N + FExt);
+      VCSAdd(GroupPath + N);
     except
       FFiles.Delete(I);
       FData.Delete(I);
@@ -298,8 +316,8 @@ end;
 procedure TFileGroup.Delete(Index: integer);
 begin
   if (Index < 0) or (Index >= Count) then exit;
-  VCSDelete(GroupPath + FFiles[Index] + FExt);
-  DeleteFile(GroupPath + FFiles[Index] + FExt);
+  VCSDelete(GroupPath + FFiles[Index]);
+  DeleteFile(GroupPath + FFiles[Index]);
   FFiles.Delete(Index);
   FData.Delete(Index);
 end;
@@ -313,7 +331,7 @@ begin
   FData[Index] := nil;
   O := TFileObject.Create;
   try
-    O.ReadFile(GroupPath + FFiles[Index] + FExt);
+    O.ReadFile(GroupPath + FFiles[Index]);
     FData[Index] := O;
     Result := O;
   except
@@ -325,7 +343,7 @@ end;
 procedure TFileGroup.SaveFile(Index: integer);
 begin
   if Assigned(FData[Index]) then begin
-    TFileObject(FData[Index]).WriteFile(GroupPath + FFiles[Index] + FExt);
+    TFileObject(FData[Index]).WriteFile(GroupPath + FFiles[Index]);
   end;
 end;
 
@@ -376,6 +394,22 @@ begin
   FreeAndNil(FFiles);
   FreeAndNil(FXML);
   inherited Destroy;
+end;
+
+function TXMLGroup.IndexOfFile(AValue: String): integer;
+var
+  I : integer;
+begin
+  Result := FFiles.IndexOfName(AValue);
+  if Result < 0 then begin
+    AValue := Trim(UpperCase(AValue));
+    if AValue <> '' then
+      for I := 0 to FFiles.Count - 1 do
+        if (AValue = Uppercase(FFiles[I])) then begin
+           Result := I;
+           Break;
+        end;
+  end;
 end;
 
 procedure TXMLGroup.Reload;

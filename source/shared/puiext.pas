@@ -4,7 +4,10 @@ unit PUIExt;
 interface
 
 uses
-  Classes, SysUtils, Forms;
+  Classes, SysUtils, Graphics, Forms;
+
+const
+  clErrorText : TColor = clRed;
 
 function DisplayUID : string;
 function FormNodePath(AForm : TForm) : String;

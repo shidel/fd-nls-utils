@@ -62,6 +62,8 @@ object fEditCodePage: TfEditCodePage
       Height = 29
       Top = 0
       Width = 29
+      Proportional = True
+      Stretch = True
     end
     object lbFontState: TLabel
       Left = 40

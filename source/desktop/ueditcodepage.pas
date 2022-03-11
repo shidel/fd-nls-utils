@@ -43,13 +43,18 @@ implementation
 
 {$R *.lfm}
 
+const
+  NullCodepage = '000';
+  FontFileExt  = '.FNT';
+  DefaultFont  = '437' + FontFileExt;
+
 { TfEditCodePage }
 
 procedure TfEditCodePage.FormCreate(Sender: TObject);
 begin
   xProperties.FileName := AppCfgFile;
   xProperties.RootNodePath := FormNodePath(Self);
-  FCodePage := '000';
+  FCodePage := NullCodepage;
   Caption := Format(dlg_EditCodePage, [FCodePage]);
   bbOK.Caption:=btn_OK;
   bbCancel.Caption:=btn_Cancel;
@@ -69,9 +74,24 @@ begin
   try
     FCodepage:=ZeroPad(StrToInt(AValue),3);
   except
-    FCodePage := '000';
+    FCodePage := NullCodepage;
   end;
-  Caption := Format(dlg_EditCodePage, [FCodePage]);
+  Caption := Format(dlg_EditCodePage, [FCodePage]) + ':' + Repository.Fonts.Filename[0];
+  Repository.Fonts.Reload;
+  if Repository.Fonts.IndexOfFile(FCodePage + FontFileExt) <> -1 then begin
+     iFontState.Picture.LoadFromLazarusResource(IconUI[14]);
+     lbFontState.Caption:=Format(lbl_UsingCodepageFont,
+       [FCodePage + FontFileExt,FCodePage]);
+     lbFontState.Font.Color:=clDefault;
+  end else begin
+    iFontState.Picture.LoadFromLazarusResource(IconUI[15]);
+    lbFontState.Font.Color:=clErrorText;
+    if Repository.Fonts.IndexOfFile(DefaultFont) <> -1 then
+      lbFontState.Caption:=Format(lbl_UsingCodepageFont,
+      [DefaultFont,FCodePage])
+    else
+      lbFontState.Caption:=lbl_NoCodepageFonts;
+  end;
 end;
 
 procedure TfEditCodePage.SetRepository(AValue: TFDNLS);

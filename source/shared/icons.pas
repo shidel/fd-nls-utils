@@ -42,12 +42,12 @@ const
     'no-edit',            { 10 }
     'edit',               { 11 }
     'no-image',           { 12 }
-    'image',
+    'image',              { 13 }
+    'check-circle',       { 14 }
+    'error',              { 15 }
     'edit-property',
     'edit-file',
-    'error',
     'notification',
-    'check-circle',
     'save',
     'save-all',
     'save-as',
