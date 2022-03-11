@@ -1,15 +1,16 @@
 // Application, FPC & Lazarus Version Information
+
 const
   { The default Free Pascal Compiler }
   FPC_VERSION='3.3.1';
   FPC_TARGET='x86_64';
 
   { Source & Subversion Last Changed Commit }
-  SOURCE_VERSION='0.0.0.42';
-  SOURCE_REVISION='158';
+  SOURCE_VERSION='0.0.0.48';
+  SOURCE_REVISION='168';
   SOURCE_URL='http://github.com/shidel/fd-nls-utils';
   SOURCE_ONLINE='';
-  SOURCE_COMMIT='471cf966ac20951da3671aad1fc84b141dfe99de';
+  SOURCE_COMMIT='2adc4b6fd6fd2098b2ed945d61cdec394431bea7';
 
   { Version Build Atributes } 
   BUILD_DEBUG=False;
@@ -19,11 +20,11 @@ const
   BUILD_SPECIAL=False;
   BUILD_LANGUAGE='';
   BUILD_CHARSET='';
-  BUILD_DATE='2022-03-10 13:17:51';
+  BUILD_DATE='2022-03-11 03:33:53';
 
   { General Application Information }
   APP_IDENTIFIER='com.jeromeshidel.fd-nls';
-  APP_VERSION='0.0.0.42';
+  APP_VERSION='0.0.0.48';
   APP_COMMENTS='FreeDOS NLS Desktop Utility';
   APP_COMPANYNAME='Jerome Shidel';
   APP_FILEDESCRIPTION='FreeDOS NLS Desktop Utility';

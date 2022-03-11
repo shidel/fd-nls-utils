@@ -19,6 +19,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
+        <IsVisibleTab Value="True"/>
         <TopLine Value="451"/>
         <CursorPos X="71" Y="476"/>
         <FoldState Value=" T3lA0325113242AC1e"/>
@@ -170,9 +171,8 @@
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
         <UnitName Value="ClassExt"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <CursorPos Y="6"/>
+        <CursorPos X="89" Y="21"/>
         <FoldState Value=" T3kQ040271921x"/>
         <UsageCount Value="13"/>
         <Loaded Value="True"/>

@@ -217,6 +217,7 @@ begin
   Result := IncludeTrailingPathDelimiter(Parent + SubDir);
 end;
 
+{
 function AnsiToUnicode(S: AnsiString): UnicodeString;
 begin
   Result := S;
@@ -226,6 +227,7 @@ function UnicodeToAnsi(S: UnicodeString): AnsiString;
 begin
   Result := S;
 end;
+}
 
 function PopDelim(var AStr : String; ADelim: String = SPACE): String;
 var
