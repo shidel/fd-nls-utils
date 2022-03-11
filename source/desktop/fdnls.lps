@@ -60,7 +60,7 @@
         <UnitName Value="PasExt"/>
         <EditorIndex Value="7"/>
         <TopLine Value="15"/>
-        <CursorPos Y="35"/>
+        <CursorPos X="82" Y="42"/>
         <FoldState Value=" T3xb0nx"/>
         <UsageCount Value="102"/>
         <Loaded Value="True"/>
@@ -89,7 +89,7 @@
         <UnitName Value="VCSExt"/>
         <EditorIndex Value="5"/>
         <CursorPos X="19" Y="23"/>
-        <UsageCount Value="19"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -108,7 +108,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos Y="73"/>
-        <UsageCount Value="127"/>
+        <UsageCount Value="128"/>
       </Unit>
       <Unit>
         <Filename Value="ulangedit.pas"/>
@@ -152,10 +152,9 @@
         <ComponentName Value="fEditCodePage"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="50"/>
-        <CursorPos X="27" Y="80"/>
+        <CursorPos X="87" Y="81"/>
         <UsageCount Value="61"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -170,9 +169,10 @@
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
         <UnitName Value="ClassExt"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="312"/>
-        <CursorPos X="66" Y="346"/>
+        <TopLine Value="246"/>
+        <CursorPos X="49" Y="256"/>
         <FoldState Value=" T3kS040223166312"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>

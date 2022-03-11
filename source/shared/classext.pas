@@ -253,7 +253,7 @@ var
   D : TFileObject;
 begin
   {$IFDEF UseLog}
-    Log(nil,'FILE_GROUP, file list ' + GroupPath );
+    Log(nil,'FILE_GROUP, file list ' + GroupPath);
   {$ENDIF}
   FileList(FFiles, GroupPath + '*' + FExt);
   FData.Clear;

@@ -76,7 +76,7 @@ begin
   except
     FCodePage := NullCodepage;
   end;
-  Caption := Format(dlg_EditCodePage, [FCodePage]) + ':' + Repository.Fonts.Filename[0];
+  Caption := Format(dlg_EditCodePage, [FCodePage]);
   Repository.Fonts.Reload;
   if Repository.Fonts.IndexOfFile(FCodePage + FontFileExt) <> -1 then begin
      iFontState.Picture.LoadFromLazarusResource(IconUI[14]);
