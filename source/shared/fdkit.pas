@@ -9,7 +9,7 @@ uses
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
-  XMLConf, XMLExt, VCSExt;
+  XMLConf, ClassExt, VCSExt;
 
 type
   TLanguageData = class(TObject)
@@ -90,6 +90,7 @@ type
     FLanguages: TFDLanguages;
     function GetCodePagePath: string;
     function GetDataPath: string;
+    function GetFontsPath: string;
     function GetLanguagesPath: string;
     function GetProjectsPath: string;
     function GetPath: string;
@@ -98,6 +99,7 @@ type
     property DataPath : string read GetDataPath;
     property LanguagesPath : string read GetLanguagesPath;
     property CodePagePath : string read GetCodePagePath;
+    property FontsPath : string read GetFontsPath;
     property ProjectsPath : string read GetProjectsPath;
   public
     constructor Create;
@@ -153,7 +155,7 @@ var
 begin
   O := TLanguageData.Create;
   try
-    O.Identifier := FXML.GetValue(FGroupID + '/IDENTIFIER', '');
+    O.Identifier := GetValueXML(FXML, FGroupID + '/IDENTIFIER', '');
   except
     FreeAndNil(O);
   end;
@@ -285,10 +287,10 @@ var
 begin
   O := TLanguageData.Create;
   try
-    O.Identifier := FXML.GetValue(FGroupID + '/IDENTIFIER', '');
-    O.Caption := FXML.GetValue(FGroupID + '/CAPTION', '');
-    O.Language := FXML.GetValue(FGroupID + '/LANG', '');
-    O.CodePage := StrToInt(FXML.GetValue(FGroupID + '/CODEPAGE', '-1'));
+    O.Identifier := GetValueXML(FXML, FGroupID + '/IDENTIFIER', '');
+    O.Caption := GetValueXML(FXML, FGroupID + '/CAPTION', '');
+    O.Language := GetValueXML(FXML, FGroupID + '/LANG', '');
+    O.CodePage := StrToInt(GetValueXML(FXML, FGroupID + '/CODEPAGE', '-1'));
   except
     FreeAndNil(O);
   end;
@@ -341,6 +343,11 @@ end;
 function TFDNLS.GetDataPath: string;
 begin
   Result := VerifiedPath(RepositoryPath, 'fd-nls');
+end;
+
+function TFDNLS.GetFontsPath: string;
+begin
+  Result := VerifiedPath(DataPath, 'fonts');
 end;
 
 function TFDNLS.GetCodePagePath: string;

@@ -26,6 +26,7 @@ resourcestring
   dlg_DebugLog                  = 'Debug Log';
   dlg_PickFlag                  = 'Select image';
   dlg_ConfirmDelete             = 'Confirm Deletion';
+  dlg_EditCodePage              = 'Codepage %0:s';
 
   cbox_SoftwareUpdateOff        = 'disabled';
   cbox_SoftwareUpdateMonthly    = 'Monthly';

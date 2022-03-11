@@ -6,8 +6,8 @@ interface
 uses
   Classes, SysUtils;
 
-function VCSAddFile(AFileName : String) : boolean;
-function VCSDeleteFile(AFileName : String) : boolean;
+function VCSAdd(AFileName : String) : boolean;
+function VCSDelete(AFileName : String) : boolean;
 
 implementation
 
@@ -15,12 +15,12 @@ procedure InitVCSExt;
 begin
 end;
 
-function VCSAddFile(AFileName : String) : boolean;
+function VCSAdd(AFileName : String) : boolean;
 begin
 	Result := True;
 end;
 
-function VCSDeleteFile(AFileName : String) : boolean;
+function VCSDelete(AFileName : String) : boolean;
 begin
 	Result := True;
 end;

@@ -31,6 +31,8 @@ const
   UNDERSCORE  = #$5f;
   CRLF        = #$0d#$0a;
 
+  MaxInteger  = MaxLongInt;
+
 {$I country.inc}
 
 var
@@ -53,6 +55,11 @@ type
 procedure InitPasExt(Identifier : String);
 
 function VerifiedPath (Parent, SubDir : String) : string;
+
+{
+function AnsiToUnicode(S : AnsiString) : UnicodeString;
+function UnicodeToAnsi(S : UnicodeString) : AnsiString;
+}
 
 function PopDelim(var AStr : String; ADelim: String = SPACE): String; overload;
 function FieldStr(AStr : String; AField : integer = 0; ADelim : String = SPACE) : String; overload;
@@ -124,6 +131,11 @@ function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean
 
 procedure FileList(var List : TStringList; APathSpec : String);  overload;
 procedure FileList(var List : TStringArray; APathSpec : String);  overload;
+
+function SaveToFile(AFileName: String; AValue : String; ARaise : boolean = true) : integer; overload;
+function SaveToFile(AFileName: String; AValue : TByteArray; ARaise : boolean = true) : integer; overload;
+function LoadFromFile(AFileName: String; var AValue : String; ARaise : boolean = true) : integer; overload;
+function LoadFromFile(AFileName: String; var AValue : TByteArray; ARaise : boolean = true) : integer; overload;
 
 function StrToInts(AStr: String): String; overload;
 function IntsToStr(AStr: String): String; overload;
@@ -203,6 +215,16 @@ begin
   if not DirectoryExists(Parent + SubDir) then
      if not CreateDir(Parent + SubDir) then exit;
   Result := IncludeTrailingPathDelimiter(Parent + SubDir);
+end;
+
+function AnsiToUnicode(S: AnsiString): UnicodeString;
+begin
+  Result := S;
+end;
+
+function UnicodeToAnsi(S: UnicodeString): AnsiString;
+begin
+  Result := S;
 end;
 
 function PopDelim(var AStr : String; ADelim: String = SPACE): String;
@@ -789,6 +811,109 @@ begin
   FindClose(Search);
   SetLength(List, C);
 end;
+
+{$PUSH}{$I-}
+function SaveToFile(AFileName: String; AValue: String; ARaise: boolean
+  ): integer;
+var
+   T : Text;
+   R, E : integer;
+begin
+  System.Assign(T, AFileName);
+  Rewrite(T);
+  R := IOResult;
+  if R = 0 then begin
+    WriteLn(T, AValue);
+    R := IOResult;
+    Close(T);
+    E := IOResult;
+    if R = 0 then R := E;
+  end;
+  Result := R;
+  if (R <> 0) and ARaise then
+    raise exception.Create('file save error ' + IntToStr(R));
+end;
+
+function SaveToFile(AFileName: String; AValue: TByteArray; ARaise: boolean
+  ): integer;
+var
+   F : File;
+   R, E : integer;
+begin
+  System.Assign(F, AFileName);
+  Rewrite(F,1);
+  R := IOResult;
+  if R = 0 then begin
+    BlockWrite(F, AValue[0], Length(AValue));
+    R := IOResult;
+    Close(F);
+    E := IOResult;
+    if R = 0 then R := E;
+  end;
+  Result := R;
+  if (R <> 0) and ARaise then
+    raise exception.Create('file save error ' + IntToStr(R));
+end;
+
+function LoadFromFile(AFileName: String; var AValue: String; ARaise: boolean
+  ): integer;
+var
+   T : Text;
+   X, S : String;
+   R, E : integer;
+begin
+  X := '';
+  AValue := X;
+  System.Assign(T, AFileName);
+  Reset(T);
+  R := IOResult;
+  if R = 0 then begin
+    while (R = 0) and (not EOF(T)) do begin
+      ReadLn(T, S);
+      R := IOResult;
+      X := X + S + CRLF;
+    end;
+    Close(T);
+    E := IOResult;
+    if R = 0 then R := E;
+  end;
+  Result := R;
+  if R = 0 then
+    AValue := X
+  else if ARaise then
+    raise exception.Create('file load error ' + IntToStr(R));
+end;
+
+function LoadFromFile(AFileName: String; var AValue: TByteArray; ARaise: boolean
+  ): integer;
+var
+   F : File;
+   R, E : integer;
+begin
+  SetLength(AValue, 0);
+  System.Assign(F, AFileName);
+  Reset(F, 1);
+  R := IOResult;
+  if R = 0 then begin
+    if FileSize(F) >= MaxInteger then
+      R := 8
+    else begin
+        SetLength(AValue, FileSize(F));
+        BlockRead(F, AValue[0], Length(AValue));
+    end;
+    Close(F);
+    E := IOResult;
+    if R = 0 then R := E;
+  end;
+  Result := R;
+  if R <> 0 then begin
+    SetLength(AValue, 0);
+    if ARaise then
+      raise exception.Create('file load error ' + IntToStr(R));
+  end;
+end;
+
+{$POP}
 
 function StrToInts(AStr: String): String;
 var

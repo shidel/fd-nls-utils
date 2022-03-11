@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   PasExt, PUIExt, StdCtrls, Buttons, ActnList, XMLPropStorage,
-  uAppNLS, uLog, Icons;
+  uAppNLS, uLog, Icons, FDKit;
 
 type
 
@@ -17,15 +17,23 @@ type
     bbCancel: TBitBtn;
     bbOK: TBitBtn;
     ilButtons: TImageList;
+    iFontState: TImage;
+    lbFontState: TLabel;
+    lvEditCP: TListView;
     pBtnSeperator: TPanel;
     pButtons: TPanel;
     xProperties: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
+    FCodepage: string;
+    FRepository: TFDNLS;
+    procedure SetCodepage(AValue: string);
+    procedure SetRepository(AValue: TFDNLS);
 
   public
-
+    property Codepage : string read FCodepage write SetCodepage;
+    property Repository : TFDNLS read FRepository write SetRepository;
   end;
 
 var
@@ -41,7 +49,8 @@ procedure TfEditCodePage.FormCreate(Sender: TObject);
 begin
   xProperties.FileName := AppCfgFile;
   xProperties.RootNodePath := FormNodePath(Self);
-  Caption := dlg_PickFlag;
+  FCodePage := '000';
+  Caption := Format(dlg_EditCodePage, [FCodePage]);
   bbOK.Caption:=btn_OK;
   bbCancel.Caption:=btn_Cancel;
   ilButtons.AddLazarusResource(IconUI[7]);
@@ -51,6 +60,24 @@ end;
 procedure TfEditCodePage.FormShow(Sender: TObject);
 begin
   Position:=poDesigned;
+end;
+
+procedure TfEditCodePage.SetCodepage(AValue: string);
+begin
+  if not Assigned(Repository) then exit;
+  if FCodepage=AValue then Exit;
+  try
+    FCodepage:=ZeroPad(StrToInt(AValue),3);
+  except
+    FCodePage := '000';
+  end;
+  Caption := Format(dlg_EditCodePage, [FCodePage]);
+end;
+
+procedure TfEditCodePage.SetRepository(AValue: TFDNLS);
+begin
+  if FRepository=AValue then Exit;
+  FRepository:=AValue;
 end;
 
 end.

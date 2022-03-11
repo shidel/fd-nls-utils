@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, PasExt, PUIExt, FDKit, Forms, Controls, Graphics, Dialogs,
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker,
+  XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, ClassExt,
   opensslsockets, fphttpclient, DateUtils,
   uAppNLS, uLog, uPickFlag, uEditCodePage,
   Icons;
@@ -162,8 +162,8 @@ begin
    // set Program configuration file
    xConfig.Filename:= AppCfgPath + 'userdata.xml';
    // configure local repository
-   OpenRepository(xConfig.GetValue('REPOSITORY/LOCAL/PATH',  ''));
-   SetAppLanguageText(xConfig.GetValue('LANGUAGE/USER/ACTIVE',
+   OpenRepository(GetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH',  ''));
+   SetAppLanguageText(GetValueXML(xConfig, 'LANGUAGE/USER/ACTIVE',
      UpperCase(GetEnvironmentVariable('LANG'))));
    // Set display config files
    xProperties.FileName := AppCfgFile;
@@ -174,9 +174,9 @@ begin
    CreatePrefsTree;
    CreateAboutText;
    // Config verification
-   if xConfig.GetValue('VERSION/ABOUT/REVISION',  '') <> SOURCE_REVISION then
+   if GetValueXML(xConfig, 'VERSION/ABOUT/REVISION',  '') <> SOURCE_REVISION then
       SelectPrefsPage(tsAbout)
-   else if not DirectoryExists(xConfig.GetValue('REPOSITORY/LOCAL/PATH', '')) then
+   else if not DirectoryExists(GetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', '')) then
       SelectPrefsPage(tsRepo);
 end;
 
@@ -326,12 +326,12 @@ end;
 
 procedure TfMain.tsAboutShow(Sender: TObject);
 begin
-  xConfig.SetValue('VERSION/ABOUT/REVISION', SOURCE_REVISION);
+  SetValueXML(xConfig, 'VERSION/ABOUT/REVISION', SOURCE_REVISION);
 end;
 
 procedure TfMain.tsGeneralShow(Sender: TObject);
 begin
-  cbSoftwareUpdate.ItemIndex:= xConfig.GetValue('SOFTWARE/UPDATE/INERVAL', 4);
+  cbSoftwareUpdate.ItemIndex:= GetValueXML(xConfig, 'SOFTWARE/UPDATE/INERVAL', 4);
 end;
 
 procedure TfMain.tsLanguagesShow(Sender: TObject);
@@ -353,7 +353,7 @@ end;
 
 procedure TfMain.tsRepoShow(Sender: TObject);
 begin
-  deLocalRepo.Directory:=xConfig.GetValue('REPOSITORY/LOCAL/PATH', '');
+  deLocalRepo.Directory:=GetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', '');
 end;
 
 procedure TfMain.actAppleAboutExecute(Sender: TObject);
@@ -385,9 +385,10 @@ end;
 
 procedure TfMain.actCodepageEditExecute(Sender: TObject);
 begin
-  if fEditCodePage.ShowModal = mrOk then begin
-
-  end;
+  fEditCodePage.Repository:=Repository;
+  fEditCodePage.Codepage:=leLangCodePage.Caption;
+  fEditCodePage.ShowModal;
+  leLangCodePageChange(Self);
 end;
 
 procedure TfMain.actCodepageNewExecute(Sender: TObject);
@@ -443,7 +444,7 @@ end;
 
 procedure TfMain.cbSoftwareUpdateChange(Sender: TObject);
 begin
-  xConfig.SetValue('SOFTWARE/UPDATE/INERVAL', cbSoftwareUpdate.ItemIndex);
+  SetValueXML(xConfig, 'SOFTWARE/UPDATE/INERVAL', cbSoftwareUpdate.ItemIndex);
   xConfig.Flush;
 end;
 
@@ -469,14 +470,14 @@ begin
   Result := False;
   ALang := UpperCase(AlphaOnly(ALang));
   if Length(ALang) < 2 then exit;
-  Result := xConfig.GetValue('LANGUAGE/EDIT/' + Copy(ALang,1,2) + '/' + ALang, False);
+  Result := GetValueXML(xConfig, 'LANGUAGE/EDIT/' + Copy(ALang,1,2) + '/' + ALang, False);
 end;
 
 procedure TfMain.SetActiveLanguage(ALang : String; AValue: boolean);
 begin
   ALang := UpperCase(AlphaOnly(ALang));
   if Length(ALang) < 2 then exit;
-  xConfig.SetValue('LANGUAGE/EDIT/' + Copy(ALang,1,2) + '/' + ALang, AValue);
+  SetValueXML(xConfig, 'LANGUAGE/EDIT/' + Copy(ALang,1,2) + '/' + ALang, AValue);
   xConfig.Flush;
 end;
 
@@ -617,7 +618,7 @@ procedure TfMain.OpenRepository(Location : String);
 begin
     if Location <> Repository.Path then begin
       Repository.Path:= Location;
-      xConfig.SetValue('REPOSITORY/LOCAL/PATH', Repository.Path);
+      SetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', Repository.Path);
       xConfig.Flush;
     end;
     Log(Self, 'Open local repository ' + Location);
@@ -627,8 +628,8 @@ procedure TfMain.SetAppLanguageText(ALanguage: String);
 var
   I : integer;
 begin
-  if ALanguage <> xConfig.GetValue('LANGUAGE/USER/ACTIVE',  '') then begin
-    xConfig.SetValue('LANGUAGE/USER/ACTIVE',  ALanguage);
+  if ALanguage <> GetValueXML(xConfig, 'LANGUAGE/USER/ACTIVE',  '') then begin
+    SetValueXML(xConfig, 'LANGUAGE/USER/ACTIVE',  ALanguage);
     xConfig.Flush;
   end;
   lbAvailLanguages.Caption:=lbl_AvailLanguages;
@@ -728,8 +729,8 @@ begin
   DT := Now;
   if Silent then begin
      try
-       LT := ScanDateTime(DTFmt, xConfig.GetValue('SOFTWARE/UPDATE/CHECKED', 'failed'));
-       case xConfig.GetValue('SOFTWARE/UPDATE/INERVAL', 4) of
+       LT := ScanDateTime(DTFmt, GetValueXML(xConfig, 'SOFTWARE/UPDATE/CHECKED', 'failed'));
+       case GetValueXML(xConfig, 'SOFTWARE/UPDATE/INERVAL', 4) of
          0 : { disabled } exit;
          1 : { monthly } begin
            if MonthOf(DT) = MonthOf(LT) then Exit;
@@ -753,7 +754,7 @@ begin
        { ignore errors / assume needs checked }
      end;
   end;
-  xConfig.SetValue('SOFTWARE/UPDATE/CHECKED', FormatDateTime(DTFmt, DT));
+  SetValueXML(xConfig, 'SOFTWARE/UPDATE/CHECKED', FormatDateTime(DTFmt, DT));
   XConfig.Flush;
   Query := UpdateServer +
     StringReplace(APP_PRODUCTNAME, '-', '', [rfReplaceAll]) +

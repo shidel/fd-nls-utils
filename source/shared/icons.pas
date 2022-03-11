@@ -85,7 +85,6 @@ implementation
 procedure Initialize;
 var
   I : integer;
-  S : String;
 begin
   {$I icons.lrs}
   for I := Low(IconUI) to High(IconUI) do
