@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
-  PasExt, PUIExt, StdCtrls, Buttons, ActnList, XMLPropStorage,
+  PasExt, PUIExt, Buttons, ActnList, XMLPropStorage,
   uAppNLS, uLog, Icons;
 
 type

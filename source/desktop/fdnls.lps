@@ -19,12 +19,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="386"/>
         <CursorPos X="23" Y="388"/>
         <FoldState Value=" T3lA0325113242Ac"/>
         <UsageCount Value="202"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ulog.pas"/>
@@ -33,70 +32,18 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLog"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="50"/>
-        <CursorPos X="90" Y="79"/>
+        <CursorPos X="27" Y="9"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="uappnls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="13"/>
         <CursorPos X="22" Y="24"/>
         <UsageCount Value="222"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\shared\version.inc"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="3" Y="29"/>
-        <UsageCount Value="31"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\shared\pasext.pas"/>
-        <UnitName Value="PasExt"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="15"/>
-        <CursorPos X="82" Y="42"/>
-        <FoldState Value=" T3xb0nx"/>
-        <UsageCount Value="102"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <UnitName Value="FDKit"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="377"/>
-        <CursorPos X="10" Y="414"/>
-        <FoldState Value=" T3kQ03211111E piZl7063v"/>
-        <UsageCount Value="100"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\shared\icons.pas"/>
-        <UnitName Value="Icons"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="32"/>
-        <CursorPos Y="50"/>
-        <UsageCount Value="102"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\shared\vcsext.pas"/>
-        <UnitName Value="VCSExt"/>
-        <EditorIndex Value="5"/>
-        <CursorPos X="19" Y="23"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\shared\country.inc"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="46" Y="371"/>
-        <UsageCount Value="24"/>
       </Unit>
       <Unit>
         <Filename Value="upickflag.pas"/>
@@ -105,10 +52,68 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="106" Y="23"/>
+        <UsageCount Value="153"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ueditcodepage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fEditCodePage"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uEditCodePage"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="40"/>
-        <CursorPos Y="73"/>
-        <UsageCount Value="152"/>
+        <CursorPos X="27" Y="10"/>
+        <UsageCount Value="86"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\version.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="29"/>
+        <UsageCount Value="31"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\pasext.pas"/>
+        <UnitName Value="PasExt"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="6"/>
+        <CursorPos X="9" Y="36"/>
+        <FoldState Value=" T3xb0nx"/>
+        <UsageCount Value="101"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <UnitName Value="FDKit"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="3" Y="12"/>
+        <FoldState Value=" T3kQ03211111E,"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\icons.pas"/>
+        <UnitName Value="Icons"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="32"/>
+        <CursorPos Y="50"/>
+        <UsageCount Value="102"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\vcsext.pas"/>
+        <UnitName Value="VCSExt"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="19" Y="23"/>
+        <UsageCount Value="32"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\country.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="350"/>
+        <CursorPos X="58" Y="372"/>
+        <UsageCount Value="24"/>
       </Unit>
       <Unit>
         <Filename Value="ulangedit.pas"/>
@@ -117,7 +122,7 @@
         <UnitName Value="uLangEdit"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="23" Y="15"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\..\..\..\Developer\LazyFPC\sources\fpc\rtl\objpas\classes\classesh.inc"/>
@@ -147,20 +152,6 @@
         <UsageCount Value="3"/>
       </Unit>
       <Unit>
-        <Filename Value="ueditcodepage.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="fEditCodePage"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="uEditCodePage"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="68"/>
-        <CursorPos X="28" Y="105"/>
-        <UsageCount Value="86"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="..\shared\puiext.pas"/>
         <UnitName Value="PUIExt"/>
         <EditorIndex Value="-1"/>
@@ -170,12 +161,11 @@
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
         <UnitName Value="ClassExt"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="265"/>
         <CursorPos X="38" Y="268"/>
         <FoldState Value=" T3kS040223166312"/>
         <UsageCount Value="32"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\graphics.pp"/>
@@ -186,126 +176,14 @@
         <UsageCount Value="7"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
+    <JumpHistory HistoryIndex="1">
       <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="93" Column="17" TopLine="61"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="47" Column="19" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="217" Column="3" TopLine="179"/>
+        <Filename Value="ulog.pas"/>
+        <Caret Line="9" Column="27"/>
       </Position>
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="125" Column="46" TopLine="106"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="120" Column="20" TopLine="105"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="476" Column="71" TopLine="451"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="81" Column="22" TopLine="68"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="54" Column="19" TopLine="32"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="87" Column="53" TopLine="51"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\pasext.pas"/>
-        <Caret Line="36" Column="16" TopLine="15"/>
-      </Position>
-      <Position>
-        <Filename Value="ueditcodepage.pas"/>
-        <Caret Line="79" Column="33" TopLine="55"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="243" Column="41" TopLine="222"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="408" Column="41" TopLine="382"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="165" Column="10" TopLine="150"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="136" Column="23" TopLine="104"/>
-      </Position>
-      <Position>
-        <Filename Value="ueditcodepage.pas"/>
-        <Caret Line="74" Column="94" TopLine="53"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="36" Column="43" TopLine="28"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="203" Column="30" TopLine="155"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="213" Column="7" TopLine="173"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="214" Column="40" TopLine="174"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="222" Column="7" TopLine="182"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="258" Column="42" TopLine="219"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="271" Column="107" TopLine="237"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="278" Column="49" TopLine="244"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="294" Column="44" TopLine="260"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="299" Column="20" TopLine="273"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="320" Column="39" TopLine="285"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\classext.pas"/>
-        <Caret Line="334" Column="41" TopLine="300"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="619" Column="5" TopLine="667"/>
-      </Position>
-      <Position>
-        <Filename Value="ueditcodepage.pas"/>
-        <Caret Line="37" Column="21" TopLine="19"/>
+        <Caret Line="12" Column="3" TopLine="55"/>
       </Position>
     </JumpHistory>
     <RunParams>

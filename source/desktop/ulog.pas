@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, PasExt, PUIExt, Forms, Controls, Graphics, Dialogs,
-  XMLPropStorage, StdCtrls, IDEWindowIntf;
+  XMLPropStorage, StdCtrls;
 
 type
 

@@ -7,6 +7,8 @@ object fEditCodePage: TfEditCodePage
   Caption = 'fEditCodePage'
   ClientHeight = 304
   ClientWidth = 472
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 320
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
@@ -14,17 +16,17 @@ object fEditCodePage: TfEditCodePage
   LCLVersion = '2.3.0.0'
   object pButtons: TPanel
     Left = 16
-    Height = 29
+    Height = 32
     Top = 256
     Width = 440
     Anchors = [akLeft, akRight, akBottom]
     BevelOuter = bvNone
-    ClientHeight = 29
+    ClientHeight = 32
     ClientWidth = 440
     TabOrder = 0
     object pBtnSeperator: TPanel
       Left = 355
-      Height = 29
+      Height = 32
       Top = 0
       Width = 10
       Align = alRight
@@ -34,7 +36,7 @@ object fEditCodePage: TfEditCodePage
     end
     object bbOK: TBitBtn
       Left = 280
-      Height = 29
+      Height = 32
       Top = 0
       Width = 75
       Align = alRight
@@ -46,7 +48,7 @@ object fEditCodePage: TfEditCodePage
     end
     object bbCancel: TBitBtn
       Left = 365
-      Height = 29
+      Height = 32
       Top = 0
       Width = 75
       Align = alRight
@@ -59,18 +61,22 @@ object fEditCodePage: TfEditCodePage
     end
     object iFontState: TImage
       Left = 0
-      Height = 29
+      Height = 32
       Top = 0
-      Width = 29
+      Width = 32
       Proportional = True
       Stretch = True
     end
     object lbFontState: TLabel
-      Left = 32
-      Height = 16
-      Top = 8
-      Width = 70
+      Left = 38
+      Height = 32
+      Top = 0
+      Width = 228
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = False
       Caption = 'lbFontState'
+      Layout = tlCenter
+      WordWrap = True
     end
   end
   object lvEditCP: TListView
