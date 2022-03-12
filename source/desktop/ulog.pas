@@ -58,7 +58,7 @@ end;
 procedure TfLog.FormCreate(Sender: TObject);
 begin
    xProperties.FileName := AppCfgFile;
-   xProperties.RootNodePath := FormNodePath(Self);
+   xProperties.RootNodePath := DisplayNamePath(Self);
    LogText.Clear;
    Add('Log started on ' + FormatDateTime('yyyy-mm-dd', Now));
    Add('');

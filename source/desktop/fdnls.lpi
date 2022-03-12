@@ -87,6 +87,7 @@
         <Filename Value="ueditcodepage.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="fEditCodePage"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
       </Unit>

@@ -4,13 +4,13 @@ unit PUIExt;
 interface
 
 uses
-  Classes, SysUtils, Graphics, Forms;
+  Classes, SysUtils, Graphics, Controls, Forms;
 
 const
   clErrorText : TColor = clRed;
 
 function DisplayUID : string;
-function FormNodePath(AForm : TForm) : String;
+function DisplayNamePath(AComponent : TComponent) : String;
 
 implementation
 
@@ -30,9 +30,9 @@ begin
    Result := Displays;
 end;
 
-function FormNodePath(AForm: TForm): String;
+function DisplayNamePath(AComponent : TComponent): String;
 begin
-  Result := 'DISPLAYS/UID_' + DisplayUID + '/' + AForm.Name + '/STATE';
+  Result := 'DISPLAYS/UID_' + DisplayUID + '/' + AComponent.GetNamePath + '/STATE';
 end;
 
 initialization

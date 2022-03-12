@@ -47,10 +47,10 @@ type
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
     function LoadData : TObject; override;
-    property Data[Index : integer] : TLanguageData read GetData;
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
+    property Data[Index : integer] : TLanguageData read GetData;
     property Caption[Index : integer] : String read GetCaption write SetCaption;
     property Identifier[Index : integer] : String read GetIdentifier write SetIdentifier;
     property Language[Index : integer] : String read GetLanguage write SetLanguage;
@@ -73,10 +73,10 @@ type
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
     function LoadData : TObject; override;
-    property Data[Index : integer] : TCodePageData read GetData;
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
+    property Data[Index : integer] : TCodePageData read GetData;
     property Identifier[Index : integer] : String read GetIdentifier write SetIdentifier;
     function IndexOfIdentifier(AValue : String) : integer;
     function IndexOfCodePage(AValue : Integer) : integer;
@@ -96,9 +96,9 @@ type
     destructor Destroy; override;
     function  AsBitmap(Index : integer; Foreground : TColor = clBlack;
       Background : TColor = clWhite) : TBitmap;
-    procedure ToImage(var Image : TImage; Index : integer;
+    procedure ToImage(Index: integer; var Image : TImage;
       Foreground : TColor = clBlack; Background : TColor = clWhite);
-    procedure ToImageList(var Images : TImageList; Index : integer;
+    procedure ToImageList(Index: integer; var Images : TImageList;
       Foreground : TColor = clBlack; Background : TColor = clWhite);
   published
   end;
@@ -169,7 +169,7 @@ var
 begin
   try
     Result := TBitMap.Create;
-    F := Data[0].FileData;
+    F := Data[Index].FileData;
     BPC := Length(F) div 256;
     Rows := 256 div Columns;
     if Rows * Columns <> 256 then Inc(Rows);
@@ -190,7 +190,7 @@ begin
   end;
 end;
 
-procedure TFDFontFiles.ToImage(var Image: TImage; Index: integer;
+procedure TFDFontFiles.ToImage(Index: integer; var Image: TImage;
   Foreground: TColor; Background: TColor);
 var
   I : TBitmap;
@@ -203,7 +203,7 @@ begin
   end;
 end;
 
-procedure TFDFontFiles.ToImageList(var Images: TImageList; Index: integer;
+procedure TFDFontFiles.ToImageList(Index: integer; var Images: TImageList;
   Foreground: TColor; Background: TColor);
 var
   BPC : word;
@@ -211,7 +211,7 @@ var
   C, X, Y, V : integer;
   B, N : TBitmap;
 begin
-  F := Data[0].FileData;
+  F := Data[Index].FileData;
   BPC := Length(F) div 256;
   for C := 0 to 255 do
     try

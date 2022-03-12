@@ -46,7 +46,7 @@ var
   I : integer;
 begin
   xProperties.FileName := AppCfgFile;
-  xProperties.RootNodePath := FormNodePath(Self);
+  xProperties.RootNodePath := DisplayNamePath(Self);
   Caption := dlg_PickFlag;
   bbOK.Caption:=btn_OK;
   bbCancel.Caption:=btn_Cancel;

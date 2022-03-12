@@ -1,15 +1,16 @@
 object fEditCodePage: TfEditCodePage
   Left = 303
-  Height = 304
+  Height = 320
   Top = 361
-  Width = 472
+  Width = 480
   BorderStyle = bsSizeToolWin
   Caption = 'fEditCodePage'
-  ClientHeight = 304
-  ClientWidth = 472
+  ClientHeight = 320
+  ClientWidth = 480
   Constraints.MinHeight = 200
   Constraints.MinWidth = 320
   OnCreate = FormCreate
+  OnHide = FormHide
   OnShow = FormShow
   Position = poScreenCenter
   SessionProperties = 'Position;Left;Top;Height;Width;ClientHeight;ClientWidth'
@@ -17,15 +18,15 @@ object fEditCodePage: TfEditCodePage
   object pButtons: TPanel
     Left = 16
     Height = 32
-    Top = 256
-    Width = 440
+    Top = 272
+    Width = 448
     Anchors = [akLeft, akRight, akBottom]
     BevelOuter = bvNone
     ClientHeight = 32
-    ClientWidth = 440
+    ClientWidth = 448
     TabOrder = 0
     object pBtnSeperator: TPanel
-      Left = 355
+      Left = 363
       Height = 32
       Top = 0
       Width = 10
@@ -35,7 +36,7 @@ object fEditCodePage: TfEditCodePage
       TabOrder = 0
     end
     object bbOK: TBitBtn
-      Left = 280
+      Left = 288
       Height = 32
       Top = 0
       Width = 75
@@ -47,7 +48,7 @@ object fEditCodePage: TfEditCodePage
       TabOrder = 1
     end
     object bbCancel: TBitBtn
-      Left = 365
+      Left = 373
       Height = 32
       Top = 0
       Width = 75
@@ -71,7 +72,7 @@ object fEditCodePage: TfEditCodePage
       Left = 38
       Height = 32
       Top = 0
-      Width = 228
+      Width = 236
       Anchors = [akTop, akLeft, akRight]
       AutoSize = False
       Caption = 'lbFontState'
@@ -81,26 +82,16 @@ object fEditCodePage: TfEditCodePage
   end
   object lvEditCP: TListView
     Left = 16
-    Height = 224
+    Height = 240
     Top = 16
-    Width = 440
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    Columns = <    
-      item
-        Caption = 'Value'
-      end    
-      item
-        Caption = 'DOS'
-      end    
-      item
-        Caption = 'Editor'
-      end    
-      item
-        Caption = 'UTF-8'
-      end    
-      item
-        Caption = 'HTML'
-      end>
+    Width = 288
+    Anchors = [akTop, akLeft, akBottom]
+    Columns = <>
+    Font.CharSet = 4
+    LargeImages = ilDOSFont
+    ParentFont = False
+    SmallImages = ilDOSFont
+    StateImages = ilDOSFont
     TabOrder = 1
     ViewStyle = vsReport
   end
@@ -113,6 +104,11 @@ object fEditCodePage: TfEditCodePage
     Height = 28
     Width = 28
     Left = 120
+    Top = 88
+  end
+  object ilDOSFont: TImageList
+    Width = 12
+    Left = 184
     Top = 88
   end
 end

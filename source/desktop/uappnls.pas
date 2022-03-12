@@ -47,6 +47,12 @@ resourcestring
   led_LanguageCodepage          = 'Code page';
   led_NewLanguage               = 'New Language';
 
+  lvh_EditCpDOS                 = 'DOS';
+  lvh_EditCpValue               = 'Value';
+  lvh_EditCPUnicode             = 'Editor';
+  lvh_EditCpUTF8                = 'UTF-8';
+  lvh_EditCpHTML                = 'HTML';
+
   btn_OK                        = 'OK';
   btn_Cancel                    = 'Cancel';
 

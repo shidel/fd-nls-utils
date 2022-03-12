@@ -52,26 +52,29 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
         <CursorPos X="106" Y="23"/>
-        <UsageCount Value="153"/>
+        <UsageCount Value="162"/>
       </Unit>
       <Unit>
         <Filename Value="ueditcodepage.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="fEditCodePage"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
         <CursorPos X="27" Y="10"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="95"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="29"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="30"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
@@ -80,7 +83,7 @@
         <TopLine Value="6"/>
         <CursorPos X="9" Y="36"/>
         <FoldState Value=" T3xb0nx"/>
-        <UsageCount Value="101"/>
+        <UsageCount Value="100"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
@@ -88,7 +91,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos X="3" Y="12"/>
-        <UsageCount Value="100"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
@@ -96,21 +99,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="32"/>
         <CursorPos Y="50"/>
-        <UsageCount Value="102"/>
+        <UsageCount Value="101"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\vcsext.pas"/>
         <UnitName Value="VCSExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="19" Y="23"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="31"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\country.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="350"/>
         <CursorPos X="58" Y="372"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="23"/>
       </Unit>
       <Unit>
         <Filename Value="ulangedit.pas"/>
@@ -119,20 +122,20 @@
         <UnitName Value="uLangEdit"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="23" Y="15"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\..\..\..\Developer\LazyFPC\sources\fpc\rtl\objpas\classes\classesh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="301"/>
         <CursorPos X="53" Y="301"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\xmlgroup.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="146"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\xmlext.pas"/>
@@ -140,20 +143,20 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="22"/>
         <CursorPos X="40" Y="48"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\defines.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="47" Y="15"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\puiext.pas"/>
         <UnitName Value="PUIExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="23" Y="10"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
@@ -162,7 +165,7 @@
         <TopLine Value="265"/>
         <CursorPos X="38" Y="268"/>
         <FoldState Value=" T3kS040223166312"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="31"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\graphics.pp"/>
@@ -170,12 +173,9 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="259"/>
         <CursorPos X="3" Y="268"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="-1"/>
-    </General>
     <JumpHistory HistoryIndex="-1"/>
     <RunParams>
       <FormatVersion Value="2"/>
