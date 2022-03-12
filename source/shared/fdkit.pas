@@ -5,7 +5,7 @@ interface
 
 {$DEFINE UseLog}
 uses
-  Classes, SysUtils, Contnrs, Graphics, ExtCtrls, PasExt,
+  Classes, SysUtils, Contnrs, Graphics, Controls, ExtCtrls, PasExt,
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
@@ -97,6 +97,8 @@ type
     function  AsBitmap(Index : integer; Foreground : TColor = clBlack;
       Background : TColor = clWhite) : TBitmap;
     procedure ToImage(var Image : TImage; Index : integer;
+      Foreground : TColor = clBlack; Background : TColor = clWhite);
+    procedure ToImageList(var Images : TImageList; Index : integer;
       Foreground : TColor = clBlack; Background : TColor = clWhite);
   published
   end;
@@ -199,6 +201,46 @@ begin
   finally
     FreeAndNil(I);
   end;
+end;
+
+procedure TFDFontFiles.ToImageList(var Images: TImageList; Index: integer;
+  Foreground: TColor; Background: TColor);
+var
+  BPC : word;
+  F : TByteArray;
+  C, X, Y, V : integer;
+  B, N : TBitmap;
+begin
+  F := Data[0].FileData;
+  BPC := Length(F) div 256;
+  for C := 0 to 255 do
+    try
+      B := TBitmap.Create;
+      B.SetSize(8, BPC);
+      B.Canvas.Brush.Color:= Background;
+      B.Canvas.FillRect(0,0,B.Width, B.Height);
+      for Y := 0 to BPC - 1 do begin
+        V := F[C * BPC + Y];
+        for X := 0 to 7 do
+          if ((V shr (7 - X)) and 1 = 1) then
+            B.Canvas.Pixels[X, Y] := Foreground;
+      end;
+      if (Images.Width <> 8) or (Images.Height <> BPC) then begin
+         try
+           N := ScaleBitmap(B, Images.Width, Images.Height);
+           Images.AddMasked(N, Background);
+           FreeAndNil(N);
+         except
+           FreeAndNil(N);
+           raise
+         end;
+      end else
+        Images.AddMasked(B, Background);
+      FreeAndNil(B);
+    except
+      FreeAndNil(B);
+      raise
+    end;
 end;
 
 { TFDCodePages }

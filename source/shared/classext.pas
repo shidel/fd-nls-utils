@@ -8,7 +8,7 @@ interface
 
 {$DEFINE UseLog}
 uses
-  Classes, SysUtils, Contnrs, PasExt,
+  Classes, SysUtils, Contnrs, Graphics, PasExt,
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
@@ -102,6 +102,8 @@ procedure SetValueXML(XML : TXMLConfig; Key : String; Value : boolean); overload
 procedure SetValueXML(XML : TXMLConfig; Key : String; Value : integer); overload;
 procedure SetValueXML(XML : TXMLConfig; Key : String; Value : String); overload;
 
+function ScaleBitmap(B : TBitMap; NewWidth, NewHeight: word) : TBitMap; overload;
+
 implementation
 
 function GetValueXML(XML: TXMLConfig; Key: String; Default: boolean): boolean;
@@ -141,6 +143,19 @@ end;
 procedure SetValueXML(XML: TXMLConfig; Key: String; Value: String);
 begin
   XML.SetValue(Key, Value);
+end;
+
+function ScaleBitmap(B: TBitMap; NewWidth, NewHeight: word): TBitMap;
+begin
+  try
+    Result := TBitmap.Create;
+    Result.SetSize(NewWidth, NewHeight);
+    Result.Canvas.FillRect(0,0,Result.Width, Result.Height);
+    Result.Canvas.StretchDraw(Rect(0, 0, NewWidth, NewHeight), B);
+  except
+    FreeAndNil(Result);
+    raise
+  end;
 end;
 
 { TFileObject }
