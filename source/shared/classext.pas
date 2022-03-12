@@ -20,8 +20,10 @@ type
 
   TFileObject = class(TObject)
     FileData : TByteArray;
+    Loaded : boolean;
     procedure WriteFile(FileName : String); virtual;
     procedure ReadFile(FileName : String); virtual;
+    procedure Clear; virtual;
   end;
 
   { TFileGroup }
@@ -41,7 +43,7 @@ type
     procedure SetFileName(Index : integer; AValue: String);
     procedure SetGroupID(AValue: String);
     function GroupPath : String; virtual; abstract;
-    function LoadFile(Index : integer) : TFileObject; virtual;
+    procedure LoadFile(Index : integer); virtual;
     procedure SaveFile(Index : integer); virtual;
   public
     constructor Create;
@@ -144,13 +146,36 @@ end;
 { TFileObject }
 
 procedure TFileObject.WriteFile(FileName: String);
+var
+  R : integer;
 begin
-
+  R := SaveToFile(FileName, FileData);
+  if R = 0 then Loaded := True;
+  {$IFDEF UseLog}
+    Log(nil, 'FILE SAVE, ' + FileName + ', Result:' + IntToStr(R));
+  {$ELSE}
+    SaveFile(FileName, FileData);
+  {$ENDIF}
 end;
 
 procedure TFileObject.ReadFile(FileName: String);
+var
+  R : integer;
 begin
+  R := LoadFromFile(FileName, FileData);
+  if R = 0 then Loaded := True;
+  {$IFDEF UseLog}
+    Log(nil, 'FILE READ, ' + FileName +
+     ', Result:' + IntToStr(R) + ', ' + IntToStr(Length(FileData)) + ' bytes');
+  {$ELSE}
+    LoadFromFile(FileName, FileData);
+  {$ENDIF}
+end;
 
+procedure TFileObject.Clear;
+begin
+  Loaded := False;
+  SetLength(FileData, 0);
 end;
 
 { TFileGroup }
@@ -164,9 +189,8 @@ end;
 function TFileGroup.GetFileObject(Index : integer): TFileObject;
 begin
   try
-    if not Assigned(FData[Index]) then
-      FData[Index] := LoadFile(Index);
     Result := TFileObject(FData[Index]);
+    if Result.Loaded = false then LoadFile(Index);
   except
     Result := nil
   end;
@@ -253,18 +277,23 @@ var
   D : TFileObject;
 begin
   {$IFDEF UseLog}
-    Log(nil,'FILE_GROUP, file list ' + GroupPath);
+    if GroupPath = '' then
+      Log(nil,'FILE_GROUP, file list (null)')
+    else
+      Log(nil,'FILE_GROUP, file list ' + GroupPath);
+
   {$ENDIF}
-  FileList(FFiles, GroupPath + '*' + FExt);
   FData.Clear;
+  if GroupPath = '' then begin
+    FFiles.Clear;
+    exit;
+  end;
+  FileList(FFiles, GroupPath + '*' + FExt);
   FFiles.Sort;
   I := 0;
   while I < FFiles.Count do begin
     try
-      if LoadAll then
-        D := LoadFile(I)
-      else
-        D := nil;
+      D := TFileObject.Create;
       X := FData.Add(D);
       if I <> X then begin
         {$IFDEF UseLog}
@@ -272,6 +301,11 @@ begin
         {$ENDIF}
         raise exception.Create('maligned list index management error');
       end;
+      if LoadAll then LoadFile(I);
+      {$IFDEF UseLog}
+        if not D.Loaded then
+          Log(nil,'  File: ' + FFiles[I] + ' added');
+      {$ENDIF}
       inc(I);
     except
       {$IFDEF UseLog}
@@ -322,29 +356,16 @@ begin
   FData.Delete(Index);
 end;
 
-function TFileGroup.LoadFile(Index : integer): TFileObject;
-var
-  O : TFileObject;
+procedure TFileGroup.LoadFile(Index : integer);
 begin
-  O := TFileObject(FData[Index]);
-  if Assigned(O) then FreeAndNil(O);
-  FData[Index] := nil;
-  O := TFileObject.Create;
-  try
-    O.ReadFile(GroupPath + FFiles[Index]);
-    FData[Index] := O;
-    Result := O;
-  except
-    FreeAndNil(O);
-    Result := nil;
-  end;
+  if not TFileObject(FData[Index]).Loaded then
+    TFileObject(FData[Index]).ReadFile(GroupPath + FFiles[Index]);
 end;
 
 procedure TFileGroup.SaveFile(Index: integer);
 begin
-  if Assigned(FData[Index]) then begin
+  if TFileObject(FData[Index]).Loaded then
     TFileObject(FData[Index]).WriteFile(GroupPath + FFiles[Index]);
-  end;
 end;
 
 { TXMLGroup }
@@ -418,10 +439,17 @@ var
   D : TObject;
 begin
   {$IFDEF UseLog}
-    Log(nil,'XML_GROUP, file list ' + GroupPath );
+    if GroupPath = '' then
+      Log(nil,'XML_GROUP, file list (null)')
+    else
+      Log(nil,'XML_GROUP, file list ' + GroupPath );
   {$ENDIF}
-  FileList(FFiles, GroupPath + '*.xml');
   FData.Clear;
+  if GroupPath = '' then begin
+    FFiles.Clear;
+    exit;
+  end;
+  FileList(FFiles, GroupPath + '*.xml');
   FFiles.Sort;
   I := 0;
   while I < FFiles.Count do begin
@@ -435,9 +463,13 @@ begin
       end
       else begin
         D := LoadData;
-        if not Assigned(D) then
+        if not Assigned(D) then begin
+          {$IFDEF UseLog}
+          if Assigned(D) then
+            Log(nil,'  File: ' + FFiles[I] + ' not loaded, removed');
+          {$ENDIF}
           FFiles.Delete(I)
-        else begin
+        end else begin
           X := FData.Add(D);
           if I <> X then begin
             {$IFDEF UseLog}
@@ -445,6 +477,10 @@ begin
             {$ENDIF}
             raise exception.Create('maligned list index management error');
           end;
+          {$IFDEF UseLog}
+          if Assigned(D) then
+            Log(nil,'  File: ' + FFiles[I] + ' loaded');
+          {$ENDIF}
           inc(I);
         end;
       end;

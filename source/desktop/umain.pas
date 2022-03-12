@@ -618,11 +618,12 @@ end;
 procedure TfMain.OpenRepository(Location : String);
 begin
     if Location <> Repository.Path then begin
+      Log(Self, 'Open local repository ' + Location);
       Repository.Path:= Location;
+      Log(Self, 'Repository ' + Location + ' open');
       SetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', Repository.Path);
       xConfig.Flush;
     end;
-    Log(Self, 'Open local repository ' + Location);
 end;
 
 procedure TfMain.SetAppLanguageText(ALanguage: String);

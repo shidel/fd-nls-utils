@@ -202,7 +202,7 @@ begin
   inherited Create;
   FOwner := AOwner;
   FGroupID := 'CODEPAGE';
-  Reload;
+  if GroupPath <> '' then Reload;
 end;
 
 destructor TFDCodePages.Destroy;
@@ -337,7 +337,7 @@ begin
   inherited Create;
   FOwner := AOwner;
   FGroupID := 'LANGUAGE';
-  Reload;
+  if GroupPath <> '' then Reload;
 end;
 
 destructor TFDLanguages.Destroy;

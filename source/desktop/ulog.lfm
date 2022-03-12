@@ -19,6 +19,7 @@ object fLog: TfLog
     Top = 8
     Width = 253
     Anchors = [akTop, akLeft, akRight, akBottom]
+    Font.Name = 'Courier New'
     Font.Pitch = fpFixed
     Lines.Strings = (
       'Memo1'

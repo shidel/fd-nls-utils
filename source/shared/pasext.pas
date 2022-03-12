@@ -56,11 +56,6 @@ procedure InitPasExt(Identifier : String);
 
 function VerifiedPath (Parent, SubDir : String) : string;
 
-{
-function AnsiToUnicode(S : AnsiString) : UnicodeString;
-function UnicodeToAnsi(S : UnicodeString) : AnsiString;
-}
-
 function PopDelim(var AStr : String; ADelim: String = SPACE): String; overload;
 function FieldStr(AStr : String; AField : integer = 0; ADelim : String = SPACE) : String; overload;
 function FieldStr(AStr : String; AField, ACount : integer; ADelim : String = SPACE) : String; overload;
