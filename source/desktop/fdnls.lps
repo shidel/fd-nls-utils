@@ -32,9 +32,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLog"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="27" Y="9"/>
         <UsageCount Value="201"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="uappnls.pas"/>
@@ -53,10 +53,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="106" Y="23"/>
         <UsageCount Value="153"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ueditcodepage.pas"/>
@@ -86,12 +85,10 @@
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos X="3" Y="12"/>
-        <FoldState Value=" T3kQ03211111E,"/>
         <UsageCount Value="100"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
@@ -176,16 +173,10 @@
         <UsageCount Value="7"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="1">
-      <Position>
-        <Filename Value="ulog.pas"/>
-        <Caret Line="9" Column="27"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="12" Column="3" TopLine="55"/>
-      </Position>
-    </JumpHistory>
+    <General>
+      <ActiveWindowIndexAtStart Value="-1"/>
+    </General>
+    <JumpHistory HistoryIndex="-1"/>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>

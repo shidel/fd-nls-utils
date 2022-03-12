@@ -331,7 +331,7 @@ end;
 
 procedure TfMain.tsGeneralShow(Sender: TObject);
 begin
-  cbSoftwareUpdate.ItemIndex:= GetValueXML(xConfig, 'SOFTWARE/UPDATE/INERVAL', 4);
+  cbSoftwareUpdate.ItemIndex:= GetValueXML(xConfig, 'SOFTWARE/UPDATE/INTERVAL', 4);
 end;
 
 procedure TfMain.tsLanguagesShow(Sender: TObject);
@@ -445,7 +445,7 @@ end;
 
 procedure TfMain.cbSoftwareUpdateChange(Sender: TObject);
 begin
-  SetValueXML(xConfig, 'SOFTWARE/UPDATE/INERVAL', cbSoftwareUpdate.ItemIndex);
+  SetValueXML(xConfig, 'SOFTWARE/UPDATE/INTERVAL', cbSoftwareUpdate.ItemIndex);
   xConfig.Flush;
 end;
 
@@ -731,7 +731,7 @@ begin
   if Silent then begin
      try
        LT := ScanDateTime(DTFmt, GetValueXML(xConfig, 'SOFTWARE/UPDATE/CHECKED', 'failed'));
-       case GetValueXML(xConfig, 'SOFTWARE/UPDATE/INERVAL', 4) of
+       case GetValueXML(xConfig, 'SOFTWARE/UPDATE/INTERVAL', 4) of
          0 : { disabled } exit;
          1 : { monthly } begin
            if MonthOf(DT) = MonthOf(LT) then Exit;
