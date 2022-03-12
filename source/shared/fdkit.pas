@@ -5,7 +5,7 @@ interface
 
 {$DEFINE UseLog}
 uses
-  Classes, SysUtils, Contnrs, PasExt,
+  Classes, SysUtils, Contnrs, Graphics, ExtCtrls, PasExt,
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
@@ -94,6 +94,10 @@ type
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
+    function  AsBitmap(Index : integer; Foreground : TColor = clBlack;
+      Background : TColor = clWhite) : TBitmap;
+    procedure ToImage(var Image : TImage; Index : integer;
+      Foreground : TColor = clBlack; Background : TColor = clWhite);
   published
   end;
 
@@ -149,6 +153,52 @@ end;
 destructor TFDFontFiles.Destroy;
 begin
   inherited Destroy;
+end;
+
+function TFDFontFiles.AsBitmap(Index: integer; Foreground: TColor;
+  Background: TColor): TBitmap;
+const
+  Columns : integer = 32;
+var
+  Rows : integer;
+  BPC : word;
+  F : TByteArray;
+  X, Y, XX, YY, V : integer;
+begin
+  try
+    Result := TBitMap.Create;
+    F := Data[0].FileData;
+    BPC := Length(F) div 256;
+    Rows := 256 div Columns;
+    if Rows * Columns <> 256 then Inc(Rows);
+    Result.SetSize(Columns * 8, Rows * BPC);
+    Result.Canvas.Brush.Color:= Background;
+    Result.Canvas.FillRect(0,0,Result.Width, Result.Height);
+    for Y := 0 to Rows - 1 do
+      for X := 0 to Columns - 1 do
+        if Y * Columns + X < 256 then
+          for YY := 0 to BPC - 1 do begin
+            V := F[(Y * Columns + X) * BPC + YY];
+            for XX := 0 to 7 do
+              if ((V shr (7 - XX)) and 1 = 1) then
+                Result.Canvas.Pixels[X * 8 + XX, Y * BPC + YY] := Foreground;
+          end;
+  except
+    FreeAndNil(Result);
+  end;
+end;
+
+procedure TFDFontFiles.ToImage(var Image: TImage; Index: integer;
+  Foreground: TColor; Background: TColor);
+var
+  I : TBitmap;
+begin
+  try
+    I := AsBitmap(Index,Foreground, Background);
+    Image.Picture.Assign(I);
+  finally
+    FreeAndNil(I);
+  end;
 end;
 
 { TFDCodePages }
