@@ -385,6 +385,7 @@ end;
 
 procedure TfMain.actCodepageEditExecute(Sender: TObject);
 begin
+  fEditCodePage.Clear;
   fEditCodePage.Repository:=Repository;
   fEditCodePage.Codepage:=leLangCodePage.Caption;
   fEditCodePage.ShowModal;

@@ -79,8 +79,24 @@ object fEditCodePage: TfEditCodePage
     Top = 16
     Width = 440
     Anchors = [akTop, akLeft, akRight, akBottom]
-    Columns = <>
+    Columns = <    
+      item
+        Caption = 'Value'
+      end    
+      item
+        Caption = 'DOS'
+      end    
+      item
+        Caption = 'Editor'
+      end    
+      item
+        Caption = 'UTF-8'
+      end    
+      item
+        Caption = 'HTML'
+      end>
     TabOrder = 1
+    ViewStyle = vsReport
   end
   object xProperties: TXMLPropStorage
     StoredValues = <>

@@ -34,6 +34,7 @@ type
   public
     property Codepage : string read FCodepage write SetCodepage;
     property Repository : TFDNLS read FRepository write SetRepository;
+    procedure Clear;
   end;
 
 var
@@ -54,12 +55,11 @@ procedure TfEditCodePage.FormCreate(Sender: TObject);
 begin
   xProperties.FileName := AppCfgFile;
   xProperties.RootNodePath := FormNodePath(Self);
-  FCodePage := NullCodepage;
-  Caption := Format(dlg_EditCodePage, [FCodePage]);
-  bbOK.Caption:=btn_OK;
-  bbCancel.Caption:=btn_Cancel;
   ilButtons.AddLazarusResource(IconUI[7]);
   ilButtons.AddLazarusResource(IconUI[8]);
+  bbOK.Caption:=btn_OK;
+  bbCancel.Caption:=btn_Cancel;
+  Clear;
 end;
 
 procedure TfEditCodePage.FormShow(Sender: TObject);
@@ -70,7 +70,7 @@ end;
 procedure TfEditCodePage.SetCodepage(AValue: string);
 begin
   if not Assigned(Repository) then exit;
-  if FCodepage=AValue then Exit;
+  if (FCodepage=AValue) and (AValue <> NullCodepage) then Exit;
   try
     FCodepage:=ZeroPad(StrToInt(AValue),3);
   except
@@ -98,6 +98,11 @@ procedure TfEditCodePage.SetRepository(AValue: TFDNLS);
 begin
   if FRepository=AValue then Exit;
   FRepository:=AValue;
+end;
+
+procedure TfEditCodePage.Clear;
+begin
+  SetCodepage(NullCodepage);
 end;
 
 end.
