@@ -135,6 +135,7 @@ object fEditCodePage: TfEditCodePage
       EditLabel.Caption = 'leUTF8'
       TabOrder = 0
       Text = 'leUTF8'
+      OnChange = leUTF8EditingDone
       OnEditingDone = leUTF8EditingDone
     end
     object leHTML: TLabeledEdit
@@ -149,6 +150,7 @@ object fEditCodePage: TfEditCodePage
       EditLabel.Caption = 'leHTML'
       TabOrder = 1
       Text = 'leHTML'
+      OnChange = leHTMLEditingDone
       OnEditingDone = leHTMLEditingDone
     end
   end
