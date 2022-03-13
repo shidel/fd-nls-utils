@@ -167,7 +167,7 @@ begin
      UpperCase(GetEnvironmentVariable('LANG'))));
    // Set display config files
    xProperties.FileName := AppCfgFile;
-   xProperties.RootNodePath := FormNodePath(Self);
+   xProperties.RootNodePath := DisplayNamePath(Self);
    // Populate UI elements
    LoadGlyphResources;
    CreateMainMenu;

@@ -19,11 +19,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="386"/>
-        <CursorPos X="23" Y="388"/>
+        <CursorPos X="36" Y="12"/>
         <FoldState Value=" T3lA0325113242Ac"/>
         <UsageCount Value="202"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ulog.pas"/>
@@ -65,10 +64,11 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="27" Y="10"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="139"/>
+        <CursorPos X="48" Y="175"/>
         <UsageCount Value="95"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
@@ -154,9 +154,10 @@
       <Unit>
         <Filename Value="..\shared\puiext.pas"/>
         <UnitName Value="PUIExt"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="23" Y="10"/>
-        <UsageCount Value="7"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="25" Y="13"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
@@ -176,7 +177,12 @@
         <UsageCount Value="6"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="8" Column="34"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>

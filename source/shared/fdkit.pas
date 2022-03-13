@@ -22,6 +22,8 @@ type
 
   TCodePageData = class(TObject)
     Identifier : String;
+    UTF8       : array [0..255] of UTF8String;
+    HTML       : array [0..255] of String;
   end;
 
   { TFDNLS }
@@ -97,9 +99,11 @@ type
     function  AsBitmap(Index : integer; Foreground : TColor = clBlack;
       Background : TColor = clWhite) : TBitmap;
     procedure ToImage(Index: integer; var Image : TImage;
-      Foreground : TColor = clBlack; Background : TColor = clWhite);
+      Foreground : TColor = clBlack; Background : TColor = clWhite); overload;
+    procedure ToImage(Index: integer; Ascii : integer; var Image : TImage;
+      Foreground : TColor = clBlack; Background : TColor = clWhite); overload;
     procedure ToImageList(Index: integer; var Images : TImageList;
-      Foreground : TColor = clBlack; Background : TColor = clWhite);
+      Foreground : TColor = clBlack; Background : TColor = clWhite); overload;
   published
   end;
 
@@ -203,6 +207,35 @@ begin
   end;
 end;
 
+procedure TFDFontFiles.ToImage(Index: integer; Ascii: integer;
+  var Image: TImage; Foreground: TColor; Background: TColor);
+var
+  BPC : word;
+  F : TByteArray;
+  X, Y, V : integer;
+  B, N : TBitmap;
+begin
+  F := Data[Index].FileData;
+  BPC := Length(F) div 256;
+  try
+    B := TBitmap.Create;
+    B.SetSize(8, BPC);
+    B.Canvas.Brush.Color:= Background;
+    B.Canvas.FillRect(0,0,B.Width, B.Height);
+    for Y := 0 to BPC - 1 do begin
+      V := F[Ascii * BPC + Y];
+      for X := 0 to 7 do
+        if ((V shr (7 - X)) and 1 = 1) then
+          B.Canvas.Pixels[X, Y] := Foreground;
+    end;
+    Image.Picture.Assign(B);
+    FreeAndNil(B);
+  except
+    FreeAndNil(B);
+    raise
+  end;
+end;
+
 procedure TFDFontFiles.ToImageList(Index: integer; var Images: TImageList;
   Foreground: TColor; Background: TColor);
 var
@@ -278,13 +311,29 @@ end;
 
 function TFDCodePages.LoadData: TObject;
 var
-  O : TLanguageData;
+  O : TCodePageData;
+  I : Integer;
+  N : String;
+  U : UTF8String;
+  H : String;
 begin
-  O := TLanguageData.Create;
+  O := TCodePageData.Create;
   try
+    N := ExtractFileName(FXML.FileName);
+    SetLength(N, Length(N) - Length(ExtractFileExt(N)));
     O.Identifier := GetValueXML(FXML, FGroupID + '/IDENTIFIER', '');
+    if (O.Identifier <> N) and (O.Identifier <> '') then
+       raise exception.Create('invalid codepage format');
+    for I := 0 to 255 do begin
+      U := AnsiToUTF8(Char(I));
+      H:= Char(I);
+      O.UTF8[I]    := IntsToStr(GetValueXML(FXML, FGroupID + '/ASCII_' + IntToStr(I) + '/UTF8', StrToInts(U)));
+      O.HTML[I]    := IntsToStr(GetValueXML(FXML, FGroupID + '/ASCII_' + IntToStr(I) + '/HTML', StrToInts(H)));
+    end;
+    FXML.Flush;
   except
     FreeAndNil(O);
+    raise
   end;
   Result := O;
 end;

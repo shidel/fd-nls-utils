@@ -53,6 +53,11 @@ resourcestring
   lvh_EditCpUTF8                = 'UTF-8';
   lvh_EditCpHTML                = 'HTML';
 
+  lbl_EditCpValue               = 'Ascii Code %0:s';
+  lbl_EditCPUnicode             = 'Unicode';
+  lbl_EditCpUTF8                = 'UTF-8';
+  lbl_EditCpHTML                = 'HTML';
+
   btn_OK                        = 'OK';
   btn_Cancel                    = 'Cancel';
 

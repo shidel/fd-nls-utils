@@ -132,8 +132,8 @@ function SaveToFile(AFileName: String; AValue : TByteArray; ARaise : boolean = t
 function LoadFromFile(AFileName: String; var AValue : String; ARaise : boolean = true) : integer; overload;
 function LoadFromFile(AFileName: String; var AValue : TByteArray; ARaise : boolean = true) : integer; overload;
 
-function StrToInts(AStr: String): String; overload;
-function IntsToStr(AStr: String): String; overload;
+function StrToInts(const S : UTF8String) : string; overload;
+function IntsToStr(S : String): UTF8String;  overload;
 
 implementation
 
@@ -912,26 +912,26 @@ end;
 
 {$POP}
 
-function StrToInts(AStr: String): String;
+function StrToInts(const S : UTF8String) : string; overload;
 var
   I : integer;
 begin
   Result := '';
-  for I := 1 to length(AStr) do begin
-    Result := Result + IntToStr(Word(AStr[I]));
-    if I < length(AStr) then Result := Result + ' ';
+  for I := 1 to length(S) do begin
+    Result := Result + IntToStr(Word(S[I]));
+    if I < length(S) then Result := Result + ' ';
   end;
 end;
 
-function IntsToStr(AStr: String): String;
+function IntsToStr(S : String): UTF8String;  overload;
 var
-  S : String;
+  C : String;
   V, E : integer;
 begin
   Result := '';
-  While AStr <> '' do begin
-    S := PopDelim(AStr, SPACE);
-    Val(S, V, E);
+  While S <> '' do begin
+    C := PopDelim(S, SPACE);
+    Val(C, V, E);
     if E <> 0 then begin
       Result := '';
       Break;

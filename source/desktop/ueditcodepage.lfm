@@ -85,15 +85,72 @@ object fEditCodePage: TfEditCodePage
     Height = 240
     Top = 16
     Width = 288
-    Anchors = [akTop, akLeft, akBottom]
+    Anchors = [akTop, akLeft, akRight, akBottom]
     Columns = <>
-    Font.CharSet = 4
     LargeImages = ilDOSFont
     ParentFont = False
+    ReadOnly = True
+    RowSelect = True
     SmallImages = ilDOSFont
     StateImages = ilDOSFont
     TabOrder = 1
     ViewStyle = vsReport
+    OnChange = lvEditCPChange
+  end
+  object pEditValues: TPanel
+    Left = 312
+    Height = 248
+    Top = 16
+    Width = 152
+    Anchors = [akTop, akRight]
+    BevelOuter = bvNone
+    ClientHeight = 248
+    ClientWidth = 152
+    TabOrder = 2
+    object lblAscii: TLabel
+      Left = 4
+      Height = 16
+      Top = 8
+      Width = 144
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = False
+      Caption = 'lblAscii'
+    end
+    object iDOS: TImage
+      Left = 48
+      Height = 64
+      Top = 152
+      Width = 40
+      Stretch = True
+    end
+    object leUTF8: TLabeledEdit
+      Left = 4
+      Height = 22
+      Top = 56
+      Width = 144
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = False
+      EditLabel.Height = 16
+      EditLabel.Width = 144
+      EditLabel.Caption = 'leUTF8'
+      TabOrder = 0
+      Text = 'leUTF8'
+      OnEditingDone = leUTF8EditingDone
+    end
+    object leHTML: TLabeledEdit
+      Left = 4
+      Height = 22
+      Top = 112
+      Width = 144
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = False
+      EditLabel.Height = 16
+      EditLabel.Width = 144
+      EditLabel.Caption = 'leHTML'
+      TabOrder = 1
+      Text = 'leHTML'
+      OnEditingDone = leHTMLEditingDone
+    end
   end
   object xProperties: TXMLPropStorage
     StoredValues = <>
