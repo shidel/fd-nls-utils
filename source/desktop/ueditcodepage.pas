@@ -123,13 +123,20 @@ begin
 end;
 
 procedure TfEditCodePage.leUTF8EditingDone(Sender: TObject);
+var
+  Both : boolean;
 begin
+  Both := EditItem <> -1;
+  if Both then
+    with lvEditCP.Items[EditItem] do Both := SubItems[1] = SubItems[2];
+
   if Trim(leUTF8.Caption) <> '' then
     leUTF8.Caption := Trim(leUTF8.Caption);
   if EditItem <> -1 then
     lvEditCP.Items[EditItem].SubItems[1]:=leUTF8.Caption
   else
     leUTF8.Caption :='';
+  if Both then leHTML.Caption := leUTF8.Caption;
 end;
 
 procedure TfEditCodePage.lvEditCPChange(Sender: TObject; Item: TListItem;
