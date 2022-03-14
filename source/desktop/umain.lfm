@@ -11,6 +11,8 @@ object fMain: TfMain
   Menu = mMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnHide = FormHide
+  OnShow = FormShow
   SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;tvPrefs.Width;Width;WindowState;pLanguagesList.Height'
   LCLVersion = '2.3.0.0'
   Visible = True
@@ -103,9 +105,9 @@ object fMain: TfMain
       Height = 401
       Top = 4
       Width = 632
-      ActivePage = tsProjects
+      ActivePage = tsPackages
       Align = alClient
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'
@@ -122,6 +124,16 @@ object fMain: TfMain
       end
       object tsPackages: TTabSheet
         Caption = 'Packages'
+        ClientHeight = 371
+        ClientWidth = 626
+        inline frPkgListEdit: TframePkgListEdit
+          Left = 8
+          Height = 352
+          Top = 8
+          Width = 616
+          DesignLeft = 124
+          DesignTop = 151
+        end
       end
       object tsPrefs: TTabSheet
         Caption = 'Preferences'

@@ -9,7 +9,7 @@ uses
   XMLPropStorage, StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
   XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, ClassExt,
   opensslsockets, fphttpclient, DateUtils,
-  uAppNLS, uLog, uPickFlag, uEditCodePage,
+  uAppNLS, uLog, uPickFlag, uEditCodePage, uPkgListEdit,
   Icons;
 
 type
@@ -37,6 +37,7 @@ type
     bbRemoveLanguage: TBitBtn;
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
+    frPkgListEdit: TframePkgListEdit;
     ilToolsMedium: TImageList;
     ilFlagsLarge: TImageList;
     ilFlagsSmall: TImageList;
@@ -105,6 +106,8 @@ type
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormHide(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
     procedure leGraphicClick(Sender: TObject);
@@ -187,6 +190,19 @@ end;
 procedure TfMain.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Repository);
+end;
+
+procedure TfMain.FormHide(Sender: TObject);
+begin
+  xProperties.WriteInteger(frPkgListEdit.lvPackages.GetNamePath + '/WIDTH',
+    frPkgListEdit.lvPackages.Width);
+end;
+
+procedure TfMain.FormShow(Sender: TObject);
+begin
+  frPkgListEdit.lvPackages.Width :=
+    xProperties.ReadInteger(frPkgListEdit.lvPackages.GetNamePath + '/WIDTH',
+    frPkgListEdit.lvPackages.Width);
 end;
 
 procedure TfMain.hpAboutHotClick(Sender: TObject);
@@ -655,6 +671,7 @@ begin
       SetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', Repository.Path);
       xConfig.Flush;
     end;
+    frPkgListEdit.Clear;
 end;
 
 procedure TfMain.SetAppLanguageText(ALanguage: String);
