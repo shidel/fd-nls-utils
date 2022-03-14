@@ -17,12 +17,17 @@ resourcestring
   msg_AboutIconCopyright        = 'Most icons are Copyright (c) %0:s, %1:s and may be download in the %2:s collection';
   msg_AboutCreatedWith          = 'Created with the %0:s and %1:s';
   msg_VerifyDelete              = 'Are you sure you want to delete this entry?';
+  msg_UnknownDateTime           = '(unknown)';
 
   lbl_AvailLanguages            = 'Available languages';
   lbl_LocalRepository           = 'Location of local repository';
   lbl_SoftwareUpdate            = 'Check for software updates';
   lbl_NoCodepageFonts           = 'no codepage font available';
   lbl_UsingCodepageFont         = 'using %0:s font for codepage';
+  lbl_UpdateChecked             = 'Last update check was %0:s';
+  lbl_NotGitRepo                = 'Not a git repository';
+  lbl_GitRepo                   = 'Git repository %0:s';
+  lbl_ComingSoon                = 'not implemented, coming soon';
 
   dlg_LocalRepo                 = 'FD-NLS Local Repository';
   dlg_DebugLog                  = 'Debug Log';

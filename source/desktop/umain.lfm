@@ -103,12 +103,22 @@ object fMain: TfMain
       Height = 401
       Top = 4
       Width = 632
-      ActivePage = tsPrefs
+      ActivePage = tsProjects
       Align = alClient
-      TabIndex = 2
+      TabIndex = 0
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'
+        ClientHeight = 371
+        ClientWidth = 626
+        OnShow = tsProjectsShow
+        object lbComingSoon: TLabel
+          Left = 8
+          Height = 16
+          Top = 8
+          Width = 89
+          Caption = 'lbComingSoon'
+        end
       end
       object tsPackages: TTabSheet
         Caption = 'Packages'
@@ -142,10 +152,10 @@ object fMain: TfMain
           Height = 371
           Top = 0
           Width = 500
-          ActivePage = tsLanguages
+          ActivePage = tsRepo
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 2
+          TabIndex = 1
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
@@ -181,6 +191,16 @@ object fMain: TfMain
               Anchors = [akTop, akRight]
               TabOrder = 1
             end
+            object lbUpdateChecked: TLabel
+              Left = 16
+              Height = 16
+              Top = 64
+              Width = 109
+              Caption = 'lbUpdateChecked'
+              Enabled = False
+              Font.Style = [fsItalic]
+              ParentFont = False
+            end
           end
           object tsRepo: TTabSheet
             Caption = 'Repository'
@@ -209,6 +229,16 @@ object fMain: TfMain
               MaxLength = 0
               TabOrder = 0
               Text = 'deLocalRepo'
+            end
+            object lbGitRepo: TLabel
+              Left = 16
+              Height = 16
+              Top = 64
+              Width = 60
+              Caption = 'lbGitRepo'
+              Enabled = False
+              Font.Style = [fsItalic]
+              ParentFont = False
             end
           end
           object tsLanguages: TTabSheet

@@ -41,6 +41,9 @@ type
     ilFlagsLarge: TImageList;
     ilFlagsSmall: TImageList;
     ilToolsSmall: TImageList;
+    lbComingSoon: TLabel;
+    lbUpdateChecked: TLabel;
+    lbGitRepo: TLabel;
     leGraphic: TImage;
     imgAbout: TImage;
     hpAbout: TIpHtmlPanel;
@@ -117,6 +120,7 @@ type
     procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
+    procedure tsProjectsShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
   private
@@ -332,6 +336,8 @@ end;
 procedure TfMain.tsGeneralShow(Sender: TObject);
 begin
   cbSoftwareUpdate.ItemIndex:= GetValueXML(xConfig, 'SOFTWARE/UPDATE/INTERVAL', 4);
+  lbUpdateChecked.Caption:=Format(lbl_UpdateChecked,
+    [GetValueXML(xConfig, 'SOFTWARE/UPDATE/CHECKED', msg_UnknownDateTime)]);
 end;
 
 procedure TfMain.tsLanguagesShow(Sender: TObject);
@@ -351,9 +357,15 @@ begin
   SelectEditLanguage(-1);
 end;
 
+procedure TfMain.tsProjectsShow(Sender: TObject);
+begin
+  lbComingSoon.Caption:=lbl_ComingSoon;
+end;
+
 procedure TfMain.tsRepoShow(Sender: TObject);
 begin
   deLocalRepo.Directory:=GetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', '');
+
 end;
 
 procedure TfMain.actAppleAboutExecute(Sender: TObject);
@@ -441,6 +453,8 @@ end;
 procedure TfMain.actSoftwareUpdateExecute(Sender: TObject);
 begin
   SoftwareUpdate(False);
+  lbUpdateChecked.Caption:=Format(lbl_UpdateChecked,
+    [GetValueXML(xConfig, 'SOFTWARE/UPDATE/CHECKED', msg_UnknownDateTime)]);
 end;
 
 procedure TfMain.cbSoftwareUpdateChange(Sender: TObject);
@@ -616,7 +630,24 @@ begin
 end;
 
 procedure TfMain.OpenRepository(Location : String);
+var
+  GCF, S : String;
 begin
+    GCF := IncludeTrailingPathDelimiter(Location) +
+      IncludeTrailingPathDelimiter('.git') + 'config';
+    if (Location = '') or (not FileExists(GCF)) then begin
+      lbGitRepo.Caption:=lbl_NotGitRepo;
+    end else begin
+      S := '';
+      LoadFromFile(GCF, S, False);
+      if Pos('url =', S) > 0 then
+        S := Trim(Copy(S, Pos('url =', S) + 5, Length(S)))
+      else
+        S := '';
+      if Pos(LF, S) > 0 then SetLength(S, Pos(LF, S) - 1);
+      if Pos(CR, S) > 0 then SetLength(S, Pos(CR, S) - 1);
+      lbGitRepo.Caption:=Format(lbl_GitRepo, [S]);
+    end;
     if Location <> Repository.Path then begin
       Log(Self, 'Open local repository ' + Location);
       Repository.Path:= Location;
