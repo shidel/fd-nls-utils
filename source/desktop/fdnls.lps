@@ -8,10 +8,9 @@
       <Unit>
         <Filename Value="fdnls.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="94" Y="11"/>
         <UsageCount Value="202"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="umain.pas"/>
@@ -20,13 +19,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="177"/>
-        <CursorPos X="35" Y="198"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="40" Y="8"/>
         <FoldState Value=" T3lH030225113432E picp30S512 pj1mG0{I$"/>
         <UsageCount Value="202"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ulog.pas"/>
@@ -43,11 +39,10 @@
         <Filename Value="uappnls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="31"/>
         <CursorPos Y="68"/>
         <UsageCount Value="222"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="upickflag.pas"/>
@@ -59,7 +54,7 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <CursorPos X="106" Y="23"/>
-        <UsageCount Value="192"/>
+        <UsageCount Value="193"/>
       </Unit>
       <Unit>
         <Filename Value="ueditcodepage.pas"/>
@@ -68,11 +63,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="69"/>
         <CursorPos Y="101"/>
-        <UsageCount Value="125"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="126"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
@@ -83,19 +77,19 @@
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="99"/>
         <CursorPos X="110" Y="127"/>
         <UsageCount Value="99"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="55"/>
-        <CursorPos X="3" Y="12"/>
-        <UsageCount Value="95"/>
+        <TopLine Value="383"/>
+        <CursorPos X="85" Y="425"/>
+        <UsageCount Value="96"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
@@ -172,135 +166,15 @@
         <ComponentName Value="framePkgListEdit"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
-        <EditorIndex Value="3"/>
-        <CursorPos Y="21"/>
-        <UsageCount Value="23"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="20" Y="11"/>
+        <UsageCount Value="24"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="138" Column="24" TopLine="105"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="631" Column="29" TopLine="624"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="628" Column="55" TopLine="606"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="633" Column="8" TopLine="606"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="629" Column="37" TopLine="608"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="630" Column="35" TopLine="609"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="637" Column="50" TopLine="605"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="640" TopLine="614"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="647" TopLine="621"/>
-      </Position>
-      <Position>
-        <Filename Value="uappnls.pas"/>
-        <Caret Line="30" Column="66" TopLine="4"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="362" Column="29" TopLine="436"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="10" Column="116"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="659" Column="43" TopLine="551"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="22" Column="12"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="19" Column="26"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="27" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="26" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="27" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="26" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="27" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="28" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="27" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="28" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="12" Column="36"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="199" TopLine="195"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="206" TopLine="195"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="22" Column="15"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="49" TopLine="9"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="21"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="204" Column="51" TopLine="176"/>
-      </Position>
-    </JumpHistory>
+    <General>
+      <ActiveWindowIndexAtStart Value="-1"/>
+    </General>
+    <JumpHistory HistoryIndex="-1"/>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>

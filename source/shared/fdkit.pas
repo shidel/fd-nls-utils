@@ -111,16 +111,34 @@ type
   published
   end;
 
+   { TFDFontFiles }
+
+  { TFDPackageLists }
+
+  TFDPackageLists = class (TFileGroup)
+  private
+    FOwner: TFDNLS;
+  protected
+    property Owner : TFDNLS read FOwner;
+    function GroupPath : String; override;
+  public
+    constructor Create(AOwner : TFDNLS);
+    destructor Destroy; override;
+  published
+  end;
+
   { TFDNLS }
   TFDNLS = class(TPersistent)
   private
     FCodePages: TFDCodePages;
     FFonts: TFDFontFiles;
     FLanguages: TFDLanguages;
+    FPackageLists: TFDPackageLists;
     function GetCodePagePath: string;
     function GetDataPath: string;
     function GetFontsPath: string;
     function GetLanguagesPath: string;
+    function GetPackageListPath: String;
     function GetProjectsPath: string;
     function GetPath: string;
     procedure SetPath(AValue: string);
@@ -130,6 +148,7 @@ type
     property CodePagePath : string read GetCodePagePath;
     property FontsPath : string read GetFontsPath;
     property ProjectsPath : string read GetProjectsPath;
+    property PackageListPath : String read GetPackageListPath;
   public
     constructor Create;
     destructor Destroy; override;
@@ -137,6 +156,7 @@ type
     property Languages : TFDLanguages read FLanguages;
     property CodePages : TFDCodePages read FCodePages;
     property Fonts : TFDFontFiles read FFonts;
+    property PackageLists : TFDPackageLists read FPackageLists;
     procedure Reload;
   published
   end;
@@ -145,6 +165,25 @@ implementation
 
 const
    RepositoryPath : String = '';
+
+{ TFDPackageLists }
+
+function TFDPackageLists.GroupPath: String;
+begin
+  Result := FOwner.PackageListPath;
+end;
+
+constructor TFDPackageLists.Create(AOwner: TFDNLS);
+begin
+ inherited Create;
+ FOwner := AOwner;
+ GroupID := 'CSV';
+end;
+
+destructor TFDPackageLists.Destroy;
+begin
+  inherited Destroy;
+end;
 
 { TFDFontFiles }
 
@@ -405,8 +444,12 @@ var
   I : integer;
 begin
   Result := '';
-  for I := 1 to Length(S) do
-    Result := Result + Data[Index].UTF8[Ord(S[I])];
+  for I := 1 to Length(S) do begin
+    if S[I] in [CR, LF, TAB, SPACE] then
+      Result := Result + S[I]
+    else
+      Result := Result + Data[Index].UTF8[Ord(S[I])];
+  end;
 end;
 
 function TFDCodePages.DOStoHTML(Index: integer; S: String): String;
@@ -415,9 +458,12 @@ var
 begin
   Result := '';
   for I := 1 to Length(S) do
-    Result := Result + Data[Index].HTML[Ord(S[I])];
+    if S[I] = CR then
+    else if S[I] = LF then
+      Result := Result + '<br>'
+    else
+      Result := Result + Data[Index].HTML[Ord(S[I])];
 end;
-
 
 { TFDLanguages }
 
@@ -585,6 +631,11 @@ begin
   Result := VerifiedPath(DataPath, 'languages');
 end;
 
+function TFDNLS.GetPackageListPath: String;
+begin
+  Result := VerifiedPath(RepositoryPath, 'packages');
+end;
+
 function TFDNLS.GetProjectsPath: string;
 begin
   Result := VerifiedPath(DataPath, 'projects');
@@ -610,10 +661,12 @@ begin
   FLanguages := TFDLanguages.Create(Self);
   FCodePages := TFDCodepages.Create(Self);
   FFonts     := TFDFontFiles.Create(Self);
+  FPackageLists := TFDPackageLists.Create(Self);
 end;
 
 destructor TFDNLS.Destroy;
 begin
+  FreeAndNil(FPackageLists);
   FreeAndNil(FFonts);
   FreeAndNil(FCodePages);
   FreeAndNil(FLanguages);
@@ -625,6 +678,7 @@ begin
   Languages.Reload;
   CodePages.Reload;
   Fonts.Reload;
+  PackageLists.Reload;
 end;
 
 end.

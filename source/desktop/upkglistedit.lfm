@@ -1,24 +1,24 @@
 object framePkgListEdit: TframePkgListEdit
   Left = 0
-  Height = 284
+  Height = 347
   Top = 0
-  Width = 503
+  Width = 588
   Anchors = [akTop, akLeft, akRight, akBottom]
-  ClientHeight = 284
-  ClientWidth = 503
+  ClientHeight = 347
+  ClientWidth = 588
   TabOrder = 0
   DesignLeft = 113
   DesignTop = 187
   object lvPackages: TListView
     Left = 0
-    Height = 284
+    Height = 347
     Top = 0
-    Width = 250
+    Width = 150
     Align = alLeft
     AutoWidthLastColumn = True
     Columns = <    
       item
-        Width = 233
+        Width = 133
       end>
     LargeImages = fMain.ilToolsSmall
     RowSelect = True
@@ -30,16 +30,16 @@ object framePkgListEdit: TframePkgListEdit
     ViewStyle = vsReport
   end
   object sPkgEditSplitter: TSplitter
-    Left = 250
-    Height = 284
+    Left = 150
+    Height = 347
     Top = 0
     Width = 5
   end
   object pEditor: TPanel
-    Left = 255
-    Height = 284
+    Left = 155
+    Height = 347
     Top = 0
-    Width = 248
+    Width = 433
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
