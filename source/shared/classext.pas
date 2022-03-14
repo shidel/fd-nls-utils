@@ -8,7 +8,7 @@ interface
 
 {$DEFINE UseLog}
 uses
-  Classes, SysUtils, Contnrs, Graphics, PasExt,
+  Classes, SysUtils, Contnrs, Graphics, AvgLvlTree, PasExt,
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
@@ -95,6 +95,55 @@ type
   published
   end;
 
+  { TDictionaryItem }
+  TDictionary = class;
+
+  TDictionaryItem = class (TPersistent)
+  private
+    FOwner: TDictionary;
+    FReference: String;
+    FValue: String;
+    procedure SetReference(AValue: String);
+    procedure SetValue(AValue: String);
+  protected
+  public
+    property Owner : TDictionary read FOwner;
+    property Reference : String read FReference write SetReference;
+    property Value : String read FValue write SetValue;
+    constructor Create(AOwner : TDictionary);
+    destructor Destroy; override;
+  published
+  end;
+
+
+  { TDictionary }
+
+  TDictionary = class (TPersistent)
+  private
+    FTree : TAvgLvlTree;
+    FMaxRef,
+    FMaxVal : integer;
+    function GetCount: integer;
+    function GetMaxRef: integer;
+    function GetMaxVal: integer;
+  protected
+    procedure RecalcMax;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Clear;
+    function Add(Reference : String; Value : String = '') : TDictionaryItem;
+    function Find(Reference : String; Longest : boolean = false) : TDictionaryItem;
+    procedure Delete(Reference : String); overload;
+    procedure Delete(Item : TDictionaryItem); overload;
+    property Count : integer read GetCount;
+    property MaxRefLen : integer read GetMaxRef;
+    property MaxValLen : integer read GetMaxVal;
+    procedure InvalidateMax;
+    function Rewrite(S : String) : String; overload;
+  published
+  end;
+
 function GetValueXML(XML : TXMLConfig; Key : String; Default : boolean = false) : boolean; overload;
 function GetValueXML(XML : TXMLConfig; Key : String; Default : integer = 0) : Integer; overload;
 function GetValueXML(XML : TXMLConfig; Key : String; Default : String = '') : String; overload;
@@ -156,6 +205,181 @@ begin
     FreeAndNil(Result);
     raise
   end;
+end;
+
+{ TDictionary }
+
+function CompareDictionaryItem(A, B : pointer) : integer;
+begin
+  if TDictionaryItem(A).FReference < TDictionaryItem(B).FReference then
+    Result := -1
+  else if TDictionaryItem(A).FReference > TDictionaryItem(B).FReference then
+    Result := 1
+  else
+    Result := 0;
+end;
+
+function CompareStringToDictionaryItem(A, B : pointer) : integer;
+begin
+  if String(A) < TDictionaryItem(B).FReference then
+    Result := -1
+  else if String(A) > TDictionaryItem(B).FReference then
+    Result := 1
+  else
+    Result := 0;
+end;
+
+function TDictionary.GetCount: integer;
+begin
+  Result := FTree.Count;
+end;
+
+function TDictionary.GetMaxRef: integer;
+begin
+  if FMaxRef = -1 then
+    RecalcMax;
+  Result := FMaxRef;
+end;
+
+function TDictionary.GetMaxVal: integer;
+begin
+  if FMaxVal = -1 then
+    RecalcMax;
+  Result := FMaxVal;
+end;
+
+procedure TDictionary.RecalcMax;
+var
+  Node: TAvgLvlTreeNode;
+begin
+  FMaxRef := 0;
+  FMaxVal := 0;
+  for Node in FTree do
+    if Assigned(Node.Data) then
+      with TDictionaryItem(Node.Data) do begin
+        if Length(FReference) > FMaxRef then FMaxRef := Length(FReference);
+        if Length(FValue) > FMaxVal then FMaxVal := Length(FValue);
+      end;
+end;
+
+constructor TDictionary.Create;
+begin
+  inherited Create;
+  FTree := TAvgLvlTree.Create(@CompareDictionaryItem);
+  InvalidateMax;
+end;
+
+destructor TDictionary.Destroy;
+begin
+  Clear;
+  FreeAndNil(FTree);
+  inherited Destroy;
+end;
+
+procedure TDictionary.Clear;
+var
+  Node: TAvgLvlTreeNode;
+begin
+  InvalidateMax;
+  for Node in FTree do
+    FTree.FreeAndDelete(Node);
+end;
+
+function TDictionary.Add(Reference: String; Value: String): TDictionaryItem;
+begin
+  Result := TDictionaryItem.Create(Self);
+  Result.Reference:=Reference;
+  Result.Value:=Value;
+  if Length(Reference) > FMaxRef then FMaxRef := Length(Reference);
+  if Length(Value) > FMaxVal then FMaxVal := Length(Value);
+  FTree.Add(Result);
+end;
+
+function TDictionary.Find(Reference: String; Longest: boolean) : TDictionaryItem;
+var
+  Node: TAvgLvlTreeNode;
+begin
+  Result := nil;
+  repeat
+    Node:=FTree.FindKey(Pointer(Reference),@CompareStringToDictionaryItem);
+    if Length(Reference) > 0 then
+      SetLength(Reference, Length(Reference) - 1 );
+  until (Not Longest) or Assigned(Node) or (Length(Reference) = 0);
+  if Assigned(Node) then
+    Result := TDictionaryItem(Node.Data);
+end;
+
+procedure TDictionary.Delete(Reference: String);
+var
+  Node : TAvgLvlTreeNode;
+begin
+  InvalidateMax;
+  Node:=FTree.FindKey(Pointer(Reference),@CompareStringToDictionaryItem);
+  if Assigned(Node) then
+    FTree.FreeAndDelete(Node);
+end;
+
+procedure TDictionary.Delete(Item: TDictionaryItem);
+var
+  Node : TAvgLvlTreeNode;
+begin
+  InvalidateMax;
+  Node:=FTree.Find(Item);
+  if Assigned(Node) then
+    FTree.FreeAndDelete(Node);
+end;
+
+procedure TDictionary.InvalidateMax;
+begin
+  FMaxRef := -1;
+  FMaxVal := -1;
+end;
+
+function TDictionary.Rewrite(S: String): String;
+var
+  D : TDictionaryItem;
+begin
+  Result := '';
+  while Length(S) > 0 do begin
+    D := Find(Copy(S, 1, MaxRefLen), true);
+    if Assigned(D) then begin
+      Result := Result + D.Value;
+      System.Delete(S, 1, Length(D.Reference));
+    end else begin
+      Result := Result + S[1];
+      System.Delete(S, 1, 1);
+    end;
+  end;
+end;
+
+{ TDictionaryItem }
+procedure TDictionaryItem.SetReference(AValue: String);
+begin
+  if FReference=AValue then Exit;
+  if (Length(AValue) < Length(FReference)) and Assigned(FOwner) then
+    FOwner.InvalidateMax;
+  FReference:=AValue;
+end;
+
+procedure TDictionaryItem.SetValue(AValue: String);
+begin
+  if FValue=AValue then Exit;
+  if (Length(AValue) < Length(FValue)) and Assigned(FOwner) then
+    FOwner.InvalidateMax;
+  FValue:=AValue;
+end;
+
+constructor TDictionaryItem.Create(AOwner: TDictionary);
+begin
+  inherited Create;
+  FOwner := AOwner;
+end;
+
+destructor TDictionaryItem.Destroy;
+begin
+  if Assigned(FOwner) then
+    FOwner.InvalidateMax;
+  inherited Destroy;
 end;
 
 { TFileObject }

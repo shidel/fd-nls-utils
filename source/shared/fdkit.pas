@@ -82,6 +82,10 @@ type
     property Identifier[Index : integer] : String read GetIdentifier write SetIdentifier;
     function IndexOfIdentifier(AValue : String) : integer;
     function IndexOfCodePage(AValue : Integer) : integer;
+    function CreateUTF8Dictionary(Index : integer) : TDictionary; overload;
+    function CreateHTMLDictionary(Index : integer) : TDictionary; overload;
+    function DOStoUTF8(Index : integer; S : String) : String;
+    function DOStoHTML(Index : integer; S : String) : String;
   published
   end;
 
@@ -213,7 +217,7 @@ var
   BPC : word;
   F : TArrayOfBytes;
   X, Y, V : integer;
-  B, N : TBitmap;
+  B : TBitmap;
 begin
   F := Data[Index].FileData;
   BPC := Length(F) div 256;
@@ -369,6 +373,51 @@ function TFDCodePages.IndexOfCodePage(AValue: Integer): integer;
 begin
   Result := IndexOfIdentifier(IntToStr(AValue));
 end;
+
+function TFDCodePages.CreateUTF8Dictionary(Index: integer): TDictionary;
+var
+  I : integer;
+begin
+  Result := TDictionary.Create;
+  try
+    for I := 0 to 255 do
+      Result.Add(Data[Index].UTF8[I], Char(I));
+  except
+    FreeANdNil(Result);
+  end;
+end;
+
+function TFDCodePages.CreateHTMLDictionary(Index: integer): TDictionary;
+var
+  I : integer;
+begin
+  Result := TDictionary.Create;
+  try
+    for I := 0 to 255 do
+      Result.Add(Data[Index].HTML[I], Char(I));
+  except
+    FreeANdNil(Result);
+  end;
+end;
+
+function TFDCodePages.DOStoUTF8(Index: integer; S: String): String;
+var
+  I : integer;
+begin
+  Result := '';
+  for I := 1 to Length(S) do
+    Result := Result + Data[Index].UTF8[Ord(S[I])];
+end;
+
+function TFDCodePages.DOStoHTML(Index: integer; S: String): String;
+var
+  I : integer;
+begin
+  Result := '';
+  for I := 1 to Length(S) do
+    Result := Result + Data[Index].HTML[Ord(S[I])];
+end;
+
 
 { TFDLanguages }
 
