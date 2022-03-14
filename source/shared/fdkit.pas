@@ -168,7 +168,7 @@ const
 var
   Rows : integer;
   BPC : word;
-  F : TByteArray;
+  F : TArrayOfBytes;
   X, Y, XX, YY, V : integer;
 begin
   try
@@ -211,7 +211,7 @@ procedure TFDFontFiles.ToImage(Index: integer; Ascii: integer;
   var Image: TImage; Foreground: TColor; Background: TColor);
 var
   BPC : word;
-  F : TByteArray;
+  F : TArrayOfBytes;
   X, Y, V : integer;
   B, N : TBitmap;
 begin
@@ -240,7 +240,7 @@ procedure TFDFontFiles.ToImageList(Index: integer; var Images: TImageList;
   Foreground: TColor; Background: TColor);
 var
   BPC : word;
-  F : TByteArray;
+  F : TArrayOfBytes;
   C, X, Y, V : integer;
   B, N : TBitmap;
 begin

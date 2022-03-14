@@ -1,4 +1,4 @@
-unit CRTView;
+unit DosView;
 
 {$mode ObjFPC}{$H+}
 
@@ -11,18 +11,18 @@ type
 
   { TCRTView }
 
-  { TCRTScreen }
+  { TDosScreen }
 
-  TCRTScreen = class (TPersistent)
+  TDosScreen = class (TPersistent)
   private
     FBackground: TColor;
     FBitmap: TBitmap;
-    FFont: TByteArray;
+    FFont: TArrayOfBytes;
     FScreenMax: TPoint;
     FTextColor: TColor;
     FWhereXY: TPoint;
     procedure SetBackground(AValue: TColor);
-    procedure SetFont(AValue: TByteArray);
+    procedure SetFont(AValue: TArrayOfBytes);
     procedure SetScreenMax(AValue: TPoint);
     procedure SetTextColor(AValue: TColor);
     procedure SetWhereXY(AValue: TPoint);
@@ -33,7 +33,7 @@ type
     constructor Create;
     destructor Destroy; override;
     property Bitmap : TBitmap read FBitmap;
-    property Font : TByteArray read FFont write SetFont;
+    property Font : TArrayOfBytes read FFont write SetFont;
     property ScreenMax : TPoint read FScreenMax write SetScreenMax;
     property WhereXY : TPoint read FWhereXY write SetWhereXY;
     property TextColor : TColor read FTextColor write SetTextColor;
@@ -48,9 +48,9 @@ type
 
 implementation
 
-{ TCRTScreen }
+{ TDosScreen }
 
-procedure TCRTScreen.SetScreenMax(AValue: TPoint);
+procedure TDosScreen.SetScreenMax(AValue: TPoint);
 begin
   if FScreenMax=AValue then Exit;
   FScreenMax:=AValue;
@@ -58,13 +58,13 @@ begin
   ClearScreen;
 end;
 
-procedure TCRTScreen.SetTextColor(AValue: TColor);
+procedure TDosScreen.SetTextColor(AValue: TColor);
 begin
   if FTextColor=AValue then Exit;
   FTextColor:=AValue;
 end;
 
-procedure TCRTScreen.SetFont(AValue: TByteArray);
+procedure TDosScreen.SetFont(AValue: TArrayOfBytes);
 begin
   // if FFont=AValue then Exit;
   FFont:=AValue;
@@ -72,49 +72,49 @@ begin
   ClearScreen;
 end;
 
-procedure TCRTScreen.SetBackground(AValue: TColor);
+procedure TDosScreen.SetBackground(AValue: TColor);
 begin
   if FBackground=AValue then Exit;
   FBackground:=AValue;
 end;
 
-procedure TCRTScreen.SetWhereXY(AValue: TPoint);
+procedure TDosScreen.SetWhereXY(AValue: TPoint);
 begin
   if FWhereXY=AValue then Exit;
   FWhereXY:=AValue;
 end;
 
-function TCRTScreen.FontHeight: integer;
+function TDosScreen.FontHeight: integer;
 begin
   Result := Length(FFont) div 256;
 end;
 
-function TCRTScreen.FontWidth: integer;
+function TDosScreen.FontWidth: integer;
 begin
   Result := 9;
 end;
 
-constructor TCRTScreen.Create;
+constructor TDosScreen.Create;
 begin
   inherited Create;
   FBitmap := TBitmap.Create;
   ScreenMax.SetLocation(80,25);
 end;
 
-destructor TCRTScreen.Destroy;
+destructor TDosScreen.Destroy;
 begin
   FreeAndNil(FBitmap);
   inherited Destroy;
 end;
 
-procedure TCRTScreen.ClearScreen;
+procedure TDosScreen.ClearScreen;
 begin
   FBitMap.Canvas.Brush.Color:= FBackground;
   FBitMap.Canvas.FillRect(0, 0, FontWidth * FScreenMax.X, FontHeight * FScreenMax.Y - 1);
   WhereXY.SetLocation(1,1);
 end;
 
-procedure TCRTScreen.PutChar(C: Char);
+procedure TDosScreen.PutChar(C: Char);
 var
   S, V : integer;
   XX, YY : integer;
@@ -143,7 +143,7 @@ begin
   end;
 end;
 
-procedure TCRTScreen.PutString(S: String);
+procedure TDosScreen.PutString(S: String);
 var
   I : integer;
 begin
@@ -151,7 +151,7 @@ begin
       PutChar(S[I]);
 end;
 
-procedure TCRTScreen.WriteText(S: String);
+procedure TDosScreen.WriteText(S: String);
 var
   I : integer;
 begin

@@ -19,7 +19,7 @@ type
   { TFileObject }
 
   TFileObject = class(TObject)
-    FileData : TByteArray;
+    FileData : TArrayOfBytes;
     Loaded : boolean;
     procedure WriteFile(FileName : String); virtual;
     procedure ReadFile(FileName : String); virtual;

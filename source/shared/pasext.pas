@@ -44,12 +44,13 @@ var
   UpdateServer  : String;      { Application Update Server URL }
 
 type
-  TByteArray = array of Byte;
-  TWordArray = array of Word;
-  TIntegerArray = array of Integer;
-  TCharArray = array of Char;
-  TStringArray = array of String;
-  TPointerArray = array of Pointer;
+  TArrayOfBytes = array of Byte;
+  TArrayOfWords = array of Word;
+  TArrayOfIntegers = array of Integer;
+  TArrayOfChars = array of Char;
+  TArrayOfStrings = array of String;
+  TArrayOfPointers = array of Pointer;
+
   TForEachFileFunc = function (FileName : String) : integer of object;
 
 procedure InitPasExt(Identifier : String);
@@ -106,31 +107,31 @@ function CenterPad(AStr : String; AWidth: integer; ASubStr : String = SPACE) : S
 
 function SimpleCheckSum(const AStr : String) : word; overload;
 
-procedure ClearArray(var A : TByteArray; ALength : integer = 0); overload;
-procedure ClearArray(var A : TWordArray; ALength : integer = 0); overload;
-procedure ClearArray(var A : TIntegerArray; ALength : integer = 0); overload;
-procedure ClearArray(var A : TCharArray; ALength : integer = 0); overload;
-procedure ClearArray(var A : TStringArray; ALength : integer = 0); overload;
-procedure ClearArray(var A : TPointerArray; ALength : integer = 0); overload;
+procedure ClearArray(var A : TArrayOfBytes; ALength : integer = 0); overload;
+procedure ClearArray(var A : TArrayOfWords; ALength : integer = 0); overload;
+procedure ClearArray(var A : TArrayOfIntegers; ALength : integer = 0); overload;
+procedure ClearArray(var A : TArrayOfChars; ALength : integer = 0); overload;
+procedure ClearArray(var A : TArrayOfStrings; ALength : integer = 0); overload;
+procedure ClearArray(var A : TArrayOfPointers; ALength : integer = 0); overload;
 
-function AddToArray(var A : TByteArray; B : Byte) : integer; overload;
-function AddToArray(var A : TWordArray; W : Word) : integer; overload;
-function AddToArray(var A : TIntegerArray; I : Integer) : integer; overload;
-function AddToArray(var A : TCharArray; C : Char) : integer; overload;
-function AddToArray(var A : TStringArray; S : String) : integer; overload;
-function AddToArray(var A : TPointerArray; P : Pointer) : integer; overload;
+function AddToArray(var A : TArrayOfBytes; B : Byte) : integer; overload;
+function AddToArray(var A : TArrayOfWords; W : Word) : integer; overload;
+function AddToArray(var A : TArrayOfIntegers; I : Integer) : integer; overload;
+function AddToArray(var A : TArrayOfChars; C : Char) : integer; overload;
+function AddToArray(var A : TArrayOfStrings; S : String) : integer; overload;
+function AddToArray(var A : TArrayOfPointers; P : Pointer) : integer; overload;
 
-function InArray(AStr : String; A : TStringArray; CaseSpecific : boolean = true) : boolean; overload;
+function InArray(AStr : String; A : TArrayOfStrings; CaseSpecific : boolean = true) : boolean; overload;
 
 function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean = True) : integer; overload;
 
 procedure FileList(var List : TStringList; APathSpec : String);  overload;
-procedure FileList(var List : TStringArray; APathSpec : String);  overload;
+procedure FileList(var List : TArrayOfStrings; APathSpec : String);  overload;
 
 function SaveToFile(AFileName: String; AValue : String; ARaise : boolean = true) : integer; overload;
-function SaveToFile(AFileName: String; AValue : TByteArray; ARaise : boolean = true) : integer; overload;
+function SaveToFile(AFileName: String; AValue : TArrayOfBytes; ARaise : boolean = true) : integer; overload;
 function LoadFromFile(AFileName: String; var AValue : String; ARaise : boolean = true) : integer; overload;
-function LoadFromFile(AFileName: String; var AValue : TByteArray; ARaise : boolean = true) : integer; overload;
+function LoadFromFile(AFileName: String; var AValue : TArrayOfBytes; ARaise : boolean = true) : integer; overload;
 
 function StrToInts(const S : UTF8String) : string; overload;
 function IntsToStr(S : String): UTF8String;  overload;
@@ -594,7 +595,7 @@ begin
   Result:=Sum;
 end;
 
-procedure ClearArray(var A: TByteArray; ALength: integer);
+procedure ClearArray(var A: TArrayOfBytes; ALength: integer);
 var
   I : integer;
 begin
@@ -604,7 +605,7 @@ begin
       A[I] := 0;
 end;
 
-procedure ClearArray(var A: TWordArray; ALength: integer);
+procedure ClearArray(var A: TArrayOfWords; ALength: integer);
 var
   I : integer;
 begin
@@ -614,7 +615,7 @@ begin
       A[I] := 0;
 end;
 
-procedure ClearArray(var A: TIntegerArray; ALength: integer);
+procedure ClearArray(var A: TArrayOfIntegers; ALength: integer);
 var
   I : integer;
 begin
@@ -624,7 +625,7 @@ begin
       A[I] := 0;
 end;
 
-procedure ClearArray(var A: TCharArray; ALength: integer);
+procedure ClearArray(var A: TArrayOfChars; ALength: integer);
 var
   I : integer;
 begin
@@ -634,7 +635,7 @@ begin
       A[I] := #0;
 end;
 
-procedure ClearArray(var A: TStringArray; ALength: integer);
+procedure ClearArray(var A: TArrayOfStrings; ALength: integer);
 var
   I : integer;
 begin
@@ -644,7 +645,7 @@ begin
       A[I] := '';
 end;
 
-procedure ClearArray(var A: TPointerArray; ALength: integer);
+procedure ClearArray(var A: TArrayOfPointers; ALength: integer);
 var
   I : integer;
 begin
@@ -654,49 +655,49 @@ begin
       A[I] := nil;
 end;
 
-function AddToArray(var A: TByteArray; B: Byte): integer;
+function AddToArray(var A: TArrayOfBytes; B: Byte): integer;
 begin
   SetLength(A, Length(A) + 1);
   A[High(A)] := B;
   Result := Length(A);
 end;
 
-function AddToArray(var A: TWordArray; W: Word): integer;
+function AddToArray(var A: TArrayOfWords; W: Word): integer;
 begin
   SetLength(A, Length(A) + 1);
   A[High(A)] := W;
   Result := Length(A);
 end;
 
-function AddToArray(var A: TIntegerArray; I: Integer): integer;
+function AddToArray(var A: TArrayOfIntegers; I: Integer): integer;
 begin
   SetLength(A, Length(A) + 1);
   A[High(A)] := I;
   Result := Length(A);
 end;
 
-function AddToArray(var A: TCharArray; C: Char): integer;
+function AddToArray(var A: TArrayOfChars; C: Char): integer;
 begin
   SetLength(A, Length(A) + 1);
   A[High(A)] := C;
   Result := Length(A);
 end;
 
-function AddToArray(var A : TStringArray; S : String) : integer;
+function AddToArray(var A : TArrayOfStrings; S : String) : integer;
 begin
   SetLength(A, Length(A) + 1);
   A[High(A)] := S;
   Result := Length(A);
 end;
 
-function AddToArray(var A: TPointerArray; P: Pointer): integer;
+function AddToArray(var A: TArrayOfPointers; P: Pointer): integer;
 begin
   SetLength(A, Length(A) + 1);
   A[High(A)] := P;
   Result := Length(A);
 end;
 
-function InArray(AStr: String; A: TStringArray; CaseSpecific: boolean
+function InArray(AStr: String; A: TArrayOfStrings; CaseSpecific: boolean
   ): boolean;
 var
   I : integer;
@@ -787,7 +788,7 @@ begin
   FindClose(Search);
 end;
 
-procedure FileList(var List : TStringArray; APathSpec : String);  overload;
+procedure FileList(var List : TArrayOfStrings; APathSpec : String);  overload;
 var
   R, C : integer;
   Search : TSearchRec;
@@ -831,7 +832,7 @@ begin
     raise exception.Create('file save error ' + IntToStr(R));
 end;
 
-function SaveToFile(AFileName: String; AValue: TByteArray; ARaise: boolean
+function SaveToFile(AFileName: String; AValue: TArrayOfBytes; ARaise: boolean
   ): integer;
 var
    F : File;
@@ -881,7 +882,7 @@ begin
     raise exception.Create('file load error ' + IntToStr(R));
 end;
 
-function LoadFromFile(AFileName: String; var AValue: TByteArray; ARaise: boolean
+function LoadFromFile(AFileName: String; var AValue: TArrayOfBytes; ARaise: boolean
   ): integer;
 var
    F : File;
