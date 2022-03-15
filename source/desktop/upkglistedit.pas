@@ -43,10 +43,19 @@ begin
 end;
 
 procedure TframePkgListEdit.Refresh;
+var
+  I : integer;
+  LI : TListItem;
 begin
   if not FNeedRefresh then Exit;
   FNeedRefresh := False;
-  log(Self, IntToStr(FDNLS.PackageLists.MasterCSV.RowCount) + ' master packages');
+  log(Self, IntToStr(FDNLS.PackageLists.PackageCount) + ' master packages');
+  lvPackages.Clear;
+  for I := 0 to FDNLS.PackageLists.PackageCount - 1 do begin
+    LI := lvPackages.Items.Add;
+    LI.Caption := FDNLS.PackageLists.PackageID[I];
+  end;
+
 end;
 
 end.

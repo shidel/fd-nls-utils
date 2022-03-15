@@ -115,20 +115,32 @@ type
 
   TFDPackageLists = class (TFileGroup)
   private
+    FFields: TStringList;
     FOwner: TFDNLS;
     FMasterCSV : TStringGrid;
+    FFileCSV : array of TStringGrid;
+    function GetFields: TStringList;
+    function GetFileCSV(Index : integer): TStringGrid;
     function GetMasterCSV: TStringGrid;
+    function GetPackageCount: integer;
+    function GetPackageID(Index : integer): String;
   protected
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
     function IncludeFile(AFileName : String) : boolean; override;
     function IndexOfLanguage(AValue : String) : integer;
+    procedure PurgeCSVData;
+    procedure UpdateFields(CSV : TStringGrid);
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
     procedure Reload; override;
+    property Fields : TStringList read GetFields;
+    property PackageCount : integer read GetPackageCount;
+    property PackageID[Index : integer] : String read GetPackageID;
     // Move to Private Post Dev
     property MasterCSV : TStringGrid read GetMasterCSV;
+    property FileCSV[Index : integer] : TStringGrid read GetFileCSV;
   published
   end;
 
@@ -182,12 +194,45 @@ begin
     try
       FMasterCSV := TStringGrid.Create(nil);
       FMasterCSV.LoadFromCSVFile(GroupPath + 'master.csv');
+      FMasterCSV.SortColRow(True, 0);
     except
-      Log(Self, 'exception opening master csv');
+      Log(Self, 'exception opening master.csv');
       FreeAndNil(FMasterCSV);
     end;
   end;
   Result := FMasterCSV;
+end;
+
+function TFDPackageLists.GetPackageCount: integer;
+begin
+  Result := MasterCSV.RowCount - 1;
+end;
+
+function TFDPackageLists.GetPackageID(Index : integer): String;
+begin
+  Result := MasterCSV.Cells[0, Index + 1];
+end;
+
+function TFDPackageLists.GetFileCSV(Index : integer): TStringGrid;
+begin
+  try
+    if not Assigned(FFileCSV[Index]) then begin
+      try
+        FFileCSV[Index] := TStringGrid.Create(nil);
+        FFileCSV[Index].LoadFromCSVFile(GroupPath + FFiles[Index]);
+      except
+        Log(Self, 'exception opening ' + FFiles[Index]);
+        FreeAndNil(FFileCSV[Index]);
+      end;
+    end;
+  except
+    Result := nil;
+  end;
+end;
+
+function TFDPackageLists.GetFields: TStringList;
+begin
+  Result := FFields;
 end;
 
 function TFDPackageLists.GroupPath: String;
@@ -208,19 +253,31 @@ begin
  FOwner := AOwner;
  GroupID := 'CSV';
  Recursive := True;
- FMasterCSV := nil;
+ FFields := TStringList.Create;
+ FFields.Add('title');
+ FFields.Add('description');
+ FFields.Add('summary');
+ FFields.Add('keywords');
+ FFields.Add('platforms');
+ FFields.Add('copying-policy');
 end;
 
 destructor TFDPackageLists.Destroy;
 begin
-  FreeAndNil(FMasterCSV);
+  PurgeCSVData;
+  FreeAndNil(FFields);
   inherited Destroy;
 end;
 
 procedure TFDPackageLists.Reload;
+var
+  I : integer;
 begin
+  PurgeCSVData;
   inherited Reload;
-  FreeAndNil(FMasterCSV);
+  SetLength(FFileCSV,FFiles.Count);
+  for I := 0 to Length(FFileCSV) - 1 do
+    FFileCSV[I] := nil;
 end;
 
 function TFDPackageLists.IndexOfLanguage(AValue: String): integer;
@@ -235,6 +292,20 @@ begin
          Result := I;
          Break;
       end;
+end;
+
+procedure TFDPackageLists.PurgeCSVData;
+var
+  I : integer;
+begin
+  FreeAndNil(FMasterCSV);
+  for I := 0 to Length(FFileCSV) - 1 do
+    FreeAndNil(FFileCSV[I]);
+end;
+
+procedure TFDPackageLists.UpdateFields(CSV: TStringGrid);
+begin
+
 end;
 
 { TFDFontFiles }

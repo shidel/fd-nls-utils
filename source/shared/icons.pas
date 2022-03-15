@@ -74,7 +74,13 @@ const
     'unfold',
     'document-header',
     'document-body',
-    'footer'
+    'footer',
+    'high-priority',
+    'unavailable',
+    'tv-off',
+    'tv-on',
+    'console',
+    'command-line'
   );
 
   IconFlags : array of string = ();

@@ -180,10 +180,10 @@ object fMain: TfMain
           Height = 371
           Top = 0
           Width = 500
-          ActivePage = tsGeneral
+          ActivePage = tsLanguages
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 0
+          TabIndex = 2
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
@@ -321,10 +321,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 24
-                    Width = 282
+                    Width = 264
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 282
+                    EditLabel.Width = 264
                     EditLabel.Caption = 'leLangID'
                     TabOrder = 0
                     Text = 'leLangID'
@@ -334,10 +334,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 72
-                    Width = 282
+                    Width = 264
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 282
+                    EditLabel.Width = 264
                     EditLabel.Caption = 'leLangName'
                     TabOrder = 1
                     Text = 'leLangName'
@@ -347,23 +347,24 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 120
-                    Width = 282
+                    Width = 264
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 282
+                    EditLabel.Width = 264
                     EditLabel.Caption = 'leLangDOS'
                     TabOrder = 2
                     Text = 'leLangDOS'
+                    OnChange = leLangDOSChange
                     OnEditingDone = leLangDOSEditingDone
                   end
                   object leLangCodePage: TLabeledEdit
                     Left = 8
                     Height = 22
                     Top = 168
-                    Width = 282
+                    Width = 264
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 282
+                    EditLabel.Width = 264
                     EditLabel.Caption = 'leLangCodePage'
                     TabOrder = 3
                     Text = 'leLangCodePage'
@@ -394,7 +395,7 @@ object fMain: TfMain
                     Transparent = True
                   end
                   object btCodepage: TSpeedButton
-                    Left = 304
+                    Left = 280
                     Height = 22
                     Top = 168
                     Width = 23
@@ -402,6 +403,14 @@ object fMain: TfMain
                     Flat = True
                     Images = ilToolsSmall
                     ShowCaption = False
+                  end
+                  object iLangDOSStatus: TImage
+                    Left = 279
+                    Height = 24
+                    Top = 120
+                    Width = 24
+                    Anchors = [akTop, akRight]
+                    Stretch = True
                   end
                 end
                 object pLangEditRight: TPanel
