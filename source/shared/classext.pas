@@ -31,9 +31,11 @@ type
   TFileGroup = class(TPersistent)
   private
     FLoadAll: boolean;
+    FRecursive: boolean;
     function GetFileObject(Index : integer): TFileObject;
     procedure SetLoadAll(AValue: boolean);
     procedure SetFileObject(Index : integer; AValue: TFileObject);
+    procedure SetRecursive(AValue: boolean);
   protected
     FGroupID, FExt: String;
     FFiles : TStringList;
@@ -45,11 +47,13 @@ type
     function GroupPath : String; virtual; abstract;
     procedure LoadFile(Index : integer); virtual;
     procedure SaveFile(Index : integer); virtual;
+    function ValidFile(AFileName : String) : boolean; virtual;
   public
     constructor Create;
     destructor Destroy; override;
     property GroupID : String read FGroupID write SetGroupID;
     property Count : integer read GetCount;
+    property Recursive : boolean read FRecursive write SetRecursive;
     property LoadAll : boolean read FLoadAll write SetLoadAll;
     property Filename[Index : integer] : String read GetFileName write SetFileName;
     property Data[Index : integer] : TFileObject read GetFileObject write SetFileObject;
@@ -446,6 +450,12 @@ begin
   SaveFile(Index);
 end;
 
+procedure TFileGroup.SetRecursive(AValue: boolean);
+begin
+  if FRecursive=AValue then Exit;
+  FRecursive:=AValue;
+end;
+
 function TFileGroup.GetCount: integer;
 begin
   Result := FFiles.Count;
@@ -527,31 +537,34 @@ begin
     FFiles.Clear;
     exit;
   end;
-  FileList(FFiles, GroupPath + '*' + FExt);
+  FileList(FFiles, GroupPath + '*', FRecursive);
   FFiles.Sort;
   I := 0;
   while I < FFiles.Count do begin
-    try
-      D := TFileObject.Create;
-      X := FData.Add(D);
-      if I <> X then begin
+    if not ValidFile(FFiles[I]) then
+      FFiles.Delete(I)
+    else
+      try
+        D := TFileObject.Create;
+        X := FData.Add(D);
+        if I <> X then begin
+          {$IFDEF UseLog}
+            Log(nil,'FILE_GROUP, maligned indexes ' + IntToStr(I) + ':' + IntToStr(X) + ' with ' + FFiles[I]);
+          {$ENDIF}
+          raise exception.Create('maligned list index management error');
+        end;
+        if LoadAll then LoadFile(I);
         {$IFDEF UseLog}
-          Log(nil,'FILE_GROUP, maligned indexes ' + IntToStr(I) + ':' + IntToStr(X) + ' with ' + FFiles[I]);
+          if not D.Loaded then
+            Log(nil,'  File: ' + FFiles[I] + ' added');
         {$ENDIF}
-        raise exception.Create('maligned list index management error');
+        inc(I);
+      except
+        {$IFDEF UseLog}
+          Log(nil,'FILE_GROUP, ERROR ' + FFiles[I] + ' raised exception');
+        {$ENDIF}
+        FFiles.Delete(I);
       end;
-      if LoadAll then LoadFile(I);
-      {$IFDEF UseLog}
-        if not D.Loaded then
-          Log(nil,'  File: ' + FFiles[I] + ' added');
-      {$ENDIF}
-      inc(I);
-    except
-      {$IFDEF UseLog}
-        Log(nil,'FILE_GROUP, ERROR ' + FFiles[I] + ' raised exception');
-      {$ENDIF}
-      FFiles.Delete(I);
-    end;
   end;
 end;
 
@@ -605,6 +618,11 @@ procedure TFileGroup.SaveFile(Index: integer);
 begin
   if TFileObject(FData[Index]).Loaded then
     TFileObject(FData[Index]).WriteFile(GroupPath + FFiles[Index]);
+end;
+
+function TFileGroup.ValidFile(AFileName: String): boolean;
+begin
+  Result := (GroupID = '') or (Uppercase(FExt) = Uppercase(ExtractFileExt(AFileName)));
 end;
 
 { TXMLGroup }

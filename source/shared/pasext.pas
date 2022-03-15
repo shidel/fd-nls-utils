@@ -125,8 +125,8 @@ function InArray(AStr : String; A : TArrayOfStrings; CaseSpecific : boolean = tr
 
 function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean = True) : integer; overload;
 
-procedure FileList(var List : TStringList; APathSpec : String);  overload;
-procedure FileList(var List : TArrayOfStrings; APathSpec : String);  overload;
+procedure FileList(var List : TStringList; APathSpec : String; Recurse : boolean = false);  overload;
+procedure FileList(var List : TArrayOfStrings; APathSpec : String; Recurse : boolean = false);  overload;
 
 function SaveToFile(AFileName: String; AValue : String; ARaise : boolean = true) : integer; overload;
 function SaveToFile(AFileName: String; AValue : TArrayOfBytes; ARaise : boolean = true) : integer; overload;
@@ -770,43 +770,88 @@ begin
     Result := -1;
 end;
 
-procedure FileList(var List : TStringList; APathSpec : String);  overload;
-var
-  R : integer;
-  Search : TSearchRec;
+procedure FileList(var List : TStringList; APathSpec : String; Recurse : boolean = false);  overload;
+  function ScanPath(ASub, APath : String) : integer;
+  var
+    R : integer;
+    Search : TSearchRec;
+  begin
+    R := FindFirst(APath, faAnyFile, Search);
+    while (R = 0) do begin
+      if (Search.Attr and faDirectory <> faDirectory) then begin
+        List.Add(ASub + Search.Name);
+      end;
+      if R = 0 then
+        R := FindNext(Search);
+    end;
+    FindClose(Search);
+    if Recurse then begin
+      APath := IncludeTrailingPathDelimiter(ExtractFilePath(APath));
+      R := FindFirst(APath + '*', faAnyFile, Search);
+      while (R = 0) do begin
+        if (Search.Attr and faDirectory = faDirectory) and
+        (Search.Name[1] <> '.') then begin // no self, parent or hidden
+          R := ScanPath(
+            IncludeTrailingPathDelimiter(ASub + Search.Name),
+            APath + IncludeTrailingPathDelimiter(Search.Name) + '*');
+        end;
+        if R = 0 then
+          R := FindNext(Search);
+      end;
+      FindClose(Search);
+    end;
+    Result := 0;
+  end;
+
 begin
   if not Assigned(List) then exit;
   List.Clear;
-  R := FindFirst(APathSpec, faAnyFile, Search);
-  while (R = 0) do begin
-    if (Search.Attr and faDirectory <> faDirectory) then begin
-      List.Add(Search.Name);
-    end;
-    if R = 0 then
-      R := FindNext(Search);
-  end;
-  FindClose(Search);
+  ScanPath('', APathspec);
 end;
 
-procedure FileList(var List : TArrayOfStrings; APathSpec : String);  overload;
+procedure FileList(var List : TArrayOfStrings; APathSpec : String; Recurse : boolean = false);  overload;
 var
-  R, C : integer;
-  Search : TSearchRec;
+  C : Integer;
+
+  function ScanPath(ASub, APath : String) : integer;
+  var
+     R : integer;
+     Search : TSearchRec;
+  begin
+    R := FindFirst(APath, faAnyFile, Search);
+    while (R = 0) do begin
+      if (Search.Attr and faDirectory <> faDirectory) then begin
+        if C = Length(List) then
+          SetLength(List, Length(List) + 16);
+        List[C] := ASub + Search.Name;
+        Inc(C);
+      end;
+      if R = 0 then
+        R := FindNext(Search);
+    end;
+    FindClose(Search);
+    if Recurse then begin
+      APath := IncludeTrailingPathDelimiter(ExtractFilePath(APath));
+      R := FindFirst(APath + '*', faAnyFile, Search);
+      while (R = 0) do begin
+        if (Search.Attr and faDirectory = faDirectory) and
+        (Search.Name[1] <> '.') then begin // no self, parent or hidden
+          R := ScanPath(
+            IncludeTrailingPathDelimiter(ASub + Search.Name),
+            APath + IncludeTrailingPathDelimiter(Search.Name) + '*');
+        end;
+        if R = 0 then
+          R := FindNext(Search);
+      end;
+      FindClose(Search);
+    end;
+    Result := 0;
+  end;
+
 begin
   C := 0;
   ClearArray(List);
-  R := FindFirst(APathSpec, faAnyFile, Search);
-  while (R = 0) do begin
-    if (Search.Attr and faDirectory <> faDirectory) then begin
-      if C = Length(List) then
-        SetLength(List, Length(List) + 16);
-      List[C] := Search.Name;
-      Inc(C);
-    end;
-    if R = 0 then
-      R := FindNext(Search);
-  end;
-  FindClose(Search);
+  ScanPath('', APathSpec);
   SetLength(List, C);
 end;
 

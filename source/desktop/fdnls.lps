@@ -19,10 +19,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="40" Y="8"/>
-        <FoldState Value=" T3lH030225113432E picp30S512 pj1mG0{I$"/>
+        <CursorPos X="65" Y="10"/>
+        <FoldState Value=" T3lH030225113432Eq"/>
         <UsageCount Value="202"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ulog.pas"/>
@@ -54,7 +55,7 @@
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <CursorPos X="106" Y="23"/>
-        <UsageCount Value="193"/>
+        <UsageCount Value="202"/>
       </Unit>
       <Unit>
         <Filename Value="ueditcodepage.pas"/>
@@ -66,30 +67,46 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="69"/>
         <CursorPos Y="101"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="137"/>
+      </Unit>
+      <Unit>
+        <Filename Value="upkglistedit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="framePkgListEdit"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="uPkgListEdit"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="11"/>
+        <CursorPos X="103" Y="42"/>
+        <UsageCount Value="35"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="29"/>
-        <UsageCount Value="26"/>
+        <UsageCount Value="25"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="99"/>
-        <CursorPos X="110" Y="127"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="780"/>
+        <CursorPos X="111" Y="833"/>
         <UsageCount Value="99"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="383"/>
-        <CursorPos X="85" Y="425"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="159"/>
+        <CursorPos X="50" Y="179"/>
         <UsageCount Value="96"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\icons.pas"/>
@@ -97,21 +114,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="32"/>
         <CursorPos Y="50"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="96"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\vcsext.pas"/>
         <UnitName Value="VCSExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="19" Y="23"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="26"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\country.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="350"/>
         <CursorPos X="58" Y="372"/>
-        <UsageCount Value="19"/>
+        <UsageCount Value="18"/>
       </Unit>
       <Unit>
         <Filename Value="ulangedit.pas"/>
@@ -120,13 +137,13 @@
         <UnitName Value="uLangEdit"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="23" Y="15"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\xmlgroup.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="146"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\xmlext.pas"/>
@@ -134,23 +151,23 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="22"/>
         <CursorPos X="40" Y="48"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\puiext.pas"/>
         <UnitName Value="PUIExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="13"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="21"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
         <UnitName Value="ClassExt"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="265"/>
-        <CursorPos X="38" Y="268"/>
-        <FoldState Value=" T3kS040223166312"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="611"/>
+        <CursorPos X="88" Y="625"/>
         <UsageCount Value="27"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\graphics.pp"/>
@@ -158,23 +175,71 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="259"/>
         <CursorPos X="3" Y="268"/>
-        <UsageCount Value="2"/>
-      </Unit>
-      <Unit>
-        <Filename Value="upkglistedit.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="framePkgListEdit"/>
-        <ResourceBaseClass Value="Frame"/>
-        <UnitName Value="uPkgListEdit"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="20" Y="11"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="1"/>
       </Unit>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="-1"/>
-    </General>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory HistoryIndex="14">
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="126" Column="16" TopLine="120"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="128" Column="15" TopLine="109"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="789" Column="35" TopLine="768"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="801" TopLine="790"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="48" Column="62" TopLine="19"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="91" Column="69" TopLine="75"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="56" Column="69" TopLine="45"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="125" Column="19" TopLine="110"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="122" Column="72" TopLine="91"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="177" Column="3" TopLine="175"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="50" Column="25" TopLine="30"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="623" Column="32" TopLine="623"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="122" Column="17" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="175" Column="37" TopLine="175"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="625" Column="88" TopLine="611"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>

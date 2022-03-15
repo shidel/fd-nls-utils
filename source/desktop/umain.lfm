@@ -131,8 +131,23 @@ object fMain: TfMain
           Height = 352
           Top = 8
           Width = 616
+          ClientHeight = 352
+          ClientWidth = 616
           DesignLeft = 124
           DesignTop = 151
+          inherited lvPackages: TListView
+            Height = 352
+            LargeImages = nil
+            SmallImages = nil
+            StateImages = nil
+          end
+          inherited sPkgEditSplitter: TSplitter
+            Height = 352
+          end
+          inherited pEditor: TPanel
+            Height = 352
+            Width = 461
+          end
         end
       end
       object tsPrefs: TTabSheet

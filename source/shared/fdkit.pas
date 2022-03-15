@@ -111,8 +111,6 @@ type
   published
   end;
 
-   { TFDFontFiles }
-
   { TFDPackageLists }
 
   TFDPackageLists = class (TFileGroup)
@@ -121,6 +119,7 @@ type
   protected
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
+    function ValidFile(AFileName : String) : boolean; override;
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
@@ -173,11 +172,19 @@ begin
   Result := FOwner.PackageListPath;
 end;
 
+function TFDPackageLists.ValidFile(AFileName: String): boolean;
+begin
+  Result:=inherited ValidFile(AFileName) and
+    (Uppercase(ExtractFilename(AFileName)) = 'LISTING.CSV') and
+    (not (Pos('UTF-8', Uppercase(AFilename)) > 0));
+end;
+
 constructor TFDPackageLists.Create(AOwner: TFDNLS);
 begin
  inherited Create;
  FOwner := AOwner;
  GroupID := 'CSV';
+ Recursive := True;
 end;
 
 destructor TFDPackageLists.Destroy;
@@ -196,7 +203,7 @@ constructor TFDFontFiles.Create(AOwner : TFDNLS);
 begin
   inherited Create;
   FOwner := AOwner;
-  GroupID := 'FNT';
+  GroupID := 'fnt';
 end;
 
 destructor TFDFontFiles.Destroy;

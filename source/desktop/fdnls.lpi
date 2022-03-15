@@ -95,6 +95,7 @@
         <Filename Value="upkglistedit.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="framePkgListEdit"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
       </Unit>
