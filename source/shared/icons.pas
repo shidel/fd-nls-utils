@@ -45,6 +45,7 @@ const
     'image',              { 13 }
     'check-circle',       { 14 }
     'error',              { 15 }
+    'high-priority',      { 16 }
     'edit-property',
     'edit-file',
     'notification',
@@ -75,7 +76,6 @@ const
     'document-header',
     'document-body',
     'footer',
-    'high-priority',
     'unavailable',
     'tv-off',
     'tv-on',

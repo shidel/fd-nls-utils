@@ -655,6 +655,10 @@ begin
   AValue := Trim(AValue);
   if AValue = Data[Index].Identifier then exit;
   if AValue <> '' then begin
+    if AValue[3] = '-' then AValue[3] := '_';
+    if (Length(AValue) <> 2) and (Length(AValue) <> 5) then exit;
+    if (Length(AValue) = 5) and (AValue[3] <> '_') then exit;
+    AValue := Copy(AValue,1,3) + UpperCase(Copy(AValue, 4,2));
     T := Uppercase(AValue);
     for I := 0 to FData.Count - 1 do
         if (I <> Index) and (T = Uppercase(Data[I].Identifier)) then exit;

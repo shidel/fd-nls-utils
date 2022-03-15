@@ -328,6 +328,7 @@ object fMain: TfMain
                     EditLabel.Caption = 'leLangID'
                     TabOrder = 0
                     Text = 'leLangID'
+                    OnChange = leLangIDChange
                     OnEditingDone = leLangIDEditingDone
                   end
                   object leLangName: TLabeledEdit
@@ -341,6 +342,7 @@ object fMain: TfMain
                     EditLabel.Caption = 'leLangName'
                     TabOrder = 1
                     Text = 'leLangName'
+                    OnChange = leLangNameChange
                     OnEditingDone = leLangNameEditingDone
                   end
                   object leLangDOS: TLabeledEdit
@@ -404,10 +406,26 @@ object fMain: TfMain
                     Images = ilToolsSmall
                     ShowCaption = False
                   end
-                  object iLangDOSStatus: TImage
+                  object iLangNameVerify: TImage
+                    Left = 279
+                    Height = 24
+                    Top = 72
+                    Width = 24
+                    Anchors = [akTop, akRight]
+                    Stretch = True
+                  end
+                  object iLangDosVerify: TImage
                     Left = 279
                     Height = 24
                     Top = 120
+                    Width = 24
+                    Anchors = [akTop, akRight]
+                    Stretch = True
+                  end
+                  object iLangIdVerify: TImage
+                    Left = 280
+                    Height = 24
+                    Top = 24
                     Width = 24
                     Anchors = [akTop, akRight]
                     Stretch = True

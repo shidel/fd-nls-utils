@@ -38,11 +38,13 @@ type
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
     frPkgListEdit: TframePkgListEdit;
+    iLangNameVerify: TImage;
+    iLangIdVerify: TImage;
     ilToolsMedium: TImageList;
     ilFlagsLarge: TImageList;
     ilFlagsSmall: TImageList;
     ilToolsSmall: TImageList;
-    iLangDOSStatus: TImage;
+    iLangDosVerify: TImage;
     lbComingSoon: TLabel;
     lbUpdateChecked: TLabel;
     lbGitRepo: TLabel;
@@ -116,7 +118,9 @@ type
     procedure leLangCodePageEditingDone(Sender: TObject);
     procedure leLangDOSChange(Sender: TObject);
     procedure leLangDOSEditingDone(Sender: TObject);
+    procedure leLangIDChange(Sender: TObject);
     procedure leLangIDEditingDone(Sender: TObject);
+    procedure leLangNameChange(Sender: TObject);
     procedure leLangNameEditingDone(Sender: TObject);
     procedure lvLanguagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
@@ -146,7 +150,11 @@ type
     procedure SetAppLanguageText(ALanguage : String);
     procedure SelectEditLanguage(Index : integer);
     property ActiveLanguage[ALang : String] : boolean read GetActiveLanguage write SetActiveLanguage;
-    function CheckDOSLangEditStatus : boolean;
+    function LangStatusVerify : boolean;
+    function LangIDVerify : boolean;
+    function LangNameVerify : boolean;
+    function LangDosVerify : boolean;
+    function LangCodePageVerify : boolean;
   public
      Repository: TFDNLS;
    procedure SoftwareUpdate(Silent : boolean);
@@ -278,7 +286,7 @@ end;
 
 procedure TfMain.leLangDOSChange(Sender: TObject);
 begin
-  CheckDOSLangEditStatus;
+  LangDosVerify;
 end;
 
 procedure TfMain.leLangDOSEditingDone(Sender: TObject);
@@ -286,6 +294,11 @@ begin
    if EditLangIndex < 0 then exit;
    Repository.Languages.Language[EditLangIndex] := leLangDOS.Caption;
    leLangDOS.Caption := Repository.Languages.Language[EditLangIndex];
+end;
+
+procedure TfMain.leLangIDChange(Sender: TObject);
+begin
+  LangIDVerify;
 end;
 
 procedure TfMain.leLangIDEditingDone(Sender: TObject);
@@ -320,6 +333,12 @@ begin
          break;
        end;
     SelectEditLanguage(EditLangIndex);
+    LangStatusVerify;
+end;
+
+procedure TfMain.leLangNameChange(Sender: TObject);
+begin
+  LangNameVerify;
 end;
 
 procedure TfMain.leLangNameEditingDone(Sender: TObject);
@@ -776,13 +795,61 @@ begin
       leGraphic.Picture.LoadFromLazarusResource(G);
     end;
   end;
-  CheckDOSLangEditStatus;
+  LangStatusVerify;
   // Reset Edit Area to top
   sbLanguageEdit.VertScrollBar.Position:=0;
   sbLanguageEdit.VertScrollBar.Range:=bbRemoveLanguage.Top + bbRemoveLanguage.Height + 2;
 end;
 
-function TfMain.CheckDOSLangEditStatus: boolean;
+function TfMain.LangStatusVerify: boolean;
+begin
+  Result := LangIDVerify;
+  Result := LangDosVerify and Result;
+  Result := LangNameVerify and Result;
+  Result := LangCodepageVerify and Result;
+//  if (EditLangIndex > 0) and (not Result) then
+//    lvLanguages.Items.Item[EditLangIndex].Checked:=False;
+end;
+
+function TfMain.LangIDVerify: boolean;
+var
+  I : integer;
+  L : String;
+begin
+  L := Trim(Uppercase(leLangID.Caption));
+  Result := (Length(L) = 2) or ((Length(L) = 5) and ((L[3] = '_') or (L[3] = '-')));
+  if Result then
+    for I := 0 to Repository.Languages.Count - 1 do
+      if (I <> EditLangIndex) and (L = Uppercase(Repository.Languages.Data[I].Identifier)) then begin
+        Result := False;
+        Break;
+      end;
+  if (EditLangIndex < 0) or Result then
+    iLangIDVerify.Picture.Clear
+  else
+    iLangIDVerify.Picture.LoadFromLazarusResource(IconUI[16]);
+end;
+
+function TfMain.LangNameVerify: boolean;
+var
+  I : integer;
+  L : String;
+begin
+  L := Trim(Uppercase(leLangName.Caption));
+  Result := L <> '';
+  if Result then
+    for I := 0 to Repository.Languages.Count - 1 do
+      if (I <> EditLangIndex) and (L = Uppercase(Repository.Languages.Data[I].Caption)) then begin
+        Result := False;
+        Break;
+      end;
+  if (EditLangIndex < 0) or Result then
+    iLangNameVerify.Picture.Clear
+  else
+    iLangNameVerify.Picture.LoadFromLazarusResource(IconUI[16]);
+end;
+
+function TfMain.LangDosVerify: boolean;
 var
   I : integer;
   L : String;
@@ -796,9 +863,14 @@ begin
         Break;
       end;
   if (EditLangIndex < 0) or Result then
-    iLangDOSStatus.Picture.Clear
+    iLangDosVerify.Picture.Clear
   else
-    iLangDOSStatus.Picture.LoadFromLazarusResource(IconUI[15]);
+    iLangDosVerify.Picture.LoadFromLazarusResource(IconUI[16]);
+end;
+
+function TfMain.LangCodePageVerify: boolean;
+begin
+  Result := btCodePage.Action = actCodePageEdit;
 end;
 
 procedure TfMain.SoftwareUpdate(Silent: boolean);
