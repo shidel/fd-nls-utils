@@ -47,7 +47,7 @@ type
     function GroupPath : String; virtual; abstract;
     procedure LoadFile(Index : integer); virtual;
     procedure SaveFile(Index : integer); virtual;
-    function ValidFile(AFileName : String) : boolean; virtual;
+    function IncludeFile(AFileName : String) : boolean; virtual;
   public
     constructor Create;
     destructor Destroy; override;
@@ -541,7 +541,7 @@ begin
   FFiles.Sort;
   I := 0;
   while I < FFiles.Count do begin
-    if not ValidFile(FFiles[I]) then
+    if not IncludeFile(FFiles[I]) then
       FFiles.Delete(I)
     else
       try
@@ -620,7 +620,7 @@ begin
     TFileObject(FData[Index]).WriteFile(GroupPath + FFiles[Index]);
 end;
 
-function TFileGroup.ValidFile(AFileName: String): boolean;
+function TFileGroup.IncludeFile(AFileName: String): boolean;
 begin
   Result := (GroupID = '') or (Uppercase(FExt) = Uppercase(ExtractFileExt(AFileName)));
 end;

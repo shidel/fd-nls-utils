@@ -30,15 +30,17 @@ type
 var
   fLog: TfLog;
 
-procedure Log(Sender : TForm; Message : String); overload;
+procedure Log(Sender : TPersistent; Message : String); overload;
 
 implementation
 
 var
   PreLog : TStringList;
 
-procedure Log(Sender: TForm; Message: String);
+procedure Log(Sender: TPersistent; Message: String);
 begin
+  if Assigned(Sender) then
+    Message := Sender.GetNamePath + ': ' + Message;
   if not Assigned(fLog) then begin
      if Assigned(PreLog) then begin
           PreLog.Append(Message);

@@ -123,6 +123,7 @@ type
     procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
+    procedure tsPackagesShow(Sender: TObject);
     procedure tsProjectsShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
@@ -131,7 +132,6 @@ type
     procedure SetActiveLanguage(ALang : String; AValue: boolean);
   private
     EditLangIndex : integer;
-    Repository: TFDNLS;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
@@ -145,7 +145,8 @@ type
     procedure SelectEditLanguage(Index : integer);
     property ActiveLanguage[ALang : String] : boolean read GetActiveLanguage write SetActiveLanguage;
   public
-    procedure SoftwareUpdate(Silent : boolean);
+     Repository: TFDNLS;
+   procedure SoftwareUpdate(Silent : boolean);
   end;
 
 var
@@ -175,11 +176,12 @@ begin
    // Set display config files
    xProperties.FileName := AppCfgFile;
    xProperties.RootNodePath := DisplayNamePath(Self);
-   // Populate UI elements
+   // Populate and configure UI elements
    LoadGlyphResources;
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
+   frPkgListEdit.Initialize;
    // Config verification
    if GetValueXML(xConfig, 'VERSION/ABOUT/REVISION',  '') <> SOURCE_REVISION then
       SelectPrefsPage(tsAbout)
@@ -337,6 +339,7 @@ begin
      ActiveLanguage[Repository.Languages.Identifier[Item.Index]] :=
        Item.Checked;
   end;
+  frPkgListEdit.Clear;
 end;
 
 procedure TfMain.sbLanguageEditResize(Sender: TObject);
@@ -371,6 +374,11 @@ begin
   end;
   lvLanguages.EndUpdate;
   SelectEditLanguage(-1);
+end;
+
+procedure TfMain.tsPackagesShow(Sender: TObject);
+begin
+  frPkgListEdit.Refresh;
 end;
 
 procedure TfMain.tsProjectsShow(Sender: TObject);
@@ -414,7 +422,6 @@ end;
 procedure TfMain.actCodepageEditExecute(Sender: TObject);
 begin
   fEditCodePage.Clear;
-  fEditCodePage.Repository:=Repository;
   fEditCodePage.Codepage:=leLangCodePage.Caption;
   fEditCodePage.ShowModal;
   leLangCodePageChange(Self);

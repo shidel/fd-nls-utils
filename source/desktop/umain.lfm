@@ -1,7 +1,7 @@
 object fMain: TfMain
-  Left = 232
+  Left = 231
   Height = 477
-  Top = 81
+  Top = 80
   Width = 640
   Caption = 'FD-NLS'
   ClientHeight = 477
@@ -13,7 +13,7 @@ object fMain: TfMain
   OnDestroy = FormDestroy
   OnHide = FormHide
   OnShow = FormShow
-  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;tvPrefs.Width;Width;WindowState;pLanguagesList.Height'
+  SessionProperties = 'ClientHeight;ClientWidth;Height;Left;pLanguagesList.Height;Top;tvPrefs.Width;Width;WindowState;pcMain.ActivePage'
   LCLVersion = '2.3.0.0'
   Visible = True
   object pControlArea: TPanel
@@ -105,9 +105,9 @@ object fMain: TfMain
       Height = 401
       Top = 4
       Width = 632
-      ActivePage = tsPackages
+      ActivePage = tsPrefs
       Align = alClient
-      TabIndex = 1
+      TabIndex = 2
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'
@@ -126,6 +126,7 @@ object fMain: TfMain
         Caption = 'Packages'
         ClientHeight = 371
         ClientWidth = 626
+        OnShow = tsPackagesShow
         inline frPkgListEdit: TframePkgListEdit
           Left = 8
           Height = 352
@@ -179,10 +180,10 @@ object fMain: TfMain
           Height = 371
           Top = 0
           Width = 500
-          ActivePage = tsRepo
+          ActivePage = tsGeneral
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 1
+          TabIndex = 0
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'

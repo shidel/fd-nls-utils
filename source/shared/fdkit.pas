@@ -5,11 +5,11 @@ interface
 
 {$DEFINE UseLog}
 uses
-  Classes, SysUtils, Contnrs, Graphics, Controls, ExtCtrls, PasExt,
+  Classes, SysUtils, Contnrs, Graphics, Controls, ExtCtrls, Grids, XMLConf,
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
-  XMLConf, ClassExt, VCSExt;
+  PasExt,ClassExt, VCSExt;
 
 type
   TLanguageData = class(TObject)
@@ -116,13 +116,19 @@ type
   TFDPackageLists = class (TFileGroup)
   private
     FOwner: TFDNLS;
+    FMasterCSV : TStringGrid;
+    function GetMasterCSV: TStringGrid;
   protected
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
-    function ValidFile(AFileName : String) : boolean; override;
+    function IncludeFile(AFileName : String) : boolean; override;
+    function IndexOfLanguage(AValue : String) : integer;
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
+    procedure Reload; override;
+    // Move to Private Post Dev
+    property MasterCSV : TStringGrid read GetMasterCSV;
   published
   end;
 
@@ -160,6 +166,9 @@ type
   published
   end;
 
+var
+  FDNLS : TFDNLS;
+
 implementation
 
 const
@@ -167,14 +176,28 @@ const
 
 { TFDPackageLists }
 
+function TFDPackageLists.GetMasterCSV: TStringGrid;
+begin
+  if not Assigned(FMasterCSV) then begin
+    try
+      FMasterCSV := TStringGrid.Create(nil);
+      FMasterCSV.LoadFromCSVFile(GroupPath + 'master.csv');
+    except
+      Log(Self, 'exception opening master csv');
+      FreeAndNil(FMasterCSV);
+    end;
+  end;
+  Result := FMasterCSV;
+end;
+
 function TFDPackageLists.GroupPath: String;
 begin
   Result := FOwner.PackageListPath;
 end;
 
-function TFDPackageLists.ValidFile(AFileName: String): boolean;
+function TFDPackageLists.IncludeFile(AFileName: String): boolean;
 begin
-  Result:=inherited ValidFile(AFileName) and
+  Result:=inherited IncludeFile(AFileName) and
     (Uppercase(ExtractFilename(AFileName)) = 'LISTING.CSV') and
     (not (Pos('UTF-8', Uppercase(AFilename)) > 0));
 end;
@@ -185,11 +208,33 @@ begin
  FOwner := AOwner;
  GroupID := 'CSV';
  Recursive := True;
+ FMasterCSV := nil;
 end;
 
 destructor TFDPackageLists.Destroy;
 begin
+  FreeAndNil(FMasterCSV);
   inherited Destroy;
+end;
+
+procedure TFDPackageLists.Reload;
+begin
+  inherited Reload;
+  FreeAndNil(FMasterCSV);
+end;
+
+function TFDPackageLists.IndexOfLanguage(AValue: String): integer;
+var
+  I : integer;
+begin
+  Result := -1;
+  AValue := Trim(UpperCase(AValue));
+  if AValue <> '' then
+    for I := 0 to FFiles.Count - 1 do
+      if (AValue = Uppercase(FieldStr(FFiles[I], 0, DirectorySeparator))) then begin
+         Result := I;
+         Break;
+      end;
 end;
 
 { TFDFontFiles }
@@ -669,10 +714,12 @@ begin
   FCodePages := TFDCodepages.Create(Self);
   FFonts     := TFDFontFiles.Create(Self);
   FPackageLists := TFDPackageLists.Create(Self);
+  if not Assigned(FDNLS) then FDNLS := Self;
 end;
 
 destructor TFDNLS.Destroy;
 begin
+  if FDNLS = Self then FDNLS := nil;
   FreeAndNil(FPackageLists);
   FreeAndNil(FFonts);
   FreeAndNil(FCodePages);
@@ -688,4 +735,6 @@ begin
   PackageLists.Reload;
 end;
 
+initialization
+  FDNLS := nil;
 end.

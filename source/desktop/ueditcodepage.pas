@@ -39,14 +39,11 @@ type
   private
     EditItem, DOSFont : integer;
     FCodepage: string;
-    FRepository: TFDNLS;
     procedure SetCodepage(AValue: string);
-    procedure SetRepository(AValue: TFDNLS);
     procedure SelectEdit(Index : integer);
     procedure SaveChanges;
   public
     property Codepage : string read FCodepage write SetCodepage;
-    property Repository : TFDNLS read FRepository write SetRepository;
     procedure Clear;
     procedure Populate;
   end;
@@ -151,7 +148,7 @@ var
 begin
   DOSFont := -1;
   EditItem := -1;
-  if not Assigned(Repository) then exit;
+  if not Assigned(FDNLS) then exit;
   if (FCodepage=AValue) and (AValue <> NullCodepage) then Exit;
   try
     FCodepage:=ZeroPad(StrToInt(AValue),3);
@@ -159,8 +156,8 @@ begin
     FCodePage := NullCodepage;
   end;
   Caption := Format(dlg_EditCodePage, [FCodePage]);
-  Repository.Fonts.Reload;
-  I := Repository.Fonts.IndexOfFile(FCodePage + FontFileExt);
+  FDNLS.Fonts.Reload;
+  I := FDNLS.Fonts.IndexOfFile(FCodePage + FontFileExt);
   if I <> -1 then begin
      iFontState.Picture.LoadFromLazarusResource(IconUI[14]);
      lbFontState.Caption:=Format(lbl_UsingCodepageFont,
@@ -169,7 +166,7 @@ begin
   end else begin
     iFontState.Picture.LoadFromLazarusResource(IconUI[15]);
     lbFontState.Font.Color:=clErrorText;
-    I := Repository.Fonts.IndexOfFile(DefaultFont);
+    I := FDNLS.Fonts.IndexOfFile(DefaultFont);
     if I <> -1 then
       lbFontState.Caption:=Format(lbl_UsingCodepageFont,
       [DefaultFont,FCodePage])
@@ -179,14 +176,8 @@ begin
   DOSFont := I;
   ilDOSFont.Clear;
   if I <> -1 then
-    Repository.Fonts.ToImageList(I, ilDOSFont);
+    FDNLS.Fonts.ToImageList(I, ilDOSFont);
   Populate;
-end;
-
-procedure TfEditCodePage.SetRepository(AValue: TFDNLS);
-begin
-  if FRepository=AValue then Exit;
-  FRepository:=AValue;
 end;
 
 procedure TfEditCodePage.SelectEdit(Index: integer);
@@ -206,7 +197,7 @@ begin
     if DOSFont = -1 then
       iDOS.Picture.Clear
     else
-      Repository.Fonts.ToImage(DOSFont, EditItem, iDOS, clBlack, clForm);
+      FDNLS.Fonts.ToImage(DOSFont, EditItem, iDOS, clBlack, clForm);
     lblAscii.Caption :=Format(lbl_EditCpValue, [IntToStr(EditItem)]);
   end;
 end;
@@ -215,19 +206,19 @@ procedure TfEditCodePage.SaveChanges;
 var
   I, C : integer;
 begin
-  C := Repository.CodePages.IndexOfIdentifier(FCodePage);
+  C := FDNLS.CodePages.IndexOfIdentifier(FCodePage);
   if C = -1 then begin
-    C := Repository.CodePages.Add;
-    Repository.CodePages.Filename[C] := FCodePage + '.xml';
-    Repository.CodePages.SetValue(C, 'IDENTIFIER', FCodePage);
+    C := FDNLS.CodePages.Add;
+    FDNLS.CodePages.Filename[C] := FCodePage + '.xml';
+    FDNLS.CodePages.SetValue(C, 'IDENTIFIER', FCodePage);
   end;
   for I := 0 to 255 do begin
-    Repository.Codepages.SetValue(C, 'ASCII_' + IntToStr(I) + '/UTF8', StrToInts(
+    FDNLS.Codepages.SetValue(C, 'ASCII_' + IntToStr(I) + '/UTF8', StrToInts(
       lvEditCP.Items[I].SubItems[1]));
-    Repository.Codepages.SetValue(C, 'ASCII_' + IntToStr(I) + '/HTML', StrToInts(
+    FDNLS.Codepages.SetValue(C, 'ASCII_' + IntToStr(I) + '/HTML', StrToInts(
       lvEditCP.Items[I].SubItems[2]));
   end;
-  Repository.CodePages.Reload;
+  FDNLS.CodePages.Reload;
 end;
 
 procedure TfEditCodePage.Clear;
@@ -244,13 +235,13 @@ begin
   lvEditCP.BeginUpdate;
   lvEditCP.Clear;
   try
-    I := Repository.CodePages.IndexOfIdentifier(FCodePage);
+    I := FDNLS.CodePages.IndexOfIdentifier(FCodePage);
     if I = -1 then
-      I := Repository.CodePages.IndexOfIdentifier('437');
+      I := FDNLS.CodePages.IndexOfIdentifier('437');
     if I = -1 then
       CP := nil
     else
-      CP := Repository.CodePages.Data[I];
+      CP := FDNLS.CodePages.Data[I];
     for I := 0 to 255 do begin
         LI := lvEditCP.Items.Add;
         LI.Caption:='';

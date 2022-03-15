@@ -5,8 +5,8 @@ unit uPkgListEdit;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls,
-  FDKit;
+  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, Grids,
+  FDKit, uLog;
 
 type
 
@@ -46,6 +46,7 @@ procedure TframePkgListEdit.Refresh;
 begin
   if not FNeedRefresh then Exit;
   FNeedRefresh := False;
+  log(Self, IntToStr(FDNLS.PackageLists.MasterCSV.RowCount) + ' master packages');
 end;
 
 end.
