@@ -486,7 +486,7 @@ end;
 procedure TfMain.actRemoveLanguageExecute(Sender: TObject);
 begin
   if EditLangIndex <> -1 then begin
-    if MessageDlg(Format(msg_VerifyDelete, []),
+    if MessageDlg(Format(msg_VerifyLanguageDelete, []),
       mtConfirmation, [mbYes,mbNo], 0) = mrYes then begin
         ActiveLanguage[Repository.Languages.Identifier[EditLangIndex]] := False;
         Repository.Languages.Delete(EditLangIndex);

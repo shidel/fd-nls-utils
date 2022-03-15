@@ -16,7 +16,11 @@ resourcestring
   msg_AboutCopyright            = 'Copyright (c) %0:s';
   msg_AboutIconCopyright        = 'Most icons are Copyright (c) %0:s, %1:s and may be download in the %2:s collection';
   msg_AboutCreatedWith          = 'Created with the %0:s and %1:s';
-  msg_VerifyDelete              = 'Are you sure you want to delete this entry?';
+  msg_VerifyLanguageDelete      = 'WARNING: This affect all repository contributors!' + CRLF + CRLF +
+                                  'You may wish to just disable the language on your' + CRLF +
+                                  'computer by unchecking it.' + CRLF + CRLF +
+                                  'Are you sure you want to delete this Language?';
+
   msg_UnknownDateTime           = '(unknown)';
 
   lbl_AvailLanguages            = 'Available languages';
