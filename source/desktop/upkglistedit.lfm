@@ -1,17 +1,17 @@
 object framePkgListEdit: TframePkgListEdit
   Left = 0
-  Height = 347
+  Height = 348
   Top = 0
   Width = 588
   Anchors = [akTop, akLeft, akRight, akBottom]
-  ClientHeight = 347
+  ClientHeight = 348
   ClientWidth = 588
   TabOrder = 0
-  DesignLeft = 107
-  DesignTop = 208
+  DesignLeft = 277
+  DesignTop = 389
   object lvPackages: TListView
     Left = 0
-    Height = 347
+    Height = 348
     Top = 0
     Width = 150
     Align = alLeft
@@ -31,17 +31,28 @@ object framePkgListEdit: TframePkgListEdit
   end
   object sPkgEditSplitter: TSplitter
     Left = 150
-    Height = 347
+    Height = 348
     Top = 0
-    Width = 5
+    Width = 10
   end
-  object pEditor: TPanel
-    Left = 155
-    Height = 347
+  object pEditorOuter: TPanel
+    Left = 160
+    Height = 348
     Top = 0
-    Width = 433
+    Width = 428
     Align = alClient
     BevelOuter = bvNone
+    ClientHeight = 348
+    ClientWidth = 428
     TabOrder = 2
+    object pEditorInner: TPanel
+      Left = 0
+      Height = 348
+      Top = 0
+      Width = 419
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
   end
 end

@@ -192,7 +192,6 @@ begin
    CreateMainMenu;
    CreatePrefsTree;
    CreateAboutText;
-   frPkgListEdit.Initialize;
    // Config verification
    if GetValueXML(xConfig, 'VERSION/ABOUT/REVISION',  '') <> SOURCE_REVISION then
       SelectPrefsPage(tsAbout)
