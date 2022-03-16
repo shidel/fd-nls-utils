@@ -1,0 +1,8 @@
+# Ignore Mac system files
+.DS_store
+
+# Build and backup files
+/source/desktop/backup
+/source/desktop/lib
+
+/source/test
