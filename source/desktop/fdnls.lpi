@@ -99,6 +99,13 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
       </Unit>
+      <Unit>
+        <Filename Value="upkgdetails.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="framePkgDetails"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="uPkgDetails"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

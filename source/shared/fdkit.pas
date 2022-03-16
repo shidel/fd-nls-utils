@@ -116,12 +116,14 @@ type
   TFDPackageLists = class (TFileGroup)
   private
     FFields: TStringList;
+    FDetails : TStringList;
     FOwner: TFDNLS;
     FMasterCSV : TStringGrid;
     FFileCSV : array of TStringGrid;
     function GetFields: TStringList;
     function GetFileCSV(Index : integer): TStringGrid;
     function GetMasterCSV: TStringGrid;
+    function GetMasterDetails(Index : integer): TStringList;
     function GetPackageCount: integer;
     function GetPackageID(Index : integer): String;
   protected
@@ -138,6 +140,7 @@ type
     property Fields : TStringList read GetFields;
     property PackageCount : integer read GetPackageCount;
     property PackageID[Index : integer] : String read GetPackageID;
+    property MasterDetails[Index : integer] : TStringList read GetMasterDetails;
     // Move to Private Post Dev
     property MasterCSV : TStringGrid read GetMasterCSV;
     property FileCSV[Index : integer] : TStringGrid read GetFileCSV;
@@ -189,18 +192,42 @@ const
 { TFDPackageLists }
 
 function TFDPackageLists.GetMasterCSV: TStringGrid;
+var
+  I : integer;
 begin
   if not Assigned(FMasterCSV) then begin
     try
       FMasterCSV := TStringGrid.Create(nil);
       FMasterCSV.LoadFromCSVFile(GroupPath + 'master.csv');
       FMasterCSV.SortColRow(True, 0);
+      for I := 0 to FMasterCSV.ColCount - 1 do
+        FMasterCSV.Cells[I,0] := Trim(Lowercase(FMasterCSV.Cells[I,0]));
     except
       Log(Self, 'exception opening master.csv');
       FreeAndNil(FMasterCSV);
     end;
   end;
   Result := FMasterCSV;
+end;
+
+function TFDPackageLists.GetMasterDetails(Index : integer): TStringList;
+var
+  I, J : integer;
+  H, D : String;
+begin
+  FDetails.Clear;
+  for I := 0 to FFields.Count - 1 do begin
+    H := Lowercase(trim(FFields[I]));
+    D := '';
+    for J := 0 to MasterCSV.ColCount - 1 do begin
+      if MasterCSV.Cells[J,0] = H then begin
+        D := MasterCSV.Cells[J, Index + 1];
+        Break;
+      end;
+    end;
+    FDetails.Add(D);
+  end;
+  Result := FDetails;
 end;
 
 function TFDPackageLists.GetPackageCount: integer;
@@ -222,7 +249,7 @@ begin
         FFileCSV[Index].LoadFromCSVFile(GroupPath + FFiles[Index]);
       except
         Log(Self, 'exception opening ' + FFiles[Index]);
-        FreeAndNil(FFileCSV[Index]);
+        FreeAndNil(FFileCSV[Index - 1]);
       end;
     end;
   except
@@ -254,6 +281,7 @@ begin
  GroupID := 'CSV';
  Recursive := True;
  FFields := TStringList.Create;
+ FDetails := TStringList.Create;
  FFields.Add('title');
  FFields.Add('description');
  FFields.Add('summary');
@@ -266,6 +294,7 @@ destructor TFDPackageLists.Destroy;
 begin
   PurgeCSVData;
   FreeAndNil(FFields);
+  FreeAndNil(FDetails);
   inherited Destroy;
 end;
 

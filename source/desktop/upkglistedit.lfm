@@ -21,6 +21,7 @@ object framePkgListEdit: TframePkgListEdit
         Width = 133
       end>
     LargeImages = fMain.ilToolsSmall
+    ReadOnly = True
     RowSelect = True
     ScrollBars = ssVertical
     ShowColumnHeaders = False
@@ -28,31 +29,12 @@ object framePkgListEdit: TframePkgListEdit
     StateImages = fMain.ilToolsSmall
     TabOrder = 0
     ViewStyle = vsReport
+    OnChange = lvPackagesChange
   end
   object sPkgEditSplitter: TSplitter
     Left = 150
     Height = 348
     Top = 0
     Width = 10
-  end
-  object pEditorOuter: TPanel
-    Left = 160
-    Height = 348
-    Top = 0
-    Width = 428
-    Align = alClient
-    BevelOuter = bvNone
-    ClientHeight = 348
-    ClientWidth = 428
-    TabOrder = 2
-    object pEditorInner: TPanel
-      Left = 0
-      Height = 348
-      Top = 0
-      Width = 419
-      Anchors = [akTop, akLeft, akRight, akBottom]
-      BevelOuter = bvNone
-      TabOrder = 0
-    end
   end
 end

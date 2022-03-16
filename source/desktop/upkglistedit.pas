@@ -5,39 +5,28 @@ unit uPkgListEdit;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, Grids, PairSplitter,
-  StdCtrls, FDKit, uLog;
+  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, Grids,
+  StdCtrls, FDKit, uLog, Icons, uPkgDetails;
 
 type
-
-  { TMasterDetailsPanel }
-
-  TMasterDetailsPanel = class(TPanel)
-  private
-  protected
-    procedure  Configure; virtual;
-  public
-    constructor Create(AOwner: TComponent); override;
-    constructor Create(AOwner: TComponent; AParent : TWinControl); virtual;
-    destructor Destroy; override;
-  end;
 
   { TframePkgListEdit }
 
   TframePkgListEdit = class(TFrame)
     lvPackages: TListView;
-    pEditorOuter: TPanel;
-    pEditorInner: TPanel;
     sPkgEditSplitter: TSplitter;
+    procedure lvPackagesChange(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
   private
     FNeedRefresh : boolean;
-    FMasterDetails : TMasterDetailsPanel;
+    FMasterDetails : TframePkgDetails;
+    FPkgView : TFrame;
   public
     procedure Initialize;
     procedure Clear;
     procedure Refresh;
     constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
+    procedure SelectEdit(Item : TListItem); overload;
   end;
 
 implementation
@@ -46,42 +35,27 @@ uses uMain;
 
 {$R *.lfm}
 
-{ TMasterDetailsPanel }
-
-procedure TMasterDetailsPanel.Configure;
-begin
-  Height := 50;
-  Align := alTop;
-  Visible := True;
-end;
-
-constructor TMasterDetailsPanel.Create(AOwner: TComponent);
-begin
-  inherited Create(AOwner);
-  Configure;
-end;
-
-constructor TMasterDetailsPanel.Create(AOwner: TComponent; AParent: TWinControl
-  );
-begin
-  inherited Create(AOwner);
-  Parent := AParent;
-  Configure;
-end;
-
-destructor TMasterDetailsPanel.Destroy;
-begin
-  inherited Destroy;
-end;
-
 { TframePkgListEdit }
+
+procedure TframePkgListEdit.lvPackagesChange(Sender: TObject; Item: TListItem;
+  Change: TItemChange);
+begin
+  if lvPackages.Selected = Item then
+    SelectEdit(lvPackages.Selected);
+end;
 
 procedure TframePkgListEdit.Initialize;
 begin
   if not Assigned(FMasterDetails) then begin
-    FMasterDetails := TMasterDetailsPanel.Create(Self, pEditorInner);
+    FPkgView := TFrame.Create(Self);
+    FPkgView.Parent := Self;
+    FPkgView.Align:=alClient;
+    FMasterDetails := TframePkgDetails.Create(Self);
+    FMasterDetails.Parent := FPkgView; // pEditorOuter;
+    FMasterDetails.Align:=alTop;
+    FMasterDetails.Flag.Picture.LoadFromLazarusResource(IconPrefix + 'usa');
   end;
-  FMasterDetails.Caption:=FDNLS.PackageLists.Fields.Text;
+  FMasterDetails.SetLabels(FDNLS.PackageLists.Fields);
   Clear;
 end;
 
@@ -113,10 +87,9 @@ begin
   FNeedRefresh := True;
 end;
 
-destructor TframePkgListEdit.Destroy;
+procedure TframePkgListEdit.SelectEdit(Item: TListItem);
 begin
-  FreeAndNil(FMasterDetails);
-  inherited Destroy;
+  FMasterDetails.SetDetails(FDNLS.PackageLists.MasterDetails[Item.Index]);
 end;
 
 end.

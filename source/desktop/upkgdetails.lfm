@@ -1,0 +1,67 @@
+object framePkgDetails: TframePkgDetails
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  ClientHeight = 240
+  ClientWidth = 320
+  TabOrder = 0
+  DesignLeft = 117
+  DesignTop = 191
+  object pFrame: TPanel
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 320
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
+    ClientHeight = 238
+    ClientWidth = 318
+    TabOrder = 0
+    object pFlag: TPanel
+      Left = 0
+      Height = 238
+      Top = 0
+      Width = 64
+      Align = alLeft
+      BevelOuter = bvNone
+      ClientHeight = 238
+      ClientWidth = 64
+      TabOrder = 0
+      object iFlag: TImage
+        Left = 0
+        Height = 64
+        Top = 0
+        Width = 64
+        Proportional = True
+        Stretch = True
+      end
+    end
+    object pLabels: TPanel
+      Left = 64
+      Height = 238
+      Top = 0
+      Width = 170
+      Align = alLeft
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object pDetails: TPanel
+      Left = 239
+      Height = 238
+      Top = 0
+      Width = 79
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 2
+      OnResize = pDetailsResize
+    end
+    object sDetails: TSplitter
+      Left = 234
+      Height = 238
+      Top = 0
+      Width = 5
+    end
+  end
+end
