@@ -85,7 +85,7 @@ begin
       FLabels[I - 1] := TLabel.Create(Self);
       FLabels[I - 1].Parent := pLabels;
       FLabels[I - 1].Alignment := taRightJustify;
-      FLabels[I - 1].Left := pLabels.Width - FLabels[I - 1].Width - 8;
+      FLabels[I - 1].Left := pLabels.Width - FLabels[I - 1].Width - 1;
       FLabels[I - 1].Top := (I -1) * 16 + 8;
       FLabels[I - 1].WordWrap:=False;
       Flabels[I - 1].Anchors:=[akRight, akTop];

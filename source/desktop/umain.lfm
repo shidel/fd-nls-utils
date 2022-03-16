@@ -143,21 +143,14 @@ object fMain: TfMain
                 Width = 150
               end>
             LargeImages = nil
+            ReadOnly = False
             SmallImages = nil
             StateImages = nil
+            OnChange = nil
           end
           inherited sPkgEditSplitter: TSplitter
             Height = 352
             Width = 5
-          end
-          object pEditor: TPanel[2]
-            Left = 155
-            Height = 352
-            Top = 0
-            Width = 461
-            Align = alClient
-            BevelOuter = bvNone
-            TabOrder = 2
           end
         end
       end
@@ -165,6 +158,7 @@ object fMain: TfMain
         Caption = 'Preferences'
         ClientHeight = 371
         ClientWidth = 626
+        OnShow = tsPrefsShow
         object tvPrefs: TTreeView
           Left = 0
           Height = 371
@@ -190,10 +184,10 @@ object fMain: TfMain
           Height = 371
           Top = 0
           Width = 495
-          ActivePage = tsGeneral
+          ActivePage = tsLanguages
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 0
+          TabIndex = 2
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'

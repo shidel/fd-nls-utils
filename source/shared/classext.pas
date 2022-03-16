@@ -793,7 +793,7 @@ end;
 
 procedure TXMLGroup.SetValue(Index : integer; KeyName: String; Value: String);
 begin
-  if GetValueXML(FXML, GroupID + '/' + KeyName, '') = Value then exit;
+  // if GetValueXML(FXML, GroupID + '/' + KeyName, '') = Value then exit;
   FXML.Filename:=GroupPath + FFiles[Index];
   SetValueXML(FXML, GroupID + '/' + KeyName, Value);
   FXML.Flush;

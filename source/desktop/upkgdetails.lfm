@@ -48,10 +48,10 @@ object framePkgDetails: TframePkgDetails
       TabOrder = 1
     end
     object pDetails: TPanel
-      Left = 239
+      Left = 244
       Height = 238
       Top = 0
-      Width = 79
+      Width = 74
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
@@ -61,7 +61,7 @@ object framePkgDetails: TframePkgDetails
       Left = 234
       Height = 238
       Top = 0
-      Width = 5
+      Width = 10
     end
   end
 end

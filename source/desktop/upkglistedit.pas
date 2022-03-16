@@ -24,6 +24,7 @@ type
   public
     procedure Initialize;
     procedure Clear;
+    procedure Reload;
     procedure Refresh;
     constructor Create(AOwner: TComponent); override;
     procedure SelectEdit(Item : TListItem); overload;
@@ -40,45 +41,60 @@ uses uMain;
 procedure TframePkgListEdit.lvPackagesChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
+  // Log(Self, 'list item change ');
   if lvPackages.Selected = Item then
-    SelectEdit(lvPackages.Selected);
+    SelectEdit(Item);
 end;
 
 procedure TframePkgListEdit.Initialize;
 begin
-  if not Assigned(FMasterDetails) then begin
+  Clear;
+  Log(Self, 'Initialize');
+  if not Assigned(FPkgView) then
     FPkgView := TFrame.Create(Self);
-    FPkgView.Parent := Self;
-    FPkgView.Align:=alClient;
+  FPkgView.Parent := Self;
+  FPkgView.Align:=alClient;
+  // I changed some things. Now, all of a sudden, Lazarus started not
+  // setting these properties. \O/ 8-(
+  lvPackages.OnChange:=@lvPackagesChange;
+  lvPackages.ReadOnly:=True;
+  lvPackages.RowSelect:=True;
+
+  if not Assigned(FMasterDetails) then begin
     FMasterDetails := TframePkgDetails.Create(Self);
     FMasterDetails.Parent := FPkgView; // pEditorOuter;
     FMasterDetails.Align:=alTop;
     FMasterDetails.Flag.Picture.LoadFromLazarusResource(IconPrefix + 'usa');
+    FMasterDetails.SetLabels(FDNLS.PackageLists.Fields);
   end;
-  FMasterDetails.SetLabels(FDNLS.PackageLists.Fields);
-  Clear;
 end;
 
 procedure TframePkgListEdit.Clear;
 begin
-  FNeedRefresh := True;
+  Log(Self, 'Clear');
+  exit;
+  lvPackages.Clear;
+  FreeAndNil(FMasterDetails);
 end;
 
-procedure TframePkgListEdit.Refresh;
+procedure TframePkgListEdit.Reload;
 var
   I : integer;
   LI : TListItem;
 begin
   if not Assigned(FMasterDetails) then Initialize;
-  if not FNeedRefresh then Exit;
-  FNeedRefresh := False;
   log(Self, IntToStr(FDNLS.PackageLists.PackageCount) + ' master packages');
-  lvPackages.Clear;
   for I := 0 to FDNLS.PackageLists.PackageCount - 1 do begin
     LI := lvPackages.Items.Add;
     LI.Caption := FDNLS.PackageLists.PackageID[I];
   end;
 
+end;
+
+procedure TframePkgListEdit.Refresh;
+begin
+  if not Assigned(FMasterDetails) then Reload;
+  Log(Self, 'Refresh');
 end;
 
 constructor TframePkgListEdit.Create(AOwner: TComponent);
@@ -89,6 +105,8 @@ end;
 
 procedure TframePkgListEdit.SelectEdit(Item: TListItem);
 begin
+  Log(Self, 'select item ' + IntToStr(Item.Index) + ', ' + Item.Caption);
+  Log(Self, 'set master details');
   FMasterDetails.SetDetails(FDNLS.PackageLists.MasterDetails[Item.Index]);
 end;
 

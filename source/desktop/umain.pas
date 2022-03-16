@@ -130,6 +130,7 @@ type
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
     procedure tsPackagesShow(Sender: TObject);
+    procedure tsPrefsShow(Sender: TObject);
     procedure tsProjectsShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
@@ -138,6 +139,7 @@ type
     procedure SetActiveLanguage(ALang : String; AValue: boolean);
   private
     EditLangIndex : integer;
+    ReloadNeeded : boolean;
     function AddMenuItem(ToItem : TMenuItem; ActionItem : TBasicAction) : TMenuItem; overload;
     function AddMenuItem(ToItem : TMenuItem; CaptionText : TCaption) : TMenuItem; overload;
     procedure AddPrefsTree(ParentNode : TTreeNode; Pages : TPageControl);
@@ -155,6 +157,7 @@ type
     function LangNameVerify : boolean;
     function LangDosVerify : boolean;
     function LangCodePageVerify : boolean;
+    procedure Reload;
   public
      Repository: TFDNLS;
    procedure SoftwareUpdate(Silent : boolean);
@@ -365,7 +368,6 @@ begin
      ActiveLanguage[Repository.Languages.Identifier[Item.Index]] :=
        Item.Checked;
   end;
-  frPkgListEdit.Clear;
 end;
 
 procedure TfMain.sbLanguageEditResize(Sender: TObject);
@@ -404,11 +406,18 @@ end;
 
 procedure TfMain.tsPackagesShow(Sender: TObject);
 begin
+  Reload;
   frPkgListEdit.Refresh;
+end;
+
+procedure TfMain.tsPrefsShow(Sender: TObject);
+begin
+  ReloadNeeded := true;
 end;
 
 procedure TfMain.tsProjectsShow(Sender: TObject);
 begin
+  Reload;
   lbComingSoon.Caption:=lbl_ComingSoon;
 end;
 
@@ -705,7 +714,6 @@ begin
       SetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', Repository.Path);
       xConfig.Flush;
     end;
-    frPkgListEdit.Clear;
 end;
 
 procedure TfMain.SetAppLanguageText(ALanguage: String);
@@ -870,6 +878,17 @@ end;
 function TfMain.LangCodePageVerify: boolean;
 begin
   Result := btCodePage.Action = actCodePageEdit;
+end;
+
+procedure TfMain.Reload;
+begin
+  if not ReloadNeeded then exit;
+  ReloadNeeded := false;
+  Log(Self, 'Repository Reload Triggered');
+  exit;
+  Repository.Reload;
+  frPkgListEdit.Clear;
+  frPkgListEdit.Reload;
 end;
 
 procedure TfMain.SoftwareUpdate(Silent: boolean);
