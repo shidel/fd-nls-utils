@@ -4,5 +4,19 @@
 # Build and backup files
 /source/desktop/backup
 /source/desktop/lib
+/source/shared/backup
+/source/shared/lib
 
+# 3rd party Icon files 
+/source/shared/icons.lrs
+/source/shared/icons8/
+
+# binary builds
+/bin
+
+# dev test experiments and shortcuts
 /source/test
+/mkver.sh
+/mkicons.sh
+
+
