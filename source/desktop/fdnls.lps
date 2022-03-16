@@ -20,8 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <TopLine Value="407"/>
-        <CursorPos X="54" Y="482"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="882"/>
+        <CursorPos Y="891"/>
         <FoldState Value=" T3lW03023172419Z"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
@@ -76,10 +77,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="29"/>
-        <CursorPos X="6" Y="44"/>
+        <TopLine Value="74"/>
+        <CursorPos X="59" Y="101"/>
         <UsageCount Value="105"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -174,14 +174,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="459" Column="3" TopLine="455"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="142" Column="28" TopLine="121"/>
-      </Position>
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="160" Column="17" TopLine="139"/>
@@ -293,6 +285,14 @@
       <Position>
         <Filename Value="upkglistedit.pas"/>
         <Caret Line="57" Column="41" TopLine="40"/>
+      </Position>
+      <Position>
+        <Filename Value="upkglistedit.pas"/>
+        <Caret Line="61" Column="43" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="160" Column="16" TopLine="140"/>
       </Position>
     </JumpHistory>
     <RunParams>

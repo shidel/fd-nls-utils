@@ -142,10 +142,7 @@ object fMain: TfMain
               item
                 Width = 150
               end>
-            LargeImages = nil
-            ReadOnly = False
-            SmallImages = nil
-            StateImages = nil
+            RowSelect = True
             OnChange = nil
           end
           inherited sPkgEditSplitter: TSplitter

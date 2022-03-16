@@ -20,13 +20,8 @@ object framePkgListEdit: TframePkgListEdit
       item
         Width = 133
       end>
-    LargeImages = fMain.ilToolsSmall
-    ReadOnly = True
-    RowSelect = True
     ScrollBars = ssVertical
     ShowColumnHeaders = False
-    SmallImages = fMain.ilToolsSmall
-    StateImages = fMain.ilToolsSmall
     TabOrder = 0
     ViewStyle = vsReport
     OnChange = lvPackagesChange

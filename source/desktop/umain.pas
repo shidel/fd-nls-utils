@@ -885,7 +885,6 @@ begin
   if not ReloadNeeded then exit;
   ReloadNeeded := false;
   Log(Self, 'Repository Reload Triggered');
-  exit;
   Repository.Reload;
   frPkgListEdit.Clear;
   frPkgListEdit.Reload;

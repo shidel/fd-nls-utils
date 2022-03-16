@@ -55,10 +55,15 @@ begin
   FPkgView.Parent := Self;
   FPkgView.Align:=alClient;
   // I changed some things. Now, all of a sudden, Lazarus started not
-  // setting these properties. \O/ 8-(
-  lvPackages.OnChange:=@lvPackagesChange;
-  lvPackages.ReadOnly:=True;
-  lvPackages.RowSelect:=True;
+  // setting the properties for lvPackages. \O/ 8-(
+  with lvPackages do begin
+       OnChange:=@lvPackagesChange;
+       ReadOnly:=True;
+       RowSelect:=True;
+       ScrollBars:=ssVertical;
+       ViewStyle:=vsReport;
+       SmallImages := fMain.ilToolsSmall;
+  end;
 
   if not Assigned(FMasterDetails) then begin
     FMasterDetails := TframePkgDetails.Create(Self);
@@ -71,8 +76,6 @@ end;
 
 procedure TframePkgListEdit.Clear;
 begin
-  Log(Self, 'Clear');
-  exit;
   lvPackages.Clear;
   FreeAndNil(FMasterDetails);
 end;
