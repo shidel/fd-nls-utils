@@ -9,7 +9,7 @@ uses
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
-  PasExt,ClassExt, VCSExt;
+  PasExt, ClassExt, VCSExt;
 
 type
   TLanguageData = class(TObject)
@@ -86,6 +86,9 @@ type
     function CreateHTMLDictionary(Index : integer) : TDictionary; overload;
     function DOStoUTF8(Index : integer; S : String) : String;
     function DOStoHTML(Index : integer; S : String) : String;
+    // Need to do, just needed placeholders at present
+    function UTF8toDOS(Index : integer; S : String) : String;
+    function HTMLtoDOS(Index : integer; S : String) : String;
   published
   end;
 
@@ -181,6 +184,7 @@ type
     procedure Reload;
     function FindLanguage(ALanguage : String) : integer;
     function FindCodepage(ALanguage : String) : integer;
+    function FindFont(ALanguage : String) : integer;
   published
 
   end;
@@ -188,12 +192,23 @@ type
 var
   FDNLS : TFDNLS;
 
+const
+   MasterCSVFile     : String = 'master.csv';
+   MasterCSVLanguage : String = 'en_US';
+   DefaultCSVFields  : array of string = (
+    'title',
+    'description',
+    'summary',
+    'keywords',
+    'platforms',
+    'copying-policy'
+   );
+
+
 implementation
 
 const
    RepositoryPath    : String = '';
-   MasterCSVFile     : String = 'master.csv';
-   MasterCSVLanguage : String = 'en_US';
 
 { TFDPackageLists }
 
@@ -288,6 +303,8 @@ begin
 end;
 
 constructor TFDPackageLists.Create(AOwner: TFDNLS);
+var
+  I : integer;
 begin
  inherited Create;
  FOwner := AOwner;
@@ -296,12 +313,8 @@ begin
  Recursive := True;
  FFields := TStringList.Create;
  FDetails := TStringList.Create;
- FFields.Add('title');
- FFields.Add('description');
- FFields.Add('summary');
- FFields.Add('keywords');
- FFields.Add('platforms');
- FFields.Add('copying-policy');
+ for I := 0 to length(DefaultCSVFields) - 1 do
+   FFields.Add(DefaultCSVFields[I]);
 end;
 
 destructor TFDPackageLists.Destroy;
@@ -631,6 +644,16 @@ begin
       Result := Result + Data[Index].HTML[Ord(S[I])];
 end;
 
+function TFDCodePages.UTF8toDOS(Index: integer; S: String): String;
+begin
+  Result := S;
+end;
+
+function TFDCodePages.HTMLtoDOS(Index: integer; S: String): String;
+begin
+  Result := S;
+end;
+
 { TFDLanguages }
 
 function TFDLanguages.GetCaption(Index : integer): String;
@@ -866,6 +889,14 @@ begin
   Result := FindLanguage(ALanguage);
   if Result <> -1 then
     Result := Codepages.IndexOfIdentifier(IntToStr(Languages.CodePage[Result]));
+end;
+
+function TFDNLS.FindFont(ALanguage: String): integer;
+begin
+  Result := FindCodepage(ALanguage);
+  if Result <> -1 then
+    Result := Fonts.IndexOfFile(Codepages.Identifier[Result] + '.fnt');
+
 end;
 
 initialization

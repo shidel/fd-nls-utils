@@ -57,6 +57,8 @@ procedure InitPasExt(Identifier : String);
 
 function VerifiedPath (Parent, SubDir : String) : string;
 
+function LastPos(Sub, Str : String) : integer; overload;
+
 function PopDelim(var AStr : String; ADelim: String = SPACE): String; overload;
 function FieldStr(AStr : String; AField : integer = 0; ADelim : String = SPACE) : String; overload;
 function FieldStr(AStr : String; AField, ACount : integer; ADelim : String = SPACE) : String; overload;
@@ -224,6 +226,21 @@ begin
   Result := S;
 end;
 }
+
+function LastPos(Sub, Str: String): integer;
+var
+  I, J : integer;
+begin
+  I := Pos(Sub, Str);
+  if I > 0 then begin
+    J := I;
+    repeat
+       I := J;
+       J := Pos(Sub, Str, I + 1);
+    until J < I;
+  end;
+  Result := I;
+end;
 
 function PopDelim(var AStr : String; ADelim: String = SPACE): String;
 var

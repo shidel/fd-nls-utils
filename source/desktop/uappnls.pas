@@ -70,6 +70,11 @@ resourcestring
   btn_OK                        = 'OK';
   btn_Cancel                    = 'Cancel';
 
+  dos_PkgGroup                  = 'Eingerichtet!';
+  dos_PkgAuthor                 = 'Author''s name';
+  dos_PkgVersion                = 'Version X.YZ';
+  dos_PkgPlatforms              = '';
+
 implementation
 
 end.

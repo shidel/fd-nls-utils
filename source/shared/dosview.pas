@@ -17,31 +17,40 @@ type
   private
     FBackground: TColor;
     FBitmap: TBitmap;
+    FBorder: integer;
+    FBorderColor: TColor;
     FFont: TArrayOfBytes;
     FScreenMax: TPoint;
     FTextColor: TColor;
     FWhereXY: TPoint;
     procedure SetBackground(AValue: TColor);
+    procedure SetBorder(AValue: integer);
+    procedure SetBorderColor(AValue: TColor);
     procedure SetFont(AValue: TArrayOfBytes);
     procedure SetScreenMax(AValue: TPoint);
     procedure SetTextColor(AValue: TColor);
     procedure SetWhereXY(AValue: TPoint);
   protected
-    function FontHeight : integer;
-    function FontWidth : integer;
+    procedure AdjustSize;
   public
-    constructor Create;
+    constructor Create(MaxX : Integer = 80; MaxY : Integer = 25); virtual;
     destructor Destroy; override;
     property Bitmap : TBitmap read FBitmap;
     property Font : TArrayOfBytes read FFont write SetFont;
+    function FontHeight : integer;
+    function FontWidth : integer;
+    property Border : integer read FBorder write SetBorder;
     property ScreenMax : TPoint read FScreenMax write SetScreenMax;
     property WhereXY : TPoint read FWhereXY write SetWhereXY;
     property TextColor : TColor read FTextColor write SetTextColor;
     property Background : TColor read FBackground write SetBackground;
+    property BorderColor : TColor read FBorderColor write SetBorderColor;
     procedure ClearScreen;
     procedure PutChar(C : Char);
     procedure PutString(S : String);
     procedure WriteText(S : String);
+    procedure GotoXY(X, Y : integer); overload;
+    procedure GotoXY(XY : TPoint); overload;
   published
 
   end;
@@ -54,8 +63,7 @@ procedure TDosScreen.SetScreenMax(AValue: TPoint);
 begin
   if FScreenMax=AValue then Exit;
   FScreenMax:=AValue;
-  FBitMap.SetSize(FontWidth * FScreenMax.X, FontHeight * FScreenMax.Y);
-  ClearScreen;
+  AdjustSize;
 end;
 
 procedure TDosScreen.SetTextColor(AValue: TColor);
@@ -68,8 +76,7 @@ procedure TDosScreen.SetFont(AValue: TArrayOfBytes);
 begin
   // if FFont=AValue then Exit;
   FFont:=AValue;
-  FBitMap.SetSize(FontWidth * FScreenMax.X - 1, FontHeight * FScreenMax.Y - 1);
-  ClearScreen;
+  AdjustSize;
 end;
 
 procedure TDosScreen.SetBackground(AValue: TColor);
@@ -78,10 +85,30 @@ begin
   FBackground:=AValue;
 end;
 
+procedure TDosScreen.SetBorder(AValue: integer);
+begin
+  if FBorder=AValue then Exit;
+  FBorder:=AValue;
+  AdjustSize;
+end;
+
+procedure TDosScreen.SetBorderColor(AValue: TColor);
+begin
+  if FBorderColor=AValue then Exit;
+  FBorderColor:=AValue;
+  ClearScreen;
+end;
+
 procedure TDosScreen.SetWhereXY(AValue: TPoint);
 begin
   if FWhereXY=AValue then Exit;
   FWhereXY:=AValue;
+end;
+
+procedure TDosScreen.AdjustSize;
+begin
+  FBitMap.SetSize(FontWidth * FScreenMax.X + Border * 2, FontHeight * FScreenMax.Y + Border * 2);
+  ClearScreen;
 end;
 
 function TDosScreen.FontHeight: integer;
@@ -91,14 +118,14 @@ end;
 
 function TDosScreen.FontWidth: integer;
 begin
-  Result := 9;
+  Result := 8;
 end;
 
-constructor TDosScreen.Create;
+constructor TDosScreen.Create(MaxX : Integer = 80; MaxY : Integer = 25);
 begin
   inherited Create;
   FBitmap := TBitmap.Create;
-  ScreenMax.SetLocation(80,25);
+  ScreenMax.SetLocation(MaxX,MaxY);
 end;
 
 destructor TDosScreen.Destroy;
@@ -109,8 +136,13 @@ end;
 
 procedure TDosScreen.ClearScreen;
 begin
+  if FBorder > 0 then begin
+    FBitMap.Canvas.Brush.Color:= FBorderColor;
+    FBitMap.Canvas.FillRect(0, 0, FBitMap.Width, FBitMap.Height);
+  end;
   FBitMap.Canvas.Brush.Color:= FBackground;
-  FBitMap.Canvas.FillRect(0, 0, FontWidth * FScreenMax.X, FontHeight * FScreenMax.Y - 1);
+  FBitMap.Canvas.FillRect(FBorder, FBorder,
+    FBitMap.Width - FBorder, FBitMap.Height - FBorder);
   WhereXY.SetLocation(1,1);
 end;
 
@@ -123,8 +155,8 @@ begin
   try
     S := Ord(C);
     S := S * FontHeight;
-    XX := FontWidth * (FWhereXY.X - 1);
-    YY := FontHeight * (FWhereXY.Y - 1);
+    XX := FontWidth * (FWhereXY.X - 1) + FBorder;
+    YY := FontHeight * (FWhereXY.Y - 1) + FBorder;
     for Y := 0 to FontHeight - 1 do begin
        V := Font[S + Y];
        for X := 0 to 7 do
@@ -168,6 +200,17 @@ begin
     else
       PutChar(S[I]);
     end;
+end;
+
+procedure TDosScreen.GotoXY(X, Y: integer);
+begin
+  FWhereXY.X:=X;
+  FWhereXY.Y:=Y;
+end;
+
+procedure TDosScreen.GotoXY(XY: TPoint);
+begin
+  FWhereXY := XY;
 end;
 
 end.

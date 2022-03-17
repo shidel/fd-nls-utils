@@ -107,6 +107,13 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgDetails"/>
       </Unit>
+      <Unit>
+        <Filename Value="upkgpreview.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="framePkgPreview"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="uPkgPreview"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

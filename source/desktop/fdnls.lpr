@@ -11,7 +11,7 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, PasExt, uMain, uLog, uAppNLS, uPickFlag, uEditCodePage, uPkgListEdit,
-  uPkgDetails;
+  uPkgDetails, uPkgPreview;
 
 {$R *.res}
 

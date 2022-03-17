@@ -23,18 +23,38 @@ type
   private
     procedure SetRows(AValue: integer);
   private
+    FAllowEdit: boolean;
+    FCodePageIndex: integer;
+    FFontIndex: integer;
+    FIdentity: String;
+    FLanguageIndex: integer;
+    FModified: boolean;
     FRows: integer;
-    FPrevWidth : integer;
     FLabels : array of TLabel;
     FDetails : array of TLabel;
+    function GetDetail(Index : integer): String;
     function GetFlag: TImage;
+    procedure SetAllowEdit(AValue: boolean);
+    procedure SetCodePageIndex(AValue: integer);
+    procedure SetDetail(Index : integer; AValue: String);
+    procedure SetFontIndex(AValue: integer);
+    procedure SetIdentity(AValue: String);
+    procedure SetLanguageIndex(AValue: integer);
     property Rows : integer read FRows write SetRows;
 
   public
+    property AllowEdit : boolean read FAllowEdit write SetAllowEdit;
+    property Modified : boolean read FModified;
     property Flag : TImage read GetFlag;
+    property LanguageIndex : integer read FLanguageIndex write SetLanguageIndex;
+    property CodePageIndex : integer read FCodePageIndex write SetCodePageIndex;
+    property FontIndex : integer read FFontIndex write SetFontIndex;
+    property Identity : String read FIdentity write SetIdentity;
     procedure SetLabels(List : TStringList);
-    procedure SetDetails(List : TStringList);
+    procedure SetDetails(Identifier : String; List : TStringList);
     procedure RowsAdjust;
+    function  IndexOfLabel(S : String) : integer;
+    property  Detail [Index : integer] : String read GetDetail write SetDetail;
   end;
 
 implementation
@@ -45,7 +65,6 @@ implementation
 
 procedure TframePkgDetails.pDetailsResize(Sender: TObject);
 begin
-  // if Width <> FPrevWidth then
     RowsAdjust;
 end;
 
@@ -93,11 +112,54 @@ begin
     end;
   end;
   FRows:=AValue;
+  FModified := False;
 end;
 
 function TframePkgDetails.GetFlag: TImage;
 begin
   Result := iFlag;
+end;
+
+function TframePkgDetails.GetDetail(Index : integer): String;
+begin
+  Result := FDetails[Index].Caption;
+end;
+
+procedure TframePkgDetails.SetAllowEdit(AValue: boolean);
+begin
+  if FAllowEdit=AValue then Exit;
+  if Length(FDetails) <> 0 then exit;
+  FAllowEdit:=AValue;
+end;
+
+procedure TframePkgDetails.SetCodePageIndex(AValue: integer);
+begin
+  if FCodePageIndex=AValue then Exit;
+  FCodePageIndex:=AValue;
+end;
+
+procedure TframePkgDetails.SetDetail(Index : integer; AValue: String);
+begin
+  FDetails[Index].Caption:=AValue;
+  FModified := True;
+end;
+
+procedure TframePkgDetails.SetFontIndex(AValue: integer);
+begin
+  if FFontIndex=AValue then Exit;
+  FFontIndex:=AValue;
+end;
+
+procedure TframePkgDetails.SetIdentity(AValue: String);
+begin
+  if FIdentity=AValue then Exit;
+  FIdentity:=AValue;
+end;
+
+procedure TframePkgDetails.SetLanguageIndex(AValue: integer);
+begin
+  if FLanguageIndex=AValue then Exit;
+  FLanguageIndex:=AValue;
 end;
 
 procedure TframePkgDetails.SetLabels(List: TStringList);
@@ -108,12 +170,15 @@ begin
   for I := 0 to List.Count - 1 do begin
     FLabels[I].Caption:=List[I];
   end;
+  FModified := False;
 end;
 
-procedure TframePkgDetails.SetDetails(List: TStringList);
+procedure TframePkgDetails.SetDetails(Identifier : String; List : TStringList);
 var
   I : integer;
 begin
+  FModified := False;
+  FIdentity := Identifier;
   Rows := List.Count;
   for I := 0 to List.Count - 1 do begin
     FDetails[I].Caption:=List[I];
@@ -125,7 +190,6 @@ procedure TframePkgDetails.RowsAdjust;
 var
   I : integer;
 begin
-  // FPrevWidth := Width;
   if Length(FDetails) > 0 then begin
     Height := FDetails[Length(FDetails) - 1].Top +
       FDetails[Length(FDetails) - 1].Height + pTopSpace.Height;
@@ -133,6 +197,19 @@ begin
   for I := 0 to Length(FDetails) - 1 do begin
     FLabels[I].Top:=FDetails[I].Top;
   end;
+end;
+
+function TframePkgDetails.IndexOfLabel(S: String): integer;
+var
+  I : integer;
+begin
+  S := LowerCase(Trim(S));
+  Result := -1;
+  for I := 0 to Length(FLabels) - 1 do
+    if Lowercase(FLabels[I].Caption) = S then begin
+      Result := I;
+      Break;
+    end;
 end;
 
 end.

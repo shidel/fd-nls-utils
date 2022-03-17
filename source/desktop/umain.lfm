@@ -181,10 +181,10 @@ object fMain: TfMain
           Height = 371
           Top = 0
           Width = 495
-          ActivePage = tsLanguages
+          ActivePage = tsGeneral
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 2
+          TabIndex = 0
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
