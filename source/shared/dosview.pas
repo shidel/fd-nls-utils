@@ -107,13 +107,16 @@ end;
 
 procedure TDosScreen.AdjustSize;
 begin
-  FBitMap.SetSize(FontWidth * FScreenMax.X + Border * 2, FontHeight * FScreenMax.Y + Border * 2);
+  if FontHeight = 0 then
+    FBitMap.SetSize(FontWidth * FScreenMax.X + Border * 2, 8 * FScreenMax.Y + Border * 2)
+  else
+    FBitMap.SetSize(FontWidth * FScreenMax.X + Border * 2, FontHeight * FScreenMax.Y + Border * 2);
   ClearScreen;
 end;
 
 function TDosScreen.FontHeight: integer;
 begin
-  Result := Length(FFont) div 256;
+    Result := Length(FFont) div 256;
 end;
 
 function TDosScreen.FontWidth: integer;

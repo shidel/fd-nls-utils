@@ -9,7 +9,7 @@ uses
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
-  PasExt, ClassExt, VCSExt;
+  PasExt, ClassExt, VCSExt, Icons;
 
 type
   TLanguageData = class(TObject)
@@ -185,6 +185,7 @@ type
     function FindLanguage(ALanguage : String) : integer;
     function FindCodepage(ALanguage : String) : integer;
     function FindFont(ALanguage : String) : integer;
+    function FindFlag(ALanguage : String) : integer;
   published
 
   end;
@@ -897,6 +898,36 @@ begin
   if Result <> -1 then
     Result := Fonts.IndexOfFile(Codepages.Identifier[Result] + '.fnt');
 
+end;
+
+function TFDNLS.FindFlag(ALanguage: String): integer;
+var
+  I : integer;
+  G, S : String;
+begin
+  Result := -1;
+  I := FindLanguage(ALanguage);
+  if Languages.Graphic[I] <> '' then begin
+    G := IconPrefix + Languages.Graphic[I];
+    for I := 0 to Length(IconFlags) - 1 do
+      if G = IconFlags[I] then begin
+        Result := I;
+        Break;
+      end;
+  end else if I <> -1  then begin
+    Result := 0;
+    S := Uppercase(Languages.Identifier[I]);
+    for I := 0 to Length(LanguageCodes) - 1 do
+      if Uppercase(FieldStr(LanguageCodes[I],0,',')) = S then begin
+        G := FieldStr(LanguageCodes[I],4,',');
+        break;
+      end;
+    for I := 0 to Length(CountryData) - 1 do
+      if G = FieldStr(CountryData[I], 1, ',') then begin
+        Result := I;
+        Break;
+      end;
+  end;
 end;
 
 initialization

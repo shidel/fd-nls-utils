@@ -74,7 +74,7 @@ end;
 procedure TframePkgPreview.Render;
 var
   I, X, R : integer;
-  S, L : String;
+  S : String;
 begin
   tRender.Enabled:=False;
   FDosView.ClearScreen;

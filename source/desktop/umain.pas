@@ -152,6 +152,7 @@ type
     procedure SetAppLanguageText(ALanguage : String);
     procedure SelectEditLanguage(Index : integer);
     property ActiveLanguage[ALang : String] : boolean read GetActiveLanguage write SetActiveLanguage;
+    function ActiveLanguages(ExcludeEnglish : boolean = false) : TStringArray;
     function LangStatusVerify : boolean;
     function LangIDVerify : boolean;
     function LangNameVerify : boolean;
@@ -806,6 +807,20 @@ begin
   // Reset Edit Area to top
   sbLanguageEdit.VertScrollBar.Position:=0;
   sbLanguageEdit.VertScrollBar.Range:=bbRemoveLanguage.Top + bbRemoveLanguage.Height + 2;
+end;
+
+function TfMain.ActiveLanguages(ExcludeEnglish: boolean): TStringArray;
+var
+  I, C : integer;
+begin
+  SetLength(Result, Repository.Languages.Count);
+  Repository.Languages.Reload;
+  for I := 0 to Repository.Languages.Count - 1 do
+    if ActiveLanguage[Repository.Languages.Identifier[I]] then begin
+      Result[C] := Repository.Languages.Identifier[I];
+      Inc(C);
+    end;
+  SetLength(Result,C);
 end;
 
 function TfMain.LangStatusVerify: boolean;

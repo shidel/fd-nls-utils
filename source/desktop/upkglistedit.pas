@@ -5,7 +5,7 @@ unit uPkgListEdit;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, Grids,
+  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, Grids, PasExt,
   StdCtrls, FDKit, uLog, Icons, uPkgDetails, uPkgPreview;
 
 type
@@ -22,6 +22,9 @@ type
     FPkgView : TFrame;
     FMasterDetails : TframePkgDetails;
     FPreview : TframePkgPreview;
+    FEditors : array of TframePkgPreview;
+    function MakeViewer(Language:String; AllowEdit : boolean) : TframePkgDetails;
+    procedure MakeEditors;
   public
     procedure Initialize;
     procedure Clear;
@@ -47,6 +50,26 @@ begin
     SelectEdit(Item);
 end;
 
+function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean
+  ): TframePkgDetails;
+begin
+  log(Self, 'Create Details ' + WhenTrue(AllowEdit, 'Editor', 'Viewer') + ' for ' + Language);
+  Result := TframePkgDetails.Create(Self);
+  Result.Parent := FPkgView;
+  Result.AllowEdit:= AllowEdit;
+  Result.Align:=alTop;
+  Result.LanguageIndex:=FDNLS.FindLanguage(Language);
+  Result.CodePageIndex:=FDNLS.FindCodepage(Language);
+  Result.FontIndex:=FDNLS.FindFont(Language);
+  Result.Flag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
+  Result.SetLabels(FDNLS.PackageLists.Fields);
+end;
+
+procedure TframePkgListEdit.MakeEditors;
+begin
+
+end;
+
 procedure TframePkgListEdit.Initialize;
 begin
   Clear;
@@ -68,15 +91,7 @@ begin
   end;
 
   if not Assigned(FMasterDetails) then begin
-    FMasterDetails := TframePkgDetails.Create(Self);
-    FMasterDetails.Parent := FPkgView;
-    FMasterDetails.AllowEdit:= False;
-    FMasterDetails.Align:=alTop;
-    FMasterDetails.LanguageIndex:=FDNLS.FindLanguage(MasterCSVLanguage);
-    FMasterDetails.CodePageIndex:=FDNLS.FindCodepage(MasterCSVLanguage);
-    FMasterDetails.FontIndex:=FDNLS.FindFont(MasterCSVLanguage);
-    FMasterDetails.Flag.Picture.LoadFromLazarusResource(IconPrefix + 'usa');
-    FMasterDetails.SetLabels(FDNLS.PackageLists.Fields);
+    FMasterDetails := MakeViewer(MasterCSVLanguage, False);
   end;
 
   if not Assigned(FPreview) then begin
@@ -88,10 +103,15 @@ begin
 end;
 
 procedure TframePkgListEdit.Clear;
+var
+  I : integer;
 begin
   lvPackages.Clear;
   FreeAndNil(FMasterDetails);
   FreeAnDNil(FPreview);
+  for I := 0 to length(FEditors) - 1 do
+    FreeAndNil(FEditors[I]);
+  SetLength(FEditors, 0);
 end;
 
 procedure TframePkgListEdit.Reload;
@@ -126,8 +146,8 @@ begin
   Log(Self, 'set master details');
   FMasterDetails.SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
   FPreview.Preview(FMasterDetails);
-  lvPackages.Items[5].ImageIndex:=16;
-  lvPackages.Items[14].ImageIndex:=15;
+  if Length(FEditors) = 0 then MakeEditors;
+
 end;
 
 end.
