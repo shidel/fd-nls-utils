@@ -5,7 +5,7 @@ unit uPkgDetails;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ExtCtrls, StdCtrls;
+  Classes, SysUtils, Forms, Controls, ExtCtrls, StdCtrls, FDKit, Icons;
 
 type
 
@@ -27,6 +27,7 @@ type
     FCodePageIndex: integer;
     FFontIndex: integer;
     FIdentity: String;
+    FLanguage: String;
     FLanguageIndex: integer;
     FModified: boolean;
     FRows: integer;
@@ -41,11 +42,12 @@ type
     procedure SetIdentity(AValue: String);
     procedure SetLanguageIndex(AValue: integer);
     property Rows : integer read FRows write SetRows;
-
   public
+    constructor Create(AOwner: TComponent; ALanguage : String); virtual; overload;
     property AllowEdit : boolean read FAllowEdit write SetAllowEdit;
     property Modified : boolean read FModified;
     property Flag : TImage read GetFlag;
+    property Language : String read FLanguage;
     property LanguageIndex : integer read FLanguageIndex write SetLanguageIndex;
     property CodePageIndex : integer read FCodePageIndex write SetCodePageIndex;
     property FontIndex : integer read FFontIndex write SetFontIndex;
@@ -160,6 +162,18 @@ procedure TframePkgDetails.SetLanguageIndex(AValue: integer);
 begin
   if FLanguageIndex=AValue then Exit;
   FLanguageIndex:=AValue;
+end;
+
+constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String);
+begin
+  inherited Create(AOwner);
+  FLanguage := ALanguage;
+  Name:=Name + '_' + FLanguage;
+  FLanguageIndex:=FDNLS.FindLanguage(Language);
+  FCodePageIndex:=FDNLS.FindCodepage(Language);
+  FFontIndex:=FDNLS.FindFont(Language);
+  iFlag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
+  SetLabels(FDNLS.PackageLists.Fields);
 end;
 
 procedure TframePkgDetails.SetLabels(List: TStringList);

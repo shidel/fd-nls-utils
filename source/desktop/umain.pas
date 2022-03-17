@@ -152,7 +152,6 @@ type
     procedure SetAppLanguageText(ALanguage : String);
     procedure SelectEditLanguage(Index : integer);
     property ActiveLanguage[ALang : String] : boolean read GetActiveLanguage write SetActiveLanguage;
-    function ActiveLanguages(ExcludeEnglish : boolean = false) : TStringArray;
     function LangStatusVerify : boolean;
     function LangIDVerify : boolean;
     function LangNameVerify : boolean;
@@ -162,6 +161,7 @@ type
   public
      Repository: TFDNLS;
    procedure SoftwareUpdate(Silent : boolean);
+   function ActiveLanguages(ExcludeEnglish : boolean = false) : TStringArray;
   end;
 
 var
@@ -813,13 +813,17 @@ function TfMain.ActiveLanguages(ExcludeEnglish: boolean): TStringArray;
 var
   I, C : integer;
 begin
+  Result := [];
+  C := 0;
   SetLength(Result, Repository.Languages.Count);
   Repository.Languages.Reload;
   for I := 0 to Repository.Languages.Count - 1 do
-    if ActiveLanguage[Repository.Languages.Identifier[I]] then begin
-      Result[C] := Repository.Languages.Identifier[I];
-      Inc(C);
-    end;
+    if ActiveLanguage[Repository.Languages.Identifier[I]] then
+      if (not ExcludeEnglish) or
+      (lowercase(Repository.Languages.Identifier[I]) <> 'en_us') then begin
+        Result[C] := Repository.Languages.Identifier[I];
+        Inc(C);
+      end;
   SetLength(Result,C);
 end;
 

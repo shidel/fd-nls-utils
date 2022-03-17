@@ -18,12 +18,14 @@ type
     procedure lvPackagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
   private
+    FPreviewSplitter : TSplitter;
     FNeedRefresh : boolean;
     FPkgView : TFrame;
     FMasterDetails : TframePkgDetails;
     FPreview : TframePkgPreview;
-    FEditors : array of TframePkgPreview;
-    function MakeViewer(Language:String; AllowEdit : boolean) : TframePkgDetails;
+    FEditors : array of TframePkgDetails;
+    FActive  : TStringArray;
+    function MakeViewer(Language:String; AllowEdit : boolean; ATop : integer) : TframePkgDetails;
     procedure MakeEditors;
   public
     procedure Initialize;
@@ -50,24 +52,27 @@ begin
     SelectEdit(Item);
 end;
 
-function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean
-  ): TframePkgDetails;
+function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean;
+  ATop : Integer ): TframePkgDetails;
 begin
   log(Self, 'Create Details ' + WhenTrue(AllowEdit, 'Editor', 'Viewer') + ' for ' + Language);
-  Result := TframePkgDetails.Create(Self);
+  Result := TframePkgDetails.Create(Self, Language);
   Result.Parent := FPkgView;
   Result.AllowEdit:= AllowEdit;
+  Result.Top := ATop;
   Result.Align:=alTop;
-  Result.LanguageIndex:=FDNLS.FindLanguage(Language);
-  Result.CodePageIndex:=FDNLS.FindCodepage(Language);
-  Result.FontIndex:=FDNLS.FindFont(Language);
-  Result.Flag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
-  Result.SetLabels(FDNLS.PackageLists.Fields);
 end;
 
 procedure TframePkgListEdit.MakeEditors;
+var
+  I, Y : integer;
 begin
-
+  Y := FPreviewSplitter.Top + FPreviewSplitter.Height;
+  SetLength(FEditors, Length(FActive));
+  for I := 0 to Length(FEditors) - 1 do begin
+    FEditors[I] := MakeViewer(FActive[I], True, Y);
+    Y := FEditors[I].Top + FEditors[I].Height;
+  end;
 end;
 
 procedure TframePkgListEdit.Initialize;
@@ -91,7 +96,7 @@ begin
   end;
 
   if not Assigned(FMasterDetails) then begin
-    FMasterDetails := MakeViewer(MasterCSVLanguage, False);
+    FMasterDetails := MakeViewer(MasterCSVLanguage, False, 0);
   end;
 
   if not Assigned(FPreview) then begin
@@ -100,6 +105,15 @@ begin
     FPreview.Top := FMasterDetails.Top + FMasterDetails.Height;
     FPreview.Align:=alTop;
   end;
+
+  if not Assigned(FPreviewSplitter) then begin
+    FPreviewSplitter := TSplitter.Create(Self);
+    FPreviewSplitter.Name:='sPreviewSplitter';
+    FPreviewSplitter.Parent := FPkgView;
+    FPreviewSplitter.Top := FPreview.Top + FPreview.Height;
+    FPreviewSplitter.Align := alTop;
+  end;
+  FActive := fMain.ActiveLanguages(True);
 end;
 
 procedure TframePkgListEdit.Clear;
@@ -109,6 +123,7 @@ begin
   lvPackages.Clear;
   FreeAndNil(FMasterDetails);
   FreeAnDNil(FPreview);
+  FreeAndNil(FPreviewSplitter);
   for I := 0 to length(FEditors) - 1 do
     FreeAndNil(FEditors[I]);
   SetLength(FEditors, 0);
