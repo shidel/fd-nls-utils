@@ -111,6 +111,7 @@
         <Filename Value="upkgpreview.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="framePkgPreview"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
       </Unit>

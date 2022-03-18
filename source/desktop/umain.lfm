@@ -1,7 +1,7 @@
 object fMain: TfMain
-  Left = 231
+  Left = 438
   Height = 477
-  Top = 80
+  Top = 162
   Width = 640
   Caption = 'FD-NLS'
   ClientHeight = 477
@@ -105,9 +105,9 @@ object fMain: TfMain
       Height = 401
       Top = 4
       Width = 632
-      ActivePage = tsProjects
+      ActivePage = tsPackages
       Align = alClient
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'
@@ -126,9 +126,19 @@ object fMain: TfMain
           Height = 150
           Top = 110
           Width = 150
-          HorzScrollBar.Page = 1
-          VertScrollBar.Page = 1
+          HorzScrollBar.Page = 148
+          VertScrollBar.Page = 133
+          ClientHeight = 133
+          ClientWidth = 148
           TabOrder = 0
+          object Panel1: TPanel
+            Left = 18
+            Height = 170
+            Top = 32
+            Width = 174
+            Caption = '?'
+            TabOrder = 0
+          end
         end
       end
       object tsPackages: TTabSheet

@@ -124,11 +124,13 @@ begin
 
   iPreview.Height:=iPreview.Width * FDosView.Bitmap.Height div FDosView.Bitmap.Width;
   iPreview.Picture.Assign(FDosView.Bitmap);
+  Constraints.MaxHeight:=iPreview.Height + 2;
 end;
 
 constructor TframePkgPreview.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  Name:=Name + '_PkgPreview';
   FDosView := TDosScreen.Create(80,14);
   FDosView.Background:=clBlue;
   FDosView.Border:=2;

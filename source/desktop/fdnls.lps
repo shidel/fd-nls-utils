@@ -19,9 +19,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <TopLine Value="237"/>
-        <CursorPos X="3" Y="243"/>
-        <FoldState Value=" T3lY0302227231A18211314w"/>
+        <TopLine Value="223"/>
+        <CursorPos X="3" Y="244"/>
+        <FoldState Value=" T3lZ0302227231A18211314."/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -76,11 +76,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="102"/>
-        <CursorPos X="34" Y="131"/>
-        <UsageCount Value="177"/>
+        <TopLine Value="7"/>
+        <CursorPos X="7" Y="120"/>
+        <UsageCount Value="178"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -94,7 +93,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="16"/>
         <CursorPos X="21" Y="34"/>
-        <UsageCount Value="109"/>
+        <UsageCount Value="110"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -165,32 +164,29 @@
         <Filename Value="upkgpreview.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="framePkgPreview"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="49"/>
-        <CursorPos X="47" Y="152"/>
-        <UsageCount Value="91"/>
+        <TopLine Value="104"/>
+        <CursorPos X="51" Y="125"/>
+        <FoldState Value=" T3iG0C022-"/>
+        <UsageCount Value="92"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\dosview.pas"/>
         <UnitName Value="DosView"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="99"/>
-        <CursorPos X="61" Y="111"/>
+        <CursorPos X="14" Y="124"/>
         <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="646" Column="49" TopLine="552"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="927" Column="22" TopLine="891"/>
-      </Position>
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
         <Caret Line="919" Column="20" TopLine="892"/>
@@ -302,6 +298,14 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="242" Column="3" TopLine="236"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="243" Column="3" TopLine="237"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgpreview.pas"/>
+        <Caret Line="36" Column="19"/>
       </Position>
     </JumpHistory>
     <RunParams>

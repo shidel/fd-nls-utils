@@ -108,7 +108,7 @@ end;
 procedure TDosScreen.AdjustSize;
 begin
   if FontHeight = 0 then
-    FBitMap.SetSize(FontWidth * FScreenMax.X + Border * 2, 8 * FScreenMax.Y + Border * 2)
+    FBitMap.SetSize(FontWidth * FScreenMax.X + Border * 2, 16 * FScreenMax.Y + Border * 2)
   else
     FBitMap.SetSize(FontWidth * FScreenMax.X + Border * 2, FontHeight * FScreenMax.Y + Border * 2);
   ClearScreen;

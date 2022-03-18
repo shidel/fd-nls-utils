@@ -100,14 +100,10 @@ begin
        SmallImages := fMain.ilToolsSmall;
   end;
 
-  if not Assigned(FMasterDetails) then begin
-    FMasterDetails := MakeViewer(MasterCSVLanguage, False, 0);
-  end;
-
   if not Assigned(FPreview) then begin
     FPreview := TframePkgPreview.Create(Self);
     FPreview.Parent := FPkgView;
-    FPreview.Top := FMasterDetails.Top + FMasterDetails.Height;
+    FPreview.Top := 0;
     FPreview.Align:=alTop;
   end;
 
@@ -117,6 +113,11 @@ begin
     FPreviewSplitter.Parent := FPkgView;
     FPreviewSplitter.Top := FPreview.Top + FPreview.Height;
     FPreviewSplitter.Align := alTop;
+  end;
+
+  if not Assigned(FMasterDetails) then begin
+    FMasterDetails := MakeViewer(MasterCSVLanguage, False,
+      FPreviewSplitter.Top + FPreviewSplitter.Height);
   end;
 
   if not Assigned(FScroll) then begin

@@ -60,6 +60,7 @@ type
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
     mMain: TMainMenu;
+    Panel1: TPanel;
     pLangEditRight: TPanel;
     pLangEditLeft: TPanel;
     pLanguagesList: TPanel;
