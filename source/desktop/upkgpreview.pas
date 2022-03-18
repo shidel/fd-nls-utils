@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Graphics, Forms, Controls, ExtCtrls, PasExt, FDKit,
-  DosView, uPkgDetails, uAppNLS;
+  DosView, uAppNLS;
 
 type
 
@@ -14,14 +14,13 @@ type
 
   TframePkgPreview = class(TFrame)
     iPreview: TImage;
-    pSpacer: TPanel;
     sbPreview: TScrollBox;
     tRender: TTimer;
     procedure FrameResize(Sender: TObject);
     procedure tRenderTimer(Sender: TObject);
   private
     FDosView : TDosScreen;
-    FDetails : TframePkgDetails;
+    FDetails : TControl;
     FPkgGroup,
     FPkgId,
     FPkgDesc,
@@ -37,10 +36,12 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Preview(Details : TframePkgDetails); virtual;
+    procedure Preview(Details : TControl); virtual;
   end;
 
 implementation
+
+uses uMain, uPkgDetails;
 
 {$R *.lfm}
 
@@ -63,11 +64,11 @@ var
 begin
   Field := DefaultValue;
   if Assigned(FDetails) then begin
-    I := FDetails.IndexOfLabel(ID);
+    I := TframePkgDetails(FDetails).IndexOfLabel(ID);
     if I < 0 then exit;
-    Field := FDetails.Detail[I];
-    if FDetails.CodePageIndex <> -1 then
-      Field := FDNLS.CodePages.UTF8toDOS(FDetails.CodePageIndex,Field);
+    Field := TframePkgDetails(FDetails).Detail[I];
+    if TframePkgDetails(FDetails).CodePageIndex <> -1 then
+      Field := FDNLS.CodePages.UTF8toDOS(TframePkgDetails(FDetails).CodePageIndex,Field);
   end;
 end;
 
@@ -80,11 +81,13 @@ begin
   FDosView.ClearScreen;
   FDosView.TextColor:=clWhite;
   for I := 1 to FDosView.ScreenMax.Y do begin
+    if I = 15 then FDosView.TextColor:=clGray;
     FDosView.GotoXY(1, I);
     FDosView.PutChar(#$b3);
     FDosView.GotoXY(80, I);
     FDosView.PutChar(#$b3);
   end;
+  FDosView.TextColor:=clWhite;
   FDosView.GotoXY(25, 1);
   FDosView.PutChar(#$b3);
   FDosView.GotoXY(2, 2);
@@ -130,8 +133,8 @@ end;
 constructor TframePkgPreview.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  Name:=Name + '_PkgPreview';
-  FDosView := TDosScreen.Create(80,14);
+  Name:=Name + '_DosView';
+  FDosView := TDosScreen.Create(80,25);
   FDosView.Background:=clBlue;
   FDosView.Border:=2;
   FPkgGroup := dos_PkgGroup;
@@ -145,14 +148,14 @@ begin
   inherited Destroy;
 end;
 
-procedure TframePkgPreview.Preview(Details: TframePkgDetails);
+procedure TframePkgPreview.Preview(Details: TControl);
 begin
   FDetails := Details;
-  if Details.FontIndex = -1 then
+  if TframePkgDetails(FDetails).FontIndex = -1 then
     FDosView.Font := FDNLS.Fonts.Data[0].FileData
   else
-    FDosView.Font := FDNLS.Fonts.Data[Details.FontIndex].FileData;
-  FPkgID := Uppercase(Copy(Details.Identity, 1,8));
+    FDosView.Font := FDNLS.Fonts.Data[TframePkgDetails(FDetails).FontIndex].FileData;
+  FPkgID := Uppercase(Copy(TframePkgDetails(FDetails).Identity, 1,8));
   SetFieldValue('version', FPkgVer, dos_PkgVersion);
   SetFieldValue('author', FPkgAuthor, dos_PkgAuthor);
   SetFieldValue('group', FPkgAuthor, dos_PkgAuthor);

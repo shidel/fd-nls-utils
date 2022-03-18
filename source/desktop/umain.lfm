@@ -14,6 +14,7 @@ object fMain: TfMain
   OnHide = FormHide
   OnShow = FormShow
   SessionProperties = 'ClientHeight;ClientWidth;Height;Left;pLanguagesList.Height;Top;tvPrefs.Width;Width;WindowState'
+  ShowHint = True
   LCLVersion = '2.3.0.0'
   Visible = True
   object pControlArea: TPanel
@@ -41,24 +42,42 @@ object fMain: TfMain
       Images = ilToolsMedium
       TabOrder = 0
       object tbProjects: TToolButton
-        Left = 1
+        Left = 41
+        Hint = 'Project NLS Editor'
         Top = 0
         Action = actProjects
       end
       object tbPackages: TToolButton
-        Left = 41
+        Left = 1
+        Hint = 'Package List Description Editor'
         Top = 0
         Action = actPackages
       end
       object tbDebugLog: TToolButton
-        Left = 81
+        Left = 97
+        Hint = 'Debug Log'
         Top = 0
         Action = actDebugLog
       end
       object tbPreferences: TToolButton
-        Left = 121
+        Left = 153
+        Hint = 'Configuration, Options and Preferences'
         Top = 0
         Action = actPreferences
+      end
+      object tbSepA: TToolButton
+        Left = 81
+        Height = 40
+        Top = 0
+        Caption = 'tbSepA'
+        Style = tbsSeparator
+      end
+      object tbSepB: TToolButton
+        Left = 137
+        Height = 40
+        Top = 0
+        Caption = 'tbSepB'
+        Style = tbsSeparator
       end
     end
   end
@@ -121,24 +140,15 @@ object fMain: TfMain
           Width = 89
           Caption = 'lbComingSoon'
         end
-        object ScrollBox1: TScrollBox
-          Left = 269
-          Height = 150
-          Top = 110
+        object Memo1: TMemo
+          Left = 190
+          Height = 90
+          Top = 107
           Width = 150
-          HorzScrollBar.Page = 148
-          VertScrollBar.Page = 133
-          ClientHeight = 133
-          ClientWidth = 148
+          Lines.Strings = (
+            'Memo1'
+          )
           TabOrder = 0
-          object Panel1: TPanel
-            Left = 18
-            Height = 170
-            Top = 32
-            Width = 174
-            Caption = '?'
-            TabOrder = 0
-          end
         end
       end
       object tsPackages: TTabSheet
@@ -2938,17 +2948,18 @@ object fMain: TfMain
       ImageIndex = 2
       OnExecute = actDebugLogExecute
     end
-    object actProjects: TAction
-      Category = 'UI'
-      Caption = 'Projects'
-      ImageIndex = 3
-      OnExecute = actProjectsExecute
-    end
     object actPackages: TAction
       Category = 'UI'
       Caption = 'Packages'
       ImageIndex = 4
       OnExecute = actPackagesExecute
+    end
+    object actProjects: TAction
+      Category = 'UI'
+      Caption = 'Projects'
+      Enabled = False
+      ImageIndex = 3
+      OnExecute = actProjectsExecute
     end
     object actAddLanguage: TAction
       Category = 'UI'

@@ -30,15 +30,6 @@ object framePkgPreview: TframePkgPreview
       Stretch = True
     end
   end
-  object pSpacer: TPanel
-    Left = 0
-    Height = 5
-    Top = 0
-    Width = 319
-    Anchors = [akTop, akLeft, akRight]
-    BevelOuter = bvNone
-    TabOrder = 1
-  end
   object tRender: TTimer
     Enabled = False
     OnTimer = tRenderTimer

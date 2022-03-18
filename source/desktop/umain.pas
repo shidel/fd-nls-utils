@@ -59,8 +59,8 @@ type
     lbLocalRepo: TLabel;
     lbSoftwareUpdate: TLabel;
     lvLanguages: TListView;
+    Memo1: TMemo;
     mMain: TMainMenu;
-    Panel1: TPanel;
     pLangEditRight: TPanel;
     pLangEditLeft: TPanel;
     pLanguagesList: TPanel;
@@ -74,12 +74,13 @@ type
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
     sbLanguageEdit: TScrollBox;
-    ScrollBox1: TScrollBox;
     sLanguages: TSplitter;
     btAddLanguage: TSpeedButton;
     btCodepage: TSpeedButton;
     sPrefs: TSplitter;
     itMinute: TTimer;
+    tbSepA: TToolButton;
+    tbSepB: TToolButton;
     tsPackages: TTabSheet;
     tsProjects: TTabSheet;
     tbMain: TToolBar;

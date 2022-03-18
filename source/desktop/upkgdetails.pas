@@ -33,21 +33,24 @@ type
     FModified: boolean;
     FRows: integer;
     FLabels : array of TLabel;
-    FDetails : array of TLabel;
+    FDatum : array of TControl;
+    FViewer: TControl;
     function GetDetail(Index : integer): String;
     function GetFlag: TImage;
-    procedure SetAllowEdit(AValue: boolean);
     procedure SetCodePageIndex(AValue: integer);
     procedure SetDetail(Index : integer; AValue: String);
     procedure SetFontIndex(AValue: integer);
     procedure SetIdentity(AValue: String);
     procedure SetLanguageIndex(AValue: integer);
+    procedure SetViewer(AValue: TControl);
     property Rows : integer read FRows write SetRows;
   public
-    constructor Create(AOwner: TComponent; ALanguage : String); virtual; overload;
-    property AllowEdit : boolean read FAllowEdit write SetAllowEdit;
+    constructor Create(AOwner: TComponent; ALanguage : String; AEditor : boolean = false); virtual; overload;
+    destructor Destroy; override;
+    property AllowEdit : boolean read FAllowEdit;
     property Modified : boolean read FModified;
     property Flag : TImage read GetFlag;
+    property Viewer : TControl read FViewer write SetViewer;
     property Language : String read FLanguage;
     property LanguageIndex : integer read FLanguageIndex write SetLanguageIndex;
     property CodePageIndex : integer read FCodePageIndex write SetCodePageIndex;
@@ -61,6 +64,8 @@ type
   end;
 
 implementation
+
+uses uMain, uPkgPreview;
 
 {$R *.lfm}
 
@@ -79,11 +84,11 @@ begin
   if AValue < FRows then begin
     for I := AValue  + 1 to FRows do begin
        FreeAndNil(FLabels[I - 1]);
-       FreeAndNil(FDetails[I - 1]);
+       FreeAndNil(FDatum[I - 1]);
     end;
   end;
   SetLength(FLabels, AValue);
-  SetLength(FDetails, AValue);
+  SetLength(FDatum, AValue);
   if Not Assigned(pTopSpace) then begin
     pTopSpace := TLabel.Create(Self);
     with pTopSpace do begin
@@ -96,15 +101,22 @@ begin
   end;
   if AValue > FRows then begin
     for I := Rows + 1 to AValue do begin
-      FDetails[I - 1] := TLabel.Create(Self);
-      FDetails[I - 1].Parent := pDetails;
-      FDetails[I - 1].Top := (I) * 16 + 8;
-      FDetails[I - 1].WordWrap:=True;
-      FDetails[I - 1].Constraints.MinHeight:=16;
-      FDetails[I - 1].AutoSize:=True;
-      FDetails[I - 1].Align:=alTop;
+      if FAllowEdit then begin
+        FDatum[I - 1] := TEdit.Create(Self);
+      end else begin
+        FDatum[I - 1] := TLabel.Create(Self);
+        TLabel(FDatum[I - 1]).WordWrap:=True;
+      end;
+      FDatum[I - 1].Name:=Name + '_Details'+IntToStr(I-1);
+      FDatum[I - 1].Parent := pDetails;
+      FDatum[I - 1].Top := (I) * 16 + 8;
+      FDatum[I - 1].Constraints.MinHeight:=16;
+      FDatum[I - 1].AutoSize:=True;
+      FDatum[I - 1].Align:=alTop;
+      FDatum[I - 1].Caption:='';
 
       FLabels[I - 1] := TLabel.Create(Self);
+      FLabels[I - 1].Name:=Name + '_PkgLabel'+IntToStr(I-1);
       FLabels[I - 1].Parent := pLabels;
       FLabels[I - 1].Alignment := taRightJustify;
       FLabels[I - 1].Left := pLabels.Width - FLabels[I - 1].Width - 1;
@@ -125,14 +137,7 @@ end;
 
 function TframePkgDetails.GetDetail(Index : integer): String;
 begin
-  Result := FDetails[Index].Caption;
-end;
-
-procedure TframePkgDetails.SetAllowEdit(AValue: boolean);
-begin
-  if FAllowEdit=AValue then Exit;
-  if Length(FDetails) <> 0 then exit;
-  FAllowEdit:=AValue;
+  Result := FDatum[Index].Caption;
 end;
 
 procedure TframePkgDetails.SetCodePageIndex(AValue: integer);
@@ -143,7 +148,7 @@ end;
 
 procedure TframePkgDetails.SetDetail(Index : integer; AValue: String);
 begin
-  FDetails[Index].Caption:=AValue;
+  FDatum[Index].Caption:=AValue;
   FModified := True;
 end;
 
@@ -165,17 +170,33 @@ begin
   FLanguageIndex:=AValue;
 end;
 
-constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String);
+procedure TframePkgDetails.SetViewer(AValue: TControl);
+begin
+  if FViewer=AValue then Exit;
+  FViewer:=AValue;
+end;
+
+constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String;
+  AEditor: boolean = false);
 begin
   inherited Create(AOwner);
+  FAllowEdit := AEditor;
   FLanguage := ALanguage;
   pLanguage.Caption:=ALanguage;
   Name:=Name + '_' + FLanguage;
+  pLabels.Width :=
+    fMain.xProperties.ReadInteger(GetNamePath + '/WIDTH', pLabels.Width);
   FLanguageIndex:=FDNLS.FindLanguage(Language);
   FCodePageIndex:=FDNLS.FindCodepage(Language);
   FFontIndex:=FDNLS.FindFont(Language);
   iFlag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
   SetLabels(FDNLS.PackageLists.Fields);
+end;
+
+destructor TframePkgDetails.Destroy;
+begin
+  fMain.xProperties.WriteInteger(GetNamePath + '/WIDTH', pLabels.Width);
+  inherited Destroy;
 end;
 
 procedure TframePkgDetails.SetLabels(List: TStringList);
@@ -197,7 +218,7 @@ begin
   FIdentity := Identifier;
   Rows := List.Count;
   for I := 0 to List.Count - 1 do begin
-    FDetails[I].Caption:=List[I];
+    FDatum[I].Caption:=List[I];
   end;
   RowsAdjust;
 end;
@@ -206,12 +227,12 @@ procedure TframePkgDetails.RowsAdjust;
 var
   I : integer;
 begin
-  if Length(FDetails) > 0 then begin
-    Height := FDetails[Length(FDetails) - 1].Top +
-      FDetails[Length(FDetails) - 1].Height + pTopSpace.Height;
+  if Length(FDatum) > 0 then begin
+    Height := FDatum[Length(FDatum) - 1].Top +
+      FDatum[Length(FDatum) - 1].Height + pTopSpace.Height;
   end;
-  for I := 0 to Length(FDetails) - 1 do begin
-    FLabels[I].Top:=FDetails[I].Top;
+  for I := 0 to Length(FDatum) - 1 do begin
+    FLabels[I].Top:=FDatum[I].Top;
   end;
 end;
 

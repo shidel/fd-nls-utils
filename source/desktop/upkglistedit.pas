@@ -57,13 +57,12 @@ function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean;
   ATop : Integer ): TframePkgDetails;
 begin
   log(Self, 'Create Details ' + WhenTrue(AllowEdit, 'Editor', 'Viewer') + ' for ' + Language);
-  Result := TframePkgDetails.Create(Self, Language);
+  Result := TframePkgDetails.Create(Self, Language, AllowEdit);
   if AllowEdit then
     Result.Parent := FScroll
   else
     Result.Parent := FPkgView;
 
-  Result.AllowEdit:= AllowEdit;
   Result.Top := ATop;
   Result.Align:=alTop;
 end;
@@ -77,6 +76,7 @@ begin
   for I := 0 to Length(FEditors) - 1 do begin
     FEditors[I] := MakeViewer(FActive[I], True, Y);
     Y := FEditors[I].Top + FEditors[I].Height;
+    FEditors[I].Viewer:=FPreview;
   end;
 end;
 
@@ -105,6 +105,7 @@ begin
     FPreview.Parent := FPkgView;
     FPreview.Top := 0;
     FPreview.Align:=alTop;
+    // FPreview.Height := 300;
   end;
 
   if not Assigned(FPreviewSplitter) then begin
@@ -118,6 +119,7 @@ begin
   if not Assigned(FMasterDetails) then begin
     FMasterDetails := MakeViewer(MasterCSVLanguage, False,
       FPreviewSplitter.Top + FPreviewSplitter.Height);
+    FMasterDetails.Viewer:=FPreview;
   end;
 
   if not Assigned(FScroll) then begin
@@ -141,11 +143,11 @@ var
 begin
   lvPackages.Clear;
   FreeAndNil(FMasterDetails);
-  FreeAnDNil(FPreview);
   FreeAndNil(FPreviewSplitter);
   for I := 0 to length(FEditors) - 1 do
     FreeAndNil(FEditors[I]);
   FreeAndNil(FScroll);
+  FreeAnDNil(FPreview);
   SetLength(FEditors, 0);
 end;
 
@@ -175,13 +177,16 @@ begin
 end;
 
 procedure TframePkgListEdit.SelectEdit(Item: TListItem);
+var
+  I : integer;
 begin
   Log(Self, 'select item ' + IntToStr(Item.Index) + ', ' + Item.Caption);
   Log(Self, 'set master details');
   FMasterDetails.SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
   FPreview.Preview(FMasterDetails);
   if Length(FEditors) = 0 then MakeEditors;
-
+  for I := 0 to Length(FEditors) - 1 do
+      FEditors[I].SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
 end;
 
 end.
