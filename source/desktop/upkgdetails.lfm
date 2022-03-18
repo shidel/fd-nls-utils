@@ -37,6 +37,17 @@ object framePkgDetails: TframePkgDetails
         Proportional = True
         Stretch = True
       end
+      object pLanguage: TLabel
+        Left = -1
+        Height = 16
+        Top = 216
+        Width = 65
+        Alignment = taCenter
+        Anchors = [akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = 'xxx'
+        Enabled = False
+      end
     end
     object pLabels: TPanel
       Left = 64

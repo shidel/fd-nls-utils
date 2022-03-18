@@ -13,6 +13,7 @@ type
 
   TframePkgDetails = class(TFrame)
     iFlag: TImage;
+    pLanguage: TLabel;
     pTopSpace : TLabel;
     pDetails: TPanel;
     pLabels: TPanel;
@@ -168,6 +169,7 @@ constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String);
 begin
   inherited Create(AOwner);
   FLanguage := ALanguage;
+  pLanguage.Caption:=ALanguage;
   Name:=Name + '_' + FLanguage;
   FLanguageIndex:=FDNLS.FindLanguage(Language);
   FCodePageIndex:=FDNLS.FindCodepage(Language);

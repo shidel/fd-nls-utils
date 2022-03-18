@@ -73,6 +73,7 @@ type
     pSeperatorLower: TPanel;
     sbMain: TStatusBar;
     sbLanguageEdit: TScrollBox;
+    ScrollBox1: TScrollBox;
     sLanguages: TSplitter;
     btAddLanguage: TSpeedButton;
     btCodepage: TSpeedButton;

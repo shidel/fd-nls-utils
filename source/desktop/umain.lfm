@@ -105,9 +105,9 @@ object fMain: TfMain
       Height = 401
       Top = 4
       Width = 632
-      ActivePage = tsPackages
+      ActivePage = tsProjects
       Align = alClient
-      TabIndex = 1
+      TabIndex = 0
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'
@@ -120,6 +120,15 @@ object fMain: TfMain
           Top = 8
           Width = 89
           Caption = 'lbComingSoon'
+        end
+        object ScrollBox1: TScrollBox
+          Left = 269
+          Height = 150
+          Top = 110
+          Width = 150
+          HorzScrollBar.Page = 1
+          VertScrollBar.Page = 1
+          TabOrder = 0
         end
       end
       object tsPackages: TTabSheet

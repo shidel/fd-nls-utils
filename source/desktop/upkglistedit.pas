@@ -18,11 +18,12 @@ type
     procedure lvPackagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
   private
-    FPreviewSplitter : TSplitter;
     FNeedRefresh : boolean;
     FPkgView : TFrame;
     FMasterDetails : TframePkgDetails;
     FPreview : TframePkgPreview;
+    FPreviewSplitter : TSplitter;
+    FScroll : TScrollBox;
     FEditors : array of TframePkgDetails;
     FActive  : TStringArray;
     function MakeViewer(Language:String; AllowEdit : boolean; ATop : integer) : TframePkgDetails;
@@ -57,7 +58,11 @@ function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean;
 begin
   log(Self, 'Create Details ' + WhenTrue(AllowEdit, 'Editor', 'Viewer') + ' for ' + Language);
   Result := TframePkgDetails.Create(Self, Language);
-  Result.Parent := FPkgView;
+  if AllowEdit then
+    Result.Parent := FScroll
+  else
+    Result.Parent := FPkgView;
+
   Result.AllowEdit:= AllowEdit;
   Result.Top := ATop;
   Result.Align:=alTop;
@@ -67,7 +72,7 @@ procedure TframePkgListEdit.MakeEditors;
 var
   I, Y : integer;
 begin
-  Y := FPreviewSplitter.Top + FPreviewSplitter.Height;
+  Y := 0;
   SetLength(FEditors, Length(FActive));
   for I := 0 to Length(FEditors) - 1 do begin
     FEditors[I] := MakeViewer(FActive[I], True, Y);
@@ -108,11 +113,24 @@ begin
 
   if not Assigned(FPreviewSplitter) then begin
     FPreviewSplitter := TSplitter.Create(Self);
-    FPreviewSplitter.Name:='sPreviewSplitter';
+    FPreviewSplitter.Name:='PkgPreviewSplitter';
     FPreviewSplitter.Parent := FPkgView;
     FPreviewSplitter.Top := FPreview.Top + FPreview.Height;
     FPreviewSplitter.Align := alTop;
   end;
+
+  if not Assigned(FScroll) then begin
+    FScroll := TScrollBox.Create(Self);
+    FScroll.Name:='PkgDetailScroll';
+    FScroll.Parent := FPkgView;
+    FScroll.Top := FPreviewSplitter.Top + FPreviewSplitter.Height;
+    FScroll.Align := alClient;
+    FScroll.BorderStyle:=bsNone;
+    FScroll.AutoScroll:=True;
+    FScroll.HorzScrollBar.Visible:=False;
+    FScroll.VertScrollBar.Page:=1;
+  end;
+
   FActive := fMain.ActiveLanguages(True);
 end;
 
@@ -126,6 +144,7 @@ begin
   FreeAndNil(FPreviewSplitter);
   for I := 0 to length(FEditors) - 1 do
     FreeAndNil(FEditors[I]);
+  FreeAndNil(FScroll);
   SetLength(FEditors, 0);
 end;
 
@@ -140,7 +159,6 @@ begin
     LI := lvPackages.Items.Add;
     LI.Caption := FDNLS.PackageLists.PackageID[I];
   end;
-
 end;
 
 procedure TframePkgListEdit.Refresh;

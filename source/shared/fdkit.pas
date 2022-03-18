@@ -756,6 +756,7 @@ begin
     O.Caption := GetValueXML(FXML, FGroupID + '/CAPTION', '');
     O.Language := GetValueXML(FXML, FGroupID + '/LANG', '');
     O.CodePage := StrToInt(GetValueXML(FXML, FGroupID + '/CODEPAGE', '-1'));
+    O.Graphic:= GetValueXML(FXML, FGroupID + '/GRAPHIC', '');
   except
     FreeAndNil(O);
   end;
