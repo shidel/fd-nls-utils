@@ -125,6 +125,7 @@ type
     FMasterCP : integer;
     FFileCSV : array of TStringGrid;
     FCPIndex : array of integer;
+    function GetLangDetails(LangIndex : integer; Index : integer): TStringList;
     function GetFields: TStringList;
     function GetFileCSV(Index : integer): TStringGrid;
     function GetMasterCSV: TStringGrid;
@@ -137,6 +138,8 @@ type
     function IncludeFile(AFileName : String) : boolean; override;
     function IndexOfLanguage(AValue : String) : integer;
     procedure PurgeCSVData;
+    procedure MakeCodePage(var CSV : TStringGrid; Codepage : integer);
+    procedure MakeUTF8(var CSV : TStringGrid; Codepage : integer);
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
@@ -145,6 +148,9 @@ type
     property PackageCount : integer read GetPackageCount;
     property PackageID[Index : integer] : String read GetPackageID;
     property MasterDetails[Index : integer] : TStringList read GetMasterDetails;
+    property LangDetails[LangIndex : integer; Index : integer] : TStringList read GetLangDetails;
+    function Language(Index : integer) : String; overload;
+    function Language(ALanguage : String; AutoCreate : boolean = false) : integer; overload;
     // Move to Private Post Dev
     property MasterCSV : TStringGrid read GetMasterCSV;
     property FileCSV[Index : integer] : TStringGrid read GetFileCSV;
@@ -214,23 +220,12 @@ const
 { TFDPackageLists }
 
 function TFDPackageLists.GetMasterCSV: TStringGrid;
-var
-  I, J : integer;
 begin
   if not Assigned(FMasterCSV) then begin
     try
       FMasterCSV := TStringGrid.Create(nil);
       FMasterCSV.LoadFromCSVFile(GroupPath + MasterCSVFile);
-      FMasterCSV.SortColRow(True, 0);
-      for I := 0 to FMasterCSV.ColCount - 1 do
-        FMasterCSV.Cells[I,0] := Trim(Lowercase(FMasterCSV.Cells[I,0]));
-      FMasterCP := FDNLS.FindCodepage(MasterCSVLanguage);
-      Log(Self, ' codepage index ' + IntToStr(FMasterCP));
-      if FMasterCP >= 0 then
-        for J := 0 to FMasterCSV.RowCount - 1 do
-          for I := 0 to FMasterCSV.ColCount - 1 do
-            FMasterCSV.Cells[I,J] :=
-              FDNLS.CodePages.DOStoUTF8(FMasterCP, FMasterCSV.Cells[I,J]);
+      MakeUTF8(FMasterCSV, FDNLS.FindCodepage(MasterCSVLanguage));
     except
       Log(Self, 'exception opening ' + MasterCSVFile);
       FreeAndNil(FMasterCSV);
@@ -245,6 +240,7 @@ var
   H, D : String;
 begin
   FDetails.Clear;
+  Log(Self, 'get master details ' + '/' + IntToStr(INdex));
   for I := 0 to FFields.Count - 1 do begin
     H := Lowercase(trim(FFields[I]));
     D := '';
@@ -276,11 +272,14 @@ begin
       try
         FFileCSV[Index] := TStringGrid.Create(nil);
         FFileCSV[Index].LoadFromCSVFile(GroupPath + FFiles[Index]);
+        FCPIndex[Index] := FDNLS.FindCodepage(Language(Index));
+        MakeUTF8(FFileCSV[Index], FCPIndex[Index] );
       except
         Log(Self, 'exception opening ' + FFiles[Index]);
         FreeAndNil(FFileCSV[Index - 1]);
       end;
     end;
+    Result := FFileCSV[Index];
   except
     Result := nil;
   end;
@@ -289,6 +288,39 @@ end;
 function TFDPackageLists.GetFields: TStringList;
 begin
   Result := FFields;
+end;
+
+function TFDPackageLists.GetLangDetails(LangIndex : integer; Index : integer): TStringList;
+var
+  I, J : integer;
+  H, D : String;
+begin
+  FDetails.Clear;
+  Log(Self, 'get Language details ' + IntTostr(LangIndex) + '/' + IntToStr(Index));
+  D := lowercase(FMasterCSV.Cells[0, Index + 1]);
+  if LangIndex <> -1 then begin
+    Index := -1;
+
+    for I := 1 to FileCSV[LangIndex].RowCount - 1 do
+      if D = lowercase(FFileCSV[LangIndex].Cells[0,I]) then begin
+        Index := I;
+        Break;
+      end;
+    Log(Self, 'Index of "' + D + '" is ' + IntToStr(Index));
+    if Index > 0 then
+      for I := 0 to FFields.Count - 1 do begin
+        H := Lowercase(trim(FFields[I]));
+        D := '';
+        for J := 0 to FFileCSV[LangIndex].ColCount - 1 do begin
+          if FFileCSV[LangIndex].Cells[J,0] = H then begin
+            D := FFileCSV[LangIndex].Cells[J, Index];
+            Break;
+          end;
+        end;
+        FDetails.Add(D);
+      end;
+  end;
+  Result := FDetails;
 end;
 
 function TFDPackageLists.GroupPath: String;
@@ -340,6 +372,18 @@ begin
   end;
 end;
 
+function TFDPackageLists.Language(Index: integer): String;
+begin
+  Result := FFiles[Index];
+  Log(Self, 'Language for file ' + FFiles[Index] + ' is ' + Result);
+end;
+
+function TFDPackageLists.Language(ALanguage: String; AutoCreate : boolean = false): integer;
+begin
+  Result := IndexofLanguage(ALanguage);
+  Log(Self, 'Index of ' + ALanguage + ' is ' + IntToStr(Result));
+end;
+
 function TFDPackageLists.IndexOfLanguage(AValue: String): integer;
 var
   I : integer;
@@ -347,8 +391,8 @@ begin
   Result := -1;
   AValue := Trim(UpperCase(AValue));
   if AValue <> '' then
-    for I := 0 to FFiles.Count - 1 do
-      if (AValue = Uppercase(FieldStr(FFiles[I], 0, DirectorySeparator))) then begin
+    for I := 0 to Count - 1 do
+      if (AValue = Uppercase(FieldStr(FileName[I], 0, DirectorySeparator))) then begin
          Result := I;
          Break;
       end;
@@ -363,6 +407,25 @@ begin
     FreeAndNil(FFileCSV[I]);
     FCPIndex[I] := -1;
   end;
+end;
+
+procedure TFDPackageLists.MakeCodePage(var CSV: TStringGrid; Codepage: integer);
+begin
+  // Coming soon
+end;
+
+procedure TFDPackageLists.MakeUTF8(var CSV: TStringGrid; Codepage: integer);
+var
+  I , J : integer;
+begin
+  CSV.SortColRow(True, 0);
+  for I := 0 to CSV.ColCount - 1 do
+    CSV.Cells[I,0] := Trim(Lowercase(CSV.Cells[I,0]));
+  if CodePage >= 0 then
+    for J := 0 to CSV.RowCount - 1 do
+      for I := 0 to CSV.ColCount - 1 do
+        CSV.Cells[I,J] :=
+          FDNLS.CodePages.DOStoUTF8(Codepage, CSV.Cells[I,J]);
 end;
 
 { TFDFontFiles }
@@ -647,11 +710,13 @@ end;
 
 function TFDCodePages.UTF8toDOS(Index: integer; S: String): String;
 begin
+  // to do
   Result := S;
 end;
 
 function TFDCodePages.HTMLtoDOS(Index: integer; S: String): String;
 begin
+  // to do
   Result := S;
 end;
 

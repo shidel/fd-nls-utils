@@ -26,6 +26,7 @@ type
   private
     FAllowEdit: boolean;
     FCodePageIndex: integer;
+    FDetailsIndex: integer;
     FFontIndex: integer;
     FIdentity: String;
     FLanguage: String;
@@ -37,11 +38,8 @@ type
     FViewer: TControl;
     function GetDetail(Index : integer): String;
     function GetFlag: TImage;
-    procedure SetCodePageIndex(AValue: integer);
     procedure SetDetail(Index : integer; AValue: String);
-    procedure SetFontIndex(AValue: integer);
     procedure SetIdentity(AValue: String);
-    procedure SetLanguageIndex(AValue: integer);
     procedure SetViewer(AValue: TControl);
     property Rows : integer read FRows write SetRows;
   public
@@ -52,9 +50,10 @@ type
     property Flag : TImage read GetFlag;
     property Viewer : TControl read FViewer write SetViewer;
     property Language : String read FLanguage;
-    property LanguageIndex : integer read FLanguageIndex write SetLanguageIndex;
-    property CodePageIndex : integer read FCodePageIndex write SetCodePageIndex;
-    property FontIndex : integer read FFontIndex write SetFontIndex;
+    property LanguageIndex : integer read FLanguageIndex;
+    property CodePageIndex : integer read FCodePageIndex;
+    property FontIndex : integer read FFontIndex;
+    property DetailsIndex : integer read FDetailsIndex;
     property Identity : String read FIdentity write SetIdentity;
     procedure SetLabels(List : TStringList);
     procedure SetDetails(Identifier : String; List : TStringList);
@@ -140,34 +139,16 @@ begin
   Result := FDatum[Index].Caption;
 end;
 
-procedure TframePkgDetails.SetCodePageIndex(AValue: integer);
-begin
-  if FCodePageIndex=AValue then Exit;
-  FCodePageIndex:=AValue;
-end;
-
 procedure TframePkgDetails.SetDetail(Index : integer; AValue: String);
 begin
   FDatum[Index].Caption:=AValue;
   FModified := True;
 end;
 
-procedure TframePkgDetails.SetFontIndex(AValue: integer);
-begin
-  if FFontIndex=AValue then Exit;
-  FFontIndex:=AValue;
-end;
-
 procedure TframePkgDetails.SetIdentity(AValue: String);
 begin
   if FIdentity=AValue then Exit;
   FIdentity:=AValue;
-end;
-
-procedure TframePkgDetails.SetLanguageIndex(AValue: integer);
-begin
-  if FLanguageIndex=AValue then Exit;
-  FLanguageIndex:=AValue;
 end;
 
 procedure TframePkgDetails.SetViewer(AValue: TControl);
@@ -180,6 +161,7 @@ constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String;
   AEditor: boolean = false);
 begin
   inherited Create(AOwner);
+  FDetailsIndex := -1;
   FAllowEdit := AEditor;
   FLanguage := ALanguage;
   pLanguage.Caption:=ALanguage;
@@ -189,6 +171,7 @@ begin
   FLanguageIndex:=FDNLS.FindLanguage(Language);
   FCodePageIndex:=FDNLS.FindCodepage(Language);
   FFontIndex:=FDNLS.FindFont(Language);
+  FDetailsIndex := FDNLS.PackageLists.Language(ALanguage);
   iFlag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
   SetLabels(FDNLS.PackageLists.Fields);
 end;

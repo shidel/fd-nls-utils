@@ -62,7 +62,6 @@ begin
     Result.Parent := FScroll
   else
     Result.Parent := FPkgView;
-
   Result.Top := ATop;
   Result.Align:=alTop;
 end;
@@ -186,7 +185,7 @@ begin
   FPreview.Preview(FMasterDetails);
   if Length(FEditors) = 0 then MakeEditors;
   for I := 0 to Length(FEditors) - 1 do
-      FEditors[I].SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
+      FEditors[I].SetDetails(Item.Caption, FDNLS.PackageLists.LangDetails[FEditors[I].DetailsIndex,Item.index]);
 end;
 
 end.
