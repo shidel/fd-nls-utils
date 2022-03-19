@@ -46,6 +46,8 @@ const
     'check-circle',       { 14 }
     'error',              { 15 }
     'high-priority',      { 16 }
+    'new',                { 17 }
+    'bang',               { 18 }
     'edit-property',
     'edit-file',
     'notification',
@@ -80,7 +82,10 @@ const
     'tv-off',
     'tv-on',
     'console',
-    'command-line'
+    'command-line',
+    'star',
+    'star-filled'
+
   );
 
   IconFlags : array of string = ();

@@ -12,6 +12,8 @@ uses
   PasExt, ClassExt, VCSExt, Icons;
 
 type
+  TPackageState = (psGood, psNew, psWarning, psInvalid, psError);
+
   TLanguageData = class(TObject)
     Identifier : String;
     Caption : String;
@@ -20,10 +22,23 @@ type
     Graphic : String;
   end;
 
+  { TCodePageData }
+
   TCodePageData = class(TObject)
+  private
+    FUTF8Dict,
+    FHTMLDict : TDictionary;
+  public
     Identifier : String;
     UTF8       : array [0..255] of UTF8String;
     HTML       : array [0..255] of String;
+    constructor Create; virtual;
+    destructor  Destroy; override;
+    procedure   Clear; virtual;
+    function    DOStoUTF8( S : String ) : String;
+    function    UTF8toDOS( S : String ) : String;
+    function    DostoHTML( S : String ) : String;
+    function    HTMLtoDOS( S : String ) : String;
   end;
 
   { TFDNLS }
@@ -78,17 +93,11 @@ type
   public
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
-    property Data[Index : integer] : TCodePageData read GetData;
+    procedure Reload; override;
+    property Data[Index : integer] : TCodePageData read GetData; default;
     property Identifier[Index : integer] : String read GetIdentifier write SetIdentifier;
     function IndexOfIdentifier(AValue : String) : integer;
     function IndexOfCodePage(AValue : Integer) : integer;
-    function CreateUTF8Dictionary(Index : integer) : TDictionary; overload;
-    function CreateHTMLDictionary(Index : integer) : TDictionary; overload;
-    function DOStoUTF8(Index : integer; S : String) : String;
-    function DOStoHTML(Index : integer; S : String) : String;
-    // Need to do, just needed placeholders at present
-    function UTF8toDOS(Index : integer; S : String) : String;
-    function HTMLtoDOS(Index : integer; S : String) : String;
   published
   end;
 
@@ -132,6 +141,8 @@ type
     function GetMasterDetails(Index : integer): TStringList;
     function GetPackageCount: integer;
     function GetPackageID(Index : integer): String;
+    function GetPackageStatus(LangIndex : integer; Index : integer
+      ): TPackageState;
   protected
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
@@ -149,6 +160,7 @@ type
     property PackageID[Index : integer] : String read GetPackageID;
     property MasterDetails[Index : integer] : TStringList read GetMasterDetails;
     property LangDetails[LangIndex : integer; Index : integer] : TStringList read GetLangDetails;
+    property StatusDetails[LangIndex : integer; Index : integer] : TPackageState read GetPackageStatus;
     function Language(Index : integer) : String; overload;
     function Language(ALanguage : String; AutoCreate : boolean = false) : integer; overload;
     // Move to Private Post Dev
@@ -211,11 +223,100 @@ const
     'copying-policy'
    );
 
+   RequiredCSVFields  : array of string = (
+    'title',
+    'description',
+    'copying-policy'
+   );
 
 implementation
 
 const
    RepositoryPath    : String = '';
+
+{ TCodePageData }
+
+constructor TCodePageData.Create;
+begin
+  inherited Create;
+end;
+
+destructor TCodePageData.Destroy;
+begin
+  FreeAndNil(FUTF8Dict);
+  FreeAndNil(FHTMLDict);
+  inherited Destroy;
+end;
+
+procedure TCodePageData.Clear;
+begin
+  FreeAndNil(FUTF8Dict);
+  FreeAndNil(FHTMLDict);
+end;
+
+function TCodePageData.DOStoUTF8(S: String): String;
+var
+  I : integer;
+begin
+  Result := '';
+  for I := 1 to Length(S) do begin
+    if S[I] in [CR, LF, TAB, SPACE] then
+      Result := Result + S[I]
+    else
+      Result := Result + UTF8[Ord(S[I])];
+  end;
+end;
+
+function TCodePageData.UTF8toDOS(S: String): String;
+var
+  I : integer;
+begin
+  if not Assigned(FUTF8Dict) then begin
+    FUTF8Dict := TDictionary.Create;
+    try
+      for I := 0 to 255 do
+        FUTF8Dict.Add(UTF8[I], Char(I));
+    except
+      FreeANdNil(FUTF8Dict);
+    end;
+  end;
+  if Assigned(FUTF8Dict) then
+    Result := FUTF8Dict.Rewrite(S)
+  else
+    Result := S;
+end;
+
+function TCodePageData.DostoHTML(S: String): String;
+var
+  I : integer;
+begin
+  Result := '';
+  for I := 1 to Length(S) do
+    if S[I] = CR then
+    else if S[I] = LF then
+      Result := Result + '<br>'
+    else
+      Result := Result + HTML[Ord(S[I])];
+end;
+
+function TCodePageData.HTMLtoDOS(S: String): String;
+var
+  I : integer;
+begin
+  if not Assigned(FHTMLDict) then begin
+    FHTMLDict := TDictionary.Create;
+    try
+      for I := 0 to 255 do
+        FHTMLDict.Add(HTML[I], Char(I));
+    except
+      FreeANdNil(FHTMLDict);
+    end;
+  end;
+  if Assigned(FHTMLDict) then
+    Result := FHTMLDict.Rewrite(S)
+  else
+    Result := S;
+end;
 
 { TFDPackageLists }
 
@@ -265,14 +366,61 @@ begin
   Result := MasterCSV.Cells[0, Index + 1];
 end;
 
+function TFDPackageLists.GetPackageStatus(LangIndex : integer; Index : integer
+  ): TPackageState;
+var
+  I, J : integer;
+  H, D : String;
+begin
+  // Log(Self, 'get language status ' + IntTostr(LangIndex) + '/' + IntToStr(Index));
+  Result := psNew;
+  D := lowercase(FMasterCSV.Cells[0, Index + 1]);
+  if (LangIndex <> -1) then begin
+    Index := -1;
+    for I := 1 to FileCSV[LangIndex].RowCount - 1 do
+      if D = lowercase(FFileCSV[LangIndex].Cells[0,I]) then begin
+        Index := I;
+        Break;
+      end;
+    if Index > 0 then begin
+      Result := psGood;
+      for I := 0 to FFields.Count - 1 do begin
+        H := Lowercase(trim(FFields[I]));
+        for J := 0 to FFileCSV[LangIndex].ColCount - 1 do begin
+          if FFileCSV[LangIndex].Cells[J,0] = H then begin
+            if Trim(FFileCSV[LangIndex].Cells[J, Index]) = '' then
+              Result := psWarning;
+            Break;
+          end;
+        end;
+      end;
+      for I := 0 to Length(RequiredCSVFields) - 1 do begin
+        H := RequiredCSVFields[I];
+        for J := 0 to FFileCSV[LangIndex].ColCount - 1 do begin
+          if FFileCSV[LangIndex].Cells[J,0] = H then begin
+            if Trim(FFileCSV[LangIndex].Cells[J, Index]) = '' then
+              Result := psInvalid;
+            Break;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
 function TFDPackageLists.GetFileCSV(Index : integer): TStringGrid;
+var
+  LId : String;
 begin
   try
     if not Assigned(FFileCSV[Index]) then begin
       try
         FFileCSV[Index] := TStringGrid.Create(nil);
         FFileCSV[Index].LoadFromCSVFile(GroupPath + FFiles[Index]);
-        FCPIndex[Index] := FDNLS.FindCodepage(Language(Index));
+        LId := Language(Index);
+        FCPIndex[Index] := FDNLS.FindCodepage(LId);
+        Log(Self, 'CVS load, ' + FFiles[Index] + ', ' + LId +
+          ':' + IntToStr(FCPIndex[Index]));
         MakeUTF8(FFileCSV[Index], FCPIndex[Index] );
       except
         Log(Self, 'exception opening ' + FFiles[Index]);
@@ -378,7 +526,7 @@ end;
 
 function TFDPackageLists.Language(Index: integer): String;
 begin
-  Result := FFiles[Index];
+  Result := FieldStr(FFiles[Index], 0, DirectorySeparator);
   Log(Self, 'Language for file ' + FFiles[Index] + ' is ' + Result);
 end;
 
@@ -425,7 +573,7 @@ begin
     for J := 0 to CSV.RowCount - 1 do
       for I := 0 to CSV.ColCount - 1 do
         CSV.Cells[I,J] :=
-          FDNLS.CodePages.UTF8toDOS(Codepage, CSV.Cells[I,J]);
+          FDNLS.CodePages[Codepage].UTF8toDOS(CSV.Cells[I,J]);
   end;
 end;
 
@@ -441,7 +589,7 @@ begin
     for J := 0 to CSV.RowCount - 1 do
       for I := 0 to CSV.ColCount - 1 do
         CSV.Cells[I,J] :=
-          FDNLS.CodePages.DOStoUTF8(Codepage, CSV.Cells[I,J]);
+          FDNLS.CodePages[Codepage].DOStoUTF8(CSV.Cells[I,J]);
   end;
 end;
 
@@ -654,6 +802,36 @@ begin
   inherited Destroy;
 end;
 
+procedure TFDCodePages.Reload;
+var
+  O : TCodePageData;
+  I, X : integer;
+begin
+  // For some reason, adding the dictionaries to TCodePageData started
+  // causing an exception when trying to free the codepage data. For now,
+  // just going to ignore it and wrap it to discard the exception.
+  try
+    X := FData.Count;
+    Log(self, 'CP Free Indexes ' + IntToStr(X));
+    FData.OwnsObjects:=False;
+    for I := 0 to FData.Count - 1 do begin
+      try
+        O := TCodepageData(FData[I]);
+        FreeAndNil(O);
+        FData[I] := nil;
+      except
+        Log(self, 'Exception while destroying CP index ' + IntToStr(I));
+      end;
+    end;
+    Log(self, 'Freed ' + IntToStr(X - FData.Count) + ' CP indexes');
+    FData.Clear;
+    Log(self, 'CP Cleared, ' + IntToStr(FData.Count) + ' remain');
+  finally
+    FData.OwnsObjects:=True;
+  end;
+  inherited Reload;
+end;
+
 function TFDCodePages.IndexOfIdentifier(AValue: String): integer;
 var
   I : integer;
@@ -671,70 +849,6 @@ end;
 function TFDCodePages.IndexOfCodePage(AValue: Integer): integer;
 begin
   Result := IndexOfIdentifier(IntToStr(AValue));
-end;
-
-function TFDCodePages.CreateUTF8Dictionary(Index: integer): TDictionary;
-var
-  I : integer;
-begin
-  Result := TDictionary.Create;
-  try
-    for I := 0 to 255 do
-      Result.Add(Data[Index].UTF8[I], Char(I));
-  except
-    FreeANdNil(Result);
-  end;
-end;
-
-function TFDCodePages.CreateHTMLDictionary(Index: integer): TDictionary;
-var
-  I : integer;
-begin
-  Result := TDictionary.Create;
-  try
-    for I := 0 to 255 do
-      Result.Add(Data[Index].HTML[I], Char(I));
-  except
-    FreeANdNil(Result);
-  end;
-end;
-
-function TFDCodePages.DOStoUTF8(Index: integer; S: String): String;
-var
-  I : integer;
-begin
-  Result := '';
-  for I := 1 to Length(S) do begin
-    if S[I] in [CR, LF, TAB, SPACE] then
-      Result := Result + S[I]
-    else
-      Result := Result + Data[Index].UTF8[Ord(S[I])];
-  end;
-end;
-
-function TFDCodePages.DOStoHTML(Index: integer; S: String): String;
-var
-  I : integer;
-begin
-  Result := '';
-  for I := 1 to Length(S) do
-    if S[I] = CR then
-    else if S[I] = LF then
-      Result := Result + '<br>'
-    else
-      Result := Result + Data[Index].HTML[Ord(S[I])];
-end;
-
-function TFDCodePages.UTF8toDOS(Index: integer; S: String): String;
-begin
-  // to do
-  Result := S;
-end;
-
-function TFDCodePages.HTMLtoDOS(Index: integer; S: String): String;
-begin
-  // to do
-  Result := S;
 end;
 
 { TFDLanguages }

@@ -73,7 +73,7 @@ begin
     if I < 0 then exit;
     Field := TframePkgDetails(FDetails).Detail[I];
     if TframePkgDetails(FDetails).CodePageIndex <> -1 then
-      Field := FDNLS.CodePages.UTF8toDOS(TframePkgDetails(FDetails).CodePageIndex,Field);
+      Field := FDNLS.CodePages[TframePkgDetails(FDetails).CodePageIndex].UTF8toDOS(Field);
   end else
     Field := '';
 end;

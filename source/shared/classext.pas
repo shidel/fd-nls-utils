@@ -91,7 +91,7 @@ type
     property Count : integer read GetCount;
     property Filename[Index : integer] : String read GetFileName write SetFileName;
     function IndexOfFile(AValue : String) : integer;
-    procedure Reload;
+    procedure Reload; virtual;
     function Add : integer; virtual;
     procedure Delete(Index : integer);
     procedure SetValue(Index : integer; KeyName : String; Value : String); overload;

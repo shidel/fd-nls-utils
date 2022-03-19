@@ -28,6 +28,7 @@ type
     FActive  : TStringArray;
     function MakeViewer(Language:String; AllowEdit : boolean; ATop : integer) : TframePkgDetails;
     procedure MakeEditors;
+    procedure UpdateStatus;
   public
     procedure Initialize;
     procedure Clear;
@@ -77,6 +78,40 @@ begin
     FEditors[I] := MakeViewer(FActive[I], True, Y);
     Y := FEditors[I].Top + FEditors[I].Height;
     FEditors[I].Viewer:=FPreview;
+  end;
+  UpdateStatus;
+end;
+
+procedure TframePkgListEdit.UpdateStatus;
+var
+  I, J : integer;
+  LI : TListItem;
+  ps, ts : TPackageState;
+begin
+  log(Self, IntToStr(FDNLS.PackageLists.PackageCount) + ' package status update ' + IntToStr(length(FEditors)));
+  for I := 0 to lvPackages.Items.Count - 1 do begin
+    // Log(Self, 'Status ' + IntToStr(I));
+    LI := lvPackages.Items[I];
+    ps := psGood;
+    for J := 0 to length(FEditors) - 1 do begin
+      if (FEditors[J].DetailsIndex >= 0) then begin
+        Log(Self, 'Status ' + IntToStr(I) + ':' + IntToStr(J));
+        ts := FDNLS.PackageLists.StatusDetails[FEditors[J].DetailsIndex, I];
+        if ts = psNew then
+          ps := psNew
+        else if not (ps in [psNew, psError, psInvalid]) then
+          ps := ts;
+      end;
+
+    end;
+    case ps of
+      psNew      : LI.ImageIndex:=17;
+      psWarning  : LI.ImageIndex:=15;
+      psInvalid,
+      psError    : LI.ImageIndex:=16;
+     else
+       LI.ImageIndex := -1;
+    end;
   end;
 end;
 
@@ -142,6 +177,8 @@ var
   I : integer;
 begin
   Log(Self, 'Reset/Clear');
+  SelectEdit(nil);
+  lvPackages.Selected:=nil;
   lvPackages.Clear;
   FreeAndNil(FMasterDetails);
   FreeAndNil(FPreviewSplitter);
@@ -181,6 +218,10 @@ procedure TframePkgListEdit.SelectEdit(Item: TListItem);
 var
   I : integer;
 begin
+  if not Assigned(Item) then begin
+    SelectPreview(nil);
+    exit;
+  end;
   Log(Self, 'select item ' + IntToStr(Item.Index) + ', ' + Item.Caption);
   Log(Self, 'set master details');
   FMasterDetails.SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
