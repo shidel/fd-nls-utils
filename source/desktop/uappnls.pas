@@ -16,8 +16,8 @@ resourcestring
   msg_AboutCopyright            = 'Copyright (c) %0:s';
   msg_AboutIconCopyright        = 'Most icons are Copyright (c) %0:s, %1:s and may be download in the %2:s collection';
   msg_AboutCreatedWith          = 'Created with the %0:s and %1:s';
-  msg_VerifyLanguageDelete      = 'WARNING: This affect all repository contributors!' + CRLF + CRLF +
-                                  'You may wish to just disable the language on your' + CRLF +
+  msg_VerifyLanguageDelete      = 'WARNING: This will affect all repository contributors!' + CRLF + CRLF +
+                                  'You may wish to only disable the language on your' + CRLF +
                                   'computer by unchecking it.' + CRLF + CRLF +
                                   'Are you sure you want to delete this Language?';
 
@@ -66,6 +66,7 @@ resourcestring
   lbl_EditCPUnicode             = 'Unicode';
   lbl_EditCpUTF8                = 'UTF-8';
   lbl_EditCpHTML                = 'HTML';
+  lbl_DOSCP                     = 'CP %0:s';
 
   btn_OK                        = 'OK';
   btn_Cancel                    = 'Cancel';
@@ -74,6 +75,8 @@ resourcestring
   dos_PkgAuthor                 = 'Author''s name';
   dos_PkgVersion                = 'Version X.YZ';
   dos_PkgPlatforms              = '';
+
+
 
 implementation
 

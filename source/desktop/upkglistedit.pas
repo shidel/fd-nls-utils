@@ -95,7 +95,7 @@ begin
     ps := psGood;
     for J := 0 to length(FEditors) - 1 do begin
       if (FEditors[J].DetailsIndex >= 0) then begin
-        Log(Self, 'Status ' + IntToStr(I) + ':' + IntToStr(J));
+        // Log(Self, 'Status ' + IntToStr(I) + ':' + IntToStr(J));
         ts := FDNLS.PackageLists.StatusDetails[FEditors[J].DetailsIndex, I];
         if ts = psNew then
           ps := psNew
@@ -200,6 +200,7 @@ begin
     LI := lvPackages.Items.Add;
     LI.Caption := FDNLS.PackageLists.PackageID[I];
   end;
+  if Length(FEditors) = 0 then MakeEditors;
 end;
 
 procedure TframePkgListEdit.Refresh;
@@ -223,7 +224,6 @@ begin
     exit;
   end;
   Log(Self, 'select item ' + IntToStr(Item.Index) + ', ' + Item.Caption);
-  Log(Self, 'set master details');
   FMasterDetails.SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
   SelectPreview(FMasterDetails);
   if Length(FEditors) = 0 then MakeEditors;

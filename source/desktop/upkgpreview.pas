@@ -80,7 +80,7 @@ end;
 
 procedure TframePkgPreview.Render;
 var
-  I, X, R : integer;
+  I, X, R, WX : integer;
   S : String;
 begin
   tRender.Enabled:=False;
@@ -121,23 +121,30 @@ begin
   FDosView.GotoXY(3, 5);
   FDosView.PutString(Copy(FPkgLicense,1,76));
   FDosView.TextColor:=clWhite;
-  I := 6;
+  FDosView.Window(3, 7, FDosView.ScreenMax.X -1, FDosView.ScreenMax.Y);
   S := StringReplace(WhenTrue(FPkgSummary, FPkgSummary, FPkgDesc), '|', LF,
     [rfReplaceAll]) + LF;
   S := StringReplace(S, CRLF, LF, [rfReplaceAll]);
-  while (S <> '') and (I < FDosView.ScreenMax.Y) do begin
-    inc(I);
-    FDosView.GotoXY(3,I);
-    R := LastPos(LF, S);
-    if (R < 77) and (R > 0) then
-      X := R
-    else begin
-      X := LastPos(SPACE, Copy(S, 1, 77));
-      if X < 1 then X := 76;
-    end;
-    FDosView.WriteText(Copy(S, 1,X));
+  while (S <> '') and
+  (FDosView.WhereY < FDosView.WindMax.Y - FDosView.WindMin.Y) do begin
+    WX := FDosView.WindMax.X - FDosView.WindMin.X + 1;
+    X := Pos(LF, Copy(S, 1, WX));
+    if FDosView.WhereY > 8 then
+      FDosView.TextColor:=clGray
+    else
+      FDosView.TextColor:=clWhite;
+    if (X < 1) then begin
+      X := WX;
+      R := LastPos(SPACE, Copy(S, 1, WX));
+      if (R > 1) then X := R;
+      WX := FDosView.WhereY;
+      FDosView.WriteText(Copy(S, 1,X));
+      FDosView.GotoXY(1,WX + 1);
+    end else
+      FDosView.WriteText(Copy(S, 1,X));
     Delete(S, 1, X);
   end;
+  FDosView.WriteText(S);
   iPreview.Picture.Assign(FDosView.Bitmap);
 end;
 

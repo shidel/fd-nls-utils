@@ -54,13 +54,13 @@ object fMain: TfMain
         Action = actPackages
       end
       object tbDebugLog: TToolButton
-        Left = 97
+        Left = 89
         Hint = 'Debug Log'
         Top = 0
         Action = actDebugLog
       end
       object tbPreferences: TToolButton
-        Left = 153
+        Left = 137
         Hint = 'Configuration, Options and Preferences'
         Top = 0
         Action = actPreferences
@@ -73,7 +73,7 @@ object fMain: TfMain
         Style = tbsSeparator
       end
       object tbSepB: TToolButton
-        Left = 137
+        Left = 129
         Height = 40
         Top = 0
         Caption = 'tbSepB'

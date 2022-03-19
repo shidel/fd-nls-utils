@@ -5,7 +5,8 @@ unit uPkgDetails;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ExtCtrls, StdCtrls, FDKit, Icons;
+  Classes, SysUtils, Forms, Controls, ExtCtrls, StdCtrls, Buttons, PasExt,
+  FDKit, Icons, uAppNLS;
 
 type
 
@@ -13,6 +14,9 @@ type
 
   TframePkgDetails = class(TFrame)
     iFlag: TImage;
+    iCodePage: TImage;
+    lCodepage: TLabel;
+    pButtons: TPanel;
     pLanguage: TLabel;
     pTopSpace : TLabel;
     pDetails: TPanel;
@@ -20,6 +24,7 @@ type
     pFrame: TPanel;
     pFlag: TPanel;
     sDetails: TSplitter;
+    sbTransfer: TSpeedButton;
     procedure pDetailsResize(Sender: TObject);
   private
     procedure SetRows(AValue: integer);
@@ -184,7 +189,10 @@ begin
   sDetails.OnClick := OnClick;
   iFlag.OnClick := OnClick;
   pLanguage.OnClick := OnClick;
+  pButtons.OnClick := OnClick;
+  lCodePage.OnClick := OnClick;
   FAllowEdit := AEditor;
+
   FLanguage := ALanguage;
   pLanguage.Caption:=ALanguage;
   Name:=Name + '_' + FLanguage;
@@ -192,6 +200,18 @@ begin
     fMain.xProperties.ReadInteger(GetNamePath + '/WIDTH', pLabels.Width);
   FLanguageIndex:=FDNLS.FindLanguage(Language);
   FCodePageIndex:=FDNLS.FindCodepage(Language);
+  sbTransfer.Enabled:=FAllowEdit and (FCodePageIndex <> -1);
+  sbTransfer.Visible:=FAllowEdit and (FCodePageIndex <> -1);
+  if FCodePageIndex = -1 then begin
+    lCodepage.Visible := False;
+    iCodepage.Visible := True;
+    iCodePage.Picture.LoadFromLazarusResource(IconUI[12]);
+  end else begin
+    lCodepage.Visible := True;
+    iCodepage.Visible := False;
+    lCodePage.Caption :=
+      Format(lbl_DOSCP, [FDNLS.CodePages.Identifier[FCodePageIndex]]);
+  end;
   FFontIndex:=FDNLS.FindFont(Language);
   FDetailsIndex := FDNLS.PackageLists.Language(ALanguage);
   iFlag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
@@ -224,6 +244,7 @@ begin
   Rows := List.Count;
   for I := 0 to List.Count - 1 do begin
     FDatum[I].Caption:=List[I];
+    FDatum[I].Enabled:=lCodepage.Visible; // only enabled with valid codepage
   end;
   RowsAdjust;
 end;

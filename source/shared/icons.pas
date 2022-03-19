@@ -48,6 +48,7 @@ const
     'high-priority',      { 16 }
     'new',                { 17 }
     'bang',               { 18 }
+    'transfer',           { 19 }
     'edit-property',
     'edit-file',
     'notification',
@@ -84,7 +85,14 @@ const
     'console',
     'command-line',
     'star',
-    'star-filled'
+    'star-filled',
+    'internal',
+    'process',
+    'input',
+    'replace',
+    'download',
+    'import',
+    'export'
 
   );
 

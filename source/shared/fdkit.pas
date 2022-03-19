@@ -341,7 +341,7 @@ var
   H, D : String;
 begin
   FDetails.Clear;
-  Log(Self, 'get master details ' + IntToStr(INdex));
+  Log(Self, 'get master details ' + IntToStr(Index));
   for I := 0 to FFields.Count - 1 do begin
     H := Lowercase(trim(FFields[I]));
     D := '';
@@ -585,7 +585,7 @@ begin
   for I := 0 to CSV.ColCount - 1 do
     CSV.Cells[I,0] := Trim(Lowercase(CSV.Cells[I,0]));
   if CodePage >= 0 then begin
-    Log(self, 'Convert CSV codepage ' + FDNLS.CodePages.Identifier[Codepage] + ' to  UTF8');
+    Log(self, 'Convert CSV codepage ' + FDNLS.CodePages.Identifier[Codepage] + ' to UTF8');
     for J := 0 to CSV.RowCount - 1 do
       for I := 0 to CSV.ColCount - 1 do
         CSV.Cells[I,J] :=

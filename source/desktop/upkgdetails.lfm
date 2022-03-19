@@ -49,6 +49,49 @@ object framePkgDetails: TframePkgDetails
         Font.Color = clGrayText
         ParentFont = False
       end
+      object lCodepage: TLabel
+        Left = 0
+        Height = 16
+        Top = 200
+        Width = 64
+        Alignment = taCenter
+        Anchors = [akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = 'lCodepage'
+        Font.Color = clGrayText
+        ParentFont = False
+      end
+      object iCodePage: TImage
+        Left = 0
+        Height = 24
+        Top = 192
+        Width = 64
+        Anchors = [akLeft, akRight, akBottom]
+        Center = True
+        Proportional = True
+        Stretch = True
+      end
+      object pButtons: TPanel
+        Left = 0
+        Height = 26
+        Top = 64
+        Width = 64
+        Anchors = [akTop, akLeft, akRight]
+        BevelOuter = bvNone
+        ClientHeight = 26
+        ClientWidth = 64
+        TabOrder = 0
+        object sbTransfer: TSpeedButton
+          Left = 0
+          Height = 22
+          Top = 0
+          Width = 23
+          Color = clNone
+          Flat = True
+          Images = fMain.ilToolsSmall
+          ImageIndex = 19
+        end
+      end
     end
     object pLabels: TPanel
       Left = 64
