@@ -414,8 +414,19 @@ begin
 end;
 
 procedure TFDPackageLists.MakeCodePage(var CSV: TStringGrid; Codepage: integer);
+var
+  I , J : integer;
 begin
-  // Coming soon
+  CSV.SortColRow(True, 0);
+  for I := 0 to CSV.ColCount - 1 do
+    CSV.Cells[I,0] := Trim(Lowercase(CSV.Cells[I,0]));
+  if CodePage >= 0 then begin
+    Log(self, 'Convert CSV UTF8 to codepage ' + FDNLS.CodePages.Identifier[Codepage]);
+    for J := 0 to CSV.RowCount - 1 do
+      for I := 0 to CSV.ColCount - 1 do
+        CSV.Cells[I,J] :=
+          FDNLS.CodePages.UTF8toDOS(Codepage, CSV.Cells[I,J]);
+  end;
 end;
 
 procedure TFDPackageLists.MakeUTF8(var CSV: TStringGrid; Codepage: integer);
@@ -425,11 +436,13 @@ begin
   CSV.SortColRow(True, 0);
   for I := 0 to CSV.ColCount - 1 do
     CSV.Cells[I,0] := Trim(Lowercase(CSV.Cells[I,0]));
-  if CodePage >= 0 then
+  if CodePage >= 0 then begin
+    Log(self, 'Convert CSV codepage ' + FDNLS.CodePages.Identifier[Codepage] + ' to  UTF8');
     for J := 0 to CSV.RowCount - 1 do
       for I := 0 to CSV.ColCount - 1 do
         CSV.Cells[I,J] :=
           FDNLS.CodePages.DOStoUTF8(Codepage, CSV.Cells[I,J]);
+  end;
 end;
 
 { TFDFontFiles }

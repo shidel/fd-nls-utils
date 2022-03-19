@@ -80,7 +80,7 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="155"/>
+        <TopLine Value="153"/>
         <CursorPos X="9" Y="187"/>
         <UsageCount Value="226"/>
         <Loaded Value="True"/>
@@ -93,10 +93,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgDetails"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="63"/>
-        <CursorPos X="72" Y="87"/>
-        <UsageCount Value="160"/>
+        <TopLine Value="151"/>
+        <CursorPos X="8" Y="183"/>
+        <UsageCount Value="167"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -104,7 +105,7 @@
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="29"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
@@ -119,9 +120,9 @@
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="284"/>
-        <CursorPos X="75" Y="309"/>
-        <FoldState Value=" T7jAHI011 T3mg03131D4 pjLoC030A2j"/>
+        <TopLine Value="413"/>
+        <CursorPos X="75" Y="429"/>
+        <FoldState Value=" T7jAHI011 T3mg03131D4 pjLoP030A2A"/>
         <UsageCount Value="101"/>
         <Loaded Value="True"/>
       </Unit>
@@ -139,21 +140,21 @@
         <UnitName Value="VCSExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="19" Y="23"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\country.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="270"/>
         <CursorPos X="101" Y="305"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\puiext.pas"/>
         <UnitName Value="PUIExt"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="13"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
@@ -161,7 +162,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="20"/>
         <CursorPos Y="61"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -171,11 +172,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
-        <TopLine Value="154"/>
-        <CursorPos X="61" Y="190"/>
-        <UsageCount Value="142"/>
+        <TopLine Value="75"/>
+        <CursorPos X="38" Y="182"/>
+        <UsageCount Value="149"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -185,19 +185,11 @@
         <EditorIndex Value="9"/>
         <TopLine Value="20"/>
         <CursorPos X="100" Y="125"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="152" Column="17" TopLine="97"/>
-      </Position>
-      <Position>
-        <Filename Value="..\shared\fdkit.pas"/>
-        <Caret Line="153" Column="18" TopLine="136"/>
-      </Position>
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
         <Caret Line="375" Column="69" TopLine="359"/>
@@ -309,6 +301,14 @@
       <Position>
         <Filename Value="upkgpreview.pas"/>
         <Caret Line="183" Column="58" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="420" Column="86" TopLine="410"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="435" Column="74" TopLine="398"/>
       </Position>
     </JumpHistory>
     <RunParams>

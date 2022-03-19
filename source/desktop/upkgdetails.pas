@@ -180,6 +180,7 @@ begin
   OnClick := @UpdateViewer;
   pFrame.OnClick:= OnClick;
   pLabels.OnClick := OnClick;
+  pFlag.OnClick := OnClick;
   sDetails.OnClick := OnClick;
   iFlag.OnClick := OnClick;
   pLanguage.OnClick := OnClick;

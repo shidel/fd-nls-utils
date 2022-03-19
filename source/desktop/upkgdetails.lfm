@@ -46,7 +46,8 @@ object framePkgDetails: TframePkgDetails
         Anchors = [akLeft, akRight, akBottom]
         AutoSize = False
         Caption = 'xxx'
-        Enabled = False
+        Font.Color = clGrayText
+        ParentFont = False
       end
     end
     object pLabels: TPanel
