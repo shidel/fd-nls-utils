@@ -37,6 +37,7 @@ type
     bbRemoveLanguage: TBitBtn;
     cbSoftwareUpdate: TComboBox;
     deLocalRepo: TDirectoryEdit;
+    Edit1: TEdit;
     frPkgListEdit: TframePkgListEdit;
     iLangNameVerify: TImage;
     iLangIdVerify: TImage;

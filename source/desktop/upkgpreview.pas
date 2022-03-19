@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Graphics, Forms, Controls, ExtCtrls, PasExt, FDKit,
-  DosView, uAppNLS;
+  DosView, uAppNLS, uLog;
 
 type
 
@@ -31,12 +31,14 @@ type
     FPkgSummary,
     FPkgPlatforms,
     FPkgKeywords : String;
+    FDataUpdate : boolean;
     procedure SetFieldValue(ID : String; var Field : String; DefaultValue : String = '');
     procedure Render;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Preview(Details : TControl); virtual;
+    procedure Preview(Details : TControl);
+    procedure UpdateRequest(Sender: TObject);
   end;
 
 implementation
@@ -55,7 +57,10 @@ end;
 
 procedure TframePkgPreview.tRenderTimer(Sender: TObject);
 begin
-  Render;
+  if FDataUpdate then
+    Preview(FDetails)
+  else
+    Render;
 end;
 
 procedure TframePkgPreview.SetFieldValue(ID: String; var Field: String; DefaultValue : String = '');
@@ -69,7 +74,8 @@ begin
     Field := TframePkgDetails(FDetails).Detail[I];
     if TframePkgDetails(FDetails).CodePageIndex <> -1 then
       Field := FDNLS.CodePages.UTF8toDOS(TframePkgDetails(FDetails).CodePageIndex,Field);
-  end;
+  end else
+    Field := '';
 end;
 
 procedure TframePkgPreview.Render;
@@ -78,8 +84,16 @@ var
   S : String;
 begin
   tRender.Enabled:=False;
+  FDataUpdate := False;
   FDosView.ClearScreen;
   FDosView.TextColor:=clWhite;
+  iPreview.Height:=iPreview.Width * FDosView.Bitmap.Height div FDosView.Bitmap.Width;
+  Constraints.MaxHeight:=iPreview.Height + 2;
+  if not Assigned(FDetails) then begin
+    iPreview.Picture.Assign(FDosView.Bitmap);
+    exit;
+  end;
+
   for I := 1 to FDosView.ScreenMax.Y do begin
     if I = 15 then FDosView.TextColor:=clGray;
     FDosView.GotoXY(1, I);
@@ -124,10 +138,7 @@ begin
     FDosView.WriteText(Copy(S, 1,X));
     Delete(S, 1, X);
   end;
-
-  iPreview.Height:=iPreview.Width * FDosView.Bitmap.Height div FDosView.Bitmap.Width;
   iPreview.Picture.Assign(FDosView.Bitmap);
-  Constraints.MaxHeight:=iPreview.Height + 2;
 end;
 
 constructor TframePkgPreview.Create(AOwner: TComponent);
@@ -151,11 +162,18 @@ end;
 procedure TframePkgPreview.Preview(Details: TControl);
 begin
   FDetails := Details;
-  if TframePkgDetails(FDetails).FontIndex = -1 then
-    FDosView.Font := FDNLS.Fonts.Data[0].FileData
-  else
-    FDosView.Font := FDNLS.Fonts.Data[TframePkgDetails(FDetails).FontIndex].FileData;
-  FPkgID := Uppercase(Copy(TframePkgDetails(FDetails).Identity, 1,8));
+  if not Assigned(FDetails) then begin
+    Log(self, 'Preview upate with (null)' );
+    FDosView.Font := FDNLS.Fonts.Data[0].FileData;
+    FPkgID := '';
+  end else begin
+    Log(self, 'Preview upate with ' + FDetails.Name);
+    if TframePkgDetails(FDetails).FontIndex = -1 then
+      FDosView.Font := FDNLS.Fonts.Data[0].FileData
+    else
+      FDosView.Font := FDNLS.Fonts.Data[TframePkgDetails(FDetails).FontIndex].FileData;
+    FPkgID := Uppercase(Copy(TframePkgDetails(FDetails).Identity, 1,8));
+  end;
   SetFieldValue('version', FPkgVer, dos_PkgVersion);
   SetFieldValue('author', FPkgAuthor, dos_PkgAuthor);
   SetFieldValue('group', FPkgAuthor, dos_PkgAuthor);
@@ -166,6 +184,13 @@ begin
   SetFieldValue('keywords', FPkgKeywords);
   SetFieldValue('copying-policy', FPkgLicense);
   Render;
+end;
+
+procedure TframePkgPreview.UpdateRequest(Sender: TObject);
+begin
+  tRender.Interval:=250;
+  tRender.Enabled:=True;
+  FDataUpdate := True;
 end;
 
 end.

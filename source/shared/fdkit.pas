@@ -240,7 +240,7 @@ var
   H, D : String;
 begin
   FDetails.Clear;
-  Log(Self, 'get master details ' + '/' + IntToStr(INdex));
+  Log(Self, 'get master details ' + IntToStr(INdex));
   for I := 0 to FFields.Count - 1 do begin
     H := Lowercase(trim(FFields[I]));
     D := '';
@@ -319,6 +319,10 @@ begin
         end;
         FDetails.Add(D);
       end;
+  end;
+  D := '';
+  while FDetails.Count < FFields.Count do begin
+    FDetails.Add(D);
   end;
   Result := FDetails;
 end;

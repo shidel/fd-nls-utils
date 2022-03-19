@@ -35,6 +35,7 @@ type
     procedure Refresh;
     constructor Create(AOwner: TComponent); override;
     procedure SelectEdit(Item : TListItem); overload;
+    procedure SelectPreview(Details : TframePkgDetails);
   end;
 
 implementation
@@ -54,7 +55,7 @@ begin
 end;
 
 function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean;
-  ATop : Integer ): TframePkgDetails;
+  ATop: integer): TframePkgDetails;
 begin
   log(Self, 'Create Details ' + WhenTrue(AllowEdit, 'Editor', 'Viewer') + ' for ' + Language);
   Result := TframePkgDetails.Create(Self, Language, AllowEdit);
@@ -140,6 +141,7 @@ procedure TframePkgListEdit.Clear;
 var
   I : integer;
 begin
+  Log(Self, 'Reset/Clear');
   lvPackages.Clear;
   FreeAndNil(FMasterDetails);
   FreeAndNil(FPreviewSplitter);
@@ -182,10 +184,16 @@ begin
   Log(Self, 'select item ' + IntToStr(Item.Index) + ', ' + Item.Caption);
   Log(Self, 'set master details');
   FMasterDetails.SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
-  FPreview.Preview(FMasterDetails);
+  SelectPreview(FMasterDetails);
   if Length(FEditors) = 0 then MakeEditors;
   for I := 0 to Length(FEditors) - 1 do
       FEditors[I].SetDetails(Item.Caption, FDNLS.PackageLists.LangDetails[FEditors[I].DetailsIndex,Item.index]);
+end;
+
+procedure TframePkgListEdit.SelectPreview(Details: TframePkgDetails);
+begin
+  if Assigned(FPreview) then
+    FPreview.Preview(Details);
 end;
 
 end.

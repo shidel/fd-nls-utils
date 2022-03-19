@@ -42,6 +42,8 @@ type
     procedure SetIdentity(AValue: String);
     procedure SetViewer(AValue: TControl);
     property Rows : integer read FRows write SetRows;
+    procedure UpdateViewer(Sender: TObject);
+    procedure RefreshViewer(Sender: TObject);
   public
     constructor Create(AOwner: TComponent; ALanguage : String; AEditor : boolean = false); virtual; overload;
     destructor Destroy; override;
@@ -75,6 +77,16 @@ begin
     RowsAdjust;
 end;
 
+procedure TframePkgDetails.UpdateViewer(Sender: TObject);
+begin
+  if Assigned(Viewer) then TframePkgPreview(Viewer).Preview(Self);
+end;
+
+procedure TframePkgDetails.RefreshViewer(Sender: TObject);
+begin
+  if Assigned(Viewer) then TframePkgPreview(Viewer).UpdateRequest(Self);
+end;
+
 procedure TframePkgDetails.SetRows(AValue: integer);
 var
   I : integer;
@@ -102,6 +114,7 @@ begin
     for I := Rows + 1 to AValue do begin
       if FAllowEdit then begin
         FDatum[I - 1] := TEdit.Create(Self);
+        TEdit(FDatum[I - 1]).OnChange:=@RefreshViewer;
       end else begin
         FDatum[I - 1] := TLabel.Create(Self);
         TLabel(FDatum[I - 1]).WordWrap:=True;
@@ -113,6 +126,7 @@ begin
       FDatum[I - 1].AutoSize:=True;
       FDatum[I - 1].Align:=alTop;
       FDatum[I - 1].Caption:='';
+      FDatum[I - 1].OnClick := OnClick;
 
       FLabels[I - 1] := TLabel.Create(Self);
       FLabels[I - 1].Name:=Name + '_PkgLabel'+IntToStr(I-1);
@@ -123,6 +137,7 @@ begin
       FLabels[I - 1].WordWrap:=False;
       Flabels[I - 1].Anchors:=[akRight, akTop];
       FLabels[I - 1].AutoSize := True;
+      FLabels[I - 1].OnClick := OnClick;
     end;
   end;
   FRows:=AValue;
@@ -162,6 +177,12 @@ constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String;
 begin
   inherited Create(AOwner);
   FDetailsIndex := -1;
+  OnClick := @UpdateViewer;
+  pFrame.OnClick:= OnClick;
+  pLabels.OnClick := OnClick;
+  sDetails.OnClick := OnClick;
+  iFlag.OnClick := OnClick;
+  pLanguage.OnClick := OnClick;
   FAllowEdit := AEditor;
   FLanguage := ALanguage;
   pLanguage.Caption:=ALanguage;

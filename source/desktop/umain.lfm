@@ -150,6 +150,14 @@ object fMain: TfMain
           )
           TabOrder = 0
         end
+        object Edit1: TEdit
+          Left = 196
+          Height = 22
+          Top = 37
+          Width = 80
+          TabOrder = 1
+          Text = 'Edit1'
+        end
       end
       object tsPackages: TTabSheet
         Caption = 'Packages'
