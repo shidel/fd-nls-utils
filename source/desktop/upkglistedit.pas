@@ -261,6 +261,7 @@ begin
   if Length(FEditors) = 0 then MakeEditors;
   for I := 0 to Length(FEditors) - 1 do
       FEditors[I].SetDetails(Item.Caption, Item.Index, FDNLS.PackageLists.LangDetails[FEditors[I].DetailsIndex,Item.index]);
+  FDNLS.PackageLists.SaveChanges;
 end;
 
 procedure TframePkgListEdit.SelectPreview(Details: TframePkgDetails);

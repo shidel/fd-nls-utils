@@ -171,6 +171,7 @@ type
     function Language(ALanguage : String) : integer; overload;
     function CreateLanguage(ALanguage : String) : integer;
     procedure SetLangDetails(LangIndex : integer; Index : integer; AValue: TStringList);
+    procedure SaveChanges;
     // Probably move to Private after Development
     property MasterCSV : TStringGrid read GetMasterCSV;
     property FileCSV[Index : integer] : TStringGrid read GetFileCSV;
@@ -437,7 +438,6 @@ begin
   Log(Self, 'set Language details ' + IntTostr(LangIndex) + '/' + IntToStr(Index));
   D := lowercase(FMasterCSV.Cells[0, Index + 1]);
   if LangIndex <> -1 then begin
-    FModified[LangIndex] := True;
     Index := -1;
     for I := 1 to FileCSV[LangIndex].RowCount - 1 do
       if D = lowercase(FFileCSV[LangIndex].Cells[0,I]) then begin
@@ -455,11 +455,41 @@ begin
         H := Lowercase(trim(FFields[I]));
         for J := 0 to FFileCSV[LangIndex].ColCount - 1 do begin
           if FFileCSV[LangIndex].Cells[J,0] = H then begin
-            FFileCSV[LangIndex].Cells[J, Index]:=AValue[I];
+            if FFileCSV[LangIndex].Cells[J, Index]<>AValue[I] then begin
+              FModified[LangIndex] := True;
+              FFileCSV[LangIndex].Cells[J, Index]:=AValue[I];
+            end;
             Break;
           end;
         end;
       end;
+  end;
+end;
+
+procedure TFDPackageLists.SaveChanges;
+var
+  I : integer;
+  G : TStringGrid;
+  LId : String;
+  CP : integer;
+begin
+  for I := 0 to FFiles.Count - 1 do begin
+    if not FModified[I] then Continue;
+    Log(Self, '*** save file ' + FFiles[I]);
+    FFileCSV[I].SaveToCSVFile(GroupPath + FFiles[I] + '.UTF-8');
+    VCSAdd(GroupPath + FFiles[I] + '.UTF-8');
+    G := TStringGrid.Create(nil);
+    try
+      G.Assign(FFileCSV[I]);
+      LId := Language(I);
+      CP := FDNLS.FindCodepage(LId);
+      MakeCodePage(G, CP);
+      G.SaveToCSVFile(GroupPath + FFiles[I]);
+      VCSAdd(GroupPath + FFiles[I]);
+    finally
+      FreeAndNil(G);
+    end;
+    FModified[I] := False;
   end;
 end;
 
@@ -568,6 +598,7 @@ end;
 
 destructor TFDPackageLists.Destroy;
 begin
+  SaveChanges;
   PurgeCSVData;
   FreeAndNil(FFields);
   FreeAndNil(FDetails);
