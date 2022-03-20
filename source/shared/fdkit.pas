@@ -448,6 +448,10 @@ begin
        FFileCSV[LangIndex].InsertColRow(False, FFileCSV[LangIndex].RowCount);
        Index := FFileCSV[LangIndex].RowCount - 1;
        FFileCSV[LangIndex].Cells[0,Index]:=D;
+       for J := 0 to FFileCSV[LangIndex].ColCount - 1 do begin
+           if FFileCSV[LangIndex].Cells[J, 0] = 'sha' then
+             FFileCSV[LangIndex].Cells[J,Index]:=ZeroPad(0,64);
+       end;
     end;
     Log(Self, 'Index of "' + D + '" is ' + IntToStr(Index));
     if Index > 0 then
@@ -638,7 +642,7 @@ var
   H, D : String;
 begin
   Result := -1;
-  H := Implode(DefaultCSVFields, ',') + ',sha';
+  H := 'id,' + Implode(DefaultCSVFields, ',') + ',sha';
   D := IncludeTrailingPathDelimiter(GroupPath + lowercase(ALanguage));
   if not FileExists(D + 'listing.csv') then begin
     if not DirectoryExists(D) then

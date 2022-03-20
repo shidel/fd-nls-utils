@@ -19,9 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="537"/>
-        <CursorPos X="31" Y="539"/>
+        <TopLine Value="536"/>
+        <CursorPos X="58" Y="568"/>
         <FoldState Value=" T3mE0412723372711211314c"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
@@ -95,10 +94,21 @@
         <EditorIndex Value="6"/>
         <TopLine Value="78"/>
         <CursorPos X="73" Y="111"/>
-        <FoldState Value=" T3j3030115192i"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="upkgpreview.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="framePkgPreview"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="uPkgPreview"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="36"/>
+        <CursorPos X="100" Y="135"/>
+        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
@@ -112,10 +122,11 @@
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="1179"/>
-        <CursorPos Y="1182"/>
-        <FoldState Value=" T7jJHI T3p50J014311268 pj5qQ0B5 pigjO030426"/>
+        <TopLine Value="377"/>
+        <CursorPos X="50" Y="451"/>
+        <FoldState Value=" T7jJHI T3p50J0134112682"/>
         <UsageCount Value="101"/>
         <Loaded Value="True"/>
       </Unit>
@@ -148,21 +159,8 @@
         <EditorIndex Value="3"/>
         <TopLine Value="634"/>
         <CursorPos X="33" Y="660"/>
-        <FoldState Value=" T3uC0V4}"/>
         <UsageCount Value="41"/>
         <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="upkgpreview.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="framePkgPreview"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
-        <UnitName Value="uPkgPreview"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="36"/>
-        <CursorPos X="100" Y="135"/>
-        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\dosview.pas"/>
