@@ -90,6 +90,7 @@ object framePkgDetails: TframePkgDetails
           Flat = True
           Images = fMain.ilToolsSmall
           ImageIndex = 19
+          OnClick = sbTransferClick
         end
       end
     end

@@ -17,6 +17,7 @@ type
     sPkgEditSplitter: TSplitter;
     procedure lvPackagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure sSplitterMoved(Sender: TObject);
   private
     FNeedRefresh : boolean;
     FPkgView : TFrame;
@@ -53,6 +54,12 @@ begin
   // Log(Self, 'list item change ');
   if lvPackages.Selected = Item then
     SelectEdit(Item);
+end;
+
+procedure TframePkgListEdit.sSplitterMoved(Sender: TObject);
+begin
+  if Assigned(FPreview) then
+    FPreview.FrameResize(Sender);
 end;
 
 function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean;
@@ -149,6 +156,7 @@ begin
     FPreviewSplitter.Parent := FPkgView;
     FPreviewSplitter.Top := FPreview.Top + FPreview.Height;
     FPreviewSplitter.Align := alTop;
+    FPreviewSplitter.OnMoved:=@sSplitterMoved;
   end;
 
   if not Assigned(FMasterDetails) then begin
@@ -224,11 +232,11 @@ begin
     exit;
   end;
   Log(Self, 'select item ' + IntToStr(Item.Index) + ', ' + Item.Caption);
-  FMasterDetails.SetDetails(Item.Caption, FDNLS.PackageLists.MasterDetails[Item.Index]);
+  FMasterDetails.SetDetails(Item.Caption, Item.Index, FDNLS.PackageLists.MasterDetails[Item.Index]);
   SelectPreview(FMasterDetails);
   if Length(FEditors) = 0 then MakeEditors;
   for I := 0 to Length(FEditors) - 1 do
-      FEditors[I].SetDetails(Item.Caption, FDNLS.PackageLists.LangDetails[FEditors[I].DetailsIndex,Item.index]);
+      FEditors[I].SetDetails(Item.Caption, Item.Index, FDNLS.PackageLists.LangDetails[FEditors[I].DetailsIndex,Item.index]);
 end;
 
 procedure TframePkgListEdit.SelectPreview(Details: TframePkgDetails);

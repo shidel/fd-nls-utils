@@ -477,7 +477,7 @@ begin
   if not fLog.Visible then begin
     fLog.Caption := dlg_DebugLog;
     fLog.Show;
-    Self.Show;
+    // Self.Show;
   end;
 end;
 

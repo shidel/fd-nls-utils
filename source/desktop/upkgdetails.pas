@@ -26,6 +26,7 @@ type
     sDetails: TSplitter;
     sbTransfer: TSpeedButton;
     procedure pDetailsResize(Sender: TObject);
+    procedure sbTransferClick(Sender: TObject);
   private
     procedure SetRows(AValue: integer);
   private
@@ -34,6 +35,7 @@ type
     FDetailsIndex: integer;
     FFontIndex: integer;
     FIdentity: String;
+    FItemIndex: integer;
     FLanguage: String;
     FLanguageIndex: integer;
     FModified: boolean;
@@ -61,9 +63,10 @@ type
     property CodePageIndex : integer read FCodePageIndex;
     property FontIndex : integer read FFontIndex;
     property DetailsIndex : integer read FDetailsIndex;
+    property ItemIndex : integer read FItemIndex;
     property Identity : String read FIdentity write SetIdentity;
     procedure SetLabels(List : TStringList);
-    procedure SetDetails(Identifier : String; List : TStringList);
+    procedure SetDetails(Identifier : String; Index : integer; List : TStringList);
     procedure RowsAdjust;
     function  IndexOfLabel(S : String) : integer;
     property  Detail [Index : integer] : String read GetDetail write SetDetail;
@@ -80,6 +83,12 @@ uses uMain, uPkgPreview;
 procedure TframePkgDetails.pDetailsResize(Sender: TObject);
 begin
     RowsAdjust;
+end;
+
+procedure TframePkgDetails.sbTransferClick(Sender: TObject);
+begin
+  if FItemIndex <> -1 then
+    SetDetails(FIdentity, FItemIndex, FDNLS.PackageLists.MasterDetails[FItemIndex]);
 end;
 
 procedure TframePkgDetails.UpdateViewer(Sender: TObject);
@@ -182,6 +191,7 @@ constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String;
 begin
   inherited Create(AOwner);
   FDetailsIndex := -1;
+  FItemIndex := -1;
   OnClick := @UpdateViewer;
   pFrame.OnClick:= OnClick;
   pLabels.OnClick := OnClick;
@@ -235,12 +245,14 @@ begin
   FModified := False;
 end;
 
-procedure TframePkgDetails.SetDetails(Identifier : String; List : TStringList);
+procedure TframePkgDetails.SetDetails(Identifier: String; Index: integer;
+  List: TStringList);
 var
   I : integer;
 begin
   FModified := False;
   FIdentity := Identifier;
+  FItemIndex := Index;
   Rows := List.Count;
   for I := 0 to List.Count - 1 do begin
     FDatum[I].Caption:=List[I];
