@@ -183,6 +183,7 @@ procedure TfMain.FormCreate(Sender: TObject);
 begin
    Log(Self, 'User Language: ' + UserLanguage);
    Repository := TFDNLS.Create;
+   FDNLS.AutoCreate := True;
    // Hide some design time elements
    pcMain.ShowTabs := False;
    pcPrefs.ShowTabs := False;

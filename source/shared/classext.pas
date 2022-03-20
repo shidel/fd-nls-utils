@@ -48,6 +48,7 @@ type
     procedure LoadFile(Index : integer); virtual;
     procedure SaveFile(Index : integer); virtual;
     function IncludeFile(AFileName : String) : boolean; virtual;
+    function FileAdd(AFileName : String) : integer;
   public
     constructor Create;
     destructor Destroy; override;
@@ -59,7 +60,7 @@ type
     property Data[Index : integer] : TFileObject read GetFileObject write SetFileObject;
     function IndexOfFile(AValue : String) : integer;
     procedure Reload; virtual;
-    function Add : integer;
+    function Add(AFileBase : String = '') : integer;
     procedure Delete(Index : integer);
   published
   end;
@@ -92,7 +93,7 @@ type
     property Filename[Index : integer] : String read GetFileName write SetFileName;
     function IndexOfFile(AValue : String) : integer;
     procedure Reload; virtual;
-    function Add : integer; virtual;
+    function Add(AFileBase : String = '') : integer; virtual;
     procedure Delete(Index : integer);
     procedure SetValue(Index : integer; KeyName : String; Value : String); overload;
     procedure SetValue(Index : integer; KeyName : String; Value : Integer); overload;
@@ -568,18 +569,20 @@ begin
   end;
 end;
 
-function TFileGroup.Add: integer;
+function TFileGroup.Add(AFileBase : String = ''): integer;
 var
-  N : String;
+  B, N : String;
   X, I : integer;
 begin
   Result := -1;
   X := 0;
-  N := 'new-file'   + FExt;
+  B := AFileBase;
+  if B = '' then B := 'new-file';
+  N := B + FExt;
   While X < 100 do begin
     if not FileExists(GroupPath + N) then break;
     Inc(X);
-    N := 'new-file'+IntToStr(X) + FExt;
+    N := B+IntToStr(X) + FExt;
   end;
   if X = 100 then exit;
   I := FFiles.Add(N);
@@ -623,6 +626,39 @@ end;
 function TFileGroup.IncludeFile(AFileName: String): boolean;
 begin
   Result := (GroupID = '') or (Uppercase(FExt) = Uppercase(ExtractFileExt(AFileName)));
+end;
+
+function TFileGroup.FileAdd(AFileName: String) : integer;
+var
+  X : integer;
+  D : TFileObject;
+begin
+  Result := FFiles.Add(AFileName);
+  if not IncludeFile(FFiles[Result]) then begin
+    FFiles.Delete(Result);
+    Result := -1;
+  end else
+    try
+      D := TFileObject.Create;
+      X := FData.Add(D);
+      if Result <> X then begin
+        {$IFDEF UseLog}
+          Log(nil,'FILE_GROUP, maligned indexes ' + IntToStr(Result) + ':' + IntToStr(X) + ' with ' + FFiles[Result]);
+        {$ENDIF}
+        raise exception.Create('maligned list index management error');
+      end;
+      if LoadAll then LoadFile(Result);
+      {$IFDEF UseLog}
+        if not D.Loaded then
+          Log(nil,'  File: ' + FFiles[Result] + ' added');
+      {$ENDIF}
+    except
+      {$IFDEF UseLog}
+        Log(nil,'FILE_GROUP, ERROR ' + FFiles[Result] + ' raised exception');
+      {$ENDIF}
+      FFiles.Delete(Result);
+      Result := -1;
+    end;
 end;
 
 { TXMLGroup }
@@ -751,19 +787,21 @@ begin
   end;
 end;
 
-function TXMLGroup.Add: integer;
+function TXMLGroup.Add(AFileBase : String = ''): integer;
 var
-  N : String;
+  B, N : String;
   X, I : integer;
   D : TObject;
 begin
   Result := -1;
   X := 0;
-  N := 'new-item.xml';
+  B := AFileBase;
+  if B = '' then B := 'new-item';
+  N := B + '.xml';
   While X < 100 do begin
     if not FileExists(GroupPath + N) then break;
     Inc(X);
-    N := 'new-item'+IntToStr(X)+'.xml';
+    N := B+IntToStr(X)+'.xml';
   end;
   if X = 100 then exit;
   FXML.Filename:=GroupPath + N;

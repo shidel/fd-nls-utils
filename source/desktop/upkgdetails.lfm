@@ -84,6 +84,7 @@ object framePkgDetails: TframePkgDetails
         object sbTransfer: TSpeedButton
           Left = 0
           Height = 22
+          Hint = 'Copy master text to this translation'
           Top = 0
           Width = 23
           Color = clNone

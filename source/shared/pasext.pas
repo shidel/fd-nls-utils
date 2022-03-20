@@ -71,6 +71,9 @@ function Excise(var AStr : String; AFrom : String; MatchCase : boolean = True) :
 function AlphaOnly(AStr : String) : String; overload;
 
 function Implode(AStr: String; ADelim : String = SPACE) : String; overload;
+function Implode(AStr: TStringArray; ADelim : String = SPACE) : String; overload;
+function Implode(AStr: TStringList; ADelim : String = SPACE) : String; overload;
+
 procedure Explode(AStr : String; var AStrs : TStringList; ADelim : String; ATrim : boolean = false); overload;
 procedure Explode(AStr : String; var AStrs : TStringList; ATrim : boolean = false); overload;
 
@@ -344,6 +347,34 @@ begin
         StringReplace(AStr, CRLF, ADelim, [rfReplaceAll]),
       LF, ADelim, [rfReplaceAll]),
     CR, ADelim, [rfReplaceAll]);
+end;
+
+function Implode(AStr: TStringArray; ADelim: String): String;
+var
+  I : integer;
+begin
+  Result := '';
+  I := 0;
+  While I < Length(AStr) do begin
+    Result := Result + AStr[I];
+    Inc(I);
+    if I < Length(AStr) then
+      Result := Result + ADelim;
+  end;
+end;
+
+function Implode(AStr: TStringList; ADelim: String): String;
+var
+  I : integer;
+begin
+  Result := '';
+  I := 0;
+  While I < AStr.Count do begin
+    Result := Result + AStr[I];
+    Inc(I);
+    if I < AStr.Count then
+      Result := Result + ADelim;
+  end;
 end;
 
 procedure Explode(AStr : String; var AStrs : TStringList; ADelim : String;

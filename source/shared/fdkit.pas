@@ -134,15 +134,18 @@ type
     FMasterCP : integer;
     FFileCSV : array of TStringGrid;
     FCPIndex : array of integer;
+    FModified : array of boolean;
     function GetLangDetails(LangIndex : integer; Index : integer): TStringList;
     function GetFields: TStringList;
     function GetFileCSV(Index : integer): TStringGrid;
     function GetMasterCSV: TStringGrid;
     function GetMasterDetails(Index : integer): TStringList;
+    function GetModified: boolean;
     function GetPackageCount: integer;
     function GetPackageID(Index : integer): String;
     function GetPackageStatus(LangIndex : integer; Index : integer
       ): TPackageState;
+    procedure SetModified(AValue: boolean);
   protected
     property Owner : TFDNLS read FOwner;
     function GroupPath : String; override;
@@ -155,15 +158,20 @@ type
     constructor Create(AOwner : TFDNLS);
     destructor Destroy; override;
     procedure Reload; override;
+    property Modified : boolean read GetModified write SetModified;
     property Fields : TStringList read GetFields;
     property PackageCount : integer read GetPackageCount;
     property PackageID[Index : integer] : String read GetPackageID;
     property MasterDetails[Index : integer] : TStringList read GetMasterDetails;
-    property LangDetails[LangIndex : integer; Index : integer] : TStringList read GetLangDetails;
-    property StatusDetails[LangIndex : integer; Index : integer] : TPackageState read GetPackageStatus;
+    property LangDetails[LangIndex : integer; Index : integer] : TStringList
+      read GetLangDetails;
+    property StatusDetails[LangIndex : integer; Index : integer] : TPackageState
+      read GetPackageStatus;
     function Language(Index : integer) : String; overload;
-    function Language(ALanguage : String; AutoCreate : boolean = false) : integer; overload;
-    // Move to Private Post Dev
+    function Language(ALanguage : String) : integer; overload;
+    function CreateLanguage(ALanguage : String) : integer;
+    procedure SetLangDetails(LangIndex : integer; Index : integer; AValue: TStringList);
+    // Probably move to Private after Development
     property MasterCSV : TStringGrid read GetMasterCSV;
     property FileCSV[Index : integer] : TStringGrid read GetFileCSV;
   published
@@ -172,6 +180,7 @@ type
   { TFDNLS }
   TFDNLS = class(TPersistent)
   private
+    FAutoCreate: boolean;
     FCodePages: TFDCodePages;
     FFonts: TFDFontFiles;
     FLanguages: TFDLanguages;
@@ -183,6 +192,7 @@ type
     function GetPackageListPath: String;
     function GetProjectsPath: string;
     function GetPath: string;
+    procedure SetAutoCreate(AValue: boolean);
     procedure SetPath(AValue: string);
   protected
     property DataPath : string read GetDataPath;
@@ -199,6 +209,7 @@ type
     property CodePages : TFDCodePages read FCodePages;
     property Fonts : TFDFontFiles read FFonts;
     property PackageLists : TFDPackageLists read FPackageLists;
+    property AutoCreate : boolean read FAutoCreate write SetAutoCreate;
     procedure Reload;
     function FindLanguage(ALanguage : String) : integer;
     function FindCodepage(ALanguage : String) : integer;
@@ -356,6 +367,15 @@ begin
   Result := FDetails;
 end;
 
+function TFDPackageLists.GetModified: boolean;
+var
+  I : integer;
+begin
+  Result := False;
+  for I := 0 to Length(FModified) -1 do
+    Result := Result or FModified[I];
+end;
+
 function TFDPackageLists.GetPackageCount: integer;
 begin
   Result := MasterCSV.RowCount - 1;
@@ -406,6 +426,52 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TFDPackageLists.SetLangDetails(LangIndex : integer; Index : integer;
+  AValue: TStringList);
+var
+  I, J : integer;
+  H, D : String;
+begin
+  Log(Self, 'set Language details ' + IntTostr(LangIndex) + '/' + IntToStr(Index));
+  D := lowercase(FMasterCSV.Cells[0, Index + 1]);
+  if LangIndex <> -1 then begin
+    Log(Self, 'A');
+    FModified[LangIndex] := True;
+    Index := -1;
+    Log(Self, 'B');
+    for I := 1 to FileCSV[LangIndex].RowCount - 1 do
+      if D = lowercase(FFileCSV[LangIndex].Cells[0,I]) then begin
+        Index := I;
+        Break;
+      end;
+    Log(Self, 'C');
+    if Index = -1 then begin
+       FFileCSV[LangIndex].InsertColRow(False, FFileCSV[LangIndex].RowCount);
+       Index := FFileCSV[LangIndex].RowCount - 1;
+    end;
+    Log(Self, 'Index of "' + D + '" is ' + IntToStr(Index));
+    if Index > 0 then
+      for I := 0 to FFields.Count - 1 do begin
+        H := Lowercase(trim(FFields[I]));
+        for J := 0 to FFileCSV[LangIndex].ColCount - 1 do begin
+          if FFileCSV[LangIndex].Cells[J,0] = H then begin
+            FFileCSV[LangIndex].Cells[J, Index]:=AValue[I];
+            Break;
+          end;
+        end;
+      end;
+  end;
+end;
+
+procedure TFDPackageLists.SetModified(AValue: boolean);
+var
+  I : integer;
+begin
+  if Modified=AValue then Exit;
+  for I := 0 to Length(FModified) -1 do
+      FModified[I]:=AValue;
 end;
 
 function TFDPackageLists.GetFileCSV(Index : integer): TStringGrid;
@@ -518,9 +584,11 @@ begin
   inherited Reload;
   SetLength(FFileCSV,FFiles.Count);
   SetLength(FCPIndex,FFiles.Count);
+  SetLength(FModified,FFiles.Count);
   for I := 0 to Length(FFileCSV) - 1 do begin
     FFileCSV[I] := nil;
     FCPIndex[I] := -1;
+    FModified[I] := False;
   end;
 end;
 
@@ -530,10 +598,28 @@ begin
   Log(Self, 'Language for file ' + FFiles[Index] + ' is ' + Result);
 end;
 
-function TFDPackageLists.Language(ALanguage: String; AutoCreate : boolean = false): integer;
+function TFDPackageLists.Language(ALanguage: String): integer;
 begin
   Result := IndexofLanguage(ALanguage);
   Log(Self, 'Index of ' + ALanguage + ' is ' + IntToStr(Result));
+end;
+
+function TFDPackageLists.CreateLanguage(ALanguage: String): integer;
+var
+  H, D : String;
+begin
+  Result := -1;
+  H := Implode(DefaultCSVFields, ',') + ',sha';
+  D := IncludeTrailingPathDelimiter(GroupPath + lowercase(ALanguage));
+  if not FileExists(D + 'listing.csv') then begin
+    if not DirectoryExists(D) then
+       if not CreateDir(D) then exit;
+    if SaveToFile(D + 'listing.csv', H) = 0 then begin
+      Result := FileAdd(D + 'listing.csv');
+    end;
+  end;
+  Log(Self, 'Create new language ' + ALanguage + ' index ' + IntToStr(Result));
+
 end;
 
 function TFDPackageLists.IndexOfLanguage(AValue: String): integer;
@@ -1035,6 +1121,12 @@ end;
 function TFDNLS.GetPath: string;
 begin
   Result := RepositoryPath;
+end;
+
+procedure TFDNLS.SetAutoCreate(AValue: boolean);
+begin
+  if FAutoCreate=AValue then Exit;
+  FAutoCreate:=AValue;
 end;
 
 procedure TFDNLS.SetPath(AValue: string);

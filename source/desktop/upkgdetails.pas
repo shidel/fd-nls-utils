@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ExtCtrls, StdCtrls, Buttons, PasExt,
-  FDKit, Icons, uAppNLS;
+  FDKit, Icons, uAppNLS, uLog;
 
 type
 
@@ -36,6 +36,7 @@ type
     FFontIndex: integer;
     FIdentity: String;
     FItemIndex: integer;
+    FEditIndex : integer;
     FLanguage: String;
     FLanguageIndex: integer;
     FModified: boolean;
@@ -46,11 +47,15 @@ type
     function GetDetail(Index : integer): String;
     function GetFlag: TImage;
     procedure SetDetail(Index : integer; AValue: String);
+    procedure SetDetailsIndex(AValue: integer);
     procedure SetIdentity(AValue: String);
     procedure SetViewer(AValue: TControl);
     property Rows : integer read FRows write SetRows;
     procedure UpdateViewer(Sender: TObject);
     procedure RefreshViewer(Sender: TObject);
+    procedure Editing(Sender: TObject);
+    procedure EditExit(Sender: TObject);
+    procedure EditDone(Sender: TObject);
   public
     constructor Create(AOwner: TComponent; ALanguage : String; AEditor : boolean = false); virtual; overload;
     destructor Destroy; override;
@@ -62,7 +67,7 @@ type
     property LanguageIndex : integer read FLanguageIndex;
     property CodePageIndex : integer read FCodePageIndex;
     property FontIndex : integer read FFontIndex;
-    property DetailsIndex : integer read FDetailsIndex;
+    property DetailsIndex : integer read FDetailsIndex write SetDetailsIndex;
     property ItemIndex : integer read FItemIndex;
     property Identity : String read FIdentity write SetIdentity;
     procedure SetLabels(List : TStringList);
@@ -70,6 +75,7 @@ type
     procedure RowsAdjust;
     function  IndexOfLabel(S : String) : integer;
     property  Detail [Index : integer] : String read GetDetail write SetDetail;
+    procedure CommitChanges;
   end;
 
 implementation
@@ -87,8 +93,10 @@ end;
 
 procedure TframePkgDetails.sbTransferClick(Sender: TObject);
 begin
-  if FItemIndex <> -1 then
+  if FItemIndex <> -1 then begin
     SetDetails(FIdentity, FItemIndex, FDNLS.PackageLists.MasterDetails[FItemIndex]);
+    OnClick(Sender);
+  end;
 end;
 
 procedure TframePkgDetails.UpdateViewer(Sender: TObject);
@@ -99,6 +107,24 @@ end;
 procedure TframePkgDetails.RefreshViewer(Sender: TObject);
 begin
   if Assigned(Viewer) then TframePkgPreview(Viewer).UpdateRequest(Self);
+end;
+
+procedure TframePkgDetails.Editing(Sender: TObject);
+begin
+  FModified := True;
+  RefreshViewer(Sender);
+end;
+
+procedure TframePkgDetails.EditExit(Sender: TObject);
+begin
+  FModified := True;
+  CommitChanges;
+end;
+
+procedure TframePkgDetails.EditDone(Sender: TObject);
+begin
+  FModified := True;
+  CommitChanges;
 end;
 
 procedure TframePkgDetails.SetRows(AValue: integer);
@@ -128,7 +154,9 @@ begin
     for I := Rows + 1 to AValue do begin
       if FAllowEdit then begin
         FDatum[I - 1] := TEdit.Create(Self);
-        TEdit(FDatum[I - 1]).OnChange:=@RefreshViewer;
+        TEdit(FDatum[I - 1]).OnChange:=@Editing;
+        TEdit(FDatum[I - 1]).OnExit:=@EditExit;
+        TEdit(FDatum[I - 1]).OnEditingDone:=@EditDone;
       end else begin
         FDatum[I - 1] := TLabel.Create(Self);
         TLabel(FDatum[I - 1]).WordWrap:=True;
@@ -174,6 +202,12 @@ begin
   FModified := True;
 end;
 
+procedure TframePkgDetails.SetDetailsIndex(AValue: integer);
+begin
+  if FDetailsIndex=AValue then Exit;
+  FDetailsIndex:=AValue;
+end;
+
 procedure TframePkgDetails.SetIdentity(AValue: String);
 begin
   if FIdentity=AValue then Exit;
@@ -192,6 +226,7 @@ begin
   inherited Create(AOwner);
   FDetailsIndex := -1;
   FItemIndex := -1;
+  FEditIndex := -1;
   OnClick := @UpdateViewer;
   pFrame.OnClick:= OnClick;
   pLabels.OnClick := OnClick;
@@ -223,13 +258,14 @@ begin
       Format(lbl_DOSCP, [FDNLS.CodePages.Identifier[FCodePageIndex]]);
   end;
   FFontIndex:=FDNLS.FindFont(Language);
-  FDetailsIndex := FDNLS.PackageLists.Language(ALanguage);
+  FDetailsIndex := FDNLS.PackageLists.Language(Language);
   iFlag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
   SetLabels(FDNLS.PackageLists.Fields);
 end;
 
 destructor TframePkgDetails.Destroy;
 begin
+  CommitChanges;
   fMain.xProperties.WriteInteger(GetNamePath + '/WIDTH', pLabels.Width);
   inherited Destroy;
 end;
@@ -250,9 +286,11 @@ procedure TframePkgDetails.SetDetails(Identifier: String; Index: integer;
 var
   I : integer;
 begin
-  FModified := False;
+  if FEditIndex <> -1 then
+     CommitChanges;
   FIdentity := Identifier;
   FItemIndex := Index;
+  FEditIndex := Index;
   Rows := List.Count;
   for I := 0 to List.Count - 1 do begin
     FDatum[I].Caption:=List[I];
@@ -285,6 +323,22 @@ begin
       Result := I;
       Break;
     end;
+end;
+
+procedure TframePkgDetails.CommitChanges;
+var
+  I : integer;
+  List : TStringList;
+begin
+  if FModified = False then exit;
+  FModified := False;
+  if (FEditIndex = -1) or (DetailsIndex = -1) then exit;
+  Log(Self, 'save changes to item ' + IntToStr(DetailsIndex) + '/' + IntToStr(FEditIndex));
+  List := TStringList.Create;
+  for I := 0 to Length(FDatum) - 1 do
+    List.Add(FDatum[I].Caption);
+  FDNLS.PackageLists.SetLangDetails(DetailsIndex, FEditIndex, List);
+  FreeAndNil(List);
 end;
 
 end.

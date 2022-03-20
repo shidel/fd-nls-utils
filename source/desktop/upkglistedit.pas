@@ -29,7 +29,6 @@ type
     FActive  : TStringArray;
     function MakeViewer(Language:String; AllowEdit : boolean; ATop : integer) : TframePkgDetails;
     procedure MakeEditors;
-    procedure UpdateStatus;
   public
     procedure Initialize;
     procedure Clear;
@@ -38,6 +37,9 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure SelectEdit(Item : TListItem); overload;
     procedure SelectPreview(Details : TframePkgDetails);
+    procedure UpdateStatus; overload;
+    procedure UpdateStatus(Index : integer); overload;
+    procedure UpdateStatus(var Item : TListItem); overload;
   end;
 
 implementation
@@ -67,9 +69,13 @@ function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean;
 begin
   log(Self, 'Create Details ' + WhenTrue(AllowEdit, 'Editor', 'Viewer') + ' for ' + Language);
   Result := TframePkgDetails.Create(Self, Language, AllowEdit);
-  if AllowEdit then
-    Result.Parent := FScroll
-  else
+  if AllowEdit then begin
+    Result.Parent := FScroll;
+    if Result.DetailsIndex = -1 then begin
+      Result.DetailsIndex := FDNLS.PackageLists.CreateLanguage(Language);
+      Log(Self, 'created as index ' + IntToStr(Result.DetailsIndex));
+    end;
+  end  else
     Result.Parent := FPkgView;
   Result.Top := ATop;
   Result.Align:=alTop;
@@ -91,35 +97,46 @@ end;
 
 procedure TframePkgListEdit.UpdateStatus;
 var
-  I, J : integer;
-  LI : TListItem;
-  ps, ts : TPackageState;
+  I : integer;
 begin
   log(Self, IntToStr(FDNLS.PackageLists.PackageCount) + ' package status update ' + IntToStr(length(FEditors)));
   for I := 0 to lvPackages.Items.Count - 1 do begin
     // Log(Self, 'Status ' + IntToStr(I));
-    LI := lvPackages.Items[I];
-    ps := psGood;
-    for J := 0 to length(FEditors) - 1 do begin
-      if (FEditors[J].DetailsIndex >= 0) then begin
-        // Log(Self, 'Status ' + IntToStr(I) + ':' + IntToStr(J));
-        ts := FDNLS.PackageLists.StatusDetails[FEditors[J].DetailsIndex, I];
-        if ts = psNew then
-          ps := psNew
-        else if not (ps in [psNew, psError, psInvalid]) then
-          ps := ts;
-      end;
+    UpdateStatus(I);
+   end;
+end;
 
-    end;
-    case ps of
-      psNew      : LI.ImageIndex:=17;
-      psWarning  : LI.ImageIndex:=15;
-      psInvalid,
-      psError    : LI.ImageIndex:=16;
-     else
-       LI.ImageIndex := -1;
-    end;
-  end;
+procedure TframePkgListEdit.UpdateStatus(var Item: TListItem);
+var
+  I : integer;
+  ps, ts : TPackageState;
+begin
+   ps := psGood;
+   for I := 0 to length(FEditors) - 1 do begin
+     if (FEditors[I].DetailsIndex >= 0) then begin
+       ts := FDNLS.PackageLists.StatusDetails[FEditors[I].DetailsIndex, Item.Index];
+       if ts = psNew then
+         ps := psNew
+       else if not (ps in [psNew, psError, psInvalid]) then
+         ps := ts;
+     end;
+   end;
+   case ps of
+     psNew      : Item.ImageIndex:=17;
+     psWarning  : Item.ImageIndex:=15;
+     psInvalid,
+     psError    : Item.ImageIndex:=16;
+    else
+      Item.ImageIndex := -1;
+   end;
+end;
+
+procedure TframePkgListEdit.UpdateStatus(Index: integer);
+var
+  Item : TListItem;
+begin
+  Item := lvPackages.Items[Index];
+  UpdateStatus(Item);
 end;
 
 procedure TframePkgListEdit.Initialize;
