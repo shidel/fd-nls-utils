@@ -99,12 +99,14 @@ type
     xConfig: TXMLConfig;
     xProperties: TXMLPropStorage;
     procedure actAddLanguageExecute(Sender: TObject);
+    procedure actAddLanguageUpdate(Sender: TObject);
     procedure actAppleAboutExecute(Sender: TObject);
     procedure actApplePrefsExecute(Sender: TObject);
     procedure actCodepageEditExecute(Sender: TObject);
     procedure actCodepageNewExecute(Sender: TObject);
     procedure actDebugLogExecute(Sender: TObject);
     procedure actPackagesExecute(Sender: TObject);
+    procedure actPackagesUpdate(Sender: TObject);
     procedure actPreferencesExecute(Sender: TObject);
     procedure actProjectsExecute(Sender: TObject);
     procedure actRemoveLanguageExecute(Sender: TObject);
@@ -464,6 +466,12 @@ begin
   end;
 end;
 
+procedure TfMain.actAddLanguageUpdate(Sender: TObject);
+begin
+  actAddLanguage.Visible:=True;
+  actAddLanguage.Enabled:=Repository.Path <> '';
+end;
+
 procedure TfMain.actApplePrefsExecute(Sender: TObject);
 begin
   SelectPrefsPage(tsGeneral);
@@ -494,6 +502,11 @@ end;
 procedure TfMain.actPackagesExecute(Sender: TObject);
 begin
   pcMain.ActivePage := tsPackages;
+end;
+
+procedure TfMain.actPackagesUpdate(Sender: TObject);
+begin
+    actPackages.Enabled:=Repository.Path <> '';
 end;
 
 procedure TfMain.actPreferencesExecute(Sender: TObject);

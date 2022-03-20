@@ -226,6 +226,8 @@ end;
 
 constructor TframePkgDetails.Create(AOwner: TComponent; ALanguage: String;
   AEditor: boolean = false);
+var
+  I : integer;
 begin
   inherited Create(AOwner);
   FDetailsIndex := -1;
@@ -263,7 +265,9 @@ begin
   end;
   FFontIndex:=FDNLS.FindFont(Language);
   FDetailsIndex := FDNLS.PackageLists.Language(Language);
-  iFlag.Picture.LoadFromLazarusResource(IconFlags[FDNLS.FindFlag(Language)]);
+  I := FDNLS.FindFlag(Language);
+  if I >= 0 then
+    iFlag.Picture.LoadFromLazarusResource(IconFlags[I]);
   SetLabels(FDNLS.PackageLists.Fields);
 end;
 

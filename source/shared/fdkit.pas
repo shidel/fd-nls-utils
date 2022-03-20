@@ -1229,6 +1229,7 @@ var
 begin
   Result := -1;
   I := FindLanguage(ALanguage);
+  if I = -1 then exit;
   if Languages.Graphic[I] <> '' then begin
     G := IconPrefix + Languages.Graphic[I];
     for I := 0 to Length(IconFlags) - 1 do
@@ -1236,7 +1237,7 @@ begin
         Result := I;
         Break;
       end;
-  end else if I <> -1  then begin
+  end else begin
     Result := 0;
     S := Uppercase(Languages.Identifier[I]);
     for I := 0 to Length(LanguageCodes) - 1 do

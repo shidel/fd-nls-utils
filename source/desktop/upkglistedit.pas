@@ -68,6 +68,10 @@ end;
 function TframePkgListEdit.MakeViewer(Language: String; AllowEdit: boolean;
   ATop: integer): TframePkgDetails;
 begin
+  if FDNLS.FindLanguage(Language) = -1 then begin
+    Result := nil;
+    exit;
+  end;
   log(Self, 'Create Details ' + WhenTrue(AllowEdit, 'Editor', 'Viewer') + ' for ' + Language);
   Result := TframePkgDetails.Create(Self, Language, AllowEdit);
   if AllowEdit then begin
@@ -186,7 +190,8 @@ begin
   if not Assigned(FMasterDetails) then begin
     FMasterDetails := MakeViewer(MasterCSVLanguage, False,
       FPreviewSplitter.Top + FPreviewSplitter.Height);
-    FMasterDetails.Viewer:=FPreview;
+    if Assigned(FMasterDetails) then
+      FMasterDetails.Viewer:=FPreview;
   end;
 
   if not Assigned(FScroll) then begin
@@ -227,6 +232,7 @@ var
   LI : TListItem;
 begin
   if not Assigned(FMasterDetails) then Initialize;
+  if not Assigned(FMasterDetails) then Exit;
   log(Self, IntToStr(FDNLS.PackageLists.PackageCount) + ' master packages');
   for I := 0 to FDNLS.PackageLists.PackageCount - 1 do begin
     LI := lvPackages.Items.Add;
@@ -251,6 +257,7 @@ procedure TframePkgListEdit.SelectEdit(Item: TListItem);
 var
   I : integer;
 begin
+  if not Assigned(FMasterDetails) then Exit;
   if not Assigned(Item) then begin
     SelectPreview(nil);
     exit;

@@ -2968,6 +2968,7 @@ object fMain: TfMain
       Caption = 'Packages'
       ImageIndex = 4
       OnExecute = actPackagesExecute
+      OnUpdate = actPackagesUpdate
     end
     object actProjects: TAction
       Category = 'UI'
@@ -2980,6 +2981,7 @@ object fMain: TfMain
       Category = 'UI'
       Caption = 'actAddLanguage'
       OnExecute = actAddLanguageExecute
+      OnUpdate = actAddLanguageUpdate
     end
     object actRemoveLanguage: TAction
       Category = 'UI'
