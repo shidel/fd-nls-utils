@@ -32,6 +32,7 @@ resourcestring
   lbl_NotGitRepo                = 'Not a git repository';
   lbl_GitRepo                   = 'Git repository %0:s';
   lbl_ComingSoon                = 'not implemented, coming soon';
+  lbl_LanguageEnabled           = 'Enable Language';
 
   dlg_LocalRepo                 = 'FD-NLS Local Repository';
   dlg_DebugLog                  = 'Debug Log';

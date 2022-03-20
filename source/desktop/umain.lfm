@@ -1,10 +1,10 @@
 object fMain: TfMain
-  Left = 438
-  Height = 477
-  Top = 162
+  Left = 276
+  Height = 500
+  Top = 78
   Width = 640
   Caption = 'FD-NLS'
-  ClientHeight = 477
+  ClientHeight = 500
   ClientWidth = 640
   Constraints.MinHeight = 400
   Constraints.MinWidth = 640
@@ -85,7 +85,7 @@ object fMain: TfMain
   object sbMain: TStatusBar
     Left = 0
     Height = 18
-    Top = 459
+    Top = 482
     Width = 640
     Panels = <>
   end
@@ -101,7 +101,7 @@ object fMain: TfMain
   object pSeperatorLower: TPanel
     Left = 0
     Height = 5
-    Top = 454
+    Top = 477
     Width = 640
     Align = alBottom
     BevelOuter = bvNone
@@ -110,28 +110,28 @@ object fMain: TfMain
   end
   object pMain: TPanel
     Left = 0
-    Height = 409
+    Height = 432
     Top = 45
     Width = 640
     Align = alClient
     BevelInner = bvSpace
     BevelOuter = bvSpace
     BevelWidth = 2
-    ClientHeight = 409
+    ClientHeight = 432
     ClientWidth = 640
     TabOrder = 2
     object pcMain: TPageControl
       Left = 4
-      Height = 401
+      Height = 424
       Top = 4
       Width = 632
-      ActivePage = tsPackages
+      ActivePage = tsPrefs
       Align = alClient
-      TabIndex = 1
+      TabIndex = 2
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'
-        ClientHeight = 371
+        ClientHeight = 394
         ClientWidth = 626
         OnShow = tsProjectsShow
         object lbComingSoon: TLabel
@@ -162,41 +162,37 @@ object fMain: TfMain
       end
       object tsPackages: TTabSheet
         Caption = 'Packages'
-        ClientHeight = 371
+        ClientHeight = 394
         ClientWidth = 626
         OnShow = tsPackagesShow
         inline frPkgListEdit: TframePkgListEdit
           Left = 8
-          Height = 352
+          Height = 375
           Top = 8
           Width = 616
-          ClientHeight = 352
+          ClientHeight = 375
           ClientWidth = 616
           DesignLeft = 124
           DesignTop = 151
           inherited lvPackages: TListView
-            Height = 352
-            Columns = <            
-              item
-                Width = 150
-              end>
+            Height = 375
             RowSelect = True
             OnChange = nil
           end
           inherited sPkgEditSplitter: TSplitter
-            Height = 352
+            Height = 375
             Width = 5
           end
         end
       end
       object tsPrefs: TTabSheet
         Caption = 'Preferences'
-        ClientHeight = 371
+        ClientHeight = 394
         ClientWidth = 626
         OnShow = tsPrefsShow
         object tvPrefs: TTreeView
           Left = 0
-          Height = 371
+          Height = 394
           Top = 0
           Width = 121
           Align = alLeft
@@ -210,23 +206,23 @@ object fMain: TfMain
         end
         object sPrefs: TSplitter
           Left = 121
-          Height = 371
+          Height = 394
           Top = 0
           Width = 10
         end
         object pcPrefs: TPageControl
           Left = 131
-          Height = 371
+          Height = 394
           Top = 0
           Width = 495
-          ActivePage = tsGeneral
+          ActivePage = tsLanguages
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 0
+          TabIndex = 2
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
-            ClientHeight = 341
+            ClientHeight = 364
             ClientWidth = 489
             OnShow = tsGeneralShow
             object lbSoftwareUpdate: TLabel
@@ -271,7 +267,7 @@ object fMain: TfMain
           end
           object tsRepo: TTabSheet
             Caption = 'Repository'
-            ClientHeight = 341
+            ClientHeight = 364
             ClientWidth = 489
             OnShow = tsRepoShow
             object lbLocalRepo: TLabel
@@ -310,17 +306,17 @@ object fMain: TfMain
           end
           object tsLanguages: TTabSheet
             Caption = 'Languages'
-            ClientHeight = 341
+            ClientHeight = 364
             ClientWidth = 489
             OnShow = tsLanguagesShow
             object pLanguages: TPanel
               Left = 12
-              Height = 343
+              Height = 366
               Top = 2
               Width = 477
               Anchors = [akTop, akLeft, akRight, akBottom]
               BevelOuter = bvNone
-              ClientHeight = 343
+              ClientHeight = 366
               ClientWidth = 477
               TabOrder = 0
               object sLanguages: TSplitter
@@ -334,26 +330,26 @@ object fMain: TfMain
               end
               object sbLanguageEdit: TScrollBox
                 Left = 0
-                Height = 215
+                Height = 238
                 Top = 128
                 Width = 477
                 HorzScrollBar.Page = 1
                 HorzScrollBar.Visible = False
-                VertScrollBar.Page = 192
+                VertScrollBar.Page = 234
                 Align = alClient
                 BorderStyle = bsNone
-                ClientHeight = 215
+                ClientHeight = 238
                 ClientWidth = 477
                 TabOrder = 1
                 OnResize = sbLanguageEditResize
                 object pLangEditLeft: TPanel
                   Left = 0
-                  Height = 215
+                  Height = 238
                   Top = 0
                   Width = 477
                   Align = alClient
                   BevelOuter = bvNone
-                  ClientHeight = 215
+                  ClientHeight = 238
                   ClientWidth = 477
                   TabOrder = 0
                   object leLangID: TLabeledEdit
@@ -373,7 +369,7 @@ object fMain: TfMain
                   object leLangName: TLabeledEdit
                     Left = 8
                     Height = 22
-                    Top = 72
+                    Top = 74
                     Width = 259
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
@@ -387,7 +383,7 @@ object fMain: TfMain
                   object leLangDOS: TLabeledEdit
                     Left = 8
                     Height = 22
-                    Top = 120
+                    Top = 124
                     Width = 259
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
@@ -401,7 +397,7 @@ object fMain: TfMain
                   object leLangCodePage: TLabeledEdit
                     Left = 8
                     Height = 22
-                    Top = 168
+                    Top = 174
                     Width = 259
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
@@ -415,7 +411,7 @@ object fMain: TfMain
                   object bbRemoveLanguage: TBitBtn
                     Left = 403
                     Height = 28
-                    Top = 164
+                    Top = 170
                     Width = 58
                     Action = actRemoveLanguage
                     Anchors = [akTop, akRight]
@@ -438,7 +434,7 @@ object fMain: TfMain
                   object btCodepage: TSpeedButton
                     Left = 275
                     Height = 22
-                    Top = 168
+                    Top = 174
                     Width = 23
                     Anchors = [akTop, akRight]
                     Flat = True
@@ -448,7 +444,7 @@ object fMain: TfMain
                   object iLangNameVerify: TImage
                     Left = 274
                     Height = 24
-                    Top = 72
+                    Top = 74
                     Width = 24
                     Anchors = [akTop, akRight]
                     Stretch = True
@@ -456,7 +452,7 @@ object fMain: TfMain
                   object iLangDosVerify: TImage
                     Left = 274
                     Height = 24
-                    Top = 120
+                    Top = 122
                     Width = 24
                     Anchors = [akTop, akRight]
                     Stretch = True
@@ -464,15 +460,24 @@ object fMain: TfMain
                   object iLangIdVerify: TImage
                     Left = 275
                     Height = 24
-                    Top = 24
+                    Top = 22
                     Width = 24
                     Anchors = [akTop, akRight]
                     Stretch = True
                   end
+                  object cbLanguageEnable: TCheckBox
+                    Left = 8
+                    Height = 18
+                    Top = 216
+                    Width = 138
+                    Caption = 'cbLanguageEnable'
+                    OnClick = cbLanguageEnableClick
+                    TabOrder = 5
+                  end
                 end
                 object pLangEditRight: TPanel
                   Left = 477
-                  Height = 215
+                  Height = 238
                   Top = 0
                   Width = 0
                   Align = alRight
@@ -502,7 +507,7 @@ object fMain: TfMain
                 object lvLanguages: TListView
                   Tag = 32
                   Left = 8
-                  Height = 86
+                  Height = 84
                   Top = 32
                   Width = 449
                   Anchors = [akTop, akLeft, akRight, akBottom]
@@ -519,6 +524,7 @@ object fMain: TfMain
                   ShowColumnHeaders = False
                   StateImagesWidth = 24
                   TabOrder = 0
+                  ViewStyle = vsReport
                   OnChange = lvLanguagesChange
                   OnItemChecked = lvLanguagesItemChecked
                 end
@@ -539,12 +545,12 @@ object fMain: TfMain
           end
           object tsAbout: TTabSheet
             Caption = 'About'
-            ClientHeight = 341
+            ClientHeight = 364
             ClientWidth = 489
             OnShow = tsAboutShow
             object imgAbout: TImage
               Left = 0
-              Height = 151
+              Height = 174
               Top = 0
               Width = 489
               Align = alClient
@@ -2858,7 +2864,7 @@ object fMain: TfMain
             object pSeparatorAbout: TPanel
               Left = 0
               Height = 5
-              Top = 151
+              Top = 174
               Width = 489
               Align = alBottom
               BevelOuter = bvNone
@@ -2867,7 +2873,7 @@ object fMain: TfMain
             object hpAbout: TIpHtmlPanel
               Left = 0
               Height = 185
-              Top = 156
+              Top = 179
               Width = 489
               Align = alBottom
               BgColor = clInfoBk

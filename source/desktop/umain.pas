@@ -36,6 +36,7 @@ type
     bbSoftwareUpdate: TButton;
     bbRemoveLanguage: TBitBtn;
     cbSoftwareUpdate: TComboBox;
+    cbLanguageEnable: TCheckBox;
     deLocalRepo: TDirectoryEdit;
     Edit1: TEdit;
     frPkgListEdit: TframePkgListEdit;
@@ -109,6 +110,7 @@ type
     procedure actRemoveLanguageExecute(Sender: TObject);
     procedure actRemoveLanguageUpdate(Sender: TObject);
     procedure actSoftwareUpdateExecute(Sender: TObject);
+    procedure cbLanguageEnableClick(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -139,6 +141,7 @@ type
     procedure tsProjectsShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
+    procedure SetLangCheckBox(State : boolean);
   private
     function GetActiveLanguage(ALang : String): boolean;
     procedure SetActiveLanguage(ALang : String; AValue: boolean);
@@ -207,6 +210,11 @@ begin
       SelectPrefsPage(tsAbout)
    else if not DirectoryExists(GetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', '')) then
       SelectPrefsPage(tsRepo);
+   {$if defined(windows)}
+     bbRemoveLanguage.Top := cbLanguageEnable.Top - 8;
+   {$else}
+     cbLanguageEnable.Visible:=False;
+   {$endif}
 end;
 
 procedure TfMain.FormDestroy(Sender: TObject);
@@ -371,10 +379,10 @@ end;
 
 procedure TfMain.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
 begin
-  if Assigned(Item) then begin
-     ActiveLanguage[Repository.Languages.Identifier[Item.Index]] :=
-       Item.Checked;
-  end;
+   if Assigned(Item) then begin
+     ActiveLanguage[Repository.Languages.Identifier[Item.Index]] := Item.Checked;
+     SetLangCheckBox(Item.Checked);
+   end;
 end;
 
 procedure TfMain.sbLanguageEditResize(Sender: TObject);
@@ -523,6 +531,12 @@ begin
     [GetValueXML(xConfig, 'SOFTWARE/UPDATE/CHECKED', msg_UnknownDateTime)]);
 end;
 
+procedure TfMain.cbLanguageEnableClick(Sender: TObject);
+begin
+  if Assigned(lvLanguages.Selected) then
+    lvLanguages.Selected.Checked:=not lvLanguages.Selected.Checked;
+end;
+
 procedure TfMain.cbSoftwareUpdateChange(Sender: TObject);
 begin
   SetValueXML(xConfig, 'SOFTWARE/UPDATE/INTERVAL', cbSoftwareUpdate.ItemIndex);
@@ -550,6 +564,16 @@ begin
        exit;
      end;
    end;
+end;
+
+procedure TfMain.SetLangCheckBox(State: boolean);
+var
+  Hold : TNotifyEvent;
+begin
+  Hold:=cbLanguageEnable.OnClick;
+  cbLanguageEnable.OnClick:=nil;
+  cbLanguageEnable.Checked:=State;
+  cbLanguageEnable.OnClick:=Hold;
 end;
 
 function TfMain.GetActiveLanguage(ALang : String): boolean;
@@ -757,6 +781,7 @@ begin
   leLangID.EditLabel.Caption:=led_LanguageID;
   leLangDOS.EditLabel.Caption:=led_LanguageDOS;
   leLangCodePage.EditLabel.Caption:=led_LanguageCodePage;
+  cbLanguageEnable.Caption:=lbl_LanguageEnabled;
 end;
 
 procedure TfMain.SelectEditLanguage(Index : integer);
@@ -772,6 +797,7 @@ begin
     leLangID.Text:='';
     leLangDOS.Text:='';
     leLangCodePage.Text:='';
+    SetLangCheckBox(False);
     try
       leGraphic.Picture.LoadFromLazarusResource(IconUI[12]);
     except
@@ -783,6 +809,7 @@ begin
     leLangName.Text:=Repository.Languages.Caption[EditLangIndex];
     if leLangName.Text = '' then
       leLangName.Text:=led_NewLanguage;
+    SetLangCheckBox(lvLanguages.Items[EditLangIndex].Checked);
     lvLanguages.Items.Item[EditLangIndex].Caption:=leLangName.Text; { update list if needed }
     leLangID.Text:=Repository.Languages.Identifier[EditLangIndex];
     leLangDOS.Text:=Repository.Languages.Language[EditLangIndex];
