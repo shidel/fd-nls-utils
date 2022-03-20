@@ -19,9 +19,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <TopLine Value="185"/>
-        <CursorPos X="4" Y="185"/>
-        <FoldState Value=" T3lc0302227233728211314s"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="537"/>
+        <CursorPos X="31" Y="539"/>
+        <FoldState Value=" T3mE0412723372711211314c"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -78,8 +79,8 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="218"/>
-        <CursorPos Y="265"/>
+        <TopLine Value="231"/>
+        <CursorPos X="49" Y="247"/>
         <UsageCount Value="226"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -111,10 +112,9 @@
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="554"/>
-        <CursorPos X="37" Y="488"/>
+        <TopLine Value="1179"/>
+        <CursorPos Y="1182"/>
         <FoldState Value=" T7jJHI T3p50J014311268 pj5qQ0B5 pigjO030426"/>
         <UsageCount Value="101"/>
         <Loaded Value="True"/>
@@ -162,7 +162,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="36"/>
         <CursorPos X="100" Y="135"/>
-        <UsageCount Value="199"/>
+        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\dosview.pas"/>
@@ -174,14 +174,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="123" Column="10" TopLine="100"/>
-      </Position>
-      <Position>
-        <Filename Value="upkglistedit.pas"/>
-        <Caret Line="105" Column="19" TopLine="82"/>
-      </Position>
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
         <Caret Line="160" Column="66" TopLine="143"/>
@@ -293,6 +285,14 @@
       <Position>
         <Filename Value="..\shared\fdkit.pas"/>
         <Caret Line="490" TopLine="432"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\fdkit.pas"/>
+        <Caret Line="207" Column="18" TopLine="202"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="214" TopLine="185"/>
       </Position>
     </JumpHistory>
     <RunParams>

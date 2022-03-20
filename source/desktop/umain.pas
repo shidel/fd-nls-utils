@@ -111,6 +111,7 @@ type
     procedure actSoftwareUpdateExecute(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormHide(Sender: TObject);
@@ -531,6 +532,12 @@ end;
 procedure TfMain.deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
 begin
   OpenRepository(Value);
+end;
+
+procedure TfMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  frPkgListEdit.SelectEdit(nil);
+  Repository.PackageLists.SaveChanges;
 end;
 
 procedure TfMain.tvPrefsChange(Sender: TObject; Node: TTreeNode);
