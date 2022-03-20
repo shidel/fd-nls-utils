@@ -19,7 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <TopLine Value="536"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="944"/>
         <CursorPos X="58" Y="568"/>
         <FoldState Value=" T3mE0412723372711211314c"/>
         <UsageCount Value="202"/>
@@ -122,7 +123,6 @@
       <Unit>
         <Filename Value="..\shared\fdkit.pas"/>
         <UnitName Value="FDKit"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="377"/>
         <CursorPos X="50" Y="451"/>
