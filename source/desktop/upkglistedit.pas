@@ -40,6 +40,7 @@ type
     procedure UpdateStatus; overload;
     procedure UpdateStatus(Index : integer); overload;
     procedure UpdateStatus(var Item : TListItem); overload;
+    procedure DetailsModified(Sender : TObject);
   end;
 
 implementation
@@ -131,10 +132,16 @@ begin
    end;
 end;
 
+procedure TframePkgListEdit.DetailsModified(Sender: TObject);
+begin
+  UpdateStatus(TframePkgDetails(Sender).EditIndex);
+end;
+
 procedure TframePkgListEdit.UpdateStatus(Index: integer);
 var
   Item : TListItem;
 begin
+  if Index = -1 then exit;
   Item := lvPackages.Items[Index];
   UpdateStatus(Item);
 end;

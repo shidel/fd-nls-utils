@@ -69,6 +69,7 @@ type
     property FontIndex : integer read FFontIndex;
     property DetailsIndex : integer read FDetailsIndex write SetDetailsIndex;
     property ItemIndex : integer read FItemIndex;
+    property EditIndex : integer read FEditIndex;
     property Identity : String read FIdentity write SetIdentity;
     procedure SetLabels(List : TStringList);
     procedure SetDetails(Identifier : String; Index : integer; List : TStringList);
@@ -80,7 +81,7 @@ type
 
 implementation
 
-uses uMain, uPkgPreview;
+uses uMain, uPkgPreview, uPkgListEdit;
 
 {$R *.lfm}
 
@@ -95,6 +96,9 @@ procedure TframePkgDetails.sbTransferClick(Sender: TObject);
 begin
   if FItemIndex <> -1 then begin
     SetDetails(FIdentity, FItemIndex, FDNLS.PackageLists.MasterDetails[FItemIndex]);
+    FEditIndex := FItemIndex;
+    FModified := True;
+    CommitChanges;
     OnClick(Sender);
   end;
 end;
@@ -339,6 +343,7 @@ begin
     List.Add(FDatum[I].Caption);
   FDNLS.PackageLists.SetLangDetails(DetailsIndex, FEditIndex, List);
   FreeAndNil(List);
+  TframePkgListEdit(Owner).DetailsModified(Self);
 end;
 
 end.

@@ -437,19 +437,17 @@ begin
   Log(Self, 'set Language details ' + IntTostr(LangIndex) + '/' + IntToStr(Index));
   D := lowercase(FMasterCSV.Cells[0, Index + 1]);
   if LangIndex <> -1 then begin
-    Log(Self, 'A');
     FModified[LangIndex] := True;
     Index := -1;
-    Log(Self, 'B');
     for I := 1 to FileCSV[LangIndex].RowCount - 1 do
       if D = lowercase(FFileCSV[LangIndex].Cells[0,I]) then begin
         Index := I;
         Break;
       end;
-    Log(Self, 'C');
     if Index = -1 then begin
        FFileCSV[LangIndex].InsertColRow(False, FFileCSV[LangIndex].RowCount);
        Index := FFileCSV[LangIndex].RowCount - 1;
+       FFileCSV[LangIndex].Cells[0,Index]:=D;
     end;
     Log(Self, 'Index of "' + D + '" is ' + IntToStr(Index));
     if Index > 0 then
