@@ -21,7 +21,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
         <CursorPos X="24" Y="8"/>
-        <FoldState Value=" T3mX0412732332515141]F{"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -112,7 +111,7 @@
         <UnitName Value="uPkgPreview"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="33"/>
+        <TopLine Value="32"/>
         <CursorPos X="100" Y="135"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
