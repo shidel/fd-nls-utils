@@ -1,23 +1,24 @@
 object fLog: TfLog
-  Left = 754
-  Height = 432
-  Top = 108
-  Width = 269
+  Left = 726
+  Height = 756
+  Top = 101
+  Width = 471
   BorderStyle = bsSizeToolWin
   Caption = 'Debug Log'
-  ClientHeight = 432
-  ClientWidth = 269
+  ClientHeight = 756
+  ClientWidth = 471
+  DesignTimePPI = 168
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
   SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;Width;Position'
   ShowInTaskBar = stNever
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '2.2.0.4'
   object LogText: TMemo
-    Left = 8
-    Height = 416
-    Top = 8
-    Width = 253
+    Left = 14
+    Height = 728
+    Top = 14
+    Width = 443
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.Name = 'Courier New'
     Font.Pitch = fpFixed
@@ -31,7 +32,7 @@ object fLog: TfLog
   end
   object xProperties: TXMLPropStorage
     StoredValues = <>
-    Left = 56
-    Top = 48
+    Left = 98
+    Top = 84
   end
 end

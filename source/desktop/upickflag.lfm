@@ -1,28 +1,29 @@
 object fPickFlag: TfPickFlag
-  Left = 258
-  Height = 320
-  Top = 268
-  Width = 480
+  Left = 291
+  Height = 560
+  Top = 329
+  Width = 840
   BorderStyle = bsSizeToolWin
   Caption = 'fPickFlag'
-  ClientHeight = 320
-  ClientWidth = 480
+  ClientHeight = 560
+  ClientWidth = 840
+  DesignTimePPI = 168
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
   SessionProperties = 'Position;Left;Top;Width;Height;ClientWidth;ClientHeight'
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '2.2.0.4'
   object lvFlags: TListView
-    Left = 16
-    Height = 240
-    Top = 16
-    Width = 448
+    Left = 28
+    Height = 420
+    Top = 28
+    Width = 784
     AllocBy = 16
     Anchors = [akTop, akLeft, akRight, akBottom]
     AutoWidthLastColumn = True
     Columns = <    
       item
-        Width = 431
+        Width = 10
       end>
     LargeImages = ilFlags
     LargeImagesWidth = 48
@@ -35,30 +36,30 @@ object fPickFlag: TfPickFlag
     TabOrder = 0
   end
   object pButtons: TPanel
-    Left = 16
-    Height = 29
-    Top = 272
-    Width = 448
+    Left = 28
+    Height = 51
+    Top = 476
+    Width = 784
     Anchors = [akLeft, akRight, akBottom]
     BevelOuter = bvNone
-    ClientHeight = 29
-    ClientWidth = 448
+    ClientHeight = 51
+    ClientWidth = 784
     TabOrder = 1
     object pBtnSeperator: TPanel
-      Left = 359
-      Height = 29
+      Left = 626
+      Height = 51
       Top = 0
-      Width = 10
+      Width = 18
       Align = alRight
       Anchors = [akTop, akRight]
       BevelOuter = bvNone
       TabOrder = 0
     end
     object bbOK: TBitBtn
-      Left = 284
-      Height = 29
+      Left = 495
+      Height = 51
       Top = 0
-      Width = 75
+      Width = 131
       Align = alRight
       Caption = 'bbOK'
       ModalResult = 1
@@ -67,10 +68,10 @@ object fPickFlag: TfPickFlag
       TabOrder = 1
     end
     object bbCancel: TBitBtn
-      Left = 369
-      Height = 29
+      Left = 644
+      Height = 51
       Top = 0
-      Width = 79
+      Width = 140
       Align = alRight
       AutoSize = True
       Caption = 'bbCancel'
@@ -83,19 +84,19 @@ object fPickFlag: TfPickFlag
   object ilButtons: TImageList
     Height = 24
     Width = 24
-    Left = 24
-    Top = 272
+    Left = 42
+    Top = 476
   end
   object ilFlags: TImageList
     AllocBy = 16
     Height = 48
     Width = 48
-    Left = 80
-    Top = 272
+    Left = 140
+    Top = 476
   end
   object xProperties: TXMLPropStorage
     StoredValues = <>
-    Left = 142
-    Top = 275
+    Left = 249
+    Top = 481
   end
 end

@@ -9,7 +9,7 @@
         <Filename Value="fdnls.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="7"/>
-        <CursorPos X="8" Y="18"/>
+        <CursorPos X="7" Y="18"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
       </Unit>
@@ -20,8 +20,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="185"/>
+        <TopLine Value="184"/>
         <CursorPos X="6" Y="225"/>
         <FoldState Value=" T3mX0412732332515141]F{"/>
         <UsageCount Value="202"/>
@@ -113,7 +112,7 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="41"/>
+        <TopLine Value="40"/>
         <CursorPos X="100" Y="135"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -122,9 +121,9 @@
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
-        <TopLine Value="28"/>
-        <CursorPos Y="45"/>
+        <CursorPos X="53" Y="21"/>
         <UsageCount Value="99"/>
         <Loaded Value="True"/>
       </Unit>
@@ -185,10 +184,11 @@
       <Unit>
         <Filename Value="..\shared\version.inc"/>
         <EditorIndex Value="-1"/>
+        <CursorPos X="121" Y="15"/>
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="4">
+    <JumpHistory HistoryIndex="3">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="213" Column="13" TopLine="183"/>
@@ -204,10 +204,6 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="655" Column="29" TopLine="629"/>
-      </Position>
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="8" Column="24" TopLine="19"/>
       </Position>
     </JumpHistory>
     <RunParams>

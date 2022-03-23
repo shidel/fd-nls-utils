@@ -9,8 +9,8 @@ object framePkgPreview: TframePkgPreview
   OnResize = FrameResize
   ParentFont = False
   TabOrder = 0
-  DesignLeft = 222
-  DesignTop = 411
+  DesignLeft = 225
+  DesignTop = 451
   object sbPreview: TScrollBox
     Left = 2
     Height = 289
