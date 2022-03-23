@@ -8,8 +8,8 @@ object framePkgDetails: TframePkgDetails
   DesignTimePPI = 168
   ParentFont = False
   TabOrder = 0
-  DesignLeft = 473
-  DesignTop = 248
+  DesignLeft = 523
+  DesignTop = 256
   object pFrame: TPanel
     Left = 2
     Height = 420

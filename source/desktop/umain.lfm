@@ -1,7 +1,7 @@
 object fMain: TfMain
-  Left = 204
+  Left = 164
   Height = 756
-  Top = 142
+  Top = 148
   Width = 1120
   Caption = 'FD-NLS'
   ClientHeight = 756
@@ -56,13 +56,13 @@ object fMain: TfMain
         Action = actPackages
       end
       object tbDebugLog: TToolButton
-        Left = 141
+        Left = 135
         Hint = 'Debug Log'
         Top = 0
         Action = actDebugLog
       end
       object tbPreferences: TToolButton
-        Left = 218
+        Left = 206
         Hint = 'Configuration, Options and Preferences'
         Top = 0
         Action = actPreferences
@@ -75,7 +75,7 @@ object fMain: TfMain
         Style = tbsSeparator
       end
       object tbSepB: TToolButton
-        Left = 204
+        Left = 198
         Height = 70
         Top = 0
         Caption = 'tbSepB'

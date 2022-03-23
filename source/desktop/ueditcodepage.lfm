@@ -1,7 +1,7 @@
 object fEditCodePage: TfEditCodePage
-  Left = 324
+  Left = 342
   Height = 560
-  Top = 253
+  Top = 255
   Width = 840
   BorderStyle = bsSizeToolWin
   Caption = 'fEditCodePage'

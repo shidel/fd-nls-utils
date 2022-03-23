@@ -391,6 +391,7 @@ end;
 procedure TfMain.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
 begin
    if Assigned(Item) then begin
+     Log(self, 'Select Language ' + IntToStr(Item.Index) + ' ' + WhenTrue(Item.Checked, 'true', 'false'));
      ActiveLanguage[Repository.Languages.Identifier[Item.Index]] := Item.Checked;
      SetLangCheckBox(Item.Checked);
    end;
@@ -556,8 +557,11 @@ end;
 
 procedure TfMain.cbLanguageEnableClick(Sender: TObject);
 begin
-  if Assigned(lvLanguages.Selected) then
+  if Assigned(lvLanguages.Selected) then begin
+    Log(self, 'Select Language (cb) ' + IntToStr(lvLanguages.Selected.Index) + ' ' + WhenTrue(cbLanguageEnable.Checked, 'true', 'false'));
+    ActiveLanguage[Repository.Languages.Identifier[lvLanguages.Selected.Index]] := cbLanguageEnable.Checked;
     lvLanguages.Selected.Checked:=not lvLanguages.Selected.Checked;
+  end;
 end;
 
 procedure TfMain.cbSoftwareUpdateChange(Sender: TObject);

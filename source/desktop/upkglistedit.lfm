@@ -1,19 +1,19 @@
 object framePkgListEdit: TframePkgListEdit
   Left = 0
-  Height = 609
+  Height = 608
   Top = 0
   Width = 1029
   Anchors = [akTop, akLeft, akRight, akBottom]
-  ClientHeight = 609
+  ClientHeight = 608
   ClientWidth = 1029
   DesignTimePPI = 168
   ParentFont = False
   TabOrder = 0
-  DesignLeft = 219
-  DesignTop = 379
+  DesignLeft = 228
+  DesignTop = 382
   object lvPackages: TListView
     Left = 0
-    Height = 609
+    Height = 608
     Top = 0
     Width = 262
     Align = alLeft
@@ -30,7 +30,7 @@ object framePkgListEdit: TframePkgListEdit
   end
   object sPkgEditSplitter: TSplitter
     Left = 262
-    Height = 609
+    Height = 608
     Top = 0
     Width = 18
   end

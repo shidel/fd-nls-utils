@@ -1,7 +1,7 @@
 object fPickFlag: TfPickFlag
-  Left = 291
+  Left = 313
   Height = 560
-  Top = 329
+  Top = 328
   Width = 840
   BorderStyle = bsSizeToolWin
   Caption = 'fPickFlag'

@@ -6,8 +6,8 @@ const
   FPC_TARGET='x86_64';
 
   { Source & Subversion Last Changed Commit }
-  SOURCE_VERSION='0.1.1.65';
-  SOURCE_REVISION='278';
+  SOURCE_VERSION='0.1.1.66';
+  SOURCE_REVISION='279';
   SOURCE_URL='http://github.com/shidel/fd-nls-utils';
   SOURCE_ONLINE='';
   SOURCE_COMMIT='1ba0ecdb2646abee5639f2e75f5a0c75430d5435';
