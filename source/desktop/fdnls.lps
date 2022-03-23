@@ -20,7 +20,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <CursorPos X="24" Y="8"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="185"/>
+        <CursorPos X="6" Y="225"/>
+        <FoldState Value=" T3mX0412732332515141]F{"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -109,9 +112,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="32"/>
+        <TopLine Value="41"/>
         <CursorPos X="100" Y="135"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -186,7 +188,7 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="3">
+    <JumpHistory HistoryIndex="4">
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="213" Column="13" TopLine="183"/>
@@ -202,6 +204,10 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="655" Column="29" TopLine="629"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="8" Column="24" TopLine="19"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -218,11 +218,11 @@ begin
       SelectPrefsPage(tsAbout)
    else if not DirectoryExists(GetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', '')) then
       SelectPrefsPage(tsRepo);
-   { if defined(windows)}
+   {$if defined(windows)}
      bbRemoveLanguage.Top := cbLanguageEnable.Top - 8;
-   { else}
+   {$else}
      cbLanguageEnable.Visible:=False;
-   { endif}
+   {$endif}
 end;
 
 procedure TfMain.FormDestroy(Sender: TObject);
