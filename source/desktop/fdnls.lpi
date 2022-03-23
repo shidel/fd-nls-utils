@@ -21,7 +21,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="62"/>
+      <BuildNr Value="64"/>
       <StringTable Comments="FreeDOS NLS Desktop Utility" CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS" LegalCopyright="2022 Jerome Shidel" OriginalFilename="FD-NLS" ProductName="FD-NLS" ProductVersion="1.0"/>
     </VersionInfo>
     <BuildModes>

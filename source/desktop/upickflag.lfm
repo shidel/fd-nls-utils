@@ -1,7 +1,7 @@
 object fPickFlag: TfPickFlag
-  Left = 460
+  Left = 258
   Height = 320
-  Top = 247
+  Top = 268
   Width = 480
   BorderStyle = bsSizeToolWin
   Caption = 'fPickFlag'
@@ -45,7 +45,7 @@ object fPickFlag: TfPickFlag
     ClientWidth = 448
     TabOrder = 1
     object pBtnSeperator: TPanel
-      Left = 363
+      Left = 359
       Height = 29
       Top = 0
       Width = 10
@@ -55,7 +55,7 @@ object fPickFlag: TfPickFlag
       TabOrder = 0
     end
     object bbOK: TBitBtn
-      Left = 288
+      Left = 284
       Height = 29
       Top = 0
       Width = 75
@@ -67,10 +67,10 @@ object fPickFlag: TfPickFlag
       TabOrder = 1
     end
     object bbCancel: TBitBtn
-      Left = 373
+      Left = 369
       Height = 29
       Top = 0
-      Width = 75
+      Width = 79
       Align = alRight
       AutoSize = True
       Caption = 'bbCancel'

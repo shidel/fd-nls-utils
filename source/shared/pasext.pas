@@ -5,6 +5,9 @@ unit PasExt;
 interface
 
 uses
+  {$if defined(windows)}
+    GetText,
+  {$endif}
   {$if defined(darwin)}
     MacOSAll, { CocoaAll, CocoaUtils, }
   {$endif}
@@ -148,6 +151,8 @@ var
   Executable : String;
   {$if defined(darwin)}
     lbuf :  StringPtr;
+  {$elseif defined(windows)}
+    Lng : String;
   {$else}
     ltmp : String;
   {$endif}
@@ -161,7 +166,11 @@ begin
   AppCfgPath   := AppDataPath;
   AppCfgFile   := AppCfgPath + 'settings.xml';
   {$if defined(windows)}
-    AppDataPath  := IncludeTrailingPathDelimiter(UserHomePath + Executable);
+    UserHomePath := IncludeTrailingPathDelimiter(
+      GetEnvironmentVariable('HOMEDRIVE') + GetEnvironmentVariable('HOMEPATH'));
+    GetLanguageIDs(UserLanguage, Lng);
+    AppDataPath  := IncludeTrailingPathDelimiter(
+      IncludeTrailingPathDelimiter(GetEnvironmentVariable('LOCALAPPDATA')) + Executable);
     AppCfgPath   := AppDataPath;
     AppCfgFile   := AppCfgPath + 'settings.xml';
   {$elseif defined(darwin)}

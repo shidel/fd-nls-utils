@@ -255,8 +255,13 @@ end;
 
 destructor TCodePageData.Destroy;
 begin
-  FreeAndNil(FUTF8Dict);
-  FreeAndNil(FHTMLDict);
+  try
+    FreeAndNil(FUTF8Dict);
+    FreeAndNil(FHTMLDict);
+  finally
+    FUTF8Dict:=nil;
+    FHtmlDict:=nil;
+  end;
   inherited Destroy;
 end;
 
@@ -602,10 +607,15 @@ end;
 
 destructor TFDPackageLists.Destroy;
 begin
-  SaveChanges;
-  PurgeCSVData;
-  FreeAndNil(FFields);
-  FreeAndNil(FDetails);
+  try
+    SaveChanges;
+    PurgeCSVData;
+    FreeAndNil(FFields);
+    FreeAndNil(FDetails);
+  finally
+    FFields:=nil;
+    FDetails:=nil;
+  end;
   inherited Destroy;
 end;
 
@@ -1184,10 +1194,17 @@ end;
 destructor TFDNLS.Destroy;
 begin
   if FDNLS = Self then FDNLS := nil;
-  FreeAndNil(FPackageLists);
-  FreeAndNil(FFonts);
-  FreeAndNil(FCodePages);
-  FreeAndNil(FLanguages);
+  try
+    FreeAndNil(FPackageLists);
+    FreeAndNil(FFonts);
+    FreeAndNil(FCodePages);
+    FreeAndNil(FLanguages);
+  finally
+    FPackageLists:=nil;
+    FFonts:=nil;
+    FCodePages:=nil;
+    FLanguages:=nil;
+  end;
   inherited Destroy;
 end;
 

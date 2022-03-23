@@ -188,6 +188,12 @@ implementation
 procedure TfMain.FormCreate(Sender: TObject);
 begin
    Log(Self, 'User Language: ' + UserLanguage);
+   Log(Self, 'User Home Path: ' + UserHomePath);
+   Log(Self, 'Program Data Path: ' + AppDataPath);
+   Log(Self, 'Program Config Path: ' + AppCfgPath);
+   Log(Self, 'Program Config File: ' + AppCfgFile);
+   Log(Self, 'Update Server: ' + UpdateServer);
+   Log(Self, '');
    Repository := TFDNLS.Create;
    FDNLS.AutoCreate := True;
    // Hide some design time elements
@@ -212,16 +218,19 @@ begin
       SelectPrefsPage(tsAbout)
    else if not DirectoryExists(GetValueXML(xConfig, 'REPOSITORY/LOCAL/PATH', '')) then
       SelectPrefsPage(tsRepo);
-   {$if defined(windows)}
+   { if defined(windows)}
      bbRemoveLanguage.Top := cbLanguageEnable.Top - 8;
-   {$else}
+   { else}
      cbLanguageEnable.Visible:=False;
-   {$endif}
+   { endif}
 end;
 
 procedure TfMain.FormDestroy(Sender: TObject);
 begin
-  FreeAndNil(Repository);
+  try
+    FreeAndNil(Repository);
+  finally
+  end;
 end;
 
 procedure TfMain.FormHide(Sender: TObject);
@@ -429,6 +438,7 @@ end;
 
 procedure TfMain.tsPrefsShow(Sender: TObject);
 begin
+  frPkgListEdit.lvPackages.Selected:=nil;
   ReloadNeeded := true;
 end;
 
@@ -634,13 +644,15 @@ var
    Cat     : String;
 begin
    mMain.Items.Clear;
-   {$IFDEF MacOS}
+   {$IF defined(darwin)}
      // Create Aplication menu for Apple macOS
      aMenu := AddMenuItem(nil, #$EF#$A3#$BF); { Unicode Apple Logo }
      AddMenuItem(aMenu, actAppleAbout);
      AddMenuItem(aMenu, '-');
      AddMenuItem(aMenu, actApplePrefs);
      AddMenuItem(aMenu, '-');
+   {$ELSEIF defined(windows)}
+     Exit;
    {$ENDIF}
    // Add ActionList items to Application MainMenu
    for I := 0 to alMain.ActionCount - 1 do begin
@@ -954,11 +966,11 @@ end;
 procedure TfMain.Reload;
 begin
   if not ReloadNeeded then exit;
-  ReloadNeeded := false;
   Log(Self, 'Repository Reload Triggered');
   frPkgListEdit.Clear;
   Repository.Reload;
   frPkgListEdit.Reload;
+  ReloadNeeded := false;
 end;
 
 procedure TfMain.SoftwareUpdate(Silent: boolean);

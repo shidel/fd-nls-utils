@@ -6,9 +6,10 @@ object framePkgListEdit: TframePkgListEdit
   Anchors = [akTop, akLeft, akRight, akBottom]
   ClientHeight = 348
   ClientWidth = 588
+  ParentFont = False
   TabOrder = 0
-  DesignLeft = 277
-  DesignTop = 389
+  DesignLeft = 193
+  DesignTop = 345
   object lvPackages: TListView
     Left = 0
     Height = 348

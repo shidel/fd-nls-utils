@@ -1,11 +1,11 @@
 object fLog: TfLog
-  Left = 1000
-  Height = 445
-  Top = 128
+  Left = 754
+  Height = 432
+  Top = 108
   Width = 269
   BorderStyle = bsSizeToolWin
   Caption = 'Debug Log'
-  ClientHeight = 445
+  ClientHeight = 432
   ClientWidth = 269
   OnCreate = FormCreate
   OnShow = FormShow
@@ -15,7 +15,7 @@ object fLog: TfLog
   LCLVersion = '2.3.0.0'
   object LogText: TMemo
     Left = 8
-    Height = 429
+    Height = 416
     Top = 8
     Width = 253
     Anchors = [akTop, akLeft, akRight, akBottom]

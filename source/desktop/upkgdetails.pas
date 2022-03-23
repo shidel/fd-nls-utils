@@ -167,9 +167,15 @@ begin
       end;
       FDatum[I - 1].Name:=Name + '_Details'+IntToStr(I-1);
       FDatum[I - 1].Parent := pDetails;
-      FDatum[I - 1].Top := (I) * 16 + 8;
-      FDatum[I - 1].Constraints.MinHeight:=16;
       FDatum[I - 1].AutoSize:=True;
+      FDatum[I - 1].Caption:='Xy/|';
+      {$if defined(windows)}
+        FDatum[I - 1].Top := (I * FDatum[I - 1].Height * 2) + 8;
+        FDatum[I - 1].Constraints.MinHeight:=FDatum[I - 1].Height * 2;
+      {$else}
+        FDatum[I - 1].Top := (I) * 16 + 8;
+        FDatum[I - 1].Constraints.MinHeight:=16;
+      {$endif}
       FDatum[I - 1].Align:=alTop;
       FDatum[I - 1].Caption:='';
       FDatum[I - 1].OnClick := OnClick;
@@ -251,8 +257,8 @@ begin
     fMain.xProperties.ReadInteger(GetNamePath + '/WIDTH', pLabels.Width);
   FLanguageIndex:=FDNLS.FindLanguage(Language);
   FCodePageIndex:=FDNLS.FindCodepage(Language);
+  pButtons.Visible:=FAllowEdit and (FCodePageIndex <> -1);
   sbTransfer.Enabled:=FAllowEdit and (FCodePageIndex <> -1);
-  sbTransfer.Visible:=FAllowEdit and (FCodePageIndex <> -1);
   if FCodePageIndex = -1 then begin
     lCodepage.Visible := False;
     iCodepage.Visible := True;

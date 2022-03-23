@@ -116,9 +116,10 @@ var
   I : integer;
   ps, ts : TPackageState;
 begin
+   if not Assigned(Item) then exit;
    ps := psGood;
    for I := 0 to length(FEditors) - 1 do begin
-     if (FEditors[I].DetailsIndex >= 0) then begin
+     if assigned(FEditors[I]) and (FEditors[I].DetailsIndex >= 0) then begin
        ts := FDNLS.PackageLists.StatusDetails[FEditors[I].DetailsIndex, Item.Index];
        if ts = psNew then
          ps := psNew
