@@ -32,7 +32,7 @@ end;
 
 function DisplayNamePath(AComponent : TComponent): String;
 begin
-  Result := 'DISPLAYS/UID_' + DisplayUID + '/' + AComponent.GetNamePath + '/STATE';
+  Result := 'DISPLAYS/UID_' + DisplayUID + '/' + AComponent.GetNamePath + '/';
 end;
 
 initialization

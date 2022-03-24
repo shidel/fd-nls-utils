@@ -8,10 +8,9 @@
       <Unit>
         <Filename Value="fdnls.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="7"/>
-        <CursorPos X="8" Y="18"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="40" Y="13"/>
         <UsageCount Value="202"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="umain.pas"/>
@@ -20,10 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="533"/>
-        <CursorPos X="52" Y="562"/>
-        <FoldState Value=" T3mX0412733232515141]FQ"/>
+        <CursorPos X="30" Y="8"/>
+        <FoldState Value=" T3mT0412733232515141]FM"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -35,12 +32,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLog"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="98" Y="30"/>
         <UsageCount Value="201"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="uappnls.pas"/>
@@ -58,11 +53,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="106" Y="23"/>
         <UsageCount Value="202"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ueditcodepage.pas"/>
@@ -71,12 +64,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="50"/>
         <CursorPos X="44" Y="69"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="upkglistedit.pas"/>
@@ -85,12 +76,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="105"/>
         <CursorPos X="36" Y="119"/>
         <UsageCount Value="226"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="upkgdetails.pas"/>
@@ -99,11 +88,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgDetails"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="21" Y="261"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="252"/>
+        <CursorPos X="30" Y="282"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="upkgpreview.pas"/>
@@ -112,19 +101,18 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="40"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="39"/>
         <CursorPos X="100" Y="135"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\pasext.pas"/>
         <UnitName Value="PasExt"/>
-        <EditorIndex Value="8"/>
-        <CursorPos X="59" Y="21"/>
-        <UsageCount Value="99"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="759"/>
+        <CursorPos Y="763"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -160,10 +148,11 @@
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
         <UnitName Value="ClassExt"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="634"/>
-        <CursorPos X="95" Y="656"/>
-        <UsageCount Value="46"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="195"/>
+        <CursorPos X="26" Y="220"/>
+        <UsageCount Value="47"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\shared\dosview.pas"/>
@@ -187,31 +176,154 @@
         <CursorPos X="56" Y="16"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="uappcfg.pas"/>
+        <UnitName Value="uAppCfg"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="35"/>
+        <CursorPos X="21" Y="50"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\shared\puiext.pas"/>
+        <UnitName Value="PUIExt"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="77" Y="35"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="36"/>
+        <CursorPos Y="67"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="5">
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="umain.pas"/>
-        <Caret Line="213" Column="13" TopLine="183"/>
+        <Caret Line="237" Column="47" TopLine="198"/>
+      </Position>
+      <Position>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="14" Column="77"/>
+      </Position>
+      <Position>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="24" Column="8"/>
+      </Position>
+      <Position>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="8" Column="65"/>
+      </Position>
+      <Position>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="9" Column="12"/>
+      </Position>
+      <Position>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="18" TopLine="7"/>
+      </Position>
+      <Position>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="29" Column="9" TopLine="7"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgdetails.pas"/>
+        <Caret Line="256" Column="48" TopLine="236"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgdetails.pas"/>
+        <Caret Line="9" Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgdetails.pas"/>
+        <Caret Line="256" Column="44" TopLine="235"/>
       </Position>
       <Position>
         <Filename Value="umain.pas"/>
-        <Caret Line="158" Column="20" TopLine="144"/>
+        <Caret Line="224" Column="70" TopLine="215"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="159" Column="82" TopLine="131"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="204" TopLine="183"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="155" Column="60" TopLine="151"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="192" Column="40" TopLine="151"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="15" Column="25"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="195" Column="31" TopLine="170"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="155" Column="103" TopLine="132"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="190" Column="18" TopLine="167"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="159" Column="16" TopLine="137"/>
       </Position>
       <Position>
         <Filename Value="umain.pas"/>
-        <Caret Line="646" Column="30" TopLine="639"/>
+        <Caret Line="8" Column="30"/>
       </Position>
       <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="655" Column="29" TopLine="629"/>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="50" TopLine="19"/>
       </Position>
       <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="225" Column="6" TopLine="183"/>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="24" Column="67"/>
       </Position>
       <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="562" Column="109" TopLine="498"/>
+        <Filename Value="..\shared\pasext.pas"/>
+        <Caret Line="134" Column="95" TopLine="97"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="193" Column="3" TopLine="168"/>
+      </Position>
+      <Position>
+        <Filename Value="uappcfg.pas"/>
+        <Caret Line="56" Column="11" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="161" Column="72" TopLine="150"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="240" Column="59" TopLine="182"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="156" Column="60" TopLine="134"/>
+      </Position>
+      <Position>
+        <Filename Value="..\shared\classext.pas"/>
+        <Caret Line="220" Column="26" TopLine="195"/>
       </Position>
     </JumpHistory>
     <RunParams>

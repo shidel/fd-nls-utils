@@ -12,7 +12,7 @@ uses
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
-  XMLConf, VCSExt;
+  XMLConf, VCSExt, Forms;
 
 type
 
@@ -152,9 +152,13 @@ type
 function GetValueXML(XML : TXMLConfig; Key : String; Default : boolean = false) : boolean; overload;
 function GetValueXML(XML : TXMLConfig; Key : String; Default : integer = 0) : Integer; overload;
 function GetValueXML(XML : TXMLConfig; Key : String; Default : String = '') : String; overload;
+function GetValueXML(XML : TXMLConfig; Key : String; Default : TWindowState = wsNormal) : TWindowState; overload;
+function GetValueXML(XML : TXMLConfig; Key : String; Default : TPosition = poDesigned) : TPosition; overload;
 procedure SetValueXML(XML : TXMLConfig; Key : String; Value : boolean); overload;
 procedure SetValueXML(XML : TXMLConfig; Key : String; Value : integer); overload;
 procedure SetValueXML(XML : TXMLConfig; Key : String; Value : String); overload;
+procedure SetValueXML(XML : TXMLConfig; Key : String; Value : TWindowState); overload;
+procedure SetValueXML(XML : TXMLConfig; Key : String; Value : TPosition); overload;
 
 function ScaleBitmap(B : TBitMap; NewWidth, NewHeight: word) : TBitMap; overload;
 
@@ -184,6 +188,39 @@ begin
   Result := XML.GetValue(Key, Default);
 end;
 
+function GetValueXML(XML: TXMLConfig; Key: String; Default: TWindowState
+  ): TWindowState;
+begin
+  Case ArrayPos(XML.GetValue(Key, ''),
+  ['', 'Minimized', 'Maximized', 'FullScreen'], false) of
+    1 : Result := wsMinimized;
+    2 : Result := wsMaximized;
+    3 : Result := wsFullScreen;
+  else
+    Result := wsNormal;
+  end;
+end;
+
+function GetValueXML(XML: TXMLConfig; Key: String; Default: TPosition
+  ): TPosition;
+begin
+  Case ArrayPos(XML.GetValue(Key, ''),
+  ['Designed', 'Default', 'DefaultPosOnly', 'DefaultSizeOnly', 'ScreenCenter',
+  'DesktopCenter', 'MainFormCenter', 'OwnerFormCenter', 'WorkAreaCenter'], false) of
+    1 : Result := poDesigned;
+    2 : Result := poDefault;
+    3 : Result := poDefaultPosOnly;
+    4 : Result := poDefaultSizeOnly;
+    5 : Result := poScreenCenter;
+    6 : Result := poDesktopCenter;
+    7 : Result := poMainFormCenter;
+    8 : Result := poOwnerFormCenter;
+    9 : Result := poWorkAreaCenter;
+  else
+    Result := poDesigned;
+  end;
+end;
+
 procedure SetValueXML(XML: TXMLConfig; Key: String; Value: boolean);
 begin
   XML.SetValue(Key, WhenTrue(Value, 'true', 'false'));
@@ -197,6 +234,34 @@ end;
 procedure SetValueXML(XML: TXMLConfig; Key: String; Value: String);
 begin
   XML.SetValue(Key, Value);
+end;
+
+procedure SetValueXML(XML: TXMLConfig; Key: String; Value: TWindowState);
+begin
+  case Value of
+    wsMinimized  : XML.SetValue(Key, 'Minimized');
+    wsMaximized  : XML.SetValue(Key, 'Maximized');
+    wsFullScreen : XML.SetValue(Key, 'FullScreen');
+  else
+    XML.SetValue(Key, 'Normal');
+  end;
+end;
+
+procedure SetValueXML(XML: TXMLConfig; Key: String; Value: TPosition);
+begin
+  case Value of
+    poDefault          : XML.SetValue(Key, 'Default');
+    poDefaultPosOnly   : XML.SetValue(Key, 'DefaultPosOnly');
+    poDefaultSizeOnly  : XML.SetValue(Key, 'DefaultSizeOnly');
+    poScreenCenter     : XML.SetValue(Key, 'ScreenCenter');
+    poDesktopCenter    : XML.SetValue(Key, 'DesktopCenter');
+    poMainFormCenter   : XML.SetValue(Key, 'MainFormCenter');
+    poOwnerFormCenter  : XML.SetValue(Key, 'OwnerFormCenter');
+    poWorkAreaCenter   : XML.SetValue(Key, 'WorkAreaCenter');
+  else
+    XML.SetValue(Key, 'Designed');
+  end;
+
 end;
 
 function ScaleBitmap(B: TBitMap; NewWidth, NewHeight: word): TBitMap;

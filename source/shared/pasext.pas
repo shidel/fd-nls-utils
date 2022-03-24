@@ -2,6 +2,7 @@ unit PasExt;
 
 {$warn 5023 off : no warning about unused units }
 {$warn 5028 off : no warning about unused constants }
+
 interface
 
 uses
@@ -130,6 +131,7 @@ function AddToArray(var A : TArrayOfStrings; S : String) : integer; overload;
 function AddToArray(var A : TArrayOfPointers; P : Pointer) : integer; overload;
 
 function InArray(AStr : String; A : TArrayOfStrings; CaseSpecific : boolean = true) : boolean; overload;
+function ArrayPos(AStr : String; A : TArrayOfStrings; CaseSpecific : boolean = true) : integer; overload;
 
 function ForEachFile(AProc: TForEachFileFunc; APath : String; ARecurse : boolean = True) : integer; overload;
 
@@ -756,21 +758,27 @@ end;
 
 function InArray(AStr: String; A: TArrayOfStrings; CaseSpecific: boolean
   ): boolean;
+begin
+  Result := ArrayPos(AStr, A, CaseSpecific) <> -1;
+end;
+
+function ArrayPos(AStr: String; A: TArrayOfStrings; CaseSpecific: boolean
+  ): integer;
 var
   I : integer;
 begin
-  Result := False;
+  Result := -1;
   if CaseSpecific then begin
     for I := Low(A) to High(A) do
       if AStr = A[I] then begin
-        Result := True;
+        Result := I;
         Exit;
       end;
   end else begin
     AStr := Uppercase(AStr);
     for I := Low(A) to High(A) do
       if AStr = Uppercase(A[I]) then begin
-        Result := True;
+        Result := I;
         Exit;
       end;
   end;
