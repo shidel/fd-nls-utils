@@ -20,11 +20,13 @@ type
     FBorder: integer;
     FBorderColor: TColor;
     FFont: TArrayOfBytes;
+    FFontWidth: integer;
     FScreenMax: TPoint;
     FTextColor: TColor;
     FWhereXY: TPoint;
     FWindMax: TPoint;
     FWindMin: TPoint;
+    function GetFontHeight: integer;
     function GetWhereX: integer;
     function GetWhereXY: TPoint;
     function GetWhereY: integer;
@@ -32,6 +34,7 @@ type
     procedure SetBorder(AValue: integer);
     procedure SetBorderColor(AValue: TColor);
     procedure SetFont(AValue: TArrayOfBytes);
+    procedure SetFontWidth(AValue: integer);
     procedure SetScreenMax(AValue: TPoint);
     procedure SetTextColor(AValue: TColor);
     procedure SetWhereX(AValue: integer);
@@ -46,8 +49,8 @@ type
     destructor Destroy; override;
     property Bitmap : TBitmap read FBitmap;
     property Font : TArrayOfBytes read FFont write SetFont;
-    function FontHeight : integer;
-    function FontWidth : integer;
+    property FontHeight : integer read GetFontHeight;
+    property FontWidth : integer read FFontWidth write SetFontWidth;
     property Border : integer read FBorder write SetBorder;
     property ScreenMax : TPoint read FScreenMax write SetScreenMax;
     property WindMin : TPoint read FWindMin write SetWindMin;
@@ -102,6 +105,15 @@ begin
   AdjustSize;
 end;
 
+procedure TDosScreen.SetFontWidth(AValue: integer);
+begin
+  if (AValue < 8) then AValue := 8;
+  if (AValue < 9) then AValue := 9;
+  if FFontWidth=AValue then Exit;
+  FFontWidth:=AValue;
+  AdjustSize;
+end;
+
 procedure TDosScreen.SetBackground(AValue: TColor);
 begin
   if FBackground=AValue then Exit;
@@ -116,6 +128,11 @@ end;
 function TDosScreen.GetWhereX: integer;
 begin
   Result := FWhereXY.X;
+end;
+
+function TDosScreen.GetFontHeight: integer;
+begin
+  Result := Length(FFont) div 256;
 end;
 
 function TDosScreen.GetWhereY: integer;
@@ -171,22 +188,12 @@ begin
   ClearScreen;
 end;
 
-function TDosScreen.FontHeight: integer;
-begin
-    Result := Length(FFont) div 256;
-end;
-
-function TDosScreen.FontWidth: integer;
-begin
-  Result := 8;
-end;
-
 constructor TDosScreen.Create(MaxX : Integer = 80; MaxY : Integer = 25);
 begin
   inherited Create;
   FBitmap := TBitmap.Create;
   ScreenMax.SetLocation(MaxX,MaxY);
-
+  FFontWidth := 8;
 end;
 
 destructor TDosScreen.Destroy;

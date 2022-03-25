@@ -37,6 +37,8 @@ type
     bbRemoveLanguage: TBitBtn;
     cbSoftwareUpdate: TComboBox;
     cbLanguageEnable: TCheckBox;
+    cbWideDOSFont: TCheckBox;
+    cbAlwaysEnglish: TCheckBox;
     deLocalRepo: TDirectoryEdit;
     Edit1: TEdit;
     frPkgListEdit: TframePkgListEdit;
@@ -47,6 +49,8 @@ type
     ilFlagsSmall: TImageList;
     ilToolsSmall: TImageList;
     iLangDosVerify: TImage;
+    lbPreviewInterval: TLabel;
+    lbSimulator: TLabel;
     lbComingSoon: TLabel;
     lbUpdateChecked: TLabel;
     lbGitRepo: TLabel;
@@ -81,6 +85,8 @@ type
     btCodepage: TSpeedButton;
     sPrefs: TSplitter;
     itMinute: TTimer;
+    tbPreviewInterval: TTrackBar;
+    tsSimulator: TTabSheet;
     tbSepA: TToolButton;
     tbSepB: TToolButton;
     tsPackages: TTabSheet;
@@ -110,8 +116,10 @@ type
     procedure actRemoveLanguageExecute(Sender: TObject);
     procedure actRemoveLanguageUpdate(Sender: TObject);
     procedure actSoftwareUpdateExecute(Sender: TObject);
+    procedure cbAlwaysEnglishChange(Sender: TObject);
     procedure cbLanguageEnableClick(Sender: TObject);
     procedure cbSoftwareUpdateChange(Sender: TObject);
+    procedure cbWideDOSFontChange(Sender: TObject);
     procedure deLocalRepoAcceptDirectory(Sender: TObject; var Value: String);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -133,6 +141,7 @@ type
       Change: TItemChange);
     procedure lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
     procedure sbLanguageEditResize(Sender: TObject);
+    procedure tbPreviewIntervalChange(Sender: TObject);
     procedure tsAboutShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
@@ -140,6 +149,7 @@ type
     procedure tsPrefsShow(Sender: TObject);
     procedure tsProjectsShow(Sender: TObject);
     procedure tsRepoShow(Sender: TObject);
+    procedure tsSimulatorShow(Sender: TObject);
     procedure tvPrefsChange(Sender: TObject; Node: TTreeNode);
     procedure SetLangCheckBox(State : boolean);
   private
@@ -222,6 +232,14 @@ end;
 procedure TfMain.FormDestroy(Sender: TObject);
 begin
   try
+    Properties.Flush;
+  finally
+  end;
+  try
+    Settings.Flush;
+  finally
+  end;
+  try
     FreeAndNil(Repository);
   finally
   end;
@@ -232,14 +250,17 @@ begin
   SetPropertyState(Self);
   SetPropertyState(pLanguagesList, 'HEIGHT', pLanguagesList.Height);
   SetPropertyState(tvPrefs, 'WIDTH', tvPrefs.Width);
-  SetPropertyState(frPkgListEdit.lvPackages, 'WIDTH', frPkgListEdit.lvPackages.Width);
+  SetPropertyState(frPkgListEdit.lvPackages, 'WIDTH',
+    frPkgListEdit.lvPackages.Width);
 end;
 
 procedure TfMain.FormShow(Sender: TObject);
 begin
-  pLanguagesList.Height:= GetPropertyState(pLanguagesList, 'HEIGHT', pLanguagesList.Height);
+  pLanguagesList.Height:= GetPropertyState(pLanguagesList, 'HEIGHT',
+    pLanguagesList.Height);
   tvPrefs.Width := GetPropertyState(tvPrefs, 'WIDTH', tvPrefs.Width);
-  frPkgListEdit.lvPackages.Width := GetPropertyState(frPkgListEdit.lvPackages, 'WIDTH', frPkgListEdit.lvPackages.Width);
+  frPkgListEdit.lvPackages.Width := GetPropertyState(frPkgListEdit.lvPackages,
+    'WIDTH', frPkgListEdit.lvPackages.Width);
 end;
 
 procedure TfMain.hpAboutHotClick(Sender: TObject);
@@ -399,6 +420,17 @@ begin
     sbLanguageEdit.VertScrollBar.Page:= sbLanguageEdit.Height;
 end;
 
+procedure TfMain.tbPreviewIntervalChange(Sender: TObject);
+var
+  X : integer;
+begin
+    X := tbPreviewInterval.Position * 50;
+    if X = 0 then X := 10;
+    lbPreviewInterval.Caption:=Format(lbl_PreviewInterval, [IntToStr(X)]);
+    SetSetting('PREVIEW/INTERVAL', X);
+    Settings.Flush;
+end;
+
 procedure TfMain.tsAboutShow(Sender: TObject);
 begin
   SetValueXML(Settings, 'VERSION/ABOUT/REVISION', SOURCE_REVISION);
@@ -448,8 +480,19 @@ end;
 
 procedure TfMain.tsRepoShow(Sender: TObject);
 begin
-  deLocalRepo.Directory:=GetValueXML(Settings, 'REPOSITORY/LOCAL/PATH', '');
+  deLocalRepo.Directory:=GetSetting('REPOSITORY/LOCAL/PATH', '');
+end;
 
+procedure TfMain.tsSimulatorShow(Sender: TObject);
+var
+  X : integer;
+begin
+  tbPreviewInterval.Position:=GetSetting('PREVIEW/INTERVAL', 500) div 50;
+  cbWideDOSFont.Checked := GetSetting('PREVIEW/WIDEFONT', FALSE);
+  cbAlwaysEnglish.Checked := GetSetting('PREVIEW/ENGISH', FALSE);
+  X := tbPreviewInterval.Position * 50;
+  if X = 0 then X := 10;
+  lbPreviewInterval.Caption:=Format(lbl_PreviewInterval, [IntToStr(X)]);
 end;
 
 procedure TfMain.actAppleAboutExecute(Sender: TObject);
@@ -552,6 +595,12 @@ begin
     [GetValueXML(Settings, 'SOFTWARE/UPDATE/CHECKED', msg_UnknownDateTime)]);
 end;
 
+procedure TfMain.cbAlwaysEnglishChange(Sender: TObject);
+begin
+  SetSetting('PREVIEW/ENGISH', cbAlwaysEnglish.Checked);
+  Settings.Flush;
+end;
+
 procedure TfMain.cbLanguageEnableClick(Sender: TObject);
 begin
   if Assigned(lvLanguages.Selected) then begin
@@ -564,6 +613,12 @@ end;
 procedure TfMain.cbSoftwareUpdateChange(Sender: TObject);
 begin
   SetValueXML(Settings, 'SOFTWARE/UPDATE/INTERVAL', cbSoftwareUpdate.ItemIndex);
+  Settings.Flush;
+end;
+
+procedure TfMain.cbWideDOSFontChange(Sender: TObject);
+begin
+  SetSetting('PREVIEW/WIDEFONT', cbWideDOSFont.Checked);
   Settings.Flush;
 end;
 
@@ -809,6 +864,12 @@ begin
   leLangDOS.EditLabel.Caption:=led_LanguageDOS;
   leLangCodePage.EditLabel.Caption:=led_LanguageCodePage;
   cbLanguageEnable.Caption:=lbl_LanguageEnabled;
+
+  tsSimulator.Caption:=tab_Simulator;
+  lbSimulator.Caption:=lbl_Simulator;
+  cbWideDOSFont.Caption:=cbox_WideDOSFont;
+  cbAlwaysEnglish.Caption:=cbox_AlwaysEnglish;
+  lbPreviewInterval.Caption:=Format(lbl_PreviewInterval, ['500']);
 end;
 
 procedure TfMain.SelectEditLanguage(Index : integer);

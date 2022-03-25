@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Graphics, Forms, Controls, ExtCtrls, PasExt, FDKit,
-  DosView, uAppNLS, uLog;
+  DosView, uAppNLS, uAppCfg, uLog;
 
 type
 
@@ -32,13 +32,16 @@ type
     FPkgPlatforms,
     FPkgKeywords : String;
     FDataUpdate : boolean;
+    FRefreshRate: integer;
     procedure SetFieldValue(ID : String; var Field : String; DefaultValue : String = '');
     procedure Render;
+    procedure SetRefreshRate(AValue: integer);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Preview(Details : TControl);
     procedure UpdateRequest(Sender: TObject);
+    property RefreshRate : integer read FRefreshRate write SetRefreshRate;
   end;
 
 implementation
@@ -51,7 +54,7 @@ uses uPkgDetails;
 
 procedure TframePkgPreview.FrameResize(Sender: TObject);
 begin
-  tRender.Interval:=500;
+  tRender.Interval:=RefreshRate;
   tRender.Enabled:=True;
 end;
 
@@ -148,6 +151,12 @@ begin
   iPreview.Picture.Assign(FDosView.Bitmap);
 end;
 
+procedure TframePkgPreview.SetRefreshRate(AValue: integer);
+begin
+  if FRefreshRate=AValue then Exit;
+  FRefreshRate:=AValue;
+end;
+
 constructor TframePkgPreview.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -158,10 +167,16 @@ begin
   FPkgGroup := dos_PkgGroup;
   FPkgVer   := dos_PkgVersion;
   FPkgAuthor := dos_PkgAuthor;
+  FRefreshRate := GetSetting('PREVIEW/INTERVAL', 500);
+  if GetSetting('PREVIEW/WIDEFONT', False) then
+    FDosView.FontWidth:=9;
+  Height := GetPropertyState(Self, 'HEIGHT', Height);
 end;
 
 destructor TframePkgPreview.Destroy;
 begin
+  SetPropertyState(Self, 'HEIGHT', Height);
+  Properties.Flush;
   FreeAndNil(FDosView);
   inherited Destroy;
 end;
@@ -195,7 +210,7 @@ end;
 
 procedure TframePkgPreview.UpdateRequest(Sender: TObject);
 begin
-  tRender.Interval:=250;
+  tRender.Interval:=RefreshRate;
   tRender.Enabled:=True;
   FDataUpdate := True;
 end;

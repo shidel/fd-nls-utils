@@ -33,6 +33,7 @@ resourcestring
   lbl_GitRepo                   = 'Git repository %0:s';
   lbl_ComingSoon                = 'not implemented, coming soon';
   lbl_LanguageEnabled           = 'Enable Language';
+  lbl_Simulator                 = 'DOS Codepage Preview Simulator';
 
   dlg_LocalRepo                 = 'FD-NLS Local Repository';
   dlg_DebugLog                  = 'Debug Log';
@@ -48,6 +49,7 @@ resourcestring
 
   tab_PrefGeneral               = 'General';
   tab_PrefRepository            = 'Repository';
+  tab_Simulator                 = 'Simulator';
   tab_PrefLanguages             = 'Languages';
   tab_PrefAbout                 = 'About';
 
@@ -77,7 +79,9 @@ resourcestring
   dos_PkgVersion                = 'Version X.YZ';
   dos_PkgPlatforms              = '';
 
-
+  lbl_PreviewInterval           = 'Simulator refresh interval %0:s/ms';
+  cbox_WideDOSFont              = 'Display 8-bit font as 9-bits wide.';
+  cbox_AlwaysEnglish            = 'Revert to English preview on selection change.';
 
 implementation
 

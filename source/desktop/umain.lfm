@@ -54,13 +54,13 @@ object fMain: TfMain
         Action = actPackages
       end
       object tbDebugLog: TToolButton
-        Left = 86
+        Left = 89
         Hint = 'Debug Log'
         Top = 0
         Action = actDebugLog
       end
       object tbPreferences: TToolButton
-        Left = 131
+        Left = 137
         Hint = 'Configuration, Options and Preferences'
         Top = 0
         Action = actPreferences
@@ -73,7 +73,7 @@ object fMain: TfMain
         Style = tbsSeparator
       end
       object tbSepB: TToolButton
-        Left = 126
+        Left = 129
         Height = 40
         Top = 0
         Caption = 'tbSepB'
@@ -310,6 +310,55 @@ object fMain: TfMain
               ParentFont = False
             end
           end
+          object tsSimulator: TTabSheet
+            Caption = 'tsSimulator'
+            ClientHeight = 296
+            ClientWidth = 489
+            OnShow = tsSimulatorShow
+            object lbSimulator: TLabel
+              Left = 16
+              Height = 16
+              Top = 8
+              Width = 69
+              Caption = 'lbSimulator'
+            end
+            object cbWideDOSFont: TCheckBox
+              Left = 16
+              Height = 18
+              Top = 120
+              Width = 116
+              Caption = 'cbWideDOSFont'
+              OnChange = cbWideDOSFontChange
+              TabOrder = 1
+            end
+            object lbPreviewInterval: TLabel
+              Left = 16
+              Height = 16
+              Top = 47
+              Width = 103
+              Caption = 'lbPreviewInterval'
+            end
+            object tbPreviewInterval: TTrackBar
+              Left = 19
+              Height = 25
+              Top = 72
+              Width = 453
+              Max = 20
+              OnChange = tbPreviewIntervalChange
+              Position = 10
+              Anchors = [akTop, akLeft, akRight]
+              TabOrder = 0
+            end
+            object cbAlwaysEnglish: TCheckBox
+              Left = 16
+              Height = 18
+              Top = 144
+              Width = 116
+              Caption = 'cbAlwaysEnglish'
+              OnChange = cbAlwaysEnglishChange
+              TabOrder = 2
+            end
+          end
           object tsLanguages: TTabSheet
             Caption = 'Languages'
             ClientHeight = 296
@@ -345,27 +394,27 @@ object fMain: TfMain
                 Align = alClient
                 BorderStyle = bsNone
                 ClientHeight = 170
-                ClientWidth = 477
+                ClientWidth = 462
                 TabOrder = 1
                 OnResize = sbLanguageEditResize
                 object pLangEditLeft: TPanel
                   Left = 0
                   Height = 234
                   Top = 0
-                  Width = 477
+                  Width = 462
                   Align = alClient
                   BevelOuter = bvNone
                   ClientHeight = 234
-                  ClientWidth = 477
+                  ClientWidth = 462
                   TabOrder = 0
                   object leLangID: TLabeledEdit
                     Left = 8
                     Height = 22
                     Top = 24
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangID'
                     TabOrder = 0
                     Text = 'leLangID'
@@ -376,10 +425,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 74
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangName'
                     TabOrder = 1
                     Text = 'leLangName'
@@ -390,10 +439,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 124
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangDOS'
                     TabOrder = 2
                     Text = 'leLangDOS'
@@ -404,10 +453,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 174
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangCodePage'
                     TabOrder = 3
                     Text = 'leLangCodePage'
@@ -415,10 +464,10 @@ object fMain: TfMain
                     OnEditingDone = leLangCodePageEditingDone
                   end
                   object bbRemoveLanguage: TBitBtn
-                    Left = 400
-                    Height = 29
+                    Left = 388
+                    Height = 28
                     Top = 170
-                    Width = 61
+                    Width = 58
                     Action = actRemoveLanguage
                     Anchors = [akTop, akRight]
                     AutoSize = True
@@ -427,7 +476,7 @@ object fMain: TfMain
                     TabOrder = 4
                   end
                   object leGraphic: TImage
-                    Left = 301
+                    Left = 286
                     Height = 160
                     Top = 0
                     Width = 160
@@ -438,7 +487,7 @@ object fMain: TfMain
                     Transparent = True
                   end
                   object btCodepage: TSpeedButton
-                    Left = 275
+                    Left = 260
                     Height = 22
                     Top = 174
                     Width = 23
@@ -448,7 +497,7 @@ object fMain: TfMain
                     ShowCaption = False
                   end
                   object iLangNameVerify: TImage
-                    Left = 274
+                    Left = 259
                     Height = 24
                     Top = 74
                     Width = 24
@@ -456,7 +505,7 @@ object fMain: TfMain
                     Stretch = True
                   end
                   object iLangDosVerify: TImage
-                    Left = 274
+                    Left = 259
                     Height = 24
                     Top = 122
                     Width = 24
@@ -464,7 +513,7 @@ object fMain: TfMain
                     Stretch = True
                   end
                   object iLangIdVerify: TImage
-                    Left = 275
+                    Left = 260
                     Height = 24
                     Top = 22
                     Width = 24
@@ -475,14 +524,14 @@ object fMain: TfMain
                     Left = 8
                     Height = 18
                     Top = 216
-                    Width = 138
+                    Width = 130
                     Caption = 'cbLanguageEnable'
                     OnClick = cbLanguageEnableClick
                     TabOrder = 5
                   end
                 end
                 object pLangEditRight: TPanel
-                  Left = 477
+                  Left = 462
                   Height = 234
                   Top = 0
                   Width = 0

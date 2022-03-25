@@ -6,8 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
-  PasExt, PUIExt, Buttons, ActnList, XMLPropStorage,
-  uAppNLS, uLog, Icons;
+  PasExt, PUIExt, Buttons, ActnList, uAppNLS, uAppCfg, uLog, Icons;
 
 type
 
@@ -21,8 +20,8 @@ type
     lvFlags: TListView;
     pButtons: TPanel;
     pBtnSeperator: TPanel;
-    xProperties: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
+    procedure FormHide(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     function GetIndex: integer;
@@ -45,8 +44,7 @@ procedure TfPickFlag.FormCreate(Sender: TObject);
 var
   I : integer;
 begin
-  xProperties.FileName := AppCfgFile;
-  xProperties.RootNodePath := DisplayNamePath(Self);
+  GetPropertyState(Self);
   Caption := dlg_PickFlag;
   bbOK.Caption:=btn_OK;
   bbCancel.Caption:=btn_Cancel;
@@ -62,6 +60,11 @@ begin
   end;
   Log(Self, IntToStr(lvFlags.Items.Count) + ' flag images');
   lvFlags.EndUpdate;
+end;
+
+procedure TfPickFlag.FormHide(Sender: TObject);
+begin
+  SetPropertyState(Self);
 end;
 
 procedure TfPickFlag.FormShow(Sender: TObject);
