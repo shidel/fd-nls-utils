@@ -50,6 +50,7 @@ resourcestring
   tab_PrefGeneral               = 'General';
   tab_PrefRepository            = 'Repository';
   tab_Simulator                 = 'Simulator';
+  tab_Descriptions              = 'Packages';
   tab_PrefLanguages             = 'Languages';
   tab_PrefAbout                 = 'About';
 
@@ -79,9 +80,12 @@ resourcestring
   dos_PkgVersion                = 'Version X.YZ';
   dos_PkgPlatforms              = '';
 
-  lbl_PreviewInterval           = 'Simulator refresh interval %0:s/ms';
+  lbl_PreviewInterval           = 'Simulator refresh interval %0:sms';
   cbox_WideDOSFont              = 'Display 8-bit font as 9-bits wide.';
   cbox_AlwaysEnglish            = 'Revert to English preview on selection change.';
+
+  lbl_Descriptions              = 'Package description details';
+  lbl_MasterFontSize            = 'Master details font size:';
 
 implementation
 

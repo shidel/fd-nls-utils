@@ -8,7 +8,7 @@ interface
 
 {$DEFINE UseLog}
 uses
-  Classes, SysUtils, Contnrs, Graphics, AvgLvlTree, PasExt,
+  Classes, SysUtils, Contnrs, Graphics, AvgLvlTree, PasExt, Controls,
   {$IFDEF UseLog}
     uLog,
   {$ENDIF}
@@ -162,6 +162,9 @@ procedure SetValueXML(XML : TXMLConfig; Key : String; Value : TPosition); overlo
 
 function ScaleBitmap(B : TBitMap; NewWidth, NewHeight: word) : TBitMap; overload;
 
+function RightOf(AControl : TControl) : integer;
+function BottomOf(AControl : TControl) : integer;
+
 implementation
 
 function GetValueXML(XML: TXMLConfig; Key: String; Default: boolean): boolean;
@@ -275,6 +278,16 @@ begin
     FreeAndNil(Result);
     raise
   end;
+end;
+
+function RightOf(AControl: TControl): integer;
+begin
+ Result := AControl.Left + AControl.Width;
+end;
+
+function BottomOf(AControl: TControl): integer;
+begin
+  Result := AControl.Top + AControl.Height;
 end;
 
 { TDictionary }

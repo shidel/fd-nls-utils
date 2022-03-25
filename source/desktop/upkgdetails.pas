@@ -44,6 +44,7 @@ type
     FLabels : array of TLabel;
     FDatum : array of TControl;
     FViewer: TControl;
+    FFontSize : integer;
     function GetDetail(Index : integer): String;
     function GetFlag: TImage;
     procedure SetDetail(Index : integer; AValue: String);
@@ -170,15 +171,28 @@ begin
       FDatum[I - 1].AutoSize:=True;
       FDatum[I - 1].Caption:='Xy/|';
       {$if defined(windows)}
+        if FFontSize <> 0 then begin
+          FDatum[I - 1].Font.Height:=FFontSize;
+        end;
         FDatum[I - 1].Top := (I * FDatum[I - 1].Height * 2) + 8;
         FDatum[I - 1].Constraints.MinHeight:=FDatum[I - 1].Height * 2;
       {$else}
-        FDatum[I - 1].Top := (I) * 16 + 8;
-        FDatum[I - 1].Constraints.MinHeight:=16;
+        if FFontSize <> 0 then begin
+          FDatum[I - 1].Font.Height:=FFontSize;
+          FDatum[I - 1].Top := (I * FDatum[I - 1].Height * 3 div 2) + 8;
+          FDatum[I - 1].Constraints.MinHeight:=FDatum[I - 1].Height * 3 div 2;
+        end else begin
+          FDatum[I - 1].Top := (I) * 16 + 8;
+          FDatum[I - 1].Constraints.MinHeight:=16;
+        end;
       {$endif}
       FDatum[I - 1].Align:=alTop;
       FDatum[I - 1].Caption:='';
       FDatum[I - 1].OnClick := OnClick;
+
+      if FFontSize <> 0 then begin
+        FDatum[I - 1].Font.Height:=FFontSize;
+      end;
 
       FLabels[I - 1] := TLabel.Create(Self);
       FLabels[I - 1].Name:=Name + '_PkgLabel'+IntToStr(I-1);
@@ -190,6 +204,11 @@ begin
       Flabels[I - 1].Anchors:=[akRight, akTop];
       FLabels[I - 1].AutoSize := True;
       FLabels[I - 1].OnClick := OnClick;
+
+      if FFontSize <> 0 then begin
+        FLabels[I - 1].Font.Height:=FFontSize;
+      end;
+
     end;
   end;
   FRows:=AValue;
@@ -258,6 +277,10 @@ begin
   FCodePageIndex:=FDNLS.FindCodepage(Language);
   pButtons.Visible:=FAllowEdit and (FCodePageIndex <> -1);
   sbTransfer.Enabled:=FAllowEdit and (FCodePageIndex <> -1);
+
+  if Not FAllowEdit then
+    FFontSize := GetSetting('DETAILS/MASTER/FONT/SIZE', 0);
+
   if FCodePageIndex = -1 then begin
     lCodepage.Visible := False;
     iCodepage.Visible := True;
@@ -274,6 +297,7 @@ begin
   if I >= 0 then
     iFlag.Picture.LoadFromLazarusResource(IconFlags[I]);
   SetLabels(FDNLS.PackageLists.Fields);
+  FFontSize := 0;
 end;
 
 destructor TframePkgDetails.Destroy;

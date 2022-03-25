@@ -7,10 +7,10 @@ interface
 uses
   Classes, SysUtils, PasExt, FDKit, Forms, Controls, Graphics, Dialogs,
   StdCtrls, Menus, ActnList, ComCtrls, ExtCtrls, Buttons,
-  XMLConf, LCLType, LCLIntf, EditBtn, IpHtml, Ipfilebroker, ClassExt,
+  XMLConf, LCLType, LCLIntf, EditBtn, Spin, IpHtml, Ipfilebroker, ClassExt,
   opensslsockets, fphttpclient, DateUtils,
   uAppNLS, uAppCfg, uLog, uPickFlag, uEditCodePage, uPkgListEdit,
-  Icons;
+  Icons, Types;
 
 type
 
@@ -49,6 +49,8 @@ type
     ilFlagsSmall: TImageList;
     ilToolsSmall: TImageList;
     iLangDosVerify: TImage;
+    lbMasterFontSize: TLabel;
+    lbDescriptions: TLabel;
     lbPreviewInterval: TLabel;
     lbSimulator: TLabel;
     lbComingSoon: TLabel;
@@ -83,8 +85,10 @@ type
     sLanguages: TSplitter;
     btAddLanguage: TSpeedButton;
     btCodepage: TSpeedButton;
+    seMasterFont: TSpinEdit;
     sPrefs: TSplitter;
     itMinute: TTimer;
+    tsDescriptions: TTabSheet;
     tbPreviewInterval: TTrackBar;
     tsSimulator: TTabSheet;
     tbSepA: TToolButton;
@@ -128,6 +132,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure hpAboutHotClick(Sender: TObject);
     procedure itMinuteTimer(Sender: TObject);
+    procedure lbMasterFontSizeResize(Sender: TObject);
     procedure leGraphicClick(Sender: TObject);
     procedure leLangCodePageChange(Sender: TObject);
     procedure leLangCodePageEditingDone(Sender: TObject);
@@ -141,8 +146,12 @@ type
       Change: TItemChange);
     procedure lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
     procedure sbLanguageEditResize(Sender: TObject);
+    procedure seMasterFontChange(Sender: TObject);
     procedure tbPreviewIntervalChange(Sender: TObject);
     procedure tsAboutShow(Sender: TObject);
+    procedure tsDescriptionsContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure tsDescriptionsShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
     procedure tsPackagesShow(Sender: TObject);
@@ -274,6 +283,11 @@ begin
    // Log(Self, 'Minute Interval Trigger');
   itMinute.Interval := 60 * 1000; { 60 second intervals }
   fMain.SoftwareUpdate(True);
+end;
+
+procedure TfMain.lbMasterFontSizeResize(Sender: TObject);
+begin
+    seMasterFont.Left:=RightOf(lbMasterFontSize) + 8;
 end;
 
 procedure TfMain.leGraphicClick(Sender: TObject);
@@ -420,6 +434,11 @@ begin
     sbLanguageEdit.VertScrollBar.Page:= sbLanguageEdit.Height;
 end;
 
+procedure TfMain.seMasterFontChange(Sender: TObject);
+begin
+  SetSetting('DETAILS/MASTER/FONT/SIZE', seMasterFont.Value);
+end;
+
 procedure TfMain.tbPreviewIntervalChange(Sender: TObject);
 var
   X : integer;
@@ -434,6 +453,21 @@ end;
 procedure TfMain.tsAboutShow(Sender: TObject);
 begin
   SetValueXML(Settings, 'VERSION/ABOUT/REVISION', SOURCE_REVISION);
+end;
+
+procedure TfMain.tsDescriptionsContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+
+end;
+
+procedure TfMain.tsDescriptionsShow(Sender: TObject);
+begin
+  lbDescriptions.Caption:=lbl_Descriptions;
+  lbMasterFontSize.Caption:=lbl_MasterFontSize;
+  seMasterFont.Left:=RightOf(lbMasterFontSize) + 8;
+  seMasterFont.Value:=GetSetting('DETAILS/MASTER/FONT/SIZE',
+    abs(GetFontData(Font.Reference.Handle).Height));
 end;
 
 procedure TfMain.tsGeneralShow(Sender: TObject);
@@ -709,8 +743,8 @@ begin
      AddMenuItem(aMenu, actApplePrefs);
      AddMenuItem(aMenu, '-');
    {$ELSEIF defined(windows)}
-     Exit;
    {$ENDIF}
+   Exit;
    // Add ActionList items to Application MainMenu
    for I := 0 to alMain.ActionCount - 1 do begin
       Cat := Uppercase(alMain.Actions[I].Category);
@@ -870,6 +904,8 @@ begin
   cbWideDOSFont.Caption:=cbox_WideDOSFont;
   cbAlwaysEnglish.Caption:=cbox_AlwaysEnglish;
   lbPreviewInterval.Caption:=Format(lbl_PreviewInterval, ['500']);
+
+  tsDescriptions.Caption:=tab_Descriptions;
 end;
 
 procedure TfMain.SelectEditLanguage(Index : integer);
