@@ -124,9 +124,9 @@ object fMain: TfMain
       Height = 356
       Top = 4
       Width = 632
-      ActivePage = tsPackages
+      ActivePage = tsPrefs
       Align = alClient
-      TabIndex = 1
+      TabIndex = 2
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'

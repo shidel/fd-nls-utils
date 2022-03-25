@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, PasExt,
-  StdCtrls, FDKit, uAppCfg, uLog, Icons, uPkgDetails, uPkgPreview;
+  StdCtrls, Dialogs, FDKit, uAppCfg, uLog, Icons, uPkgDetails, uPkgPreview;
 
 type
 

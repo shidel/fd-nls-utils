@@ -72,12 +72,11 @@ type
     property EditIndex : integer read FEditIndex;
     property Identity : String read FIdentity write SetIdentity;
     procedure SetLabels(List : TStringList);
-    procedure SetDetails(Identifier : String; Index : integer; List : TStringList);
+    procedure SetDetails(Identifier : String; Index : integer; List : TStringList; ReplaceAll : boolean = True);
     procedure RowsAdjust;
     function  IndexOfLabel(S : String) : integer;
     property  Detail [Index : integer] : String read GetDetail write SetDetail;
     procedure CommitChanges;
-
   end;
 
 implementation
@@ -96,7 +95,7 @@ end;
 procedure TframePkgDetails.sbTransferClick(Sender: TObject);
 begin
   if FItemIndex <> -1 then begin
-    SetDetails(FIdentity, FItemIndex, FDNLS.PackageLists.MasterDetails[FItemIndex]);
+    SetDetails(FIdentity, FItemIndex, FDNLS.PackageLists.MasterDetails[FItemIndex], False);
     FEditIndex := FItemIndex;
     FModified := True;
     CommitChanges;
@@ -296,7 +295,7 @@ begin
 end;
 
 procedure TframePkgDetails.SetDetails(Identifier: String; Index: integer;
-  List: TStringList);
+  List: TStringList; ReplaceAll : boolean = True);
 var
   I : integer;
 begin
@@ -307,8 +306,10 @@ begin
   FEditIndex := Index;
   Rows := List.Count;
   for I := 0 to List.Count - 1 do begin
-    FDatum[I].Caption:=List[I];
     FDatum[I].Enabled:=lCodepage.Visible; // only enabled with valid codepage
+    if ReplaceAll or // Not true when transfer button clicked
+    (FDatum[I].Enabled and (trim(FDatum[I].Caption) = '')) then // Is Empty and Active
+      FDatum[I].Caption:=List[I];
   end;
   RowsAdjust;
 end;
