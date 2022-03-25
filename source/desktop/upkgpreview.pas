@@ -33,6 +33,7 @@ type
     FPkgKeywords : String;
     FDataUpdate : boolean;
     FRefreshRate: integer;
+    function GetRecent: TControl;
     procedure SetFieldValue(ID : String; var Field : String; DefaultValue : String = '');
     procedure Render;
     procedure SetRefreshRate(AValue: integer);
@@ -40,8 +41,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Preview(Details : TControl);
+    property Recent : TControl read GetRecent;
     procedure UpdateRequest(Sender: TObject);
     property RefreshRate : integer read FRefreshRate write SetRefreshRate;
+
   end;
 
 implementation
@@ -79,6 +82,11 @@ begin
       Field := FDNLS.CodePages[TframePkgDetails(FDetails).CodePageIndex].UTF8toDOS(Field);
   end else
     Field := '';
+end;
+
+function TframePkgPreview.GetRecent: TControl;
+begin
+  Result := FDetails;
 end;
 
 procedure TframePkgPreview.Render;

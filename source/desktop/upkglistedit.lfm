@@ -6,7 +6,6 @@ object framePkgListEdit: TframePkgListEdit
   Anchors = [akTop, akLeft, akRight, akBottom]
   ClientHeight = 347
   ClientWidth = 588
-  LCLVersion = '2.3.0.0'
   ParentFont = False
   TabOrder = 0
   DesignLeft = 228

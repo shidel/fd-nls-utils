@@ -77,6 +77,7 @@ type
     function  IndexOfLabel(S : String) : integer;
     property  Detail [Index : integer] : String read GetDetail write SetDetail;
     procedure CommitChanges;
+
   end;
 
 implementation

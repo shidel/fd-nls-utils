@@ -489,7 +489,7 @@ var
 begin
   tbPreviewInterval.Position:=GetSetting('PREVIEW/INTERVAL', 500) div 50;
   cbWideDOSFont.Checked := GetSetting('PREVIEW/WIDEFONT', FALSE);
-  cbAlwaysEnglish.Checked := GetSetting('PREVIEW/ENGISH', FALSE);
+  cbAlwaysEnglish.Checked := GetSetting('PREVIEW/ENGLISH', FALSE);
   X := tbPreviewInterval.Position * 50;
   if X = 0 then X := 10;
   lbPreviewInterval.Caption:=Format(lbl_PreviewInterval, [IntToStr(X)]);
@@ -597,7 +597,7 @@ end;
 
 procedure TfMain.cbAlwaysEnglishChange(Sender: TObject);
 begin
-  SetSetting('PREVIEW/ENGISH', cbAlwaysEnglish.Checked);
+  SetSetting('PREVIEW/ENGLISH', cbAlwaysEnglish.Checked);
   Settings.Flush;
 end;
 

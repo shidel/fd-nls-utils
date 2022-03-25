@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, PasExt,
-  StdCtrls, FDKit, uLog, Icons, uPkgDetails, uPkgPreview;
+  StdCtrls, FDKit, uAppCfg, uLog, Icons, uPkgDetails, uPkgPreview;
 
 type
 
@@ -27,6 +27,7 @@ type
     FScroll : TScrollBox;
     FEditors : array of TframePkgDetails;
     FActive  : TStringArray;
+    FStayWithLang : boolean;
     function MakeViewer(Language:String; AllowEdit : boolean; ATop : integer) : TframePkgDetails;
     procedure MakeEditors;
   public
@@ -215,6 +216,7 @@ var
   I : integer;
 begin
   Log(Self, 'Reset/Clear');
+  FStayWithLang := not GetSetting('PREVIEW/ENGLISH', false);
   SelectEdit(nil);
   lvPackages.Selected:=nil;
   lvPackages.Clear;
@@ -234,6 +236,7 @@ var
 begin
   if not Assigned(FMasterDetails) then Initialize;
   if not Assigned(FMasterDetails) then Exit;
+  FStayWithLang := not GetSetting('PREVIEW/ENGLISH', false);
   log(Self, IntToStr(FDNLS.PackageLists.PackageCount) + ' master packages');
   for I := 0 to FDNLS.PackageLists.PackageCount - 1 do begin
     LI := lvPackages.Items.Add;
@@ -245,6 +248,7 @@ end;
 procedure TframePkgListEdit.Refresh;
 begin
   if not Assigned(FMasterDetails) then Reload;
+  FStayWithLang := not GetSetting('PREVIEW/ENGLISH', false);
   Log(Self, 'Refresh');
 end;
 
@@ -252,11 +256,13 @@ constructor TframePkgListEdit.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FNeedRefresh := True;
+  FStayWithLang := not GetSetting('PREVIEW/ENGLISH', false);
 end;
 
 procedure TframePkgListEdit.SelectEdit(Item: TListItem);
 var
   I : integer;
+  P : TframePkgDetails;
 begin
   if not Assigned(FMasterDetails) then Exit;
   if not Assigned(Item) then begin
@@ -265,15 +271,26 @@ begin
   end;
   Log(Self, 'select item ' + IntToStr(Item.Index) + ', ' + Item.Caption);
   FMasterDetails.SetDetails(Item.Caption, Item.Index, FDNLS.PackageLists.MasterDetails[Item.Index]);
-  SelectPreview(FMasterDetails);
+  if not FStayWithLang then begin
+     Log(self, 'view master details');
+     SelectPreview(FMasterDetails);
+  end;
   if Length(FEditors) = 0 then MakeEditors;
   for I := 0 to Length(FEditors) - 1 do
       FEditors[I].SetDetails(Item.Caption, Item.Index, FDNLS.PackageLists.LangDetails[FEditors[I].DetailsIndex,Item.index]);
   FDNLS.PackageLists.SaveChanges;
+  if FStayWithLang then begin
+    P := nil;
+    if Assigned(FPreview) then P := TframePkgDetails(FPreview.Recent);
+    Log(Self, 'View language details ' + WhenTrue(Assigned(P), 'true', 'false'));
+    SelectPreview(P);
+  end;
 end;
 
 procedure TframePkgListEdit.SelectPreview(Details: TframePkgDetails);
 begin
+  if not Assigned(Details) then
+    Details := FMasterDetails;
   if Assigned(FPreview) then
     FPreview.Preview(Details);
 end;
