@@ -43,7 +43,7 @@ type
 
 implementation
 
-uses uMain, uPkgDetails;
+uses uPkgDetails;
 
 {$R *.lfm}
 

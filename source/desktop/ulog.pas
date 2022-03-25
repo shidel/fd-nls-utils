@@ -5,8 +5,8 @@ unit uLog;
 interface
 
 uses
-  Classes, SysUtils, PasExt, PUIExt, Forms, Controls, Graphics, Dialogs,
-  XMLPropStorage, StdCtrls;
+  Classes, SysUtils, PasExt, Forms, Controls, Graphics, Dialogs,
+  StdCtrls;
 
 type
 
@@ -14,8 +14,8 @@ type
 
   TfLog = class(TForm)
     LogText: TMemo;
-    xProperties: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
+    procedure FormHide(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     FAutoShow: boolean;
@@ -33,6 +33,8 @@ var
 procedure Log(Sender : TPersistent; Message : String); overload;
 
 implementation
+
+uses uAppCfg;
 
 var
   PreLog : TStringList;
@@ -59,8 +61,7 @@ end;
 
 procedure TfLog.FormCreate(Sender: TObject);
 begin
-   xProperties.FileName := AppCfgFile;
-   xProperties.RootNodePath := DisplayNamePath(Self);
+   GetPropertyState(Self);
    LogText.Clear;
    Add('Log started on ' + FormatDateTime('yyyy-mm-dd', Now));
    Add('');
@@ -70,6 +71,11 @@ begin
       FreeAndNil(PreLog);
    end;
    FAutoShow := False;
+end;
+
+procedure TfLog.FormHide(Sender: TObject);
+begin
+  SetPropertyState(Self);
 end;
 
 procedure TfLog.FormShow(Sender: TObject);

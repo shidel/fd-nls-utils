@@ -5,7 +5,7 @@ unit uPkgListEdit;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, Grids, PasExt,
+  Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, PasExt,
   StdCtrls, FDKit, uLog, Icons, uPkgDetails, uPkgPreview;
 
 type

@@ -9,8 +9,9 @@ uses
 const
   clErrorText : TColor = clRed;
 
-function DisplayUID : string;
-function DisplayNamePath(AComponent : TComponent) : String;
+function DisplayUID : string; overload;
+function DisplayNamePath(AComponent : TComponent) : String;  overload;
+function DisplayNamePath(PathName : String) : String;  overload;
 
 implementation
 
@@ -33,6 +34,11 @@ end;
 function DisplayNamePath(AComponent : TComponent): String;
 begin
   Result := 'DISPLAYS/UID_' + DisplayUID + '/' + AComponent.GetNamePath + '/';
+end;
+
+function DisplayNamePath(PathName: String): String;
+begin
+  Result := 'DISPLAYS/UID_' + DisplayUID + '/' + PathName + '/';
 end;
 
 initialization

@@ -382,6 +382,7 @@ procedure TfMain.lvLanguagesChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
   SelectEditLanguage(Item.Index);
+  if Change = ctImage then begin end;
 end;
 
 procedure TfMain.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
@@ -573,6 +574,7 @@ end;
 
 procedure TfMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
+  CloseAction := CloseAction;
   frPkgListEdit.SelectEdit(nil);
   Repository.PackageLists.SaveChanges;
 end;

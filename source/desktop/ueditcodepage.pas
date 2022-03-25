@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
-  PasExt, PUIExt, StdCtrls, Buttons, ActnList, XMLPropStorage,
-  uAppNLS, uLog, Icons, FDKit;
+  PasExt, PUIExt, StdCtrls, Buttons, ActnList,
+  uAppNLS, uAppCfg, uLog, Icons, FDKit;
 
 type
 
@@ -28,7 +28,6 @@ type
     pEditValues: TPanel;
     pBtnSeperator: TPanel;
     pButtons: TPanel;
-    xProperties: TXMLPropStorage;
     procedure FormCreate(Sender: TObject);
     procedure FormHide(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -66,8 +65,7 @@ procedure TfEditCodePage.FormCreate(Sender: TObject);
 begin
   EditItem := -1;
   DOSFont := -1;
-  xProperties.FileName := AppCfgFile;
-  xProperties.RootNodePath := DisplayNamePath(Self);
+  GetPropertyState(Self);
   ilButtons.AddLazarusResource(IconUI[7]);
   ilButtons.AddLazarusResource(IconUI[8]);
   bbOK.Caption:=btn_OK;
@@ -86,6 +84,7 @@ procedure TfEditCodePage.FormHide(Sender: TObject);
 var
   I : integer;
 begin
+  SetPropertyState(Self);
   if ModalResult = mrOK then begin
     Log(Self,'Update codepage ' + FCodePage);
     SaveChanges;
@@ -93,7 +92,7 @@ begin
     Log(Self, 'Discard changes to codepage ' + FCodepage);
   end;
   for I := 0 to lvEditCP.Columns.Count - 1 do begin
-    xProperties.WriteInteger(lvEditCP.Name + '/COLUMN_' + IntToStr(I),
+    SetPropertyState(lvEditCP, 'COLUMN_' + IntToStr(I),
       lvEditCP.Columns.Items[I].Width);
   end;
 end;
@@ -105,7 +104,7 @@ begin
   Position:=poDesigned;
   for I := 0 to lvEditCP.Columns.Count - 1 do begin
       lvEditCP.Columns.Items[I].Width:=
-        xProperties.ReadInteger(lvEditCP.Name + '/COLUMN_' + IntToStr(I), 50);
+        GetPropertyState(lvEditCP, 'COLUMN_' + IntToStr(I), 75);
   end;
 end;
 

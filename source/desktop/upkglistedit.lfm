@@ -1,26 +1,26 @@
 object framePkgListEdit: TframePkgListEdit
   Left = 0
-  Height = 608
+  Height = 347
   Top = 0
-  Width = 1029
+  Width = 588
   Anchors = [akTop, akLeft, akRight, akBottom]
-  ClientHeight = 608
-  ClientWidth = 1029
-  DesignTimePPI = 168
+  ClientHeight = 347
+  ClientWidth = 588
+  LCLVersion = '2.3.0.0'
   ParentFont = False
   TabOrder = 0
   DesignLeft = 228
   DesignTop = 382
   object lvPackages: TListView
     Left = 0
-    Height = 608
+    Height = 347
     Top = 0
-    Width = 262
+    Width = 150
     Align = alLeft
     AutoWidthLastColumn = True
     Columns = <    
       item
-        Width = 258
+        Width = 148
       end>
     ScrollBars = ssVertical
     ShowColumnHeaders = False
@@ -29,9 +29,9 @@ object framePkgListEdit: TframePkgListEdit
     OnChange = lvPackagesChange
   end
   object sPkgEditSplitter: TSplitter
-    Left = 262
-    Height = 608
+    Left = 150
+    Height = 347
     Top = 0
-    Width = 18
+    Width = 10
   end
 end

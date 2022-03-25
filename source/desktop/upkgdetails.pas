@@ -81,7 +81,7 @@ type
 
 implementation
 
-uses uMain, uPkgPreview, uPkgListEdit;
+uses uPkgPreview, uPkgListEdit;
 
 {$R *.lfm}
 
@@ -253,7 +253,7 @@ begin
   FLanguage := ALanguage;
   pLanguage.Caption:=ALanguage;
   Name:=Name + '_' + FLanguage;
-  pLabels.Width := GetPropertyState(pLabels, 'WIDTH', pLabels.Width);
+  pLabels.Width := GetPropertyState(Name + '_LABELS', 'WIDTH', pLabels.Width);
   FLanguageIndex:=FDNLS.FindLanguage(Language);
   FCodePageIndex:=FDNLS.FindCodepage(Language);
   pButtons.Visible:=FAllowEdit and (FCodePageIndex <> -1);
@@ -279,7 +279,7 @@ end;
 destructor TframePkgDetails.Destroy;
 begin
   CommitChanges;
-  SetPropertyState(pLabels, 'WIDTH', pLabels.Width);
+  SetPropertyState(Name + '_LABELS', 'WIDTH', pLabels.Width);
   inherited Destroy;
 end;
 
