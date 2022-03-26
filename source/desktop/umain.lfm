@@ -363,7 +363,6 @@ object fMain: TfMain
             Caption = 'tsDescriptions'
             ClientHeight = 296
             ClientWidth = 489
-            OnContextPopup = tsDescriptionsContextPopup
             OnShow = tsDescriptionsShow
             object lbDescriptions: TLabel
               Left = 16
@@ -427,27 +426,27 @@ object fMain: TfMain
                 Align = alClient
                 BorderStyle = bsNone
                 ClientHeight = 170
-                ClientWidth = 477
+                ClientWidth = 462
                 TabOrder = 1
                 OnResize = sbLanguageEditResize
                 object pLangEditLeft: TPanel
                   Left = 0
                   Height = 234
                   Top = 0
-                  Width = 477
+                  Width = 462
                   Align = alClient
                   BevelOuter = bvNone
                   ClientHeight = 234
-                  ClientWidth = 477
+                  ClientWidth = 462
                   TabOrder = 0
                   object leLangID: TLabeledEdit
                     Left = 8
                     Height = 22
                     Top = 24
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangID'
                     TabOrder = 0
                     Text = 'leLangID'
@@ -458,10 +457,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 74
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangName'
                     TabOrder = 1
                     Text = 'leLangName'
@@ -472,10 +471,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 124
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangDOS'
                     TabOrder = 2
                     Text = 'leLangDOS'
@@ -486,10 +485,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 174
-                    Width = 259
+                    Width = 244
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 259
+                    EditLabel.Width = 244
                     EditLabel.Caption = 'leLangCodePage'
                     TabOrder = 3
                     Text = 'leLangCodePage'
@@ -497,7 +496,7 @@ object fMain: TfMain
                     OnEditingDone = leLangCodePageEditingDone
                   end
                   object bbRemoveLanguage: TBitBtn
-                    Left = 403
+                    Left = 388
                     Height = 28
                     Top = 170
                     Width = 58
@@ -509,7 +508,7 @@ object fMain: TfMain
                     TabOrder = 4
                   end
                   object leGraphic: TImage
-                    Left = 301
+                    Left = 286
                     Height = 160
                     Top = 0
                     Width = 160
@@ -520,7 +519,7 @@ object fMain: TfMain
                     Transparent = True
                   end
                   object btCodepage: TSpeedButton
-                    Left = 275
+                    Left = 260
                     Height = 22
                     Top = 174
                     Width = 23
@@ -530,7 +529,7 @@ object fMain: TfMain
                     ShowCaption = False
                   end
                   object iLangNameVerify: TImage
-                    Left = 274
+                    Left = 259
                     Height = 24
                     Top = 74
                     Width = 24
@@ -538,7 +537,7 @@ object fMain: TfMain
                     Stretch = True
                   end
                   object iLangDosVerify: TImage
-                    Left = 274
+                    Left = 259
                     Height = 24
                     Top = 122
                     Width = 24
@@ -546,7 +545,7 @@ object fMain: TfMain
                     Stretch = True
                   end
                   object iLangIdVerify: TImage
-                    Left = 275
+                    Left = 260
                     Height = 24
                     Top = 22
                     Width = 24
@@ -564,7 +563,7 @@ object fMain: TfMain
                   end
                 end
                 object pLangEditRight: TPanel
-                  Left = 477
+                  Left = 462
                   Height = 234
                   Top = 0
                   Width = 0

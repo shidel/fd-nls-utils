@@ -149,8 +149,6 @@ type
     procedure seMasterFontChange(Sender: TObject);
     procedure tbPreviewIntervalChange(Sender: TObject);
     procedure tsAboutShow(Sender: TObject);
-    procedure tsDescriptionsContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
     procedure tsDescriptionsShow(Sender: TObject);
     procedure tsGeneralShow(Sender: TObject);
     procedure tsLanguagesShow(Sender: TObject);
@@ -453,12 +451,6 @@ end;
 procedure TfMain.tsAboutShow(Sender: TObject);
 begin
   SetValueXML(Settings, 'VERSION/ABOUT/REVISION', SOURCE_REVISION);
-end;
-
-procedure TfMain.tsDescriptionsContextPopup(Sender: TObject; MousePos: TPoint;
-  var Handled: Boolean);
-begin
-
 end;
 
 procedure TfMain.tsDescriptionsShow(Sender: TObject);
