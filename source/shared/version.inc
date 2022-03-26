@@ -7,10 +7,10 @@ const
 
   { Source & Subversion Last Changed Commit }
   SOURCE_VERSION='0.1.1.68';
-  SOURCE_REVISION='300';
+  SOURCE_REVISION='302';
   SOURCE_URL='http://github.com/shidel/fd-nls-utils';
   SOURCE_ONLINE='';
-  SOURCE_COMMIT='2a58d5d2052107b80d96a2b2293ef060df29f32b';
+  SOURCE_COMMIT='f239699a2abecc54a2d3c363e7fdaee158208ac3';
 
   { Version Build Atributes } 
   BUILD_DEBUG=False;
@@ -20,7 +20,7 @@ const
   BUILD_SPECIAL=False;
   BUILD_LANGUAGE='';
   BUILD_CHARSET='';
-  BUILD_DATE='2022-03-26 07:01:08';
+  BUILD_DATE='2022-03-26 07:01:37';
 
   { General Application Information }
   APP_IDENTIFIER='com.jeromeshidel.fd-nls';

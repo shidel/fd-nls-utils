@@ -1,7 +1,7 @@
 object fMain: TfMain
-  Left = 160
+  Left = 155
   Height = 432
-  Top = 22
+  Top = 29
   Width = 640
   Caption = 'FD-NLS'
   ClientHeight = 432
@@ -54,13 +54,13 @@ object fMain: TfMain
         Action = actPackages
       end
       object tbDebugLog: TToolButton
-        Left = 89
+        Left = 86
         Hint = 'Debug Log'
         Top = 0
         Action = actDebugLog
       end
       object tbPreferences: TToolButton
-        Left = 137
+        Left = 131
         Hint = 'Configuration, Options and Preferences'
         Top = 0
         Action = actPreferences
@@ -73,7 +73,7 @@ object fMain: TfMain
         Style = tbsSeparator
       end
       object tbSepB: TToolButton
-        Left = 129
+        Left = 126
         Height = 40
         Top = 0
         Caption = 'tbSepB'
@@ -124,9 +124,9 @@ object fMain: TfMain
       Height = 356
       Top = 4
       Width = 632
-      ActivePage = tsPrefs
+      ActivePage = tsPackages
       Align = alClient
-      TabIndex = 2
+      TabIndex = 1
       TabOrder = 0
       object tsProjects: TTabSheet
         Caption = 'Projects'
@@ -178,7 +178,7 @@ object fMain: TfMain
             Width = 86
             Columns = <            
               item
-                Width = 69
+                Width = 84
               end>
             RowSelect = True
             OnChange = nil
@@ -221,10 +221,10 @@ object fMain: TfMain
           Height = 326
           Top = 0
           Width = 495
-          ActivePage = tsLanguages
+          ActivePage = tsDescriptions
           Align = alClient
           Constraints.MinWidth = 480
-          TabIndex = 4
+          TabIndex = 3
           TabOrder = 2
           object tsGeneral: TTabSheet
             Caption = 'tsGeneral'
@@ -326,7 +326,7 @@ object fMain: TfMain
               Left = 16
               Height = 18
               Top = 120
-              Width = 116
+              Width = 123
               Caption = 'cbWideDOSFont'
               OnChange = cbWideDOSFontChange
               TabOrder = 1
@@ -353,7 +353,7 @@ object fMain: TfMain
               Left = 16
               Height = 18
               Top = 144
-              Width = 116
+              Width = 123
               Caption = 'cbAlwaysEnglish'
               OnChange = cbAlwaysEnglishChange
               TabOrder = 2
@@ -381,10 +381,10 @@ object fMain: TfMain
             end
             object seMasterFont: TSpinEdit
               Left = 216
-              Height = 21
+              Height = 22
               Top = 38
               Width = 50
-              MaxValue = 36
+              MaxValue = 96
               MinValue = 8
               OnChange = seMasterFontChange
               TabOrder = 0
@@ -426,27 +426,27 @@ object fMain: TfMain
                 Align = alClient
                 BorderStyle = bsNone
                 ClientHeight = 170
-                ClientWidth = 462
+                ClientWidth = 477
                 TabOrder = 1
                 OnResize = sbLanguageEditResize
                 object pLangEditLeft: TPanel
                   Left = 0
                   Height = 234
                   Top = 0
-                  Width = 461
+                  Width = 476
                   Align = alClient
                   BevelOuter = bvNone
                   ClientHeight = 234
-                  ClientWidth = 461
+                  ClientWidth = 476
                   TabOrder = 0
                   object leLangID: TLabeledEdit
                     Left = 8
                     Height = 22
                     Top = 24
-                    Width = 243
+                    Width = 258
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 243
+                    EditLabel.Width = 258
                     EditLabel.Caption = 'leLangID'
                     TabOrder = 0
                     Text = 'leLangID'
@@ -457,10 +457,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 74
-                    Width = 243
+                    Width = 258
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 243
+                    EditLabel.Width = 258
                     EditLabel.Caption = 'leLangName'
                     TabOrder = 1
                     Text = 'leLangName'
@@ -471,10 +471,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 124
-                    Width = 243
+                    Width = 258
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 243
+                    EditLabel.Width = 258
                     EditLabel.Caption = 'leLangDOS'
                     TabOrder = 2
                     Text = 'leLangDOS'
@@ -485,10 +485,10 @@ object fMain: TfMain
                     Left = 8
                     Height = 22
                     Top = 174
-                    Width = 243
+                    Width = 258
                     Anchors = [akTop, akLeft, akRight]
                     EditLabel.Height = 16
-                    EditLabel.Width = 243
+                    EditLabel.Width = 258
                     EditLabel.Caption = 'leLangCodePage'
                     TabOrder = 3
                     Text = 'leLangCodePage'
@@ -496,10 +496,10 @@ object fMain: TfMain
                     OnEditingDone = leLangCodePageEditingDone
                   end
                   object bbRemoveLanguage: TBitBtn
-                    Left = 387
-                    Height = 28
+                    Left = 399
+                    Height = 29
                     Top = 170
-                    Width = 58
+                    Width = 61
                     Action = actRemoveLanguage
                     Anchors = [akTop, akRight]
                     AutoSize = True
@@ -508,7 +508,7 @@ object fMain: TfMain
                     TabOrder = 4
                   end
                   object leGraphic: TImage
-                    Left = 285
+                    Left = 300
                     Height = 160
                     Top = 0
                     Width = 160
@@ -519,7 +519,7 @@ object fMain: TfMain
                     Transparent = True
                   end
                   object btCodepage: TSpeedButton
-                    Left = 259
+                    Left = 274
                     Height = 22
                     Top = 174
                     Width = 23
@@ -529,7 +529,7 @@ object fMain: TfMain
                     ShowCaption = False
                   end
                   object iLangNameVerify: TImage
-                    Left = 258
+                    Left = 273
                     Height = 24
                     Top = 74
                     Width = 24
@@ -537,7 +537,7 @@ object fMain: TfMain
                     Stretch = True
                   end
                   object iLangDosVerify: TImage
-                    Left = 258
+                    Left = 273
                     Height = 24
                     Top = 122
                     Width = 24
@@ -545,7 +545,7 @@ object fMain: TfMain
                     Stretch = True
                   end
                   object iLangIdVerify: TImage
-                    Left = 259
+                    Left = 274
                     Height = 24
                     Top = 22
                     Width = 24
@@ -556,14 +556,14 @@ object fMain: TfMain
                     Left = 8
                     Height = 18
                     Top = 216
-                    Width = 130
+                    Width = 138
                     Caption = 'cbLanguageEnable'
                     OnClick = cbLanguageEnableClick
                     TabOrder = 5
                   end
                 end
                 object pLangEditRight: TPanel
-                  Left = 461
+                  Left = 476
                   Height = 234
                   Top = 0
                   Width = 1

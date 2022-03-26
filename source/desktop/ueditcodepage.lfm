@@ -1,7 +1,7 @@
 object fEditCodePage: TfEditCodePage
-  Left = 342
+  Left = 430
   Height = 320
-  Top = 218
+  Top = 220
   Width = 480
   BorderStyle = bsSizeToolWin
   Caption = 'fEditCodePage'
@@ -13,7 +13,7 @@ object fEditCodePage: TfEditCodePage
   OnHide = FormHide
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.3.0.0'
   object pButtons: TPanel
     Left = 16
     Height = 32
@@ -25,7 +25,7 @@ object fEditCodePage: TfEditCodePage
     ClientWidth = 448
     TabOrder = 0
     object pBtnSeperator: TPanel
-      Left = 370
+      Left = 359
       Height = 32
       Top = 0
       Width = 10
@@ -35,7 +35,7 @@ object fEditCodePage: TfEditCodePage
       TabOrder = 0
     end
     object bbOK: TBitBtn
-      Left = 295
+      Left = 284
       Height = 32
       Top = 0
       Width = 75
@@ -47,10 +47,10 @@ object fEditCodePage: TfEditCodePage
       TabOrder = 1
     end
     object bbCancel: TBitBtn
-      Left = 380
+      Left = 369
       Height = 32
       Top = 0
-      Width = 68
+      Width = 79
       Align = alRight
       AutoSize = True
       Caption = 'bbCancel'
@@ -130,7 +130,7 @@ object fEditCodePage: TfEditCodePage
       Width = 144
       Anchors = [akTop, akLeft, akRight]
       AutoSize = False
-      EditLabel.Height = 19
+      EditLabel.Height = 16
       EditLabel.Width = 144
       EditLabel.Caption = 'leUTF8'
       TabOrder = 0
@@ -145,7 +145,7 @@ object fEditCodePage: TfEditCodePage
       Width = 144
       Anchors = [akTop, akLeft, akRight]
       AutoSize = False
-      EditLabel.Height = 19
+      EditLabel.Height = 16
       EditLabel.Width = 144
       EditLabel.Caption = 'leHTML'
       TabOrder = 1

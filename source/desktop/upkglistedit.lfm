@@ -8,8 +8,8 @@ object framePkgListEdit: TframePkgListEdit
   ClientWidth = 588
   ParentFont = False
   TabOrder = 0
-  DesignLeft = 228
-  DesignTop = 382
+  DesignLeft = 375
+  DesignTop = 339
   object lvPackages: TListView
     Left = 0
     Height = 347
@@ -19,7 +19,7 @@ object framePkgListEdit: TframePkgListEdit
     AutoWidthLastColumn = True
     Columns = <    
       item
-        Width = 148
+        Width = 133
       end>
     ScrollBars = ssVertical
     ShowColumnHeaders = False

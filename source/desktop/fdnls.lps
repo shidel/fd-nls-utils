@@ -19,7 +19,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="822"/>
         <CursorPos X="7" Y="833"/>
         <UsageCount Value="202"/>
@@ -33,15 +32,17 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uLog"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="3"/>
         <CursorPos X="54" Y="11"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="uappnls.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="50"/>
         <CursorPos Y="88"/>
         <UsageCount Value="222"/>
@@ -54,10 +55,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPickFlag"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="48"/>
         <CursorPos X="61" Y="77"/>
         <UsageCount Value="202"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ueditcodepage.pas"/>
@@ -66,9 +69,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="48" Y="9"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="upkglistedit.pas"/>
@@ -77,7 +82,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
-        <EditorIndex Value="5"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="241"/>
         <CursorPos X="70" Y="253"/>
         <UsageCount Value="226"/>
@@ -91,11 +97,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgDetails"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="166"/>
         <CursorPos Y="189"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="upkgpreview.pas"/>
@@ -104,7 +111,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="107"/>
         <CursorPos X="22" Y="107"/>
         <UsageCount Value="200"/>
@@ -152,7 +159,7 @@
       <Unit>
         <Filename Value="..\shared\classext.pas"/>
         <UnitName Value="ClassExt"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="4"/>
         <CursorPos X="42" Y="22"/>
         <UsageCount Value="80"/>
         <Loaded Value="True"/>
@@ -182,7 +189,7 @@
       <Unit>
         <Filename Value="uappcfg.pas"/>
         <UnitName Value="uAppCfg"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="102"/>
         <CursorPos X="42" Y="123"/>
         <UsageCount Value="45"/>
@@ -196,7 +203,7 @@
         <UsageCount Value="31"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\..\..\..\..\..\usr\local\share\lazarus\lcl\forms.pp"/>
+        <Filename Value="D:\usr\local\share\lazarus\lcl\forms.pp"/>
         <UnitName Value="Forms"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="36"/>

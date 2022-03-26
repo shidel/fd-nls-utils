@@ -7,8 +7,8 @@ object framePkgDetails: TframePkgDetails
   ClientWidth = 320
   ParentFont = False
   TabOrder = 0
-  DesignLeft = 523
-  DesignTop = 256
+  DesignLeft = 514
+  DesignTop = 280
   object pFrame: TPanel
     Left = 1
     Height = 240
