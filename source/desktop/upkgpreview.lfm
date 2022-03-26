@@ -1,32 +1,33 @@
 object framePkgPreview: TframePkgPreview
   Left = 0
-  Height = 165
+  Height = 289
   Top = 0
-  Width = 320
-  ClientHeight = 165
-  ClientWidth = 320
+  Width = 560
+  ClientHeight = 289
+  ClientWidth = 560
+  DesignTimePPI = 168
   OnResize = FrameResize
   ParentFont = False
   TabOrder = 0
-  DesignLeft = 268
-  DesignTop = 410
+  DesignLeft = 292
+  DesignTop = 423
   object sbPreview: TScrollBox
-    Left = 1
-    Height = 165
+    Left = 2
+    Height = 289
     Top = 0
-    Width = 318
+    Width = 556
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 120
+    VertScrollBar.Page = 210
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 163
-    ClientWidth = 316
+    ClientHeight = 285
+    ClientWidth = 552
     TabOrder = 0
     object iPreview: TImage
       Left = 0
-      Height = 120
+      Height = 210
       Top = 0
-      Width = 317
+      Width = 554
       Anchors = [akTop, akLeft, akRight]
       Stretch = True
     end
@@ -34,7 +35,7 @@ object framePkgPreview: TframePkgPreview
   object tRender: TTimer
     Enabled = False
     OnTimer = tRenderTimer
-    Left = 20
-    Top = 21
+    Left = 35
+    Top = 37
   end
 end

@@ -69,6 +69,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uEditCodePage"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <CursorPos X="48" Y="9"/>
         <UsageCount Value="200"/>
@@ -82,7 +83,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
         <TopLine Value="241"/>
         <CursorPos X="70" Y="253"/>
