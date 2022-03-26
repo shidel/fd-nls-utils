@@ -1,0 +1,18 @@
+
+	* Adjustable Package List master detail font size.
+	* Transfer English to Language now only fills empty fields.
+	* Preview stays with current language.
+	* Preserve preview height.
+	* Codepage Preview Simulator options tab and settings added.
+    * Removed usage of XMLPropStorage (possibly cross-platform or different
+    IDE/Compiler version related issues). Will require user to readjust their
+    view settings.
+	* Change internal handling save/restore of settings and user preferences.
+
+2022-03-23: v0.1.1.66
+
+	* Initial working version of Windows cross-compile released
+
+2022-03-20: v0.1.1.62
+
+	* Initial macOS release

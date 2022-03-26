@@ -1,0 +1,9 @@
+Fix cross-platform UI framework issues for Windows and Linux.
+
+Readme documentation.
+
+Project NLS editing. (There is a lot to that and many sub items will be added)
+
+Report generation.
+
+Add direct git support in-app.
