@@ -1,49 +1,48 @@
 object framePkgDetails: TframePkgDetails
   Left = 0
-  Height = 420
+  Height = 240
   Top = 0
-  Width = 560
-  ClientHeight = 420
-  ClientWidth = 560
-  DesignTimePPI = 168
+  Width = 320
+  ClientHeight = 240
+  ClientWidth = 320
   ParentFont = False
   TabOrder = 0
-  DesignLeft = 548
-  DesignTop = 298
+  DesignLeft = 540
+  DesignTop = 296
   object pFrame: TPanel
-    Left = 2
-    Height = 420
+    Left = 1
+    Height = 240
     Top = 0
-    Width = 558
+    Width = 319
     Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvNone
     BorderStyle = bsSingle
-    ClientHeight = 416
-    ClientWidth = 554
+    ClientHeight = 238
+    ClientWidth = 317
     TabOrder = 0
     object pFlag: TPanel
       Left = 0
-      Height = 416
+      Height = 238
       Top = 0
-      Width = 112
+      Width = 64
       Align = alLeft
       BevelOuter = bvNone
-      ClientHeight = 416
-      ClientWidth = 112
+      ClientHeight = 238
+      ClientWidth = 64
       TabOrder = 0
       object iFlag: TImage
         Left = 0
-        Height = 112
+        Height = 64
         Top = 0
-        Width = 112
+        Width = 64
         Proportional = True
         Stretch = True
       end
       object pLanguage: TLabel
-        Left = -2
-        Height = 28
-        Top = 378
-        Width = 114
+        Left = -1
+        Height = 16
+        Top = 216
+        Width = 65
         Alignment = taCenter
         Anchors = [akLeft, akRight, akBottom]
         AutoSize = False
@@ -53,9 +52,9 @@ object framePkgDetails: TframePkgDetails
       end
       object lCodepage: TLabel
         Left = 0
-        Height = 28
-        Top = 350
-        Width = 112
+        Height = 16
+        Top = 200
+        Width = 64
         Alignment = taCenter
         Anchors = [akLeft, akRight, akBottom]
         AutoSize = False
@@ -65,9 +64,9 @@ object framePkgDetails: TframePkgDetails
       end
       object iCodePage: TImage
         Left = 0
-        Height = 42
-        Top = 336
-        Width = 112
+        Height = 24
+        Top = 192
+        Width = 64
         Anchors = [akLeft, akRight, akBottom]
         Center = True
         Proportional = True
@@ -75,20 +74,20 @@ object framePkgDetails: TframePkgDetails
       end
       object pButtons: TPanel
         Left = 0
-        Height = 46
-        Top = 112
-        Width = 112
+        Height = 26
+        Top = 64
+        Width = 64
         Anchors = [akTop, akLeft, akRight]
         BevelOuter = bvNone
-        ClientHeight = 46
-        ClientWidth = 112
+        ClientHeight = 26
+        ClientWidth = 64
         TabOrder = 0
         object sbTransfer: TSpeedButton
           Left = 0
-          Height = 38
+          Height = 22
           Hint = 'Copy master text to this translation'
           Top = 0
-          Width = 40
+          Width = 23
           Color = clNone
           Flat = True
           Images = fMain.ilToolsSmall
@@ -98,29 +97,29 @@ object framePkgDetails: TframePkgDetails
       end
     end
     object pLabels: TPanel
-      Left = 112
-      Height = 416
+      Left = 64
+      Height = 238
       Top = 0
-      Width = 224
+      Width = 128
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 1
     end
     object pDetails: TPanel
-      Left = 354
-      Height = 416
+      Left = 202
+      Height = 238
       Top = 0
-      Width = 200
+      Width = 115
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
       OnResize = pDetailsResize
     end
     object sDetails: TSplitter
-      Left = 336
-      Height = 416
+      Left = 192
+      Height = 238
       Top = 0
-      Width = 18
+      Width = 10
     end
   end
 end

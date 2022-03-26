@@ -1,13 +1,12 @@
 object fLog: TfLog
-  Left = 761
-  Height = 756
-  Top = 58
-  Width = 471
+  Left = 769
+  Height = 432
+  Top = 63
+  Width = 269
   BorderStyle = bsSizeToolWin
   Caption = 'Debug Log'
-  ClientHeight = 756
-  ClientWidth = 471
-  DesignTimePPI = 168
+  ClientHeight = 432
+  ClientWidth = 269
   OnCreate = FormCreate
   OnHide = FormHide
   OnShow = FormShow
@@ -16,10 +15,10 @@ object fLog: TfLog
   ShowInTaskBar = stNever
   LCLVersion = '2.2.0.4'
   object LogText: TMemo
-    Left = 14
-    Height = 728
-    Top = 14
-    Width = 443
+    Left = 8
+    Height = 416
+    Top = 8
+    Width = 253
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.Name = 'Courier New'
     Font.Pitch = fpFixed

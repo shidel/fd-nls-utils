@@ -557,8 +557,8 @@ begin
     LI.Caption:=Repository.Languages.Caption[I];
     lvLanguages.Selected:=LI;
     LI.MakeVisible(false);
-    leLangId.SetFocus;
     EditLangIndex := I;
+    leLangId.SetFocus;
   end;
 end;
 
