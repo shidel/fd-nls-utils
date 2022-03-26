@@ -554,11 +554,20 @@ begin
   Log(Self, 'Result ' + IntToStr(I));
   if I <> -1 then begin
     LI := lvLanguages.Items.Add;
-    LI.Caption:=Repository.Languages.Caption[I];
-    lvLanguages.Selected:=LI;
-    LI.MakeVisible(false);
-    EditLangIndex := I;
-    leLangId.SetFocus;
+    {$if defined(linux)}
+      LI.Caption:=Repository.Languages.Caption[I];
+      if LI.Caption = '' then LI.Caption:=led_NewLanguage;
+      Self.SelectEditLanguage(I);
+      leLangId.SetFocus;
+      LI.MakeVisible(False);
+      LI.Selected:=True;
+    {$else}
+      LI.Caption:=Repository.Languages.Caption[I];
+      lvLanguages.Selected:=LI;
+      LI.MakeVisible(false);
+      leLangId.SetFocus;
+      EditLangIndex := I;
+    {$endif}
   end;
 end;
 
