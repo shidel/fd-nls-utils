@@ -35,6 +35,7 @@ type
     procedure leUTF8EditingDone(Sender: TObject);
     procedure lvEditCPChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure lvEditCPClick(Sender: TObject);
   private
     EditItem, DOSFont : integer;
     FCodepage: string;
@@ -138,7 +139,18 @@ end;
 procedure TfEditCodePage.lvEditCPChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
-  SelectEdit(Item.Index);
+  {$IF defined(linux)}
+  {$ELSE}
+    SelectEdit(Item.Index);
+  {$ENDIF}
+end;
+
+procedure TfEditCodePage.lvEditCPClick(Sender: TObject);
+begin
+{$IF defined(linux)}
+  if Assigned(lvEditCP.Selected) then
+    SelectEdit(lvEditCP.Selected.Index);
+{$ENDIF}
 end;
 
 procedure TfEditCodePage.SetCodepage(AValue: string);

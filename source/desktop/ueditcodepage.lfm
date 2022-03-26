@@ -13,7 +13,7 @@ object fEditCodePage: TfEditCodePage
   OnHide = FormHide
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '2.2.0.4'
   object pButtons: TPanel
     Left = 16
     Height = 32
@@ -25,7 +25,7 @@ object fEditCodePage: TfEditCodePage
     ClientWidth = 448
     TabOrder = 0
     object pBtnSeperator: TPanel
-      Left = 359
+      Left = 370
       Height = 32
       Top = 0
       Width = 10
@@ -35,7 +35,7 @@ object fEditCodePage: TfEditCodePage
       TabOrder = 0
     end
     object bbOK: TBitBtn
-      Left = 284
+      Left = 295
       Height = 32
       Top = 0
       Width = 75
@@ -47,10 +47,10 @@ object fEditCodePage: TfEditCodePage
       TabOrder = 1
     end
     object bbCancel: TBitBtn
-      Left = 369
+      Left = 380
       Height = 32
       Top = 0
-      Width = 79
+      Width = 68
       Align = alRight
       AutoSize = True
       Caption = 'bbCancel'
@@ -95,6 +95,7 @@ object fEditCodePage: TfEditCodePage
     TabOrder = 1
     ViewStyle = vsReport
     OnChange = lvEditCPChange
+    OnClick = lvEditCPClick
   end
   object pEditValues: TPanel
     Left = 312
@@ -129,7 +130,7 @@ object fEditCodePage: TfEditCodePage
       Width = 144
       Anchors = [akTop, akLeft, akRight]
       AutoSize = False
-      EditLabel.Height = 16
+      EditLabel.Height = 19
       EditLabel.Width = 144
       EditLabel.Caption = 'leUTF8'
       TabOrder = 0
@@ -144,7 +145,7 @@ object fEditCodePage: TfEditCodePage
       Width = 144
       Anchors = [akTop, akLeft, akRight]
       AutoSize = False
-      EditLabel.Height = 16
+      EditLabel.Height = 19
       EditLabel.Width = 144
       EditLabel.Caption = 'leHTML'
       TabOrder = 1

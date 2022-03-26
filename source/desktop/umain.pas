@@ -144,6 +144,7 @@ type
     procedure leLangNameEditingDone(Sender: TObject);
     procedure lvLanguagesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure lvLanguagesClick(Sender: TObject);
     procedure lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
     procedure sbLanguageEditResize(Sender: TObject);
     procedure seMasterFontChange(Sender: TObject);
@@ -229,10 +230,13 @@ begin
       SelectPrefsPage(tsAbout)
    else if not DirectoryExists(GetValueXML(Settings, 'REPOSITORY/LOCAL/PATH', '')) then
       SelectPrefsPage(tsRepo);
-   {$if defined(windows)}
-     bbRemoveLanguage.Top := cbLanguageEnable.Top - 8;
-   {$else}
+   {$if defined(darwin)}
      cbLanguageEnable.Visible:=False;
+   {$else}
+     bbRemoveLanguage.Top := cbLanguageEnable.Top - 8;
+   {$endif}
+   {$if defined(linux)}
+     lvLanguages.CheckBoxes:=False;
    {$endif}
 end;
 
@@ -414,17 +418,32 @@ end;
 procedure TfMain.lvLanguagesChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
+  {$IF defined(linux)}
+  {$ELSE}
   SelectEditLanguage(Item.Index);
   if Change = ctImage then begin end;
+  {$ENDIF}
+end;
+
+procedure TfMain.lvLanguagesClick(Sender: TObject);
+begin
+  {$IF defined(linux)}
+  if Assigned(lvLanguages.Selected) then
+    SelectEditLanguage(lvLanguages.Selected.Index);
+  {$ENDIF}
+
 end;
 
 procedure TfMain.lvLanguagesItemChecked(Sender: TObject; Item: TListItem);
 begin
+  {$IF defined(linux)}
+  {$ELSE}
    if Assigned(Item) then begin
      Log(self, 'Select Language ' + IntToStr(Item.Index) + ' ' + WhenTrue(Item.Checked, 'true', 'false'));
      ActiveLanguage[Repository.Languages.Identifier[Item.Index]] := Item.Checked;
      SetLangCheckBox(Item.Checked);
    end;
+  {$ENDIF}
 end;
 
 procedure TfMain.sbLanguageEditResize(Sender: TObject);
@@ -807,7 +826,12 @@ var
 begin
   try
     S := TStringStream.Create(
-      '<html><body><center>' +
+      '<html><body' +
+      {$IF defined(darwin)}
+      {$ELSE}
+        ' style="background:LightGray;"' +
+      {$ENDIF}
+      '><center>' +
       '<b>' + APP_FILEDESCRIPTION + '</b><br>' +
       Format(msg_AboutVersion, [APP_VERSION, SOURCE_REVISION]) + '<br>' +
       msg_AboutLicense + '<br>' +
