@@ -1,3 +1,8 @@
+2022-03-26: v0.1.1.69 (Linux Only)
+
+	* Cross-platform compatibility fix for language selections.
+
+2022-03-26: v0.1.1.68
 
 	* Adjustable Package List master detail font size.
 	* Transfer English to Language now only fills empty fields.
