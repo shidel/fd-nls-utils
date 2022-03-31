@@ -21,9 +21,23 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="69"/>
+      <BuildNr Value="71"/>
       <StringTable Comments="FreeDOS NLS Desktop Utility" CompanyName="Jerome Shidel" FileDescription="FreeDOS NLS Desktop Utility" InternalName="FD-NLS" LegalCopyright="2022 Jerome Shidel" OriginalFilename="FD-NLS" ProductName="FD-NLS" ProductVersion="1.0"/>
     </VersionInfo>
+    <MacroValues Count="12">
+      <Macro1 Name="LCLWidgetType" Value="cocoa"/>
+      <Macro2 Name="LCLWidgetType" Value="cocoa"/>
+      <Macro3 Name="LCLWidgetType" Value="cocoa"/>
+      <Macro4 Name="LCLWidgetType" Value="win32"/>
+      <Macro5 Name="LCLWidgetType" Value="cocoa"/>
+      <Macro6 Name="LCLWidgetType" Value="win32"/>
+      <Macro7 Name="LCLWidgetType" Value="cocoa"/>
+      <Macro8 Name="LCLWidgetType" Value="win32"/>
+      <Macro9 Name="LCLWidgetType" Value="cocoa"/>
+      <Macro10 Name="LCLWidgetType" Value="win32"/>
+      <Macro11 Name="LCLWidgetType" Value="win32"/>
+      <Macro12 Name="LCLWidgetType" Value="cocoa"/>
+    </MacroValues>
     <BuildModes>
       <Item Name="Default" Default="True"/>
     </BuildModes>
@@ -130,6 +144,9 @@
       <OtherUnitFiles Value="..\shared"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <CodeGeneration>
+      <TargetOS Value="darwin"/>
+    </CodeGeneration>
     <Linking>
       <Options>
         <Win32>
@@ -138,17 +155,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions>
-      <Item>
-        <Name Value="EAbort"/>
-      </Item>
-      <Item>
-        <Name Value="ECodetoolError"/>
-      </Item>
-      <Item>
-        <Name Value="EFOpenError"/>
-      </Item>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

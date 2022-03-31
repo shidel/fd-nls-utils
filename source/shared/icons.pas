@@ -28,6 +28,16 @@ const
   IconCollectionURL     = 'https://icons8.com/icons/share-collections/uRjmCz4CbAnb';
   IconPrefix            = 'icon-';
 
+  icon_Null             = -1;
+  icon_Done             = 7;
+  icon_Close            = 8;
+  icon_NoImage          = 12;
+  icon_Good             = 14;
+  icon_Warning          = 15;
+  icon_Error            = 16;
+  icon_New              = 17;
+
+
   IconUI : array of string = (
     'bug',                { 0 }
     'gear',               { 1 }
@@ -36,17 +46,17 @@ const
     'list',               { 4 }
     'add',                { 5 }
     'remove',             { 6 }
-    'done',               { 7 }
-    'close',              { 8 }
+    'done',               { 7 - icon_Done }
+    'close',              { 8 - icon_Close }
     'cancel',             { 9 }
     'no-edit',            { 10 }
     'edit',               { 11 }
-    'no-image',           { 12 }
+    'no-image',           { 12 - icon_NoImage}
     'image',              { 13 }
-    'check-circle',       { 14 }
-    'error',              { 15 }
-    'high-priority',      { 16 }
-    'new',                { 17 }
+    'check-circle',       { 14 - icon_Good }
+    'error',              { 15 - icon_Warning }
+    'high-priority',      { 16 - icon_Error }
+    'new',                { 17 - icon_New }
     'bang',               { 18 }
     'transfer',           { 19 }
     'edit-property',

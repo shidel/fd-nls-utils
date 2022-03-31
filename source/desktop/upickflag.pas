@@ -48,8 +48,8 @@ begin
   Caption := dlg_PickFlag;
   bbOK.Caption:=btn_OK;
   bbCancel.Caption:=btn_Cancel;
-  ilButtons.AddLazarusResource(IconUI[7]);
-  ilButtons.AddLazarusResource(IconUI[8]);
+  ilButtons.AddLazarusResource(IconUI[icon_Done]);
+  ilButtons.AddLazarusResource(IconUI[icon_Close]);
   lvFlags.BeginUpdate;
   for I := Low(IconFlags) to High(IconFlags) do begin
       ilFlags.AddLazarusResource(IconFlags[I]);

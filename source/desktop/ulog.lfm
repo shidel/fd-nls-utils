@@ -1,19 +1,21 @@
 object fLog: TfLog
-  Left = 769
+  Left = 899
   Height = 432
-  Top = 63
+  Top = 230
   Width = 269
   BorderStyle = bsSizeToolWin
   Caption = 'Debug Log'
   ClientHeight = 432
   ClientWidth = 269
+  DoubleBuffered = False
   OnCreate = FormCreate
   OnHide = FormHide
   OnShow = FormShow
+  ParentDoubleBuffered = False
   Position = poScreenCenter
   SessionProperties = 'ClientHeight;ClientWidth;Height;Left;Top;Width;Position'
   ShowInTaskBar = stNever
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.3.0.0'
   object LogText: TMemo
     Left = 8
     Height = 416

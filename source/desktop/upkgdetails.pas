@@ -284,7 +284,7 @@ begin
   if FCodePageIndex = -1 then begin
     lCodepage.Visible := False;
     iCodepage.Visible := True;
-    iCodePage.Picture.LoadFromLazarusResource(IconUI[12]);
+    iCodePage.Picture.LoadFromLazarusResource(IconUI[icon_NoImage]);
   end else begin
     lCodepage.Visible := True;
     iCodepage.Visible := False;

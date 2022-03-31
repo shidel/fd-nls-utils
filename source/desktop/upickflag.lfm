@@ -1,7 +1,7 @@
 object fPickFlag: TfPickFlag
-  Left = 380
+  Left = 159
   Height = 320
-  Top = 215
+  Top = 270
   Width = 480
   BorderStyle = bsSizeToolWin
   Caption = 'fPickFlag'
@@ -12,7 +12,7 @@ object fPickFlag: TfPickFlag
   OnShow = FormShow
   Position = poScreenCenter
   SessionProperties = 'Position;Left;Top;Width;Height;ClientWidth;ClientHeight'
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.3.0.0'
   object lvFlags: TListView
     Left = 16
     Height = 240
@@ -46,7 +46,7 @@ object fPickFlag: TfPickFlag
     ClientWidth = 448
     TabOrder = 1
     object pBtnSeperator: TPanel
-      Left = 370
+      Left = 363
       Height = 29
       Top = 0
       Width = 10
@@ -56,7 +56,7 @@ object fPickFlag: TfPickFlag
       TabOrder = 0
     end
     object bbOK: TBitBtn
-      Left = 295
+      Left = 288
       Height = 29
       Top = 0
       Width = 75
@@ -68,10 +68,10 @@ object fPickFlag: TfPickFlag
       TabOrder = 1
     end
     object bbCancel: TBitBtn
-      Left = 380
+      Left = 373
       Height = 29
       Top = 0
-      Width = 68
+      Width = 75
       Align = alRight
       AutoSize = True
       Caption = 'bbCancel'

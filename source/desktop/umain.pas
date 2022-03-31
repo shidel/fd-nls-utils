@@ -507,6 +507,8 @@ end;
 
 procedure TfMain.tsPackagesShow(Sender: TObject);
 begin
+  sbMain.Panels.Clear;
+  sbMain.Panels.Add;
   Reload;
   frPkgListEdit.Refresh;
 end;
@@ -948,7 +950,7 @@ begin
     leLangCodePage.Text:='';
     SetLangCheckBox(False);
     try
-      leGraphic.Picture.LoadFromLazarusResource(IconUI[12]);
+      leGraphic.Picture.LoadFromLazarusResource(IconUI[icon_NoImage]);
     except
       leGraphic.Picture.Clear;
     end;
@@ -1041,7 +1043,7 @@ begin
   if (EditLangIndex < 0) or Result then
     iLangIDVerify.Picture.Clear
   else
-    iLangIDVerify.Picture.LoadFromLazarusResource(IconUI[16]);
+    iLangIDVerify.Picture.LoadFromLazarusResource(IconUI[icon_Error]);
 end;
 
 function TfMain.LangNameVerify: boolean;
@@ -1060,7 +1062,7 @@ begin
   if (EditLangIndex < 0) or Result then
     iLangNameVerify.Picture.Clear
   else
-    iLangNameVerify.Picture.LoadFromLazarusResource(IconUI[16]);
+    iLangNameVerify.Picture.LoadFromLazarusResource(IconUI[icon_Error]);
 end;
 
 function TfMain.LangDosVerify: boolean;
@@ -1079,7 +1081,7 @@ begin
   if (EditLangIndex < 0) or Result then
     iLangDosVerify.Picture.Clear
   else
-    iLangDosVerify.Picture.LoadFromLazarusResource(IconUI[16]);
+    iLangDosVerify.Picture.LoadFromLazarusResource(IconUI[icon_Error]);
 end;
 
 function TfMain.LangCodePageVerify: boolean;

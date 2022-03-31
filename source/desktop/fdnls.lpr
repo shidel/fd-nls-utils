@@ -1,5 +1,6 @@
 program fdnls;
 {$WARN 5028 off : Local $1 "$2" is not used}
+
 {$I defines.inc}
 
 uses
@@ -20,8 +21,8 @@ uses
 begin
   // InitPasExt(APP_IDENTIFIER);
   RequireDerivedFormResource:=True;
-  Application.Title:='FD-NLS';
   Application.Scaled:=True;
+  Application.Title:='FD-NLS';
   Application.Initialize;
   Application.CreateForm(TfMain, fMain);
   Application.CreateForm(TfLog, fLog);

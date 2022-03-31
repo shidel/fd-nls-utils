@@ -20,14 +20,18 @@ type
     procedure sSplitterMoved(Sender: TObject);
   private
     FNeedRefresh : boolean;
+    FNewPackages: integer;
     FPkgView : TFrame;
     FMasterDetails : TframePkgDetails;
     FPreview : TframePkgPreview;
     FPreviewSplitter : TSplitter;
+    FProblemPackages: integer;
     FScroll : TScrollBox;
     FEditors : array of TframePkgDetails;
     FActive  : TStringArray;
     FStayWithLang : boolean;
+    FWarningPackages: integer;
+    function GetTotalPackages: integer;
     function MakeViewer(Language:String; AllowEdit : boolean; ATop : integer) : TframePkgDetails;
     procedure MakeEditors;
   public
@@ -42,6 +46,11 @@ type
     procedure UpdateStatus(Index : integer); overload;
     procedure UpdateStatus(var Item : TListItem); overload;
     procedure DetailsModified(Sender : TObject);
+    property TotalPackages : integer read GetTotalPackages;
+    property NewPackages : integer read FNewPackages;
+    property ProblemPackages : integer read FProblemPackages;
+    property WarningPackages : integer read FWarningPackages;
+    procedure RefreshTotals;
   end;
 
 implementation
@@ -87,6 +96,11 @@ begin
   Result.Align:=alTop;
 end;
 
+function TframePkgListEdit.GetTotalPackages: integer;
+begin
+  Result := lvPackages.Items.Count;
+end;
+
 procedure TframePkgListEdit.MakeEditors;
 var
   I, Y : integer;
@@ -129,18 +143,34 @@ begin
      end;
    end;
    case ps of
-     psNew      : Item.ImageIndex:=17;
-     psWarning  : Item.ImageIndex:=15;
+     psNew      : Item.ImageIndex:=icon_New;
+     psWarning  : Item.ImageIndex:=icon_Warning;
      psInvalid,
-     psError    : Item.ImageIndex:=16;
+     psError    : Item.ImageIndex:=icon_Error;
     else
-      Item.ImageIndex := -1;
+      Item.ImageIndex := icon_Null;
    end;
 end;
 
 procedure TframePkgListEdit.DetailsModified(Sender: TObject);
 begin
   UpdateStatus(TframePkgDetails(Sender).EditIndex);
+end;
+
+procedure TframePkgListEdit.RefreshTotals;
+var
+  I : integer;
+begin
+  FNewPackages := 0;
+  FProblemPackages := 0;
+  FWarningPackages := 0;
+  for I := 0 to lvPackages.Items.Count - 1 do
+   case lvPackages.Items[I].ImageIndex of
+     icon_New     : Inc(FNewPackages);
+     icon_Warning : Inc(FWarningPackages);
+     icon_Error   : Inc(FProblemPackages);
+   end;
+
 end;
 
 procedure TframePkgListEdit.UpdateStatus(Index: integer);

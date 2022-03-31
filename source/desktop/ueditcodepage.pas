@@ -67,8 +67,8 @@ begin
   EditItem := -1;
   DOSFont := -1;
   GetPropertyState(Self);
-  ilButtons.AddLazarusResource(IconUI[7]);
-  ilButtons.AddLazarusResource(IconUI[8]);
+  ilButtons.AddLazarusResource(IconUI[icon_Done]);
+  ilButtons.AddLazarusResource(IconUI[icon_Close]);
   bbOK.Caption:=btn_OK;
   bbCancel.Caption:=btn_Cancel;
   with lvEditCP.Columns.Add do Caption := lvh_EditCpDOS;
@@ -170,12 +170,12 @@ begin
   FDNLS.Fonts.Reload;
   I := FDNLS.Fonts.IndexOfFile(FCodePage + FontFileExt);
   if I <> -1 then begin
-     iFontState.Picture.LoadFromLazarusResource(IconUI[14]);
+     iFontState.Picture.LoadFromLazarusResource(IconUI[icon_Good]);
      lbFontState.Caption:=Format(lbl_UsingCodepageFont,
        [FCodePage + FontFileExt,FCodePage]);
      lbFontState.Font.Color:=clDefault;
   end else begin
-    iFontState.Picture.LoadFromLazarusResource(IconUI[15]);
+    iFontState.Picture.LoadFromLazarusResource(IconUI[icon_Warning]);
     lbFontState.Font.Color:=clErrorText;
     I := FDNLS.Fonts.IndexOfFile(DefaultFont);
     if I <> -1 then
