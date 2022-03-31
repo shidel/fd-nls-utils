@@ -165,6 +165,7 @@ begin
       end else begin
         FDatum[I - 1] := TLabel.Create(Self);
         TLabel(FDatum[I - 1]).WordWrap:=True;
+        TLabel(FDatum[I - 1]).ShowAccelChar:=False;
       end;
       FDatum[I - 1].Name:=Name + '_Details'+IntToStr(I-1);
       FDatum[I - 1].Parent := pDetails;

@@ -163,6 +163,7 @@ type
   private
     function GetActiveLanguage(ALang : String): boolean;
     procedure SetActiveLanguage(ALang : String; AValue: boolean);
+    procedure SwitchModes;
   private
     EditLangIndex : integer;
     ReloadNeeded : boolean;
@@ -505,22 +506,31 @@ begin
   SelectEditLanguage(-1);
 end;
 
+procedure TfMain.SwitchModes;
+begin
+  frPkgListEdit.lvPackages.Selected:=nil;
+  frPkgListEdit.StatusPanel:=nil;
+  sbMain.Panels.Clear;
+
+end;
+
 procedure TfMain.tsPackagesShow(Sender: TObject);
 begin
-  sbMain.Panels.Clear;
-  sbMain.Panels.Add;
+  SwitchModes;
   Reload;
   frPkgListEdit.Refresh;
+  frPkgListEdit.StatusPanel:=sbMain.Panels.Add;
 end;
 
 procedure TfMain.tsPrefsShow(Sender: TObject);
 begin
-  frPkgListEdit.lvPackages.Selected:=nil;
+  SwitchModes;
   ReloadNeeded := true;
 end;
 
 procedure TfMain.tsProjectsShow(Sender: TObject);
 begin
+  SwitchModes;
   Reload;
   lbComingSoon.Caption:=lbl_ComingSoon;
 end;

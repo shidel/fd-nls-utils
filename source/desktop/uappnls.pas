@@ -87,6 +87,11 @@ resourcestring
   lbl_Descriptions              = 'Package description details';
   lbl_MasterFontSize            = 'Master details font size:';
 
+  stat_PackageTotals            = '%0:s%% complete, %1:s packages';
+  stat_PackageTotalNew          = ', %0:s new';
+  stat_PackageTotalProblem      = ', %0:s problem';
+  Stat_PackageTotalWarning      = ', %0:s warning';
+
 implementation
 
 end.

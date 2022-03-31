@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ComCtrls, ExtCtrls, PasExt,
-  StdCtrls, Dialogs, FDKit, uAppCfg, uLog, Icons, uPkgDetails, uPkgPreview;
+  StdCtrls, Dialogs, FDKit, uAppCfg, uAppNLS,
+  uLog, Icons, uPkgDetails, uPkgPreview;
 
 type
 
@@ -29,11 +30,14 @@ type
     FScroll : TScrollBox;
     FEditors : array of TframePkgDetails;
     FActive  : TStringArray;
+    FStatusPanel: TStatusPanel;
     FStayWithLang : boolean;
     FWarningPackages: integer;
     function GetTotalPackages: integer;
     function MakeViewer(Language:String; AllowEdit : boolean; ATop : integer) : TframePkgDetails;
     procedure MakeEditors;
+    procedure RefreshTotals;
+    procedure SetStatusPanel(AValue: TStatusPanel);
   public
     procedure Initialize;
     procedure Clear;
@@ -50,7 +54,7 @@ type
     property NewPackages : integer read FNewPackages;
     property ProblemPackages : integer read FProblemPackages;
     property WarningPackages : integer read FWarningPackages;
-    procedure RefreshTotals;
+    property StatusPanel : TStatusPanel read FStatusPanel write SetStatusPanel;
   end;
 
 implementation
@@ -150,16 +154,19 @@ begin
     else
       Item.ImageIndex := icon_Null;
    end;
+  // RefreshTotals; { not needed here, since only called on show. update after assigned }
 end;
 
 procedure TframePkgListEdit.DetailsModified(Sender: TObject);
 begin
   UpdateStatus(TframePkgDetails(Sender).EditIndex);
+  RefreshTotals;
 end;
 
 procedure TframePkgListEdit.RefreshTotals;
 var
-  I : integer;
+  I, TD, PD : integer;
+  S : String;
 begin
   FNewPackages := 0;
   FProblemPackages := 0;
@@ -170,7 +177,35 @@ begin
      icon_Warning : Inc(FWarningPackages);
      icon_Error   : Inc(FProblemPackages);
    end;
+  if Assigned(StatusPanel) then begin
+    if TotalPackages = 0 then
+      PD := 0
+    else begin
+    TD := NewPackages + ProblemPackages + WarningPackages;
+    PD := 100 - (( TD ) * 100 div TotalPackages);
+    if (PD > 99) then begin
+       if (TD <> 0) then
+         PD := 99
+       else
+         PD := 100;
+      end;
+    end;
+    S:=Format(stat_PackageTotals, [ IntToStr( PD  ), IntToStr( TotalPackages ) ]);
+    if NewPackages <> 0 then
+      S:=S + Format(stat_PackageTotalNew, [IntToStr(NewPackages)]);
+    if ProblemPackages <> 0 then
+      S:=S + Format(stat_PackageTotalProblem, [IntToStr(ProblemPackages)]);
+    if WarningPackages <> 0 then
+      S:=S + Format(stat_PackageTotalWarning, [IntToStr(WarningPackages)]);
+    StatusPanel.Text:=S;
+  end;
+end;
 
+procedure TframePkgListEdit.SetStatusPanel(AValue: TStatusPanel);
+begin
+  if FStatusPanel=AValue then Exit;
+  FStatusPanel:=AValue;
+  RefreshTotals;
 end;
 
 procedure TframePkgListEdit.UpdateStatus(Index: integer);

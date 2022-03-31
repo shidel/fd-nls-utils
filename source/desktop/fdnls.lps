@@ -35,9 +35,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uMain"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="1056"/>
-        <CursorPos X="58" Y="1084"/>
+        <TopLine Value="502"/>
+        <CursorPos X="21" Y="509"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -60,8 +59,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uAppNLS"/>
         <EditorIndex Value="9"/>
-        <TopLine Value="56"/>
-        <CursorPos X="18" Y="61"/>
+        <TopLine Value="61"/>
+        <CursorPos X="9" Y="91"/>
         <UsageCount Value="222"/>
         <Loaded Value="True"/>
       </Unit>
@@ -101,8 +100,8 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgListEdit"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="145"/>
-        <CursorPos X="35" Y="151"/>
+        <TopLine Value="176"/>
+        <CursorPos X="23" Y="198"/>
         <UsageCount Value="226"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -114,9 +113,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgDetails"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="259"/>
-        <CursorPos X="53" Y="287"/>
+        <TopLine Value="159"/>
+        <CursorPos X="91" Y="170"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -129,7 +129,7 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="uPkgPreview"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="130"/>
+        <TopLine Value="120"/>
         <CursorPos X="130" Y="120"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -141,15 +141,11 @@
         <EditorIndex Value="5"/>
         <TopLine Value="28"/>
         <CursorPos X="30" Y="34"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="18">
-      <Position>
-        <Filename Value="umain.pas"/>
-        <Caret Line="563" Column="24"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="upkglistedit.pas"/>
         <Caret Line="50" Column="45" TopLine="25"/>
@@ -221,6 +217,54 @@
       <Position>
         <Filename Value="umain.pas"/>
         <Caret Line="1065" Column="59" TopLine="1037"/>
+      </Position>
+      <Position>
+        <Filename Value="umain.pas"/>
+        <Caret Line="1069" Column="68" TopLine="1056"/>
+      </Position>
+      <Position>
+        <Filename Value="upkglistedit.pas"/>
+        <Caret Line="42" Column="18" TopLine="30"/>
+      </Position>
+      <Position>
+        <Filename Value="uappnls.pas"/>
+        <Caret Line="90" Column="89" TopLine="61"/>
+      </Position>
+      <Position>
+        <Filename Value="upkglistedit.pas"/>
+        <Caret Line="56" Column="34" TopLine="39"/>
+      </Position>
+      <Position>
+        <Filename Value="upkglistedit.pas"/>
+        <Caret Line="157" TopLine="141"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgdetails.pas"/>
+        <Caret Line="76" Column="20" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgdetails.pas"/>
+        <Caret Line="163" Column="44" TopLine="157"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgdetails.pas"/>
+        <Caret Line="58" Column="19" TopLine="36"/>
+      </Position>
+      <Position>
+        <Filename Value="upkgdetails.pas"/>
+        <Caret Line="80" Column="17" TopLine="53"/>
+      </Position>
+      <Position>
+        <Filename Value="upkglistedit.pas"/>
+        <Caret Line="52" Column="22" TopLine="36"/>
+      </Position>
+      <Position>
+        <Filename Value="upkglistedit.pas"/>
+        <Caret Line="193" Column="17" TopLine="165"/>
+      </Position>
+      <Position>
+        <Filename Value="upkglistedit.pas"/>
+        <Caret Line="196" Column="62" TopLine="170"/>
       </Position>
     </JumpHistory>
     <RunParams>
