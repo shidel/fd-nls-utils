@@ -1,4 +1,4 @@
-2022-03-31: v0.1.1.70
+2022-03-31: v0.1.1.71
 
 	* Show ampersand in English master description (not underline next letter)
 	* Package list translation progress status
