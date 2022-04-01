@@ -1,7 +1,7 @@
 object fLog: TfLog
-  Left = 887
+  Left = 704
   Height = 432
-  Top = 139
+  Top = 121
   Width = 269
   BorderStyle = bsSizeToolWin
   Caption = 'Debug Log'
