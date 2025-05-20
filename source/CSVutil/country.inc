@@ -567,12 +567,12 @@ const
 	'fo,,,Faeroese',
 	'fa,,,Farsi',
 	'fi,,,Finnish,fin',
-        // unsure if Most French is Codepage 863 or 850
-	'fr_BE,,863,French (Belgium),bel',
+        // unsure if Most French is Codepage 863, 858 or 850
+	'fr_BE,,858,French (Belgium),bel',
 	'fr_CA,,863,French (Canada),can',        // is Codepage 863
-	'fr_CH,,863,French (Switzerland),che',
-	'fr_LU,,863,French (Luxembourg),lux',
-	'fr,fr,863,French (Standard),fra',
+	'fr_CH,,858,French (Switzerland),che',
+	'fr_LU,,858,French (Luxembourg),lux',
+	'fr,fr,850,French (Standard),fra',
 	'gd,,,Gaelic (Scotland)',
 	'de_AT,,850,German (Austria),aut',
 	'de_LI,,850,German (Liechtenstein),lie',
