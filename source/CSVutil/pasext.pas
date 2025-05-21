@@ -73,7 +73,7 @@ const
 
   TIME_ZONE : String = 'GMT';
 
-{ $I version.inc}
+{$I version.inc}
 
 {$I country.inc}
 
@@ -94,7 +94,7 @@ type
   TArrayOfStrings = TStringArray; // Same as: array of String;
   TArrayOfPointers = array of Pointer;
 
-  // dsEverything can include viable and dead links.
+  // dsEverything can include both viable and dead links.
   TDirScanMode = (dsFilesOnly, dsDirsOnly, dsFilesAndDirs, dsEverything);
 
   TForEachFileFunc = function (FileName : String) : integer of object;
@@ -152,6 +152,13 @@ function WhenTrue(AInt : Integer; ATrue : pointer; AFalse : pointer = nil) : poi
 function WhenTrue(APtr : Pointer; ATrue : String;  AFalse : String = '') : String; overload;
 function WhenTrue(APtr : Pointer; ATrue : integer; AFalse : integer = 0) : integer; overload;
 function WhenTrue(APtr : Pointer; ATrue : pointer; AFalse : pointer = nil) : pointer; overload;
+
+procedure SwapData(var A, B : boolean); overload;
+procedure SwapData(var A, B : Char); overload;
+procedure SwapData(var A, B : String); overload;
+procedure SwapData(var A, B : byte); overload;
+procedure SwapData(var A, B : integer); overload;
+procedure SwapData(var A, B : pointer); overload;
 
 function ZeroPad(AValue : LongInt; AWidth: integer) : String; overload;
 function LeftPad(AStr : String; AWidth: integer; ASubStr : String = SPACE) : String; overload;
@@ -229,6 +236,8 @@ function CreateLink(Target, Link : String) : boolean;
 
 { delete a file or entire directory tree }
 function DeleteTree (APath: String) : boolean;
+function CreateTree(ADirTree : String; CanExist : boolean = false) : boolean;
+function TreeCopy(Src, Dst : String) : integer;
 
 { make a temp directory under a path. If path is not spcified, it will attempt
   to create the directory using the system default path for temporary files.
@@ -244,6 +253,8 @@ function DirectoryIsEmpty(APath : String) : boolean;
 // FileCopy does not preserve Owner, Group or permissions
 function FileCopy(Source, Dest : String; Overwrite : boolean = true) : integer;
 function FileMove(Source, Dest : String; Overwrite : boolean = true) : integer;
+
+function FileCaseMatch(BasePath : String; FileName : String) : String;
 
 // Recursively set permissions of all directories and files under and including
 // the specified directory. Default is FILES (RW,R,R) and DIRS (RWX,RX,RX).
@@ -277,6 +288,8 @@ function ExtractFileBase(FileName : String) : String;
 procedure LineEndings(var S : String; LE : String = CRLF);
 
 function SanitizeHTML(S : String) : String;
+
+function WildMatch(AWild, AStr : String) : boolean;
 
 {$IFDEF Country}
 function TimeZoneOffset(TZ : String) : String;
@@ -925,6 +938,60 @@ begin
     Result := ATrue
   else
     Result := AFalse;
+end;
+
+procedure SwapData(var A, B : boolean);
+var
+  C : Boolean;
+begin
+  C:=A;
+  A:=B;
+  B:=C;
+end;
+
+procedure SwapData(var A, B : Char);
+var
+  C : Char;
+begin
+  C:=A;
+  A:=B;
+  B:=C;
+end;
+
+procedure SwapData(var A, B : String);
+var
+  C : String;
+begin
+  C:=A;
+  A:=B;
+  B:=C;
+end;
+
+procedure SwapData(var A, B : byte);
+var
+  C : byte;
+begin
+  C:=A;
+  A:=B;
+  B:=C;
+end;
+
+procedure SwapData(var A, B : integer);
+var
+  C : integer;
+begin
+  C:=A;
+  A:=B;
+  B:=C;
+end;
+
+procedure SwapData(var A, B : pointer);
+var
+  C : pointer;
+begin
+  C:=A;
+  A:=B;
+  B:=C;
 end;
 
 function ZeroPad(AValue : LongInt; AWidth: integer): String;
@@ -1670,6 +1737,76 @@ begin
   DeleteTree:=RemoveDir(APath);
 end;
 
+function CreateTree(ADirTree : String; CanExist : boolean = false) : boolean;
+var
+  EP, MP, DP, TP : String;
+begin
+  CreateTree:=CanExist;
+  if DirectoryExists(ADirTree) then Exit;
+  ADirTree:=Trim(StringReplace(ADirTree, PathDelimiter + '.' + PathDelimiter,
+   PathDelimiter, [rfReplaceAll]));
+  if ADirTree = PathDelimiter then exit;
+  CreateTree:=False;
+  EP:='';
+  DP:='';
+  MP:='';
+  While ADirTree <> '' do begin
+    TP:=PopDelim(ADirTree, PathDelimiter);
+    if (TP = '') then begin
+      if (EP = '') then
+        TP:='/'
+       else
+         continue;
+    end;
+    if DirectoryExists(EP + TP) then begin
+      EP:=EP + IncludeTrailingPathDelimiter(TP);
+      Continue;
+    end;
+    MP:=MP+TP;
+    if not CreateDir(EP + MP) then begin
+      if DP <> '' then
+        DeleteTree(EP + DP);
+      Exit;
+    end;
+    if DP = '' then DP:=MP;
+    MP:=IncludeTrailingPathDelimiter(MP);
+  end;
+  CreateTree:=True;
+end;
+
+function TreeCopy(Src, Dst : String) : integer;
+var
+  List : TStringList;
+  I: integer;
+  S : String;
+begin
+  TreeCopy:=-1;
+  Src:=IncludeTrailingPathDelimiter(Src);
+  Dst:=IncludeTrailingPathDelimiter(Dst);
+  // WriteLn(Src, '->', Dst);
+  if Src=Dst then exit;
+  if not CreateTree(DST, false) then exit;
+  List:=TStringList.Create;
+  DirScan(List, Src+DirWildCard,True, dsEverything);
+  TreeCopy:=0;
+  for I := 0 to List.Count - 1 do begin
+    S:=ReadLink(Src+List[I]);
+    if S <> '' then begin
+     if CreateLink(S, Dst+List[I]) then Continue;
+    end else
+    if DirectoryExists(Src+List[I]) then begin
+      if CreateTree(Dst+List[I],true) then Continue;
+    end else begin
+      // is likely a file
+      if FileCopy(Src+List[I],Dst+List[I],False) = 0 then Continue;
+    end;
+    // anything else or failed "copy" will cause loop to fail.
+    TreeCopy:=-1;
+    Break;
+  end;
+  List.Free;
+end;
+
 {$PUSH}
 {$I-}
 {$HINTS off}
@@ -1976,6 +2113,37 @@ begin
   SanitizeHTML:=S;
 end;
 
+function FileCaseMatch(BasePath : String; FileName : String) : String;
+var
+   E: Integer;
+   O: String;
+   T: String;
+   R: TSearchRec;
+begin
+  FileCaseMatch:='';
+  FileName:=Lowercase(FileName);
+  if BasePath <> '' then
+    BasePath:=IncludeTrailingPathDelimiter(BasePath);
+  O:='';
+  While FileName<>'' do begin
+    T:=LowerCase(PopDelim(FileName, PathDelimiter));
+    E:=FindFirst(BasePath + O + DirWildCard, faAnything,R);
+    while E = 0 do begin
+      if LowerCase(R.Name) = T then begin
+        if R.Attr and faDirectory = faDirectory then
+          O:=O+IncludeTrailingPathDelimiter(R.Name)
+        else
+          O:=O+R.Name;
+        Break;
+      end;
+      E:=FindNext(R);
+    end;
+    FindClose(R);
+    if E <> 0 then Exit;
+  end;
+  FileCaseMatch:=O;
+end;
+
 {$IFDEF Country}
 function TimeZoneOffset(TZ: String): String;
 var
@@ -2022,6 +2190,74 @@ begin
     S:=Copy(S, 1, Length(S) - 3);
   end;
 end;
+
+function WildMatch(AWild, AStr : String) : boolean;
+// Ported from my DOS QStrings Library. LOL.
+
+{ far from perfect, but good enough for now. :-) }
+
+  function SubMatchWC(AWild, AStr :String) : boolean;
+  var
+      I : Integer;
+  begin
+      SubMatchWC:= False;
+      if Length(AWild) <> Length(AStr) then exit;
+      for I := 1 to Length(AWild) do
+          if (AWild[I] <> AStr[I]) and (AWild[I] <> '?') then exit;
+      SubMatchWC := True;
+  end;
+
+  function QPos(ASub, AStr : String) : integer;
+  var
+      I : integer;
+  begin
+      QPos := 0;
+      for I := 1 to Length(AStr) - Length(ASub) + 1 do
+          if SubMatchWC(ASub, Copy(AStr, I, Length(ASub))) then begin
+              QPos := I;
+              Break;
+          end;
+  end;
+
+var
+    PW, PS : integer;
+    X : integer;
+begin
+    X := 0;
+    WildMatch := True;
+    if AWild = AStr then Exit;
+    if AWild = '' then begin
+        WildMatch := False;
+        Exit;
+    end;
+    repeat
+        Inc(X);
+        if AWild[1] = '*' then begin
+            { WriteLn('[A-',AWild, '/',AStr,']'); }
+            While (AWild<> '') and (AWild[1] = '*') do Delete(AWild, 1,1);
+            if AWild = '' then Exit;
+            PW := Pos('*', AWild);
+            if PW < 1 then PW := Length(AWild)+ 1;
+            { WriteLn(PW, ';', Copy(AWild, 1, PW -1), ';', AStr); }
+            PS := QPos(Copy(AWild, 1, PW -1), AStr);
+            { WriteLn(PS); }
+            if PS < 1 then Break;
+            Delete(AStr, 1, PS - 1);
+        end;
+        { WriteLn('[B-',AWild, '/',AStr,']'); }
+        if SubMatchWC(AWild, AStr) then Exit;
+        PW := Pos('*', AWild) - 1;
+        { WriteLn(PW); }
+        if PW < 1 then PW := Length(AWild) + 1;
+        if not SubMatchWC(Copy(AWild,1, PW), Copy(AStr, 1, PW)) then Break;
+        Delete(AWild, 1, PW);
+        Delete(AStr, 1, PW);
+        { WriteLn('[C-',AWild, '/',AStr,']'); }
+    until (AWild = '') or (AStr = '') or (X = 1000);
+    { WriteLn('[D-',AWild, '/',AStr,']'); }
+    WildMatch := ((AWild = '*') or (AWild = '')) and (AStr = '');
+end;
+
 
 initialization
 

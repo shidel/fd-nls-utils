@@ -29,7 +29,7 @@ uses
                                // 2 = Codepage Not Found Error
                                // 3 = Unmappable Character(s)
 
-  function CPtoUTF8(S : String; CodePage : integer = 437) : String;
+  function CPtoUTF8(S : String; CodePage : integer = 437; CTRL : boolean = true) : String;
   function UTF8toCP(S : String; CodePage : integer = 437) : String;
   function CodePage(Language : String = 'en') : integer; // -1 error
 
@@ -73,7 +73,7 @@ type
     destructor Destroy; override;
     procedure Clear;
     function Select(CodePage : integer) : boolean;
-    function toUTF8(S : String) : String;
+    function toUTF8(S : String; CTRL : boolean = true) : String;
     function fromUTF8(S : String) : String;
     // function toHTML(S :String) : String;
    published
@@ -84,14 +84,14 @@ type
 var
   CodePages : TCodePages;
 
-function CPtoUTF8(S : String; CodePage : integer = 437) : String;
+function CPtoUTF8(S : String; CodePage : integer = 437; CTRL : boolean = true) : String;
 begin
   if not CodePages.Select(CodePage) then begin
     CodePageError:=2;
     CPtoUTF8:=S;
   end else begin
     CodePageError:=0;
-    CPtoUTF8:=CodePages.toUTF8(S);
+    CPtoUTF8:=CodePages.toUTF8(S,CTRL);
   end;
 end;
 
@@ -292,7 +292,7 @@ begin
   Select:= I <> -1;
 end;
 
-function TCodePages.toUTF8(S: String): String;
+function TCodePages.toUTF8(S: String; CTRL : boolean = true): String;
 var
   I : Integer;
 begin
@@ -301,8 +301,18 @@ begin
     Exit;
   end;
   toUTF8:='';
-  for I := 1 to Length(S) do
-     toUTF8:=toUTF8+FCPA[FIndex].UTF8[Ord(S[I])];
+  if CTRL then begin
+    for I := 1 to Length(S) do
+     toUTF8:=toUTF8+FCPA[FIndex].UTF8[Ord(S[I])]
+  end else begin
+    for I := 1 to Length(S) do begin
+      // if (S[I]=CR) or (S[I]=LF) then
+      if (S[I] < SPACE) then // ASCII < #32 is treated as a control character
+        toUTF8:=toUTF8+S[I]
+      else
+       toUTF8:=toUTF8+FCPA[FIndex].UTF8[Ord(S[I])]
+    end;
+  end;
 end;
 
 function TCodePages.fromUTF8(S: String): String;
